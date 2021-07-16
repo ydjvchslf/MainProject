@@ -59,9 +59,12 @@ public class EduController {
 		String userEmail = ((User)httpRequest.getSession().getAttribute("user")).getEmail();   
 		
 		edu.setUser( userService.getUser(userEmail));
-		edu.setAcademy( acaService.getAcademy("A20") );
-		edu.setEduState("0");
+		edu.setAcademy( acaService.getAcademy("예시") );
 		edu.setEduRest( edu.getEduMember() );
+		
+		if( edu.getEduState() == null ) {
+			edu.setEduState("0");
+		}
 		
 		System.out.println("/edu/addEdu : POST ");
 		
@@ -109,7 +112,8 @@ public class EduController {
 	}
 	
 	@RequestMapping( value="listEdu" )
-	public String listEdu( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listEdu( @ModelAttribute("search") Search search , 
+							@ModelAttribute("edu") Edu edu , Model model , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/edu/listEdu : GET / POST");
 		
@@ -118,13 +122,11 @@ public class EduController {
 		}
 		search.setPageSize(pageSize);
 		
-		System.out.println("SearchEduState 값 :: "+search.getSearchEduState());
-		
 		// Business logic 수행
 		Map<String , Object> map= eduService.getEduList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		System.err.println(map);
 		
 		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
