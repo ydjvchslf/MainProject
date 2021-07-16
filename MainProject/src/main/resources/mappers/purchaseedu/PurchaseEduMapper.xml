@@ -9,7 +9,7 @@
 	<resultMap id="purchaseEduSelectMap"	type="purchaseEdu">
 		<result property="buyer.userNo"	column="purchase_user_no"	jdbcType="NUMERIC"/>
 		<result property="purchaseEdu.eduNo"	column="purchase_edu_no"	jdbcType="NUMERIC"/>
-		<result property="purchaseAca.academyCode"	column="purchase_aca_code"	jdbcType="VARCHAR"/>
+		<result property="purchaseAcademy.academyCode"	column="purchase_aca_code"	jdbcType="VARCHAR"/>
 		<result property="payNo"		column="pay_no"  jdbcType="NUMERIC"/>
 		<result property="payState"		column="pay_state"	  jdbcType="CHAR"/>
 		<result property="payDate"		column="pay_date"	  jdbcType="DATE"/>
@@ -21,7 +21,7 @@
 		INSERT
 		INTO purchase_edu( pay_no , purchase_user_no , purchase_edu_no , pay_state , pay_date , purchase_uid, purchase_aca_code )
 		VALUES( seq_purchase_edu_pay_no.nextval, ${buyer.userNo}, ${purchaseEdu.eduNo},
-				'${payState}', SYSDATE, '${purchaseUid}', '${purchaseAca.academyCode}' )
+				'${payState}', SYSDATE, '${purchaseUid}', '${purchaseAcademy.academyCode}' )
 	</insert>
 	
 	

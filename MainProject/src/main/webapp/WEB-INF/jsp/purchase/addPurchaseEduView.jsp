@@ -54,7 +54,7 @@
 		        var userNo = ${user.userNo}
 		        alert(userNo)
 		        
-		        self.location = "/purchaseedu/addPurchaseEduUid?eduNo="+eduNo+"&userNo="+userNo
+		        self.location = "/purchaseedu/addPurchaseEduUid?eduNo="+eduNo+"&userNo="+userNo+"&uid="+rsp.imp_uid
 		        		
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
