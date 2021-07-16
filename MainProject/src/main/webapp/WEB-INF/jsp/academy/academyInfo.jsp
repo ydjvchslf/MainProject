@@ -17,7 +17,13 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-
+		<script type="text/javascript">
+			$("#layoutSidenav_content").on("click", ".")
+		
+		
+		
+		</script>
+		
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -128,8 +134,22 @@
                                     지역 구 : ${academy.academyArea }<br/>
                                     위도 : ${academy.academyLat }<br/>
                                     경도 : ${academy.academyLng }<br/>
-                                    소개	: ${academy.academyIntro }<br/>
-                                    실적 : ${academy.academyHistory }<br/>
+                                    
+                                    <div class="container">
+                                    
+                                    	<div class="col-xs-8">
+                                    		<input class="form-control" type="text" size="80">
+                                    		소개	: ${academy.academyIntro }<br/>
+		      								<button class="btn success" id="update" value="${academy.academyCode}"> 수 정 </button>
+		    							</div>
+		    							
+		    							<div class="col-xs-8">
+                                    		실적 : ${academy.academyHistory }<br/>
+		      								<button class="btn success" id="update" value="${academy.academyCode}"> 수 정 </button>
+		    							</div>
+                                  
+                                    </div>
+                                    
                             </div>
                         </div>
                         <div style="height: 100vh"></div>
@@ -141,6 +161,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        
+        
+        
     </body>
 </html>
     

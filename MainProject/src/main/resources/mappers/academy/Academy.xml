@@ -50,7 +50,7 @@
 	   	WHERE academy_code = #{academyCode}
 	 </update>
 	 
-	 <update	id="updateAcademyHistory"	parameterType="Academy" >
+	 <update	id="updateAcademyHistory"	parameterType="String" >
 	   	UPDATE academy
 	   	<set>
 	   		academy_history = #{academyHistory},
@@ -72,6 +72,14 @@
 		academy_code
 		FROM academy 
 		WHERE user_no = #{user.userNo}
+	 </select>
+	 
+	  <!-- SQL : SELECT ONE 에듀 넘버로 아카데미 코드 찾기 -->
+	 <select 	id="getAcademyCodeforEdu"	parameterType="int"	resultType="String">
+		SELECT
+     	a.academy_code
+     	from academy a, edu e
+     	WHERE e.edu_no = '${value}'
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
