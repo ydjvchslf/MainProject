@@ -66,7 +66,7 @@
 		WHERE user_no = #{user.userNo}
 	 </select>
 	 
-	 <!-- SQL : SELECT ONE 아카데미 코드만 가져오기 -->
+	 <!-- SQL : SELECT ONE 유저 넘버로 아카데미 코드 찾기 -->
 	 <select 	id="getAcademyCode"	parameterType="int"	resultType="String">
 		SELECT
 		academy_code
@@ -87,7 +87,7 @@
 		SELECT
 		academy_code
 		FROM academy 
-		WHERE academy_code = #{academyCode}
+		WHERE academy_code = #{value}
 	 </select>
 	 
 	 <!-- ~~~~~~~~~~멀티미디어 mapper~~~~~~~~~~ -->
