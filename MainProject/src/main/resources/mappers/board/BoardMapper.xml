@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.board.BoardDao">
+ 	
+ 	
+	<resultMap id="boardSelectMap" type="board" >
+		<result property="boardNo" 			column="board_no" 				jdbcType="NUMERIC" />
+		<result property="boardTitle" 		column="board_title" 			jdbcType="VARCHAR" />
+		<result property="boardContent" 	column="board_content" 			jdbcType="VARCHAR" />
+		<result property="boardWriter" 		column="board_Writer" 			jdbcType="NUMERIC" />
+		<result property="boardDate" 		column="board_date" 			jdbcType="DATE" />
+		<result property="boardState" 		column="board_state" 			jdbcType="CHAR" />
+		<result property="cateCode" 		column="category_code" 			jdbcType="CHAR" />
+		<result property="viewCnt" 			column="view_count" 			jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addBoard"		parameterType="board" useGeneratedKeys="true" keyColumn="board_no" keyProperty="boardNo">
+	 	INSERT
+		INTO board( board_no , board_title , board_content , board_writer , board_date, board_state, category_code, view_count) 
+		VALUES	 ( board_board_no.nextval , #{boardTitle} , #{boardContent} , #{boardWriter}, SYSDATE, '0', '0', #{viewCnt} )
+	 </insert>
+
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getBoard"	parameterType="int"	resultMap="boardSelectMap">
+		SELECT
+		b.board_no , b.board_title , b.board_content , b.board_writer , b.board_date, b.category_code, b.view_count, email
+		FROM board b, users u
+		WHERE b.board_writer=u.user_no and board_no = #{value} 
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateBoard"	parameterType="board" >
+	   	UPDATE board
+	   	<set>
+	   		board_title 			= #{boardTitle} ,
+			board_content			= #{boardContent},
+			board_date 				= SYSDATE ,
+			board_writer			= #{boardWriter},
+			board_state				= '0',
+			view_count				= #{viewCnt}
+	   	</set>
+	   	WHERE board_no = #{boardNo}
+	 </update>
+	 
+	 <delete	id="deleteBoard"	parameterType="int" >
+	   	DELETE from board
+	   	WHERE board_no = #{boardNo}
+	 </delete>
+		 
+   <!-- SQL : SELECT LIST -->
+   <select  id="getBoardList"  parameterType="search"   resultMap="boardSelectMap">
+ 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
+	  					FROM		(	SELECT b.*, u.email
+											FROM board b, users u
+											WHERE b.board_writer=u.user_no
+											 <if test="searchKeyword !=null">
+                                                 and board_title like '%' || #{searchKeyword} || '%'
+                                             </if>
+											ORDER BY b.board_date desc ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum,jdbcType=NUMERIC} AND #{endRowNum}	
+    </select>
+	 	<!--  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+		-->
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  		  	SELECT COUNT(*)
+	  	FROM(	SELECT * 
+						FROM board
+						
+						<if test="searchKeyword !=null">
+                         WHERE  board_title like '%' || #{searchKeyword} || '%'
+                        </if>
+						ORDER BY board_date desc 
+						) countTable						
+	 </select>
+	 
+	 <update id="updateViewcnt" parameterType="int">
+		UPDATE board SET view_count = view_count + 1 
+		WHERE  board_no = #{boardNo}
+	 </update>
+	
+	 <insert id="addRecommend">
+            INSERT INTO recommend (recommend_no, board_no, recommender)
+            VALUES (recommend_recommend_no.nextval, #{boardNo}, #{userNo})
+     </insert>
+
+     <delete id="deleteRecommend">
+            DELETE FROM recommend
+            WHERE board_no = #{boardNo} AND recommender = #{userNo}
+     </delete>
+
+     <select id="getRecommend" parameterType="map" resultType="int" >
+            SELECT count(*) FROM recommend WHERE board_no = #{boardNo} AND recommender = #{userNo}
+     </select>
+     
+     <select id="recommendCnt" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM recommend
+        where board_no = #{boardNo}
+     </select>
+	 
+	 <select id="commentCount" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM comments
+        where board_no = #{boardNo}
+    </select>
+    
+    <select id="listComment" parameterType="int" resultType="hashmap">
+        SELECT
+        comment_No, comment_Content, comment_Writer, TO_CHAR(comment_Date, 'YYYY/MM/DD HH24:MI:SS') as comment_Date, email
+        FROM comments c, users u
+        where c.comment_writer=u.user_no and board_no = #{boardNo}
+        ORDER BY c.comment_no desc
+    </select>
+    
+    
+    <insert id="addComment" parameterType="map">
+        INSERT INTO
+        comments (comment_No, board_no, comment_Content, comment_Writer, comment_State, comment_Date)
+        VALUES(comments_comment_no.nextval,#{boardNo},#{commentContent},#{userNo},DEFAULT, SYSDATE) 
+        
+    </insert>
+    
+    <update id="updateComment" parameterType="map">
+        UPDATE COMMENTS
+            SET
+            COMMENT_CONTENT = #{commentContent}
+        WHERE COMMENT_NO = #{commentNo}
+    </update>
+    
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM COMMENTS WHERE COMMENT_NO = #{commentNo}
+    </delete>
+	 
+	 
+</mapper>
