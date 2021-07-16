@@ -284,7 +284,7 @@ public class UserController {
 			
 			if ( dbUser.getRole().equals("academy") ) {
 				
-				Map<String, Object> map = academyService.getAcademyCode(dbUser.getUserNo());
+				Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
 	            
 	            model.addAttribute("list",map.get("list"));
 				
