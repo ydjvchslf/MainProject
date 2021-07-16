@@ -1,16 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-    
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
+
+
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
 
-<!-- 참조 : http://getbootstrap.com/css/   -->
+
+<!DOCTYPE html>
+
+<html lang="ko">
+	
+<head>
+	<meta charset="EUC-KR">
+	
+	<!-- 참조 : http://getbootstrap.com/css/   -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -24,65 +29,27 @@
    	
    	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	
-	//============= 로그인 화면이동 =============
-	$( function() {
-		//==> 추가된부분 : "addUser"  Event 연결
-		$("a[href='#' ]:contains('로그아웃')").on("click" , function() {
-			self.location = "/user/logout"
+		
+		//============= 회원원가입 화면이동 =============
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('회원가입')").on("click" , function() {
+				self.location = "/user/addUser"
+			});
 		});
-	});
-	
-	$( function() {
-		//==> 추가된부분 : "getUser"  Event 연결
-		$("a[href='#' ]:contains('내정보보기')").on("click" , function() {
-			self.location = "/user/getUser?email=${user.email}"
+		
+		//============= 로그인 화면이동 =============
+		$( function() {
+			//==> 추가된부분 : "addUser"  Event 연결
+			$("a[href='#' ]:contains('로 그 인')").on("click" , function() {
+				self.location = "/user/login"
+			});
 		});
-	});
+		
+	</script>	
 	
-	$( function() {
-		$("a[href='#' ]:contains('비밀번호변경')").on("click" , function() {
-			self.location = "/user/updatePassword?email=${user.email}"
-		});
-	});
-	
-	$( function() {
-		$("a[href='#' ]:contains('탈퇴하기')").on("click" , function() {
-			self.location = "/user/outUser?email=${user.email}"
-		});
-	});
-	
-	$( function() {
-		$("a[href='#' ]:contains('학원 등록')").on("click" , function() {
-			self.location = "/academy/addAcademyView1"
-		});
-	});
-	
-	
-	
-	
-	<c:set var="i" value="0" />
-		 <c:forEach var="academy" items="${list}">
-					 <c:set var="i" value="${ i+1 }" />
-			  
-			  <li class="list-group-item">
-				 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
-				 </li>
-			
-         </c:forEach>		
-	
-	$( function() {
-		$("a[href='#' ]:contains('학원명')").on("click" , function() {
-			self.location = "/academy/academyInfo?academyCode=${academy.academyCode}"
-		});
-	});
-	
-	
-	
-	</script>
-
-<title>Academy main page</title>
 </head>
+
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
@@ -105,13 +72,15 @@
 			
 			<div class="collapse navbar-collapse"  id="target">
 	             <ul class="nav navbar-nav navbar-right">
-	                 <li><a href="#">로그아웃</a></li>
+	                 <li><a href="#">회원가입</a></li>
+	                 <li><a href="#">로 그 인</a></li>
 	           	</ul>
 	       </div>
    		
    		</div>
    	</div>
-
+   	<!-- ToolBar End /////////////////////////////////////-->
+   	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		
@@ -129,13 +98,16 @@
          			<!--  회원관리 아이템 -->
 					<ul class="list-group">
 						 <li class="list-group-item">
-						 	<a href="#">내정보보기</a> <i class="glyphicon glyphicon-ok"></i>
+						 	<a href="#">개인정보조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 						 <li class="list-group-item">
-						 	<a href="#">비밀번호변경</a>
+						 	<a href="#">비밀번호변경</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						 </li>
+						 <li class="list-group-item">
+						 	<a href="#">내가다니는학원</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 						  <li class="list-group-item">
-						 	<a href="#">탈퇴하기</a>
+						 	<a href="#">탈퇴하기</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
 					</ul>
 		        </div>
@@ -143,55 +115,45 @@
                
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-							<i class="glyphicon glyphicon-briefcase"></i> 학원 프로필
+							<i class="glyphicon glyphicon-briefcase"></i> 회원관리
          			</div>
 					<ul class="list-group">
-					<!-- userController 에서 count 를 넘겨줘야 ~~ -->
-					<c:forEach var="academy" items="${count}">
-					 <c:if test="${academy.count<=3}">
-						<li class="list-group-item">
-						 	<a href="#">학원 등록</a>
+						 <li class="list-group-item">
+						 	<a href="#">전체회원보기</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
-					</c:if>
-					</c:forEach>
-					
-					<li class="list-group-item">
-						 	<a href="#">학원 등록</a>
+						 <li class="list-group-item">
+						 	<a href="#">탈퇴회원보기</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						 </li>
-					
-				<c:set var="i" value="0" />
-				 <c:forEach var="academy" items="${list}">
-							 <c:set var="i" value="${ i+1 }" />
-					  
-					  <li class="list-group-item">
-						 	<a href="#" >${academy.academyName}</a>
-						 </li>
-					
-		          </c:forEach>								 
-
 					</ul>
 		        </div>
-		        
-
 
 				
 			</div>
 			<!--  Menu 구성 end /////////////////////////////////////-->   
 
-			<h1>학원 프로필을 선택 해 주세요.</h1> 		
-			
-			<a href="/main/academyMain">학원메인으로</a>
+	 	 	<!--  Main start /////////////////////////////////////-->   		
+	 	 	<div class="col-md-9">
+				<div class="jumbotron">
+			  		<h1>Model2 MVC Shop</h1>
+			  		<p>로그인 후 사용가능...</p>
+			  		<p>로그인 전 검색만 가능합니다.</p>
+			  		<p>회원가입 하세요.</p>
+			  		
+			  		<div class="text-center">
+			  			<a class="btn btn-info btn-lg" href="#" role="button">회원가입</a>
+			  			<a class="btn btn-info btn-lg" href="#" role="button">로 그 인</a>
+			  		</div>
+			  	
+			  	</div>
+	        </div>
+	   	 	<!--  Main end /////////////////////////////////////-->   		
 	 	 	
 		</div>
 		<!-- 다단레이아웃  end /////////////////////////////////////-->
 		
 	</div>
-
-
-
+	<!--  화면구성 div end /////////////////////////////////////-->
 
 </body>
+
 </html>
-
-
-

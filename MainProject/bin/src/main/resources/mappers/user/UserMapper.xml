@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.user.UserDao">
+	
+	<resultMap id="userSelectMap"		type="user">
+		<result property="userNo" 			column="user_no" 		jdbcType="NUMERIC"/>
+		<result property="role"				column="role" 			jdbcType="VARCHAR" />
+		<result property="email" 			column="email" 			jdbcType="VARCHAR" />
+		<result property="password" 		column="password" 		jdbcType="VARCHAR" />
+		<result property="name" 			column="name" 			jdbcType="VARCHAR" />
+		<result property="phone" 			column="phone" 			jdbcType="VARCHAR" />
+		<result property="accountState" 	column="account_state" 	jdbcType="CHAR" />
+		<result property="inDate" 			column="in_date" 		jdbcType="DATE" />
+		<result property="outDate" 			column="out_date" 		jdbcType="DATE"  />
+	</resultMap>
+	
+	<!-- buyEdu : INSERT -->
+	<insert 	id="addUser"		parameterType="user" >
+	 	INSERT
+		INTO users
+		( user_no , role , email , password , name , phone , account_state , in_date , out_date ) 
+		VALUES ( SEQ_USERS_USER_NO.nextval , #{role} , #{email} , #{password} , #{name} , 
+		#{phone} , DEFAULT , SYSDATE , #{outDate:DATE}  )
+	 </insert>
+	 
+	 
+	<select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		user_no , role , email , password , name , phone , account_state , in_date , out_date		
+		FROM users 
+		WHERE email = #{value}
+	 </select>
+	 
+	 <select 	id="getUserByUserNo"	parameterType="int"	resultMap="userSelectMap">
+		SELECT
+		user_no , role , email , password , name , phone , account_state , in_date , out_date		
+		FROM users 
+		WHERE user_no = #{value}
+	 </select>
+	 
+	 
+	 <!-- SQL : UPDATE 이름, 전화번호 / 비밀번호 변경 / 계정상태 : 탈퇴신청 -->
+	 <update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   	 	name = #{name}, 
+	   	 	phone = #{phone}, 
+	   		password = #{password},
+	   		account_state = #{accountState}, 
+	   	</set>
+	   	WHERE user_no = #{userNo}
+	 </update>
+	 
+	 
+	 <update	id="updatePassword"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		password = #{password},
+	   		role = #{role},
+	   		email = #{email},
+	   		phone = #{phone},
+	   		name = #{name},
+	   		account_state = #{accountState},
+	   		in_date = #{inDate},
+	   	</set>
+	   	WHERE user_no = #{userNo}
+	 </update>
+	 
+	 
+	 <!-- 탈퇴하기 -->
+	 <update	id="outUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		password = #{password},
+	   		role = #{role},
+	   		email = #{email},
+	   		phone = #{phone},
+	   		name = #{name},
+	   		account_state = '1',
+	   		in_date = #{inDate},
+	   		out_date = SYSDATE,
+	   	</set>
+	   	WHERE user_no = #{userNo}
+	 </update>
+	 
+	 
+	 
+	 <select 	id="findEmail"	parameterType="user"	resultMap="userSelectMap">
+		SELECT
+		user_no , role , email , password , name , phone , account_state , in_date , out_date		
+		FROM users 
+		WHERE name = #{name}
+		AND phone = #{phone}
+	 </select>
+	 
+	 <select 	id="findPassword"	parameterType="user"	resultMap="userSelectMap">
+		SELECT *		
+		FROM users 
+		WHERE name = #{name}
+		AND phone = #{phone}
+		AND email = #{email}
+	 </select>
+	 
+	 
+	 <!--유저 계정 복구신청 -->
+	 <update	id="returnUserByUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		password = #{password},
+	   		role = #{role},
+	   		email = #{email},
+	   		phone = #{phone},
+	   		name = #{name},
+	   		account_state = '0',
+	   		in_date = #{inDate},
+	   		out_date = '',
+	   	</set>
+		WHERE name = #{name}
+		AND email = #{email}
+		AND password = #{password}
+	 </update>
+	 
+	 
+	 <!-- mapper 수정중 이상해,, -->
+	 <select 	id="findAbleDate"	parameterType="user"	resultMap="userSelectMap">
+		<![CDATA[
+		 SELECT *		
+			FROM users 
+			WHERE SYSDATE < (out_date + 30)
+			AND name = #{phone}
+			AND email = #{email}
+			AND phone = #{phone}
+		]]>		
+	 </select>
+	 
+	
+	 <!-- 관리자가 유저 계정 복구하기 // dao 아직 / 이거 필요 없을듯 -->
+	 <update	id="returnUserByAdmin"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		password = #{password},
+	   		role = #{role},
+	   		email = #{email},
+	   		phone = #{phone},
+	   		name = #{name},
+	   		account_state = '0',
+	   		in_date = #{inDate},
+	   	</set>
+	   	WHERE email = #{email}
+	 </update>
+	 
+	 
+	 <!-- SQL : SELECT LIST -->
+	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT *
+											FROM users
+	
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				email LIKE '%${searchKeyword}%'
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				name LIKE '%${searchKeyword}%'
+													</if>
+													
+													<if test="searchRole != null">
+														role = #{searchRole}
+													</if>
+												</where>
+											</if>
+											
+											ORDER BY in_date desc ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	
+
+	 
+	 <!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT role, email, name, phone, in_date, account_state
+						FROM users
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			email LIKE '%${searchKeyword}%'
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 			name LIKE '%${searchKeyword}%'
+								</if>
+								<if test="searchRole != null">
+									role = #{searchRole}
+								</if>
+							</where>
+						</if>
+						) countTable						
+	 </select>
+	 
+	
+	 
+	 
+	 <!-- E-mail(아이디) 중복 체크 -->
+	 <select id="checkEmail" parameterType="String" resultType="int">
+	 	SELECT COUNT(*) FROM users
+		WHERE email = #{value}
+	 </select>
+	 
+
+	 
+</mapper>

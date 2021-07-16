@@ -59,17 +59,9 @@
 	 </update>
 	 
 	 <!-- SQL : SELECT ONE 로그인 후 학원 프로필 선택용 -->
-	 <select 	id="getAcademyCodeList"	parameterType="int"	resultMap="academySelectMap">
+	 <select 	id="getAcademyCode"	parameterType="int"	resultMap="academySelectMap">
 		SELECT
 		academy_code, academy_name
-		FROM academy 
-		WHERE user_no = #{user.userNo}
-	 </select>
-	 
-	 <!-- SQL : SELECT ONE 아카데미 코드만 가져오기 -->
-	 <select 	id="getAcademyCode"	parameterType="int"	resultType="String">
-		SELECT
-		academy_code
 		FROM academy 
 		WHERE user_no = #{user.userNo}
 	 </select>

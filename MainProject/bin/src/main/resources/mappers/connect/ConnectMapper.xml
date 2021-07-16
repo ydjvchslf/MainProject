@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.connect.ConnectDao">
+	
+	<resultMap id="connectSelectMap"	type="connect">
+	
+		<result property="connectNo" 			column="connect_no" 		jdbcType="NUMERIC"/>
+		<result property="connectState" 		column="connect_state" 		jdbcType="CHAR" />
+		<result property="connectCnt" 			column="cnt" 				jdbcType="NUMERIC" />
+		<result property="user.userNo" 			column="user_no" 			jdbcType="NUMERIC"/>
+		<result property="academy.academyCode" 	column="academy_code" 		jdbcType="VARCHAR"/>
+		<result property="academy.academyName" 	column="academy_name" 		jdbcType="VARCHAR"/>
+
+	</resultMap>	
+
+
+	 <!-- Connect 인증갯수 확인 // 단위테스트 확인중--> 
+	 <select id="checkConnectCnt"	parameterType="int" 	resultType="int">
+	 	SELECT COUNT(*) FROM connection
+		WHERE user_no = #{value}
+	 </select>
+	 
+	 
+	 <insert id="addConnect"		parameterType="connect" >
+	 	INSERT
+		INTO connection
+		( connection_no , user_no , academy_code , connect_state ) 
+		VALUES ( SEQ_CONNECTION_CONNECTION_NO.nextval , ${user.userNo} , '${academy.academyCode}' , '0' )
+	 </insert>
+	 
+	 
+	 <select 	id="getConnect"		parameterType="connect"	resultMap="connectSelectMap">
+		SELECT
+		c.academy_code, a.academy_name
+		FROM connection c, academy a
+		WHERE c.academy_code = a.academy_code
+		AND c.user_no = #{user.userNo}
+		AND c.academy_code = #{academy.academyCode}
+	 </select>
+	 
+	 
+	 
+	 <!-- 인증학원 0~3개 list로 가져오기 -->
+	 <select 	id="getConnectList"		parameterType="int"	resultMap="connectSelectMap">
+		SELECT
+		academy_code		
+		FROM connection
+		WHERE user_no = #{value}
+	 </select>
+	  
+	  
+	 <update	id="updateConnectAccept"	parameterType="connect" >
+	   	UPDATE connection
+	   	<set>
+	   	 	connect_state = '1'
+	   	</set>
+	   	WHERE user_no = #{user.userNo}
+	   	AND academy_code = #{academy.academyCode}
+	 </update>
+	 
+	 
+	 <update	id="updateConnectReject"	parameterType="connect" >
+	   	UPDATE connection
+	   	<set>
+	   	 	connect_state = '2'
+	   	</set>
+	   	WHERE user_no = #{user.userNo}
+	   	AND academy_code = #{academy.academyCode}
+	 </update>
+	 
+	
+	<delete id="deleteConnect"	parameterType="connect">
+		DELETE connection
+		WHERE user_no = #{user.userNo}
+	   	AND academy_code = #{academy.academyCode}
+	</delete>
+	 
+	 
+	 
+</mapper>
