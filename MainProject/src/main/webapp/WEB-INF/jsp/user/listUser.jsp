@@ -44,6 +44,18 @@
 				});
 				 
 			});
+			
+			
+			$(function() {
+				
+				$( "button[name='detailFormButton']" ).on("click" , function() {
+				
+					fncGetList(1);
+				});
+				 
+			});
+			
+			
 		</script>
 		
 
@@ -151,10 +163,17 @@
 							    <form class="form-inline" name="detailForm">
 							    
 							     <div class="col-md-6 text-right">
-							    	<p class="text-primary">
+							    	<p>
+							    		<span><strong> 사용자 역할 </strong></span>
 							    		<input type="radio" name="searchRole" value="student"> 학생
 							    		<input type="radio" name="searchRole" value="parents"> 학부모
 							    		<input type="radio" name="searchRole" value="academy"> 학원
+							    	</p>
+							    	<p>
+							    		<span><strong> 회원 상태 </strong></span>
+							    		<input type="checkbox" name="searchAccountState" value="0"> 활동중
+							    		<input type="checkbox" name="searchAccountState" value="1"> 탈퇴
+							    		<input type="checkbox" name="searchAccountState" value="2"> 복구신청
 							    	</p>
 						   		 </div>
 							    

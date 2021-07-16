@@ -220,28 +220,30 @@ public class UserRestController {
 		Map<String, String> map1 = new HashMap<String, String>();
 		
 		String message="";
-		
+		//아예 회원 정보 없을 때
 		if( dbUser == null) {
 			
 			message = "no";
 			map1.put("message", message);
 			
-		}else {
+		}else{
 			
 			User ableUser = userService.findAbleDate(dbUser);
+			System.err.println("ableUser=>"+ableUser);
 			
-			if ( ableUser != null && ableUser.getAccountState().equals("1") ) {
-				
-				userService.returnUserByUser(dbUser);
-				message = "ok";
-				map1.put("message", message);
-				
-			}else {
-				
-				message = "no";
-				map1.put("message", message);
-				
-			}
+				// 복구가능기간 && 계정상태 = '1'
+				if ( ableUser != null && ableUser.getAccountState().equals("1") ) {
+					
+					userService.returnUserByUser(ableUser);
+					message = "ok";
+					map1.put("message", message);
+					
+				}else {
+					
+					message = "disable";
+					map1.put("message", message);
+					
+				}
 		}
 		return map1;
 			
@@ -268,11 +270,11 @@ public class UserRestController {
 		
 		User user = userService.getUserByUserNo(userNo);
 		
-//		Academy academy = academyService.getAcademy(academyCode);
+		Academy academy = academyService.getAcademy(academyCode);
 	
 		Connect connect = new Connect();
 		connect.setUser(user);
-//		connect.setAcademy(academy);
+		connect.setAcademy(academy);
 		
 		userService.addConnect(connect);
 		
