@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.pickedu.PickEduDao">
+	
+	<resultMap id="pickEduSelectMap"		type="pickedu">
+		<result property="pickAcademy.academyCode"	column="academy_code"	jdbcType="VARCHAR"/>
+		<result property="picker.userNo"	column="pick_user_no"			jdbcType="NUMERIC"/>
+		<result property="eduNo"			column="pick_edu_no"			jdbcType="NUMERIC"/>
+		<result property="pickNo"			column="pick_no"				jdbcType="NUMERIC"/>
+		<result property="pickAcademy.academyName"			column="academy_name"				jdbcType="VARCHAR"/>
+		<result property="eduName"			column="Edu_name"			jdbcType="VARCHAR"/>
+		<result property="eduStartDate"		column="EDU_START_DATE"		jdbcType="VARCHAR"/>
+		<result property="eduEndDate"		column="edu_end_date"		jdbcType="VARCHAR"/>
+		<result property="eduGrade"			column="edu_grade"			jdbcType="VARCHAR"/>
+		<result property="eduSubject"		column="edu_Subject"		jdbcType="VARCHAR"/>
+		<result property="eduPrice"			column="edu_price"			jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<!-- buyEdu : Pick Edu INSERT -->
+	<insert 	id="addPickEdu"	parameterType="PickEdu" useGeneratedKeys="true" keyColumn="pick_no" keyProperty="pickNo">
+		INSERT
+		INTO pick_edu( pick_no, pick_user_no, pick_edu_no )
+		VALUES( SEQ_PICK_EDU_PICK_NO.nextval, ${picker.userNo}, ${eduNo} )
+	</insert>
+	
+	<!--  buyEdu : Pick Edu GET -->
+	<select 	id="getPickEdu"	parameterType="String"	resultMap="pickEduSelectMap" >
+		SELECT
+		pick_no, pick_user_no, pick_edu_no
+		FROM pick_edu
+		WHERE pick_no = '${value}'
+	</select>
+	
+	<!-- buyEdu : Pick Edu GET LIST -->
+	<select  id="getPickEduList"  parameterType="Search"	resultMap="pickEduSelectMap">
+	  	SELECT distinct *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM	( SELECT a.academy_name , e.edu_name , e.edu_start_date , e.edu_end_date , e.edu_grade , e.edu_subject , e.edu_price
+							  FROM edu e, academy a, users u, pick_edu pe WHERE pe.pick_user_no = u.user_no AND
+							  e.edu_academy_code = a.academy_code AND pe.pick_edu_no = e.edu_no ORDER BY edu_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+	</select>
+	
+	<!-- buyEdu : Pick Edu TOTAL COUNT -->
+	<select  id="getPickEduTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM( SELECT a.academy_name , e.edu_name , e.edu_end_date , e.edu_start_date , e.edu_grade , e.edu_subject , e.edu_price
+				FROM edu e, academy a, users u, pick_edu pe WHERE pe.pick_user_no = u.user_no AND
+					 e.edu_academy_code = a.academy_code AND pe.pick_edu_no = e.edu_no ORDER BY edu_no)
+	</select>
+	
+	<delete	id="deletePickEdu"	parameterType="int" >
+	   	DELETE from pick_edu
+	   	WHERE pick_edu_no = '${value}'
+	 </delete>
+
+</mapper>

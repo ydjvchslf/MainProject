@@ -28,11 +28,11 @@ public class AcademyService {
 		return academyDao.getAcademy(academyCode);
 	}
 	
-	public Map<String, Object> getAcademyCode(int userNo) throws Exception {
+	public Map<String, Object> getAcademyCodeList(int userNo) throws Exception {
 		
 		Academy academy = new Academy();
 		
-		List<Academy> list = academyDao.getAcademyCode(userNo);
+		List<Academy> list = academyDao.getAcademyCodeList(userNo);
 		
 		int count = list.size();
 		academy.setCount(count);
@@ -47,6 +47,10 @@ public class AcademyService {
 		
 		return map;
 	};
+	
+	public String getAcademyCode(int userNo) throws Exception{
+		return academyDao.getAcademyCode(userNo);
+	}
 	
 	public String checkAcademyCode(String academyCode) throws Exception{
 		return academyDao.checkAcademyCode(academyCode);

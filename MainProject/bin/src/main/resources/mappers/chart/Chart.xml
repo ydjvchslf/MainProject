@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- FQNC로 적어주기 !! -->
+<mapper namespace="com.buyedu.dao.chart.ChartDao">
+
+	<resultMap type="chart" id="chartSelectMap">
+		<result property="userRole"		column="ROLE"		jdbcType="VARCHAR" />
+		<result property="userCnt"		column="USER_COUNT"		jdbcType="NUMERIC" />
+		<result property="area"		column="ACADEMY_AREA"		jdbcType="VARCHAR" />
+		<result property="academyCnt"		column="ACADEMY_COUNT"		jdbcType="NUMERIC" />
+		
+	</resultMap>
+	
+
+	<select id="getUserChart" resultMap="chartSelectMap">
+		SELECT role , COUNT(*) user_count
+		FROM users
+		GROUP BY role
+	</select>
+	
+	<select id="getAcademyChart" resultMap="chartSelectMap">
+		SELECT academy_area , COUNT(*) academy_count
+		FROM academy
+		GROUP BY academy_area
+	</select>
+	
+</mapper>
+

@@ -14,7 +14,9 @@ public interface AcademyDao {
 	
 	Academy getAcademy(String academyCode) throws Exception;
 	
-	List<Academy> getAcademyCode(int userNo) throws Exception;
+	List<Academy> getAcademyCodeList(int userNo) throws Exception;
+	
+	String getAcademyCode(int userNo) throws Exception;
 	
 	String checkAcademyCode(String academyCode) throws Exception;
 	
