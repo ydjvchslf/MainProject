@@ -65,6 +65,11 @@ public class EduService {
 		return eduDao.deleteEdu(eduNo);
 	}
 	
+	public String getAcademyCodeByEduNo(int eduNo) {
+		
+		return eduDao.getAcademyCodeByEduNo(eduNo);
+	}
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public int addPickEdu(PickEdu pickEdu) throws Exception {

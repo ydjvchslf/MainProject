@@ -47,6 +47,13 @@
 		WHERE edu_no = '${value}'
 	 </select>
 	 
+	 <select 	id="getAcademyCodeByEduNo"	parameterType="String" resultMap="eduSelectMap">
+		SELECT
+		edu_academy_code
+		from edu
+		WHERE edu_no = '${value}'
+	 </select>
+	 
 	 <update	id="updateEdu"	parameterType="Edu" useGeneratedKeys="true" keyColumn="edu_no" keyProperty="eduNo">
 	   	UPDATE edu
 	   	<set>

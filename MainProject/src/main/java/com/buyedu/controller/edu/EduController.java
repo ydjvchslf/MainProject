@@ -59,7 +59,7 @@ public class EduController {
 		String userEmail = ((User)httpRequest.getSession().getAttribute("user")).getEmail();   
 		
 		edu.setUser( userService.getUser(userEmail));
-		edu.setAcademy( acaService.getAcademy("예시") );
+		edu.setAcademy( acaService.getAcademy( acaService.getAcademyCode( userService.getUser(userEmail).getUserNo() ) ) );
 		edu.setEduRest( edu.getEduMember() );
 		
 		if( edu.getEduState() == null ) {
@@ -122,13 +122,13 @@ public class EduController {
 		}
 		search.setPageSize(pageSize);
 		
-		// Business logic 수행
+		// Business logic ����
 		Map<String , Object> map= eduService.getEduList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.err.println(map);
 		
-		// Model 과 View 연결
+		// Model 怨� View �곌껐
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);

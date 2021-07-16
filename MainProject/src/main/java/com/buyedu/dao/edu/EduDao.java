@@ -23,5 +23,7 @@ public interface EduDao {
 	int getEduTotalCount(Search search);
 	
 	int deleteEdu(int eduNo);
+	
+	String getAcademyCodeByEduNo(int eduNo);
 
 }
