@@ -61,21 +61,9 @@
 	
 	
 	
-	<c:set var="i" value="0" />
-		 <c:forEach var="academy" items="${list}">
-					 <c:set var="i" value="${ i+1 }" />
-			  
-			  <li class="list-group-item">
-				 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
-				 </li>
-			
-         </c:forEach>		
+		
 	
-	$( function() {
-		$("a[href='#' ]:contains('학원명')").on("click" , function() {
-			self.location = "/academy/academyInfo?academyCode=${academy.academyCode}"
-		});
-	});
+	
 	
 	
 	
@@ -84,7 +72,23 @@
 <title>Academy main page</title>
 </head>
 <body>
-
+<!-- 
+	<c:set var="i" value="0" />
+		 <c:forEach var="academy" items="${list}">
+					 <c:set var="i" value="${ i+1 }" />
+			  
+			  <li class="list-group-item">
+				 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
+				 </li>
+				 
+				 $( function() {
+						$("a[href='#' ]:contains('학원명')").on("click" , function() {
+							self.location = "/academy/academyInfo?academyCode=${academy.academyCode}"
+						});
+					});
+			
+     </c:forEach>
+ -->
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
 		
