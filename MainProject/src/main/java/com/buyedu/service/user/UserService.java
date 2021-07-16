@@ -88,11 +88,15 @@ public class UserService {
 		return connectDao.checkConnectCnt(userNo);
 	}
 	
+	public int checkAcademyCode(Connect connect) throws Exception{
+		return connectDao.checkAcademyCode(connect);
+	}
+	
 	public Connect getConnect(Connect connect) throws Exception{
 		return connectDao.getConnect(connect);
 	}
 
-	public List<Object> getConnectList(int userNo) throws Exception {
+	public List<Connect> getConnectList(int userNo) throws Exception {
 		return connectDao.getConnectList(userNo);
 	}
 	

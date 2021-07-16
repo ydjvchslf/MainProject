@@ -165,9 +165,9 @@
 							     <div class="col-md-6 text-right">
 							    	<p>
 							    		<span><strong> 사용자 역할 </strong></span>
-							    		<input type="radio" name="searchRole" value="student"> 학생
-							    		<input type="radio" name="searchRole" value="parents"> 학부모
-							    		<input type="radio" name="searchRole" value="academy"> 학원
+							    		<input type="checkbox" name="searchRole" value="student"> 학생
+							    		<input type="checkbox" name="searchRole" value="parents"> 학부모
+							    		<input type="checkbox" name="searchRole" value="academy"> 학원
 							    	</p>
 							    	<p>
 							    		<span><strong> 회원 상태 </strong></span>

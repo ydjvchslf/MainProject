@@ -1,5 +1,7 @@
 package com.buyedu.controller.user;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
@@ -357,7 +360,54 @@ public class UserController {
 	
 		System.out.println("/user/myAcademy : GET");
 		
-		System.out.println(session.getAttribute("user"));
+		User user = (User)session.getAttribute("user");
+		
+		System.out.println("세션담긴 user=> "+ user );
+		
+		System.out.println( "Get 인증학원=> " + userService.getConnectList(user.getUserNo()) );
+		
+		List<Connect> list = userService.getConnectList(user.getUserNo());
+		
+		System.err.println("리스트에 담은 Connect => "+list);
+		
+		if( list.size() == 1 ){
+			
+			Academy academy = academyService.getAcademy(list.get(0).getAcademy().getAcademyCode());
+			list.get(0).setAcademy(academy);
+			
+			model.addAttribute("list", list);
+			
+			System.out.println("모델에담긴 list=>" + list);
+			
+		} else if ( list.size() == 2 ) {
+			
+			Academy academy = academyService.getAcademy(list.get(0).getAcademy().getAcademyCode());
+			list.get(0).setAcademy(academy);
+			
+			Academy academy1 = academyService.getAcademy(list.get(1).getAcademy().getAcademyCode());
+			list.get(1).setAcademy(academy1);
+			
+			model.addAttribute("list", list);
+			
+			System.out.println("모델에담긴 list=>" + list);
+			
+		} else if ( list.size() == 3 ) {
+			
+			Academy academy = academyService.getAcademy(list.get(0).getAcademy().getAcademyCode());
+			list.get(0).setAcademy(academy);
+			
+			Academy academy1 = academyService.getAcademy(list.get(1).getAcademy().getAcademyCode());
+			list.get(1).setAcademy(academy1);
+			
+			Academy academy2 = academyService.getAcademy(list.get(1).getAcademy().getAcademyCode());
+			list.get(2).setAcademy(academy2);
+			
+			model.addAttribute("list", list);
+			
+			System.out.println("모델에담긴 list=>" + list);
+			
+		}
+	
 		
 		model.addAttribute( "user", session.getAttribute("user") );
 		

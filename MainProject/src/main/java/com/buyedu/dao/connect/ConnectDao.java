@@ -16,8 +16,10 @@ public interface ConnectDao {
 	public Connect getConnect(Connect connect) throws Exception;
 	
 	// 인증한 학원 GET  
-	public List<Object> getConnectList(int userNo) throws Exception;
+	public List<Connect> getConnectList(int userNo) throws Exception;
 	
+	
+	public int checkAcademyCode(Connect connect) throws Exception;
 	// 인증요청 INSERT
 	public void addConnect(Connect connect) throws Exception;
 	

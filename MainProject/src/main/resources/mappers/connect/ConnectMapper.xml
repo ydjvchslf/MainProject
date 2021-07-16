@@ -18,10 +18,18 @@
 	</resultMap>	
 
 
-	 <!-- Connect 인증갯수 확인 // 단위테스트 확인중--> 
+	 <!-- Connect 유저 인증갯수 찾기--> 
 	 <select id="checkConnectCnt"	parameterType="int" 	resultType="int">
 	 	SELECT COUNT(*) FROM connection
 		WHERE user_no = #{value}
+	 </select>
+	 
+	 
+	 <!-- 학원코드 중복 확인 -->
+	 <select id="checkAcademyCode"	parameterType="Connect" 	resultType="int">
+	 	SELECT COUNT(*) FROM connection
+		WHERE user_no = #{user.userNo}
+		AND academy_code = #{academy.academyCode}
 	 </select>
 	 
 	 
@@ -46,8 +54,7 @@
 	 
 	 <!-- 인증학원 0~3개 list로 가져오기 -->
 	 <select 	id="getConnectList"		parameterType="int"	resultMap="connectSelectMap">
-		SELECT
-		academy_code		
+		SELECT *	
 		FROM connection
 		WHERE user_no = #{value}
 	 </select>

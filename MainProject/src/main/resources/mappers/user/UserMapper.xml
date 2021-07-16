@@ -169,7 +169,8 @@
 														AND role = #{searchRole}
 													</if>
 													
-													<foreach collection="searchAccountState" item="accountState" open='AND account_state IN (' close=')' separator=",">
+													<foreach collection="searchAccountState" item="accountState" 
+															open='AND account_state IN (' close=')' separator=",">
 														#{accountState}
 													</foreach>
 												</where>
@@ -202,7 +203,8 @@
 								AND role = #{searchRole}
 							</if>
 							
-							<foreach collection="searchAccountState" item="accountState" open='AND account_state IN (' close=')' separator=",">
+							<foreach collection="searchAccountState" item="accountState" 
+									 open='AND account_state IN (' close=')' separator=",">
 									#{accountState}
 							</foreach>
 						</where>
