@@ -43,7 +43,7 @@
 	 </select>
 	 
 	 
-	 <!-- SQL : UPDATE 이름, 전화번호 / 비밀번호 변경 / 계정상태 : 탈퇴신청 -->
+	 <!-- SQL : UPDATE 이름, 전화번호 변경 -->
 	 <update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
@@ -55,17 +55,11 @@
 	   	WHERE user_no = #{userNo}
 	 </update>
 	 
-	 
+	 <!-- SQL : 비밀번호 변경 -->
 	 <update	id="updatePassword"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
 	   		password = #{password},
-	   		role = #{role},
-	   		email = #{email},
-	   		phone = #{phone},
-	   		name = #{name},
-	   		account_state = #{accountState},
-	   		in_date = #{inDate},
 	   	</set>
 	   	WHERE user_no = #{userNo}
 	 </update>
@@ -125,13 +119,13 @@
 	 </update>
 	 
 	 
-	 <!-- mapper 수정중 이상해,, -->
+	 <!-- mapper 수정중 이상해 -->
 	 <select 	id="findAbleDate"	parameterType="user"	resultMap="userSelectMap">
 		<![CDATA[
 		 SELECT *		
 			FROM users 
 			WHERE SYSDATE < (out_date + 30)
-			AND name = #{phone}
+			AND name = #{name}
 			AND email = #{email}
 			AND phone = #{phone}
 		]]>		
@@ -161,20 +155,24 @@
 	  					FROM		(	SELECT *
 											FROM users
 	
-											<if test="searchCondition != null">
 												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				email LIKE '%${searchKeyword}%'
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				name LIKE '%${searchKeyword}%'
+													<choose>
+														<when test="searchCondition == 0 and searchKeyword !=''">
+														    email LIKE '%${searchKeyword}%'
+														</when>
+														<when test="searchCondition == 1 and searchKeyword !=''">
+														    name LIKE '%${searchKeyword}%'
+														</when>
+													</choose>
+													
+													<if test="searchRole != null and searchRole != ''">
+														AND role = #{searchRole}
 													</if>
 													
-													<if test="searchRole != null">
-														role = #{searchRole}
-													</if>
+													<foreach collection="searchAccountState" item="accountState" open='AND account_state IN (' close=')' separator=",">
+														#{accountState}
+													</foreach>
 												</where>
-											</if>
 											
 											ORDER BY in_date desc ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
@@ -189,19 +187,26 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT role, email, name, phone, in_date, account_state
 						FROM users
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			email LIKE '%${searchKeyword}%'
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 			name LIKE '%${searchKeyword}%'
-								</if>
-								<if test="searchRole != null">
-									role = #{searchRole}
-								</if>
-							</where>
-						</if>
+						
+						<where>
+							<choose>
+								<when test="searchCondition == 0 and searchKeyword !=''">
+								    email LIKE '%${searchKeyword}%'
+								</when>
+								<when test="searchCondition == 1 and searchKeyword !=''">
+								    name LIKE '%${searchKeyword}%'
+								</when>
+							</choose>
+							
+							<if test="searchRole != null and searchRole != ''">
+								AND role = #{searchRole}
+							</if>
+							
+							<foreach collection="searchAccountState" item="accountState" open='AND account_state IN (' close=')' separator=",">
+									#{accountState}
+							</foreach>
+						</where>
+												
 						) countTable						
 	 </select>
 	 
