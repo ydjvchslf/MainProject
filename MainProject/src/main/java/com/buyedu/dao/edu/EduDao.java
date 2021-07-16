@@ -24,6 +24,4 @@ public interface EduDao {
 	
 	int deleteEdu(int eduNo);
 	
-	String getAcademyCodeByEduNo(int eduNo);
-
 }

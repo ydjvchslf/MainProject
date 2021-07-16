@@ -71,7 +71,7 @@ public class PurchaseEduController {
 		purchase.setPurchaseEdu( eduService.getEdu(eduNo) );
 		System.out.println("되어라 ================ " + purchase.getPurchaseEdu() );
 		
-		purchase.setPurchaseAcademy( acaService.getAcademy( eduService.getAcademyCodeByEduNo(eduNo) ) );
+		purchase.setPurchaseAcademy( acaService.getAcademy( "L2bjCXZ" ) );
 		System.out.println("부탁이다 =============== " + purchase.getPurchaseAcademy() );
 		
 		System.err.println("완벽한 디버깅이어야 하는데........");
