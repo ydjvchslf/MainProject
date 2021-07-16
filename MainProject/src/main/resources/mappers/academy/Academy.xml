@@ -87,7 +87,7 @@
 		SELECT
 		academy_code
 		FROM academy 
-		WHERE academy_code = #{value}
+		WHERE academy_code = '${value}'
 	 </select>
 	 
 	 <!-- ~~~~~~~~~~멀티미디어 mapper~~~~~~~~~~ -->
