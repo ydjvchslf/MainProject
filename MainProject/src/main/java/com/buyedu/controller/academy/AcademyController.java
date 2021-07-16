@@ -129,7 +129,7 @@ public class AcademyController {
 		
 		System.out.println(academy);
 		
-		return "search/searchInfo";
+		return "academy/academyInfo";
 	}
 	
 

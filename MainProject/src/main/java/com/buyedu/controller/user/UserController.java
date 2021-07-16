@@ -137,15 +137,21 @@ public class UserController {
 
 		System.out.println("/user/updatePassword : POST");
 		
-		User dbUser = (User)session.getAttribute("user");
+		System.err.println(user.getEmail() + "///" + user.getPassword() );
 		
-		System.err.println("세션저장된 user==> " + dbUser);
+		User user2 = userService.getUser(user.getEmail());
 		
-		userService.updatePassword(dbUser);
+		System.out.println("비번변경 전 user==> "+user2);
 		
-		session.setAttribute("user", dbUser);
+		user2.setPassword(user.getPassword());
 		
-		model.addAttribute("user", dbUser);
+		userService.updatePassword(user2);
+		
+		System.out.println("비번변경 후 user==> "+ user2);
+		
+		session.setAttribute("user", user2);
+		
+		model.addAttribute("user", user2);
 		
 		System.out.println("비번 변경완료->정보조회 화면으로 네비게이션");
 		
@@ -278,7 +284,7 @@ public class UserController {
 			
 			if ( dbUser.getRole().equals("academy") ) {
 				
-				Map<String, Object> map = academyService.getAcademyCode(dbUser.getUserNo());
+				Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
 	            
 	            model.addAttribute("list",map.get("list"));
 				
@@ -312,6 +318,8 @@ public class UserController {
 		
 		System.out.println("/user/listUser : GET / POST");
 		
+		System.out.println("계정상태=> " + search.getSearchAccountState());
+		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -319,7 +327,7 @@ public class UserController {
 		
 		System.err.println("Search => " + search);
 		
-//		System.out.println("searchRole 잘받았나==>" + search.getSearchRole() );
+		System.out.println("searchRole 잘받았나==>" + search.getSearchRole() );
 		
 		// Business logic 수행
 		Map<String , Object> map=userService.getUserList(search);
@@ -337,6 +345,7 @@ public class UserController {
 		System.out.println("listUser 끝");
 		
 		return "/user/listUser";
+		
 	}
 	
 	
