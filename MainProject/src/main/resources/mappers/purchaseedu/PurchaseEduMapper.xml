@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.purchaseedu.PurchaseEduDao">
+	
+	<resultMap id="purchaseEduSelectMap"	type="purchaseEdu">
+		<result property="buyer.userNo"	column="purchase_user_no"	jdbcType="NUMERIC"/>
+		<result property="purchaseEdu.eduNo"	column="purchase_edu_no"	jdbcType="NUMERIC"/>
+		<result property="purchaseAca.academyCode"	column="purchase_aca_code"	jdbcType="VARCHAR"/>
+		<result property="payNo"		column="pay_no"  jdbcType="NUMERIC"/>
+		<result property="payState"		column="pay_state"	  jdbcType="CHAR"/>
+		<result property="payDate"		column="pay_date"	  jdbcType="DATE"/>
+		<result property="purchaseUid"	column="purchase_uid" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- buyEdu : PurchaseEdu INSERT -->
+	<insert 	id="addPurchaseEdu"	parameterType="PurchaseEdu" >
+		INSERT
+		INTO purchase_edu( pay_no , purchase_user_no , purchase_edu_no , pay_state , pay_date , purchase_uid, purchase_aca_code )
+		VALUES( seq_purchase_edu_pay_no.nextval, ${buyer.userNo}, ${purchaseEdu.eduNo},
+				'${payState}', SYSDATE, '${purchaseUid}', '${purchaseAca.academyCode}' )
+	</insert>
+	
+	
+	<!--  buyEdu : Purchase Edu GET -->
+	<select 	id="getPurchaseEdu"	parameterType="String"	resultMap="purchaseEduSelectMap">
+		SELECT
+		purchase_uid, purchase_user_no, purchase_edu_no, pay_date, pay_state, pay_no, purchase_aca_code
+		FROM purchase_edu
+		WHERE purchase_uid = '${value}'
+	</select>
+	
+	<!--  buyEdu : Purchase Edu UPDATE -->
+ 	<update	id="updatePurchaseEdu"	parameterType="purchaseedu" >
+	   	UPDATE purchase_edu
+	   	<set>
+	   	 	pay_state = #{payState}
+	   	</set>
+	   	WHERE purchase_uid = #{purchaseUid}
+	 </update>
+
+</mapper>
