@@ -22,7 +22,7 @@ public class Board {
 	private String commentWriter;
 	private String commentStateCode;
 	private String commentDate;
-	private int commentCount;
+	private int comment_cnt;
 	
 	private int recommendNo;
 	private String recommender;
@@ -150,12 +150,12 @@ public class Board {
 		this.commentDate = commentDate;
 	}
 
-	public int getCommentCount() {
-		return commentCount;
+	public int getComment_cnt() {
+		return comment_cnt;
 	}
 
-	public void setCommentCount(int commentCount) {
-		this.commentCount = commentCount;
+	public void setComment_cnt(int comment_cnt) {
+		this.comment_cnt = comment_cnt;
 	}
 
 	public int getRecommendNo() {
@@ -196,8 +196,8 @@ public class Board {
 				+ ", boardDate=" + boardDate + ", boardWriter=" + boardWriter + ", boardImage=" + boardImage
 				+ ", boardState=" + boardState + ", cateCode=" + cateCode + ", viewCnt=" + viewCnt + ", email=" + email
 				+ ", commentNo=" + commentNo + ", commentContent=" + commentContent + ", commentWriter=" + commentWriter
-				+ ", commentStateCode=" + commentStateCode + ", commentDate=" + commentDate + ", commentCount="
-				+ commentCount + ", recommendNo=" + recommendNo + ", recommender=" + recommender + ", recommendCnt="
+				+ ", commentStateCode=" + commentStateCode + ", commentDate=" + commentDate + ", comment_cnt"
+				+ comment_cnt + ", recommendNo=" + recommendNo + ", recommender=" + recommender + ", recommendCnt="
 				+ recommendCnt + ", totalCount=" + totalCount + "]";
 	}
 

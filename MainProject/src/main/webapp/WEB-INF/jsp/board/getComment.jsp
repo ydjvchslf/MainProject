@@ -1,3 +1,4 @@
+<%@page import="com.buyedu.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,11 +13,11 @@
  </br></br>
  
  	  <div class="container">
-        댓글 <span id="commentCount"></span>
-        <form name="commentInsertForm">
+        댓글 <span class="commentCount"></span>
+        <form name="commentInsertForm" onsubmit="return false">
             <div class="input-group">
                <input type="hidden" name="boardNo" value="${board.boardNo}"/>
-               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+               <input type="text" class="form-control" onkeyup="enterEvent()" id="content" name="content" placeholder="내용을 입력하세요.">
                <span class="input-group-btn">
                     <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
                     
@@ -61,15 +62,24 @@ function commentList(){
 
             var a =''; 
             var cnt = data[0].commentCount;
-            $("#commentCount").html(cnt);
+
+           
+			var sessionId = "<%=((User)session.getAttribute("user")).getUserNo() %>"
+            
+            alert(sessionId)
+            $(".commentCount").html(cnt);
             console.log(cnt)
        		
             $.each(data, function(key, value){ 
             	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
                 a += '<div class="commentInfo'+value.COMMENT_NO+'">'+'작성일자 : '+value.COMMENT_DATE+' / 작성자 : '+value.EMAIL;
                 <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
+                if (sessionId == value.COMMENT_WRITER){
                 a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a> </div>';
+                a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
+                if (sessionId != value.COMMENT_WRITER){
+                a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
+                a += '</div>';
                 a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> 내용 : '+value.COMMENT_CONTENT+'</p>';
                 a += '</div></div>';
             });
@@ -91,9 +101,17 @@ function commentInsert(insertData){
             if(data == 1) {
                 commentList(); //댓글 작성 후 댓글 목록 reload
                 $('[name=content]').val('');
+                
             }
         }
     });
+}
+
+function enterEvent(){
+	if(window.event.keyCode == 13){
+		var insertData = $('[name=commentInsertForm]').serialize(); 
+		commentInsert(insertData);
+	}
 }
 
  
@@ -126,15 +144,21 @@ function commentUpdateProc(commentNo){
  
 //댓글 삭제 
 function commentDelete(commentNo){
-    $.ajax({
-    	
-        url : '/board/json/deleteComment/'+commentNo,
-        type : 'post',
-        success : function(data){
-            if(data == 1) commentList(boardNo);
-          //댓글 삭제후 목록 출력 
-        }
-    });
+	if(confirm('삭제하시겠습니까?')){
+		
+	    $.ajax({
+	    	
+	        url : '/board/json/deleteComment/'+commentNo,
+	        type : 'post',
+	        success : function(data){
+	            if(data == 1) commentList(boardNo);
+	            location.reload();
+	          //댓글 삭제후 목록 출력 
+	        }
+	    });
+	}else{
+		return false;
+	}
 }
  
  
