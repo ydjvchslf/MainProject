@@ -119,6 +119,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			int boardLike = boardService.getRecommend(map);
 	        System.out.println("쪼아용"+boardLike);
 	        model.addAttribute("heart",boardLike);
+	        model.addAttribute("userNo",userNo);
 	        
 //	        int complainBoard = complainService.addComplainBoard(map);
 //	        System.out.println("컴플레인"+complainBoard);
@@ -173,13 +174,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		public String listBoard( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 			
 			System.out.println("/board/listBoard : GET / POST");
-			System.err.println("1 : " +search.getSearchKeyword());
+			System.err.println("keyword : " +search.getSearchKeyword());
+			System.err.println("condition : " +search.getSearchConditionb());
+			
+			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
+
+			
+			String category = request.getParameter("category"); // 게시판 종류
 			
 			
 			if(search.getCurrentPage() ==0 ){
 				search.setCurrentPage(1);
 			}
 			search.setPageSize(pageSize);
+			
+			System.out.println("현재 :: " + search.getCurrentPage());
 			
 			// Business logic 수행
 			List<Board> list =boardService.getBoardList(search);
@@ -188,12 +197,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			int totalCount = list.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
-			
+			 
 			
 			// Model 과 View 연결
 			model.addAttribute("list", list);
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
+//			model.addAttribute("category", category);
 			System.err.println(search.getEndRowNum());
 //			model.addAttribute("menu", menu);		
 //			model.addAttribute("cglist", cgmap.get("list"));
@@ -219,21 +229,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			
 			
 			
-			return "/board/listBoard";
+			return "redirect:/board/listBoard";
 		}
 		
 	
-	@Configuration
-	public class WebMvcConfig implements WebMvcConfigurer {
 
-		//web root가 아닌 외부 경로에 있는 리소스를 url로 불러올 수 있도록 설정
-	    //현재 localhost:8090/summernoteImage/1234.jpg
-	    //로 접속하면 C:/summernote_image/1234.jpg 파일을 불러온다.
-	    @Override
-	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	        registry.addResourceHandler("/summernoteImage/**")
-	                .addResourceLocations("file:///C:/summernote_image/");
-	    }
-	} 
 	}
 

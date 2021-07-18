@@ -47,6 +47,12 @@
 			//$("form").submit();
 		}
 		
+		function enterEvent(){
+			if(window.event.keyCode == 13){
+				fncGetList(1);
+			}
+		}
+		
 		$(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( "button.btn.btn-default" ).on("click" , function() {
@@ -93,7 +99,17 @@
 		<div class="page-header text-default">
 		<br/><br/><br/>
 		
-		
+		<c:choose>
+			<c:when test="${category eq 10001 }">
+				<h3>공지사항</h3>
+			</c:when>
+			<c:when test="${category eq 10002 }">
+				<h3>학원 공지사항</h3>
+			</c:when>
+			<c:when test="${category eq 10003 }">
+				<h3>자주 묻는 질문</h3>
+			</c:when>
+		</c:choose>
 							<h3>자유 게시판</h3> 
 						
 					
@@ -120,10 +136,17 @@
 			    <form class="form-inline" >
 			    <input type="hidden" name="searchCategory" id="searchCategory" value="0" />
 			    
+			    <div class="form-group">
+				    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
+						<option value="0"  ${ ! empty search.searchConditionb && search.searchConditionb==0 ? "selected" : "" }>제목</option>
+						<option value="1"  ${ ! empty search.searchConditionb && search.searchConditionb==1 ? "selected" : "" }>내용</option>
+						<option value="2"  ${ ! empty search.searchConditionb && search.searchConditionb==2 ? "selected" : "" }>작성자</option>
+					</select>
+				  </div>
 				  
 				  <div class="form-group">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    <input type="text" class="form-control" onkeyup="enterEvent()" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : null }"  >
 				  </div>
 				  
@@ -164,7 +187,7 @@
 			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
 		
 	
-		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}">${board.boardTitle} (${commentCount})</a></td>
+		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt }</span>)</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${board.email}</td>

@@ -85,13 +85,7 @@ function fncupdateBoard(){
 		      <input type="text" class="form-control" id="boardTitle" name="boardTitle" value="${board.boardTitle}">
 		    </div>
 		</div>
-		
-		<div id="updatebrdview" class="form-group">
-		    <label for="boardWriter" class="col-sm-offset-1 col-sm-1 control-label">작성자</label>
-		    <div class="col-sm-8">
-		      <input type="text" class="form-control" id="boardWriter" name="boardWriter" value="${board.boardWriter}">
-		    </div>
-		</div>
+	
 			
 	 	<div class="form-group">
 		    <label for="boardContent" height=100px class="col-sm-offset-1 col-sm-1 control-label">내용</label>

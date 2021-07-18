@@ -135,9 +135,33 @@ function fncAddBoard(){
     	  		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
     	  		 // 추가한 폰트사이즈
     	  		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+    	  		callbacks: {	//이미지 첨부하는 부분
+    	               onImageUpload : function(files) {
+    	                    uploadSummernoteImageFile(files[0],this);
+    	                }
+    	            }
     	  	  
            });
     });	 
+    
+    function uploadSummernoteImageFile(file, editor) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            data : data,
+            type : "POST",
+            url : "/board/uploadSummernoteImageFile",
+            contentType : false,
+            processData : false,
+            success : function(data) {
+                //항상 업로드된 파일의 url이 있어야 한다.
+                $(editor).summernote('insertImage', data.url);
+            }
+        , error:function(request,status,error){
+        	alert("code : " + request.status + " / msg : " + request.responseText + " / error : " + error);
+        }
+        });
+    }
       
     	 </script>
     

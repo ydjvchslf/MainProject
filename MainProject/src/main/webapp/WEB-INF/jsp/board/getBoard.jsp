@@ -1,7 +1,9 @@
 <%@page import="com.buyedu.domain.Board"%>
+<%@page import="com.buyedu.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -148,13 +150,20 @@
 
 	<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="update" value="${board.boardNo}">수 &nbsp;정</button>
-		    </div>
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="complain" value="${board.boardNo}">신 &nbsp;고</button>
 		    </div>
+		    <span>세션 : ${userNo}</span>
+		    <span>세션 : ${board.boardWriter}</span>
+		    
+		    <c:if test="${userNo eq board.boardWriter}">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button class="btn success" id="update" value="${board.boardNo}">수 &nbsp;정</button>   
+		   	</div>
+		    
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="delete" value="${board.boardNo}">삭&nbsp;제
+			</div>
+			</c:if>
 	</div>
 	
 	<div style="text-align: center;">
@@ -177,7 +186,7 @@
         }
         else {
             console.log(heartval);
-            $("#heart").prop("src", "/images/like_before.png");
+            $("#heart").prop("src", "/image/like_before.png");
             
             $(".heart").prop('name',heartval)
         }
