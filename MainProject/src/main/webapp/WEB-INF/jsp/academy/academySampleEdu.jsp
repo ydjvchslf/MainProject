@@ -10,78 +10,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>academyInfo</title>
+        <title>academyMain</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-		<script>
-		var academyCode = '${academy.academyCode}';
-		
-		 alert("학원 코드 = "+academyCode);
-			
-		
-		function getAcademy(){
-			$.ajax({
-				 url : '/academy/json/getacademy/'+academyCode,
-			     method : 'GET',
-			     dataType : "json",
-			     headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-			     },
-				 success : function(data, status){
-					 var str = '';
-					 
-						 str += '<div class="historyIntro" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-						 str += '<div class="academyIntro'+data.academyCode+'"> &nbsp; 소개 : '+data.academyIntro+'</p>';
-						 str += '<a onclick="introUpdate('+data.academyCode+',\''+data.academyIntro+'\');"> 수정 </a>';
-						 str += '<div class="academyHistory'+data.academyCode+'"> &nbsp; 실적 : '+data.academyHistory+'</p>';
-						 str += '<a onclick="historyUpdate('+data.academyCode+',\''+data.academyHistory+'\');"> 수정 </a>';
-						 str += '</div></div>';
-			            
-					 $('.card-body2').html(str);
-				 }							
-			});		
-		}
-		
-		// 텍스트 박스 
-		function introUpdate(academyCode, academyIntro){
-		    var intro ='';
-		    
-		    	intro += '<div class="input-group">';
-		   	 	intro += '<input type="text" class="form-control" name="content_'+academyCode+'" value="'+academyIntro+'"/>';
-		    	intro += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="acaIntroUpdate('+academyCode+');">저장</button> </span>';
-		   		intro += '</div>';
-		    
-		    $('.card-body2').html(intro);
-		    
-		}
-		 
-		// 수정
-		function acaIntroUpdate(academyCode){
-		    var updateIntro = $('[name=academy'+academyCode+']').val();
-		    
-		    $.ajax({
-		        url : '/academy/json/updateIntro',
-		        type : 'post',
-		        data : {'academyCode' : academyCode, 'intro' : academyIntro}
-		    });
-		}
 
-		
-
-		$(document).ready(function(){
-			getAcademy(); 
-		});
-		 
-		
-	
-		
-		</script>
-		
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -138,7 +74,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="#">기본 정보</a>
                                     <a class="nav-link" href="#">멀티미디어 정보</a>
-                                    <a class="nav-link" href="#">학원 후기 보기</a>
+                                    <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
                                     <a class="nav-link" href="#">원생 관리</a>
                                 </nav>
                             </div>                            
@@ -175,6 +111,8 @@
 
                 </nav>
             </div>
+            
+            
             <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
             <div id="layoutSidenav_content">
                 <main>
@@ -184,31 +122,42 @@
                             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                             <li class="breadcrumb-item active">Static Navigation</li>
                         </ol>
+            <form method="post" action="../resources/static/image" enctype="multipart/form-data">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <p class="mb-0">
                                     학원 번호	: ${academy.academyPhone}<br/>
-                                    학원 주소 : ${academy.academyAddr}<br/>
-                                    지역 구 : ${academy.academyArea }<br/>
-                                    위도 : ${academy.academyLat }<br/>
-                                    경도 : ${academy.academyLng }<br/>
-                                   
+                                    
+                                    학원 이미지 : 
+                                    
+                <c:set var="i" value="0" />
+				<c:forEach var="academy" items="${list}">
+					<c:set var="i" value="${ i+1 }" />
+					
+					<c:if test="${list.size()<=2}">
+						<li class="list-group-item">
+							<img src="../resources/static/image/${academy.multimedia}"/>
+						</li>
+						<input multiple="multiple" type="file" name="multimedia" id="multimedia" accept="image/png, image/jpeg">
+						<input type="submit">
+					</c:if>
+		        </c:forEach>	
                                     
                             </div>
-                            <div class="card-body2">  </div>
+
                         </div>
+            </form>
                         <div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
                     </div>
                 </main>
             </div>
+            
+            
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        
-        
-        
     </body>
 </html>
     

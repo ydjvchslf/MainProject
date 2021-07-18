@@ -30,20 +30,12 @@ public class AcademyService {
 	
 	public Map<String, Object> getAcademyCodeList(int userNo) throws Exception {
 		
-		Academy academy = new Academy();
-		
 		List<Academy> list = academyDao.getAcademyCodeList(userNo);
-		
-		int count = list.size();
-		academy.setCount(count);
 				
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
-		map.put("count", count);
 		
 		System.out.println("service list = "+list);
-		System.out.println("count = "+count);
 		
 		return map;
 	};
@@ -60,14 +52,14 @@ public class AcademyService {
 		return academyDao.checkAcademyCode(academyCode);
 	};
 	
-	public String updateAcademyHistory(String academyCode) throws Exception{
-		return academyDao.updateAcademyHistory(academyCode);
-	}
-	
 	public String updateAcademyIntro(Academy academy) throws Exception{
 		return academyDao.updateAcademyIntro(academy);
 	}
 	
+	public String updateAcademyHistory(Academy academy) throws Exception{
+		return academyDao.updateAcademyHistory(academy);
+	}
+
 	// 지도검색 후 학원 목록
 	public List<Academy> getSearchList(Search search) {
 		return academyDao.getSearchList(search);
