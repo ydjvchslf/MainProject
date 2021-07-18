@@ -59,22 +59,19 @@ public class PurchaseEduController {
 	
 	@RequestMapping ( value = "addPurchaseEduUid", method=RequestMethod.GET )
 	public String addPurchaseEduUid( @RequestParam("eduNo") int eduNo ,
-										@RequestParam("userNo") int userNo ) throws Exception {
-		
-		System.err.println(eduNo);
-		System.err.println(userNo);
+										@RequestParam("userNo") int userNo , 
+										@RequestParam("uid") String uid) throws Exception {
 		
 		PurchaseEdu purchase = new PurchaseEdu();
 		
 		purchase.setBuyer( userService.getUserByUserNo(userNo) );
-		System.out.println("제발 ================= " + purchase.getBuyer() );
 		purchase.setPurchaseEdu( eduService.getEdu(eduNo) );
-		System.out.println("되어라 ================ " + purchase.getPurchaseEdu() );
-		
-		purchase.setPurchaseAcademy( acaService.getAcademy( "L2bjCXZ" ) );
-		System.out.println("부탁이다 =============== " + purchase.getPurchaseAcademy() );
+		purchase.setPurchaseAcademy( acaService.getAcademy( acaService.getAcademyCodeforEdu(eduNo) ) );
+		purchase.setPurchaseUid(uid);
 		
 		System.err.println("완벽한 디버깅이어야 하는데........");
+		
+		eduService.addPurchaseEdu(purchase);
 		
 		return "edu/listEdu";
 	}
