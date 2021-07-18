@@ -52,16 +52,20 @@ public class AcademyService {
 		return academyDao.getAcademyCode(userNo);
 	}
 	
+	public String getAcademyCodeforEdu(int eduNo) throws Exception{
+		return academyDao.getAcademyCodeforEdu(eduNo);
+	};
+	
 	public String checkAcademyCode(String academyCode) throws Exception{
 		return academyDao.checkAcademyCode(academyCode);
 	};
 	
-	public void updateAcademyHistory(Academy academy) throws Exception{
-		academyDao.updateAcademyHistory(academy);
+	public String updateAcademyHistory(String academyCode) throws Exception{
+		return academyDao.updateAcademyHistory(academyCode);
 	}
 	
-	public void updateAcademyIntro(Academy academy) throws Exception{
-		academyDao.updateAcademyIntro(academy);
+	public String updateAcademyIntro(Academy academy) throws Exception{
+		return academyDao.updateAcademyIntro(academy);
 	}
 	
 	// 지도검색 후 학원 목록

@@ -18,11 +18,13 @@ public interface AcademyDao {
 	
 	String getAcademyCode(int userNo) throws Exception;
 	
+	String getAcademyCodeforEdu(int eduNo) throws Exception;
+	
 	String checkAcademyCode(String academyCode) throws Exception;
 	
-	void updateAcademyHistory(Academy academy) throws Exception;
+	String updateAcademyHistory(String academyCode) throws Exception;
 	
-	void updateAcademyIntro(Academy academy) throws Exception;
+	String updateAcademyIntro(Academy academy) throws Exception;
 	
 	// 여기서 메소드 이름이 매퍼에 sql id 랑 동일해야합니다.
 	public List<Academy> getSearchList(Search search);
