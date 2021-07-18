@@ -197,7 +197,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			int totalCount = list.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
-			
+			 
 			
 			// Model 과 View 연결
 			model.addAttribute("list", list);
