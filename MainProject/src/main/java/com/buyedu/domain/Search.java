@@ -8,6 +8,7 @@ public class Search {
 	///Field
 	private int currentPage;
 	private String searchCondition;
+	private String searchConditionb;
 	private String searchKeyword;
 	private String searchAcademyName;
 	private String searchAcademyAddr;
@@ -69,6 +70,15 @@ public class Search {
 	public void setSearchCondition(String searchCondition) {
 		this.searchAccountState = searchAccountState == null ? new ArrayList<>() : searchAccountState;
 	}
+	
+	public String getSearchConditionb() {
+		return searchConditionb;
+	}
+
+	public void setSearchConditionb(String searchConditionb) {
+		this.searchConditionb = searchConditionb;
+	}
+
 	
 	public String getSearchKeyword() {
 		return searchKeyword;

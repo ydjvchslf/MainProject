@@ -102,14 +102,21 @@ public class UserController {
 
 		System.out.println("/user/updateUser : POST");
 		
-		//Business Logic
-		userService.updateUser(user);
+		User dbUser = userService.getUserByUserNo(user.getUserNo());
 		
-		String sessionId=((User)session.getAttribute("user")).getEmail();
+		dbUser.setName(user.getName());
+		dbUser.setPhone(user.getPhone());
 		
-		if(sessionId.equals(user.getEmail())){
-			session.setAttribute("user", user);
+		
+		userService.updateUser(dbUser);
+		
+		String sessionEmail=((User)session.getAttribute("user")).getEmail();
+		
+		if(sessionEmail.equals(user.getEmail())){
+			session.setAttribute("user", dbUser);
 		}
+		
+		model.addAttribute("user", dbUser);
 		
 		return "/user/getUser";
 	}
@@ -263,6 +270,7 @@ public class UserController {
 	public String login() throws Exception{
 		
 		System.out.println("/user/logon : GET");
+		System.out.println("로그인 화면으로 단순 네비게이션");
 
 		return "/user/loginView";
 	}
@@ -280,7 +288,15 @@ public class UserController {
 		
 		System.out.println("겟유저 가져온 dbUser=>" + dbUser);
 		
-		if( user.getPassword().equals(dbUser.getPassword())){
+		String accountState = dbUser.getAccountState();
+		
+		if ( dbUser == null || accountState.equals("1") ) {
+			
+			model.addAttribute("message", "회원정보가 맞지 않습니다.");
+			return "/user/loginView";
+		}
+		
+		if( user.getPassword().equals(dbUser.getPassword()) ){
 			
 			session.setAttribute("user", dbUser);
 			model.addAttribute("user", user);
@@ -292,15 +308,23 @@ public class UserController {
 	            model.addAttribute("list",map.get("list"));
 				
 				return "/academy/selectAcademy";
+				
+			}else if( dbUser.getRole().equals("admin") ) {
+				
+				return "adminMain";
+				
 			}
 			
 			return "userMain";
 			
-		}else {
+		}else{
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
 			return "/user/loginView";
+		
 		}
+		
+		
 	}
 		
 	
@@ -332,6 +356,15 @@ public class UserController {
 		
 		System.out.println("searchRole 잘받았나==>" + search.getSearchRole() );
 		
+		List<String> roles = search.getSearchRole();
+		List<String> states = search.getSearchAccountState();
+		
+		System.err.println(roles);
+		System.err.println(states);
+		
+		model.addAttribute("roles", roles);
+		model.addAttribute("states", states);
+			
 		// Business logic 수행
 		Map<String , Object> map=userService.getUserList(search);
 		
@@ -364,51 +397,12 @@ public class UserController {
 		
 		System.out.println("세션담긴 user=> "+ user );
 		
-		System.out.println( "Get 인증학원=> " + userService.getConnectList(user.getUserNo()) );
-		
 		List<Connect> list = userService.getConnectList(user.getUserNo());
-		
+
 		System.err.println("리스트에 담은 Connect => "+list);
 		
-		if( list.size() == 1 ){
 			
-			Academy academy = academyService.getAcademy(list.get(0).getAcademy().getAcademyCode());
-			list.get(0).setAcademy(academy);
-			
-			model.addAttribute("list", list);
-			
-			System.out.println("모델에담긴 list=>" + list);
-			
-		} else if ( list.size() == 2 ) {
-			
-			Academy academy = academyService.getAcademy(list.get(0).getAcademy().getAcademyCode());
-			list.get(0).setAcademy(academy);
-			
-			Academy academy1 = academyService.getAcademy(list.get(1).getAcademy().getAcademyCode());
-			list.get(1).setAcademy(academy1);
-			
-			model.addAttribute("list", list);
-			
-			System.out.println("모델에담긴 list=>" + list);
-			
-		} else if ( list.size() == 3 ) {
-			
-			Academy academy = academyService.getAcademy(list.get(0).getAcademy().getAcademyCode());
-			list.get(0).setAcademy(academy);
-			
-			Academy academy1 = academyService.getAcademy(list.get(1).getAcademy().getAcademyCode());
-			list.get(1).setAcademy(academy1);
-			
-			Academy academy2 = academyService.getAcademy(list.get(1).getAcademy().getAcademyCode());
-			list.get(2).setAcademy(academy2);
-			
-			model.addAttribute("list", list);
-			
-			System.out.println("모델에담긴 list=>" + list);
-			
-		}
-	
-		
+		model.addAttribute("list", list);
 		model.addAttribute( "user", session.getAttribute("user") );
 		
 		System.out.println("내가다니는학원 단순 네비게이션");

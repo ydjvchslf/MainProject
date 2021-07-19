@@ -35,12 +35,12 @@ public class UserRestController {
 	}
 	
 	//회원가입창 이메일 중복확인
-	@GetMapping("json/checkEmail/{userId}")
-	public Map checkEmail(	@PathVariable String userId ) throws Exception{
+	@GetMapping("json/checkEmail/{email}")
+	public Map checkEmail(	@PathVariable String email ) throws Exception{
 	
 		System.out.println("/user/json/checkEmail : GET");
 			
-		int result2 = userService.checkEmail(userId);
+		int result2 = userService.checkEmail(email);
 			
 		Integer result = new Integer(result2);
 		

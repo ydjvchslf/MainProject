@@ -121,18 +121,20 @@
 					
 				});
 				
+				
+				//등록한 학원 상세보기 페이지 이동 event
 				 $(function() {
 					 $('span[name="cntAcademyName"]').on("click" , function() {
-						 //alert("접근 ㅇㅋ?")
+						 alert("이동할겨")
 						 //self.location = "/user/listConnect"
+						 //재현이꺼 링크받아 바꾸기
 					 })
 					 
 				 })
 					 
 				
-				
-				
 		</script>
+		
 		
 
     </head>
@@ -219,8 +221,8 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
+                    
 				       <form class="form-horizontal">
-						  
 						  <div class="form-group">
 						    <h4><span class="label label-primary">우리학원 인증하기</span></h4>
 						    <div class="col-sm-4">
@@ -233,52 +235,57 @@
 						     </span>
 						  </div>
 						  
-						  </br></br>
+						  <br></br>
 						  
-					<table class="table table-hover table-striped" >
-				     	<h4>인증 학원 보기</h4>
-				     	
-								<!-- <span><h5>학원을 인증해주세요!</h5></span>  -->
-				     	
-								<thead>
-						          <tr>
-						          	<th align="center">No</th>
-						            <th align="center">학원이름</th>
-						            <th align="center">인증상태</th>
-						            <th align="center">인증취소</th>
-						          </tr>
-						        </thead>
-						        
-						        <tbody>
-								  <c:set var="i" value="0" />
-								  <c:forEach var="connect" items="${list}">
-									<c:set var="i" value="${ i+1 }" />
-									<tr>
-									  <td align="left">${ i }</td>
-									  <td align="left">
-									  	<span name="cntAcademyName"><u>${connect.academy.academyName}</u></span>
-									  	<input type="hidden" name="cntAcademyCode" value="${connect.academy.academyCode}">
-									  </td>
-									  <td align="left">
-										  <c:choose>
-											  <c:when test= "${connect.connectState eq '0'}">
-												인증신청
-											  </c:when>
-											  <c:when test= "${connect.connectState eq '1'}">
-												인증됨
-											  </c:when>
-										  </c:choose>
-									  </td>
-									  <td align="left">
-										<input type="button" name="delete" value="인증취소">							  
-									  </td>
-									</tr>
-						          </c:forEach>
-						        </tbody>	
-						  
-				     	
-				      </table>
-						
+						<table class="table table-hover table-striped" >
+				     		<h4>인증 학원 보기</h4>	
+				     		
+				     			<c:choose>
+								  <c:when test= "${empty list}">
+									<span><h5>
+										<img src="/image/crying.png">
+										인증된 학원이 없습니다. 학원을 인증해주세요!</h5></span>
+								  </c:when>
+								  <c:otherwise>
+								  	<thead>
+							          <tr>
+							          	<th align="center">No</th>
+							            <th align="center">학원이름</th>
+							            <th align="center">인증상태</th>
+							            <th align="center">인증취소</th>
+							          </tr>
+							        </thead>
+							        
+							        <tbody>
+									  <c:set var="i" value="0" />
+									  <c:forEach var="connect" items="${list}">
+										<c:set var="i" value="${ i+1 }" />
+										<tr>
+										  <td align="left">${ i }</td>
+										  <td align="left">
+										  	<span class="cntAcademyName"><u>${connect.academy.academyName}</u></span>
+										  	<input type="hidden" name="cntAcademyCode" value="${connect.academy.academyCode}">
+										  </td>
+										  <td align="left">
+											  <c:choose>
+												  <c:when test= "${connect.connectState eq '0'}">
+													인증신청
+												  </c:when>
+												  <c:when test= "${connect.connectState eq '1'}">
+													인증됨
+												  </c:when>
+											  </c:choose>
+										  </td>
+										  <td align="left">
+											<input type="button" name="delete" value="인증취소">							  
+										  </td>
+										</tr>
+							          </c:forEach>
+							        </tbody>
+								  </c:otherwise>
+							  	</c:choose>
+				    	  </table>
+						</form>
                     </div>
                 </main>
             </div>

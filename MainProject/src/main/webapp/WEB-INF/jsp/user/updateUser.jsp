@@ -168,6 +168,7 @@
 						  <div class="form-group">
 						    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 						    <div class="col-sm-4">
+						      <input type="hidden" name="userNo" value="${user.userNo}">
 						      <input type="text" class="form-control" id="name" name="name" value="${user.name}" placeholder="변경회원이름">
 						    </div>
 						  </div>
@@ -178,11 +179,6 @@
 						      <input type="text" class="form-control" id="phone" name="phone"  value="${user.phone}" placeholder="변경휴대폰번호">
 						    </div>
 						  </div>
-						  
-						  <input type="hidden" id="password" name="password" value="${user.password}">
-						  <input type="hidden" id="role" name="role" value="${user.role}">
-						  <input type="hidden" id="userNo" name="userNo" value="${user.userNo}">
-						  <input type="hidden" id="accountState" name="accountState" value="${user.accountState}">
 						  
 						  <div class="form-group">
 						    <div class="col-sm-offset-4  col-sm-4 text-center">
