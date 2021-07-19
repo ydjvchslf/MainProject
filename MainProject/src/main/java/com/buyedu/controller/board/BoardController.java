@@ -57,8 +57,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@Value("10")
 		int pageSize;
 		
-		
-
 		@RequestMapping( value="addBoard", method=RequestMethod.GET )
 		public String addBoard(Model model) throws Exception {
 			
@@ -73,7 +71,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@RequestMapping( value="addBoard", method=RequestMethod.POST)
 		public String addBoard( @ModelAttribute("board") Board board, Model model, @ModelAttribute("user") User user, HttpServletRequest httpRequest ) throws Exception {
 
-			 int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();   
+			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();   
 			board.setBoardWriter(userNo);	
 			System.out.println("/board/addBoard : POST");
 			System.err.println(board);
@@ -84,9 +82,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			model.addAttribute("board", board1);
 			System.out.println("들어갔나 정보 : "+board1);
 			
-	
-			
-			
 			return "/board/getBoard";
 		}
 		
@@ -96,10 +91,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			
 			System.out.println("/board/getBoard : GET");
 			//Business Logic
+			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			Board board = boardService.getBoard(boardNo);
 			System.out.println(recommendCnt);
 			board.setRecommendCnt(recommendCnt);
+			board.setBoardWriter(userNo);
 			System.out.println("컨트롤러 : "+board);
 			System.err.println(boardNo);
 //			int board1 = boardService.updateViewcnt(brdNo);
@@ -109,8 +106,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			model.addAttribute("board", board);
 			System.out.println("겟 프로덕트 : "+board);
 			System.err.println(board.getEmail());
-			
-			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("boardNo", boardNo);
@@ -124,9 +119,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //	        int complainBoard = complainService.addComplainBoard(map);
 //	        System.out.println("컴플레인"+complainBoard);
 //	        model.addAttribute("complainBoard",complainBoard);
-	        
-	        
-			
 			return "/board/getBoard";
 		}
 		
@@ -178,10 +170,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.err.println("condition : " +search.getSearchConditionb());
 			
 			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
-
 			
 			String category = request.getParameter("category"); // 게시판 종류
-			
 			
 			if(search.getCurrentPage() ==0 ){
 				search.setCurrentPage(1);
@@ -198,7 +188,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
 			 
-			
 			// Model 과 View 연결
 			model.addAttribute("list", list);
 			model.addAttribute("resultPage", resultPage);
@@ -226,9 +215,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			// Model 과 View 연결
 			//model.addAttribute("board", board);
 			//System.err.println("겟 프로덕트 : "+board);
-			
-			
-			
+
 			return "redirect:/board/listBoard";
 		}
 		

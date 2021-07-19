@@ -39,7 +39,6 @@
 	   	<set>
 	   		board_title 			= #{boardTitle} ,
 			board_content			= #{boardContent},
-			board_date 				= SYSDATE ,
 			board_state				= '0',
 			view_count				= #{viewCnt}
 	   	</set>

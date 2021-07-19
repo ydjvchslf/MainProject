@@ -152,7 +152,7 @@
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="complain" value="${board.boardNo}">脚 &nbsp;绊</button>
 		    </div>
-		    <span>技记 : ${userNo}</span>
+		    <span>技记 : ${user.userNo}</span>
 		    <span>技记 : ${board.boardWriter}</span>
 		    
 		    <c:if test="${userNo eq board.boardWriter}">
