@@ -20,7 +20,8 @@ public class Academy {
 	
 	private String academyImage;
 	private String academyVideo;
-	private String multimediano;
+	
+	private int multimediano;
 	private String multimedia;
 	private String multimediarole;
 	
@@ -108,10 +109,10 @@ public class Academy {
 	public void setAcademyArea(String academyArea) {
 		this.academyArea = academyArea;
 	}
-	public String getMultimediano() {
+	public int getMultimediano() {
 		return multimediano;
 	}
-	public void setMultimediano(String multimediano) {
+	public void setMultimediano(int multimediano) {
 		this.multimediano = multimediano;
 	}
 	public String getMultimedia() {

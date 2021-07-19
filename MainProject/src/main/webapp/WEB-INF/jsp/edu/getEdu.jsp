@@ -40,12 +40,25 @@
 			 
 			$( ".btn:contains('수업정보수정')" ).on("click" , function() {
 				 
-				self.location = "/edu/updateEdu?eduNo=${edu.eduNo}"
+				var eduState = ${edu.eduState}
+				
+				if(eduState==1) {
+					alert("판매중인 수업은 수정이 불가능합니다.")
+				} else {
+					self.location = "/edu/updateEdu?eduNo=${edu.eduNo}"
+				}
+				
 			});
 			
 			$( ".btn:contains('수업목록')" ).on("click" , function() {
 				 
-					self.location = "/edu/listEdu"
+				self.location = "/edu/listEdu"
+			});
+			
+			$( ".btn:contains('수업구매')" ).on("click" , function() {
+				 
+				var eduNo = ${edu.eduNo}
+				self.location = "/purchaseedu/addPurchaseEdu?eduNo="+eduNo
 			});
 			
 		});
@@ -154,6 +167,7 @@
 	  			<button type="button" class="btn btn-primary">수업목록</button>
 	  			<button type="button" class="btn btn-primary">관심수업등록</button>
 	  			<button type="button" class="btn btn-primary">관심수업삭제</button>
+	  			<button type="button" class="btn btn-primary">수업구매</button>
 	  		</div>
 		</div>
 		

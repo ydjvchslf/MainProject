@@ -10,7 +10,7 @@
 	<resultMap id="boardSelectMap" type="board" >
 		<result property="boardNo" 			column="board_no" 				jdbcType="NUMERIC" />
 		<result property="boardTitle" 		column="board_title" 			jdbcType="VARCHAR" />
-		<result property="boardContent" 	column="board_content" 			jdbcType="VARCHAR" />
+		<result property="boardContent" 	column="board_content" 			jdbcType="CLOB" javaType="java.lang.String" />
 		<result property="boardWriter" 		column="board_Writer" 			jdbcType="NUMERIC" />
 		<result property="boardDate" 		column="board_date" 			jdbcType="DATE" />
 		<result property="boardState" 		column="board_state" 			jdbcType="CHAR" />
@@ -40,7 +40,6 @@
 	   		board_title 			= #{boardTitle} ,
 			board_content			= #{boardContent},
 			board_date 				= SYSDATE ,
-			board_writer			= #{boardWriter},
 			board_state				= '0',
 			view_count				= #{viewCnt}
 	   	</set>
@@ -48,20 +47,29 @@
 	 </update>
 	 
 	 <delete	id="deleteBoard"	parameterType="int" >
-	   	DELETE from board
+	   	UPDATE board
+	   	SET board_state = '2'
 	   	WHERE board_no = #{boardNo}
 	 </delete>
 		 
    <!-- SQL : SELECT LIST -->
    <select  id="getBoardList"  parameterType="search"   resultMap="boardSelectMap">
- 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email
+ 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
-	  					FROM		(	SELECT b.*, u.email
-											FROM board b, users u
-											WHERE b.board_writer=u.user_no
-											 <if test="searchKeyword !=null">
-                                                 and board_title like '%' || #{searchKeyword} || '%'
-                                             </if>
+	  					FROM		(	SELECT b.*, u.email, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt
+											FROM board b, users u 
+											WHERE b.board_writer=u.user_no and b.board_state='0' 
+											<if test="searchConditionb != null">
+											 	<if test="searchConditionb == 0 and searchKeyword !='' ">
+											 		and b.board_title LIKE '%' || #{searchKeyword} || '%'
+											 	</if>
+                                             	<if test="searchConditionb == 1 and searchKeyword !='' ">
+                                                 	and b.board_content LIKE '%' || #{searchKeyword} || '%'
+                                             	</if>
+                                             	<if test="searchConditionb == 2 and searchKeyword !='' ">
+                                                 	and u.email LIKE '%' || #{searchKeyword} || '%'
+                                            	</if>
+                                            </if>
 											ORDER BY b.board_date desc ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum,jdbcType=NUMERIC} AND #{endRowNum}	
@@ -80,13 +88,21 @@
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  		  	SELECT COUNT(*)
-	  	FROM(	SELECT * 
-						FROM board
-						
-						<if test="searchKeyword !=null">
-                         WHERE  board_title like '%' || #{searchKeyword} || '%'
-                        </if>
-						ORDER BY board_date desc 
+	  	FROM(	SELECT b.*, u.email 
+						FROM board b, users u
+						where b.board_writer=u.user_no and b.board_state='0'
+						<if test="searchConditionb != null">
+								<if test="searchConditionb == 0 and searchKeyword !='' ">
+									and b.board_title LIKE '%' || #{searchKeyword} || '%'
+								</if>
+                                <if test="searchConditionb == 1 and searchKeyword !='' ">
+                                    and b.board_content LIKE '%' || #{searchKeyword} || '%'
+                                </if>
+                                <if test="searchConditionb == 2 and searchKeyword !='' ">
+                                    and u.email LIKE '%' || #{searchKeyword} || '%'
+                                </if>
+                         </if>
+						ORDER BY b.board_date desc 
 						) countTable						
 	 </select>
 	 
@@ -127,7 +143,7 @@
         SELECT
         comment_No, comment_Content, comment_Writer, TO_CHAR(comment_Date, 'YYYY/MM/DD HH24:MI:SS') as comment_Date, email
         FROM comments c, users u
-        where c.comment_writer=u.user_no and board_no = #{boardNo}
+        where c.comment_writer=u.user_no and board_no = #{boardNo} and comment_State='0'
         ORDER BY c.comment_no desc
     </select>
     
@@ -146,9 +162,11 @@
         WHERE COMMENT_NO = #{commentNo}
     </update>
     
-    <delete id="deleteComment" parameterType="int">
-        DELETE FROM COMMENTS WHERE COMMENT_NO = #{commentNo}
-    </delete>
+    <update id="deleteComment" parameterType="int">
+        UPDATE comments
+	   	SET comment_state = '2'
+	   	WHERE comment_no = #{commentNo}
+    </update>
 	 
 	 
 </mapper>

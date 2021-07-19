@@ -80,8 +80,7 @@
 		      $( "td:nth-child(2)" ).css("color" , "red");
 		      
 		});
-	
-	
+		
 	</script>
 	
 </head>
@@ -172,14 +171,15 @@
 			  <td align="left">${edu.eduRest}</td>
 			  <td align="left">
 				  <c:choose>
-				  	  <c:when test= "${edu.eduRest == 0 }">
+					  <c:when test= "${edu.eduRest == 0 }">
+					  <input type="hidden" name="eduState" id="eduState" value=2/>
 						판매완료
-					  </c:when>
-					  <c:when test= "${edu.eduState == '0' }">
-						판매 대기중
 					  </c:when>
 					  <c:when test= "${edu.eduState == '1' }">
 						판매중
+					  </c:when>
+					  <c:when test= "${edu.eduState == '0' }">
+						판매 대기중
 					  </c:when>
 				  </c:choose>
 			  </td>
