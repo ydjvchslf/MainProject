@@ -10,14 +10,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>academyInfo</title>
+        <title>searchInfo</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
-		
-
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -47,7 +45,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">search</div>
-                            <a class="nav-link" href="/academy/listSearch">
+                            <a class="nav-link" href="/search/searchAcademy">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 학원검색
                             </a>
@@ -103,31 +101,75 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">${academy.academyName }</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Static Navigation</li>
-                        </ol>
+
                         <div class="card mb-4">
+                            <div class="card-header">
+                                기본 정보
+                            </div>
                             <div class="card-body">
                                 <p class="mb-0">
                                     학원 번호	: ${academy.academyPhone}<br/>
-                                    학원 주소 : ${academy.academyAddr}<br/>
-                                    지역 구 : ${academy.academyArea }<br/>
-                                    위도 : ${academy.academyLat }<br/>
-                                    경도 : ${academy.academyLng }<br/>
                                     소개	: ${academy.academyIntro }<br/>
                                     실적 : ${academy.academyHistory }<br/>
                             </div>
                         </div>
-                        <div style="height: 100vh"></div>
-                        <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                학원 위치
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-0">
+                                    학원 주소 : ${academy.academyAddr}<br/>
+                                    지역 구 : ${academy.academyArea }<br/>
+                                    <div id="map" style="width:100%;height:400px;"></div>
+                            </div>
+                        </div>               
                     </div>
                 </main>
             </div>
         </div>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="../js/scripts.js"></script>
+
+        
+        <script >
+		
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = { 
+		        center: new kakao.maps.LatLng(${academy.academyLat}, ${academy.academyLng}), // 지도의 중심좌표
+		        level: 3 // 지도의 확대 레벨
+		    };
+			
+			var map = new kakao.maps.Map(mapContainer, mapOption);
+		
+			// 마커 이미지의 이미지 주소입니다
+			var imageSrc =  "/image/marker2.png";
+		
+			// 마커 이미지의 이미지 크기 입니다
+			var imageSize = new kakao.maps.Size(24, 35); 
+			    
+			// 마커 이미지를 생성합니다    
+			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+			    
+			var latlng = new kakao.maps.LatLng(${academy.academyLat},${academy.academyLng});
+			    
+			// 마커를 생성합니다
+			var marker = new kakao.maps.Marker({
+		        map: map, // 마커를 표시할 지도
+		        position: latlng, // 마커를 표시할 위치
+		        title : "${academy.academyName} / ${academy.academyAddr}",
+		        image : markerImage // 마커 이미지 
+
+			}); 
+
+		</script>
+        
     </body>
 </html>
     
