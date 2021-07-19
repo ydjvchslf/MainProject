@@ -67,6 +67,11 @@
 										console.log("비번 OK");
 										$(".password_check").text("비밀번호가 맞습니다");
 										$(".password_check").css("color", "blue");
+										
+										$('input[name="password0"]').css("color", "red");
+										$('input[name="password0"]').attr('disabled', 'disabled');
+										$('.updatePw').prop('disabled', false);
+										$("input[type='password']").removeAttr('disabled');
 									}
 									
 								}
@@ -107,7 +112,7 @@
 			//============= "수정"  Event 연결 =============
 			 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$( "button" ).on("click" , function() {
+				$( ".updatePw" ).on("click" , function() {
 					fncUpdatePassword();
 				});
 			});	
@@ -220,14 +225,14 @@
 						  <div class="form-group">
 						    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">새 비밀번호</label>
 						    <div class="col-sm-4">
-						      <input type="password" class="form-control" id="password" name="password" placeholder="새 비밀번호">
+						      <input type="password" class="form-control" id="password" name="password" placeholder="새 비밀번호" disabled="disabled">
 						    </div>
 						  </div>
 						  
 						  <div class="form-group">
 						    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
 						    <div class="col-sm-4">
-						      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
+						      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인" disabled="disabled">
 						     	<span id="helpBlock" class="help-block">
 						      	  <strong class="text_password"></strong>
 						      	</span>
@@ -237,7 +242,7 @@
 						  
 						  <div class="form-group">
 						    <div class="col-sm-offset-4  col-sm-4 text-center">
-						      <button type="button" class="btn btn-primary">수정하기</button>
+						      <button type="button" class="updatePw" disabled="disabled">수정하기</button>
 						    </div>
 						  </div>
 						</form>

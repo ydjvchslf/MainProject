@@ -73,7 +73,7 @@
 								} else if (JSONData.message == "ok") {
 									
 									$('button[name="changeButton"]').prop('disabled', false);
-									$("input").removeAttr('disabled');
+									$("input[type='password']").removeAttr('disabled');
 									
 									var displayText = '새로운 비밀번호로 수정해주세요!';
 									$('.explain1').text("")

@@ -8,9 +8,7 @@
 	
 	<resultMap id="connectSelectMap"	type="connect">
 	
-		<result property="connectNo" 			column="connect_no" 		jdbcType="NUMERIC"/>
 		<result property="connectState" 		column="connect_state" 		jdbcType="CHAR" />
-		<result property="connectCnt" 			column="cnt" 				jdbcType="NUMERIC" />
 		<result property="user.userNo" 			column="user_no" 			jdbcType="NUMERIC"/>
 		<result property="academy.academyCode" 	column="academy_code" 		jdbcType="VARCHAR"/>
 		<result property="academy.academyName" 	column="academy_name" 		jdbcType="VARCHAR"/>
@@ -18,10 +16,18 @@
 	</resultMap>	
 
 
-	 <!-- Connect 인증갯수 확인 // 단위테스트 확인중--> 
+	 <!-- Connect 유저 인증갯수 찾기--> 
 	 <select id="checkConnectCnt"	parameterType="int" 	resultType="int">
 	 	SELECT COUNT(*) FROM connection
 		WHERE user_no = #{value}
+	 </select>
+	 
+	 
+	 <!-- 학원코드 중복 확인 -->
+	 <select id="checkAcademyCode"	parameterType="Connect" 	resultType="int">
+	 	SELECT COUNT(*) FROM connection
+		WHERE user_no = #{user.userNo}
+		AND academy_code = #{academy.academyCode}
 	 </select>
 	 
 	 
@@ -46,10 +52,10 @@
 	 
 	 <!-- 인증학원 0~3개 list로 가져오기 -->
 	 <select 	id="getConnectList"		parameterType="int"	resultMap="connectSelectMap">
-		SELECT
-		academy_code		
-		FROM connection
-		WHERE user_no = #{value}
+		SELECT c.user_no, c.academy_code, c.connect_state, a.academy_name
+		FROM connection c, academy a
+		WHERE c.academy_code = a.academy_code
+		AND c.user_no = #{value}
 	 </select>
 	  
 	  

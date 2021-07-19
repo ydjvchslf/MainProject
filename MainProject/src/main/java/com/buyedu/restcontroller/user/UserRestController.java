@@ -35,12 +35,12 @@ public class UserRestController {
 	}
 	
 	//회원가입창 이메일 중복확인
-	@GetMapping("json/checkEmail/{userId}")
-	public Map checkEmail(	@PathVariable String userId ) throws Exception{
+	@GetMapping("json/checkEmail/{email}")
+	public Map checkEmail(	@PathVariable String email ) throws Exception{
 	
 		System.out.println("/user/json/checkEmail : GET");
 			
-		int result2 = userService.checkEmail(userId);
+		int result2 = userService.checkEmail(email);
 			
 		Integer result = new Integer(result2);
 		
@@ -245,6 +245,7 @@ public class UserRestController {
 					
 				}
 		}
+		
 		return map1;
 			
 		}
@@ -263,24 +264,88 @@ public class UserRestController {
 		
 		Map<String, String> map1 = new HashMap<String, String>();
 		
-		if ( 3 == connectCnt ) {
+		//인증갯수 이미 3개면 등록 못함 
+		if ( connectCnt == 3) {
 			map1.put("message", "no");
 			return map1;
 		}
 		
-		User user = userService.getUserByUserNo(userNo);
+		System.err.println("========111");
 		
 		Academy academy = academyService.getAcademy(academyCode);
+		Connect connect = new Connect();
+		
+		System.err.println("========222");
+		
+		//인증 0,1,2개 등록상태 --> 공통
+		if (  academy != null  ) {
+			// 인증 0개 상태
+			if ( connectCnt == 0 ) {
+				
+				User user = userService.getUserByUserNo(userNo);
+				connect.setUser(user);
+				connect.setAcademy(academy);
+				userService.addConnect(connect);
+				map1.put("message", "ok");
+				
+				System.out.println("1111111끝");
+				return map1;
+				
+			}//인증 1,2개 상태
+			else {
+				//중복 acaCode 걸러주기
+				User user = userService.getUserByUserNo(userNo);
+				connect.setUser(user);
+				connect.setAcademy(academy);
+				
+				int duplication = userService.checkAcademyCode(connect);
+				
+					if ( duplication == 1 ) { //중복일때
+						map1.put("message", "duplication");
+						
+						System.out.println("222222끝");
+						return map1;
+					}else { //중복 아닐때 ->정상 add 하면 됨
+						userService.addConnect(connect);
+						map1.put("message", "ok");
+						
+						System.out.println("33333333끝");
+						return map1;
+					}
+			}
+			
+		}else { //academy == null -> 유효하지 않은 학원코드 
+			map1.put("message", "notExist");
+			
+			System.out.println("44444444끝");
+			return map1;
+		}
+		
+	}
 	
+	
+	@GetMapping("json/deleteConnect/{userNo}/{academyCode}")
+	public Map deleteConnect( @PathVariable int userNo,
+							  @PathVariable String academyCode ) throws Exception{
+	
+		System.out.println("/user/json/deleteConnect : GET");
+		
+		User user = userService.getUserByUserNo(userNo);
+		Academy academy = academyService.getAcademy(academyCode);
+		
 		Connect connect = new Connect();
 		connect.setUser(user);
 		connect.setAcademy(academy);
 		
-		userService.addConnect(connect);
+		userService.deleteConnect(connect);
 		
+		Map map1 = new HashMap<String, String>();
 		map1.put("message", "ok");
-			
-		return map1;
 		
+		System.out.println("인증취소 완료");
+		
+		return map1;
 	}
+	
+
 }
