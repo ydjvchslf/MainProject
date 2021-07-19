@@ -1,12 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
-
-<head>
+<html>
+	<head>
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -26,153 +26,306 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "°¡ÀÔ"  Event ¿¬°á =============
-		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				fncAddUser();
-			});
-		});	
+		var emailDuplicationCheck = false;
 		
-		
-		//============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
-		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
-			});
-		});	
+		//ê°€ì…ë²„íŠ¼ ëˆŒë €ì„ë•Œ ëª¨ë“  true ê°’ ì²´í¬ ë©”ì„œë“œ
+		function fncCheckAll() {
+			
+			var valid = false;
+			
+			if( checkEmail() && fncCheckPw() && fncCheckName() && fncCheckPhone ){
+				valid = true;
+			}
+			
+			return valid;
+		}
 	
 		
-		function fncAddUser() {
+		$(function() {
 			
-			var email=$("input[name='email']").val();
-			var pw=$("input[name='password']").val();
-			var pw_confirm=$("input[name='password2']").val();
-			var name=$("input[name='name']").val();
+			//"ê°€ì…"  Event ì—°ê²°
+			$( ".signup" ).on("click" , events.click.signup);
+			
+			//ì·¨ì†Œ event form ì´ˆê¸°í™”
+			$('button[name="cancel"]').on("click" , events.click.cancel);
+			
+			//ì´ë©”ì¼ì¹¸ ë³€í™” event
+			$("input[name='email']").on("change" , events.change.email);
+			
+			//ë¹„ë°€ë²ˆí˜¸1 ë³€í™” event
+			$('#password').on("change", events.change.password);
+			
+			//ë¹„ë°€ë²ˆí˜¸2 ë³€í™” event
+			$('#password2').on("change", events.change.password2);
+			
+			//ì´ë¦„ ë³€í™” event
+			$("#name").on("change", events.change.name);
+			
+			//ì´ë¦„ ë³€í™” event
+			$("#phone").on("change", events.change.phone);
 			
 			
-			if(email == null || email.length <1){
-				alert("¾ÆÀÌµğ´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(pw == null || pw.length <1){
-				alert("ÆĞ½º¿öµå´Â  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("ÆĞ½º¿öµå È®ÀÎÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(name == null || name.length <1){
-				alert("ÀÌ¸§Àº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if( pw != pw_confirm ) {				
-				alert("ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-				$("input:text[name='password2']").focus();
-				return;
-			}
+		});	
+		
+		
+		
+		
+		var events = {
 				
-			var value = "";	
-			if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
-				var value = $("option:selected").val() + "-" 
-									+ $("input[name='phone2']").val() + "-" 
-									+ $("input[name='phone3']").val();
+			click : {
+				signup : function() {
+					
+					if(fncCheckAll()){
+						
+						fncAddUser();
+					}
+					
+				},
+				
+				cancel : function() {
+					$("form[name='signupForm']").trigger("reset");
+				}
+			},
+		
+			change : {
+				
+				email : function() {
+					emailChange();
+				},
+				
+				password : function(){
+					fncCheckPw("first");
+				},
+				
+				password2 : function(){
+					fncCheckPw("second");
+				},
+				
+				name : function(){
+					fncCheckName();
+				},
+				
+				phone : function(){
+					fncCheckPhone();
+				}
+				
+				
 			}
-
-			$("input:hidden[name='phone']").val( value );
+		}
+		
+		
+		
+		
+		
+		
+		function emailChange(){
 			
+			var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+			var email=$("input[name='email']").val();
+			
+			// null , undefined, "" ë¹ˆê°’ì„ false ë¡œ ì¸ì‹, ë§Œì•½ ê°’ì´ ìˆìœ¼ë©´ true 
+			if (email) {
+				
+				if(emailRegExp.test(email)){
+					fncCheckEmailDuplication();
+				}else{
+					$(".email_check").text("ì˜¬ë°”ë¥¸ ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
+					$(".email_check").css("color", "red");
+				}
+			
+			}else{
+				$(".email_check").text("ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”.");
+				$(".email_check").css("color", "red");
+			}
+			
+		}
+		
+		
+	
+		//ì´ë©”ì¼ìœ íš¨ì„± í•¨ìˆ˜
+	    function checkEmail() {
+			
+			var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+			var email=$("input[name='email']").val();
+			
+			// null , undefined, "" ë¹ˆê°’ì„ false ë¡œ ì¸ì‹, ë§Œì•½ ê°’ì´ ìˆìœ¼ë©´ true 
+			if (email) {
+				
+				if(emailRegExp.test(email)){
+					
+					if(emailDuplicationCheck){
+						return true;
+					} else {
+						$(".email_check").text("ì¤‘ë³µëœ ì´ë©”ì¼ì…ë‹ˆë‹¤.");
+						$(".email_check").css("color", "red");
+					}
+				} else {
+					$(".email_check").text("ì˜¬ë°”ë¥¸ ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
+					$(".email_check").css("color", "red");
+				}
+			} else {
+				$(".email_check").text("ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”.");
+				$(".email_check").css("color", "red");
+			}
+			return false;
+	    }
+		
+		
+		
+		
+		
+		//ì´ë¦„ ì²´í¬ í•¨ìˆ˜
+	    function fncCheckName() {
+			
+			var name = $("#name").val();
+			
+	        if(name){
+	        	var nameRegExp = /^[ê°€-í£]{2,20}$/;
+	        	
+	        	if(nameRegExp.test(name)){
+	        		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì…ë‹ˆë‹¤.");
+					$(".text_name").css("color", "blue");
+	        		return true;
+	        	}else{
+	        		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤");
+					$(".text_name").css("color", "red");
+	        	}
+	        } else{
+	        	$(".text_name").text("ì´ë¦„ì„ í•„ìˆ˜ë¡œ ì…ë ¥í•˜ì„¸ìš”!");
+				$(".text_name").css("color", "red");
+	        }
+	        return false; //í™•ì¸ì´ ì™„ë£Œë˜ì—ˆì„ ë•Œ
+	    }
+		
+		
+		
+	    
+
+		//í•¸ë“œí° ì²´í¬ í•¨ìˆ˜ 
+	    function fncCheckPhone(){
+	    	
+	    	var phone = $("#phone").val();
+	    	
+	    	if(phone){
+	    		
+	    		var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+	    		
+	    		if(regExp.test(phone)){
+	    			
+	    			$(".text_phone").text("ì˜¬ë°”ë¥¸ íœ´ëŒ€í° í˜•ì‹ì…ë‹ˆë‹¤.");
+					$(".text_phone").css("color", "blue");
+					
+					return true;
+					
+	    		}else{
+	    			
+	    			$(".text_phone").text("ì˜¬ë°”ë¥´ì§€ ì•Šì€ íœ´ëŒ€í° í˜•ì‹ì…ë‹ˆë‹¤.");
+					$(".text_phone").css("color", "red");
+	    			
+	    		}
+	    	}else{
+	    		
+	    		$(".text_phone").text("íœ´ëŒ€í°ë²ˆí˜¸ë¥¼ í•„ìˆ˜ë¡œ ì ì–´ì£¼ì„¸ìš”!");
+				$(".text_phone").css("color", "red");
+	    		
+	    	}
+	    	return false;
+	    }
+ 
+	
+		
+		
+		function fncAddUser() {
 			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
 		}
 		
 
-		//==>"ÀÌ¸ŞÀÏ" À¯È¿¼ºCheck  Event Ã³¸® ¹× ¿¬°á
-		 $(function() {
-			 
-			 $("input[name='email']").on("change" , function() {
-				
-				 var email=$("input[name='email']").val();
-			    
-				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-			    
-					 $(".email_check").text("¿Ã¹Ù¸¥ ÀÌ¸áÇü½ÄX");
-						$(".email_check").css("color", "red");
-			     
-				 }else{
-			    	 
-					 fncCheckEmail();
-			    	 
-			     }
-			});
-			 
-		});	
+		
+
+		
+		
 		
 		 
-		
-		function fncCheckEmail() {
-			 
-				// $("#email").blur(function(){
-					
-					var userId = $("#email").val();
-					//alert("userId=> "+userId);
-				
-					$.ajax( 
-							{
-								url : "/user/json/checkEmail/"+userId,
-								method : "GET" ,
-								dataType : "json" ,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData, status) {
-									
-									console.log(JSONData)
-									//alert(JSONData);
+		//ì´ë©”ì¼ ì¤‘ë³µí™•ì¸ í•¨ìˆ˜ ajax
+		function fncCheckEmailDuplication() {
 
-									if (JSONData.result == 1) {
-										$(".email_check").text("»ç¿ëÁßÀÎ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.");
-										$(".email_check").css("color", "red");
-										
-									} else {
-										$(".email_check").text("»ç¿ë°¡´ÉÇÑ ÀÌ¸ŞÀÏÀÔ´Ï´Ù.");
-										$(".email_check").css("color", "blue");
-									}
-									
-								}
-					});
+			var email = $("#email").val();
+			
+			$.ajax({
+				url : "/user/json/checkEmail/"+email,
+				method : "GET" ,
+				dataType : "json" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(JSONData, status) {
 					
-			//	});
-			}
-		 
-		 //ºñ¹Ğ¹øÈ£ È®ÀÎ
-		 $(function(){
+					console.log(JSONData)
+					//alert(JSONData);
 
-				 $('#password2').blur(function(){
+					if (JSONData.result == 1) {
 						
-					   if($('#password').val() != $('#password2').val()){
-						   
-					    		if ( $('#password2').val() != '' ) {
-					    			
-					    			$('.text_password').text("");
-					    			
-					    			var str = 'ºñ¹Ğ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.';
-					    			
-					    			$('.text_password').append(str).css("color", "red");
-						    	    $('#password2').val('');
-						         	$('#password2').focus();	
-								};
-					    }else{
-			    			$('.text_password').text("ºñ¹Ğ¹øÈ£°¡ ¸Â½À´Ï´Ù.").css("color", "blue");
-					    }
-					   
-					})   
+						emailDuplicationCheck = false;
+						$(".email_check").text("ì‚¬ìš©ì¤‘ì¸ ì´ë©”ì¼ì…ë‹ˆë‹¤.");
+						$(".email_check").css("color", "red");
+						
+					} else {
+						
+						emailDuplicationCheck = true;
+						$(".email_check").text("ì‚¬ìš©ê°€ëŠ¥í•œ ì´ë©”ì¼ì…ë‹ˆë‹¤.");
+						$(".email_check").css("color", "blue");
+						
+					}
+				}
+			});
+				
+		}
+		
+		
+		
+		//ì²«ë²ˆì§¸ ë¹„ë°€ë²ˆí˜¸ ì¡°ê±´
+		
+		function fncCheckPw(passwordType){
+			var passwordTarget = passwordType == "first" ? "password" : "password2";
+			var passwordCompare = passwordType == "first" ? "password2" : "password";
+			
+			
+			var pw = $("#" + passwordTarget).val();
+			var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+			
+			console.log(pw);
+			
+			if(reg.test(pw)) {
+				
+				var pw2 = $("#" + passwordCompare).val();
+				
+				if( pw == pw2 ){
 					
-				});
+					$(".text_password").text("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.");
+					$(".text_password").css("color", "blue");
+					
+					return true;
+					
+				}else{
+					
+					$(".text_password").text("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+					$(".text_password").css("color", "red");
+				}
+				
+			}else {
+				
+				var str = 'ë¹„ë°€ë²ˆí˜¸ëŠ” 8ì ì´ìƒì´ì–´ì•¼ í•˜ë©°, ìˆ«ì/ëŒ€ë¬¸ì/ì†Œë¬¸ì/íŠ¹ìˆ˜ë¬¸ìë¥¼ ëª¨ë‘ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.';
+				$('.text_password').text(str).css("color", "red");
+				$("#password").focus();
+			}
+			return false;
+		}
+		
 
-	</script>		
+			
+		 </script>	
+		
     
 </head>
 
@@ -182,21 +335,21 @@
 
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">È¸ ¿ø °¡ ÀÔ</h1>
+		<h1 class="bg-primary text-center">íšŒì›ê°€ì… í™”ë©´ / ì—¬ê¸°ë§ë‹ˆ?</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+		<form name="signupForm" class="form-horizontal">
 		
 		  <div class="form-group">
-		  	<label><input name="role" id="academy" name="academy" type="radio" value="academy">ÇĞ¿ø</label>
-		  	<label><input name="role" id="student" name="student" type="radio" checked value="student">ÇĞ»ı</label>
-            <label><input name="role" id="parents" name="parents" type="radio" value="parents">ÇĞºÎ¸ğ</label>
-		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸ŞÀÏ</label>
+		  	<label><input name="role" id="academy" name="academy" type="radio" value="academy">í•™ì›</label>
+		  	<label><input name="role" id="student" name="student" type="radio" checked value="student">í•™ìƒ</label>
+            <label><input name="role" id="parents" name="parents" type="radio" value="parents">í•™ë¶€ëª¨</label>
+		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ì´ë©”ì¼</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+		      <input type="text" class="form-control" id="email" name="email" placeholder="ex) buyedu@co.kr">
 		       <span id="helpBlock" class="help-block">
 		      	<strong class="email_check"></strong>
 		      </span>
@@ -204,16 +357,16 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="ºñ¹Ğ¹øÈ£">
+		      <input type="password" class="form-control" id="password" name="password" placeholder="ë¹„ë°€ë²ˆí˜¸">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ">
+		      <input type="password" class="form-control" id="password2" name="password2" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸">
 		     	<span id="helpBlock" class="help-block">
 		      	  <strong class="text_password"></strong>
 		      	</span>
@@ -221,31 +374,37 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ì´ë¦„</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="name" name="name" placeholder="È¸¿øÀÌ¸§">
+		      <input type="text" class="form-control" id="name" name="name" placeholder="íšŒì›ì´ë¦„">
+			    <span id="helpBlock" class="help-block">
+			      <strong class="text_name"></strong>
+			    </span>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ÈŞ´ëÀüÈ­¹øÈ£</label>
+		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">íœ´ëŒ€ì „í™”ë²ˆí˜¸</label>
 		     <div class="col-sm-4">
-		      <input type="text" class="form-control" id="phone" name="phone" placeholder="phone">
+		      <input type="text" class="form-control" id="phone" name="phone" placeholder="íœ´ëŒ€ì „í™”ë²ˆí˜¸">
+			     <span id="helpBlock" class="help-block">
+				      <strong class="text_phone"></strong>
+				  </span>
 		     </div> 
 		  </div>
 		 
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >°¡ &nbsp;ÀÔ</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
+		      <button type="button" class="signup">ê°€&nbsp;ì…</button>
+		      <button type="button" name="cancel" class="cancel">ì·¨&nbsp;ì†Œ</button>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 	
 </body>
 

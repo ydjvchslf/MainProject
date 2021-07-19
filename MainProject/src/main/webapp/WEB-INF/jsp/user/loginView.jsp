@@ -12,6 +12,7 @@
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="viewport" content="width=device-width, height=device-height, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -22,9 +23,79 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
     	 body >  div.container{ 
-        	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
+        header{
+                display:flex;
+                justify-content: center;
+            }
+            form{
+                padding:10px;
+            }
+            .input-box{
+                position:relative;
+                margin:10px 0;
+            }
+            .input-box > input{
+                background:transparent;
+                border:none;
+                border-bottom: solid 1px #ccc;
+                padding:20px 0px 5px 0px;
+                font-size:14pt;
+                width:100%;
+            }
+            input::placeholder{
+                color:transparent;
+            }
+            input:placeholder-shown + label{
+                color:#aaa;
+                font-size:14pt;
+                top:15px;
+
+            }
+            input:focus + label, label{
+                color:#8aa1a1;
+                font-size:10pt;
+                pointer-events: none;
+                position: absolute;
+                left:0px;
+                top:0px;
+                transition: all 0.2s ease ;
+                -webkit-transition: all 0.2s ease;
+                -moz-transition: all 0.2s ease;
+                -o-transition: all 0.2s ease;
+            }
+
+            input:focus, input:not(:placeholder-shown){
+                border-bottom: solid 1px #8aa1a1;
+                outline:none;
+            }
+            #a{
+                background-color: #8aa1a1;
+                border:none;
+                color:white;
+                border-radius: 5px;
+                width:100%;
+                height:35px;
+                font-size: 14pt;
+            }
+            .login{
+            margin-top:100px;
+            }
+            .signup{
+            margin-top:5px;
+            }
+            #forgot{
+                text-align: right;
+                font-size:12pt;
+                color:rgb(164, 164, 164);
+                margin:10px 0px;
+            }
+            .loginMessage{
+            	margin-left:140px;
+            }
+        
     </style>
     
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -32,26 +103,27 @@
 
 		//============= "로그인"  Event 연결 =============
 		$( function() {
+			
 			var message = '${message}';
 			
-			$('span[name="loginMessage"]').append(message);
+			$('.loginMessage').append(message).css("color", "red");
 			
 			$("#email").focus();
 			
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("button").on("click" , function() {
-				var id=$("input:text").val();
-				var pw=$("input:password").val();
+			$(".login").on("click" , function() {
+				var id=$("input[name='email']").val();
+				var pw=$("input[name='password']").val();
 				
 				if(id == null || id.length <1) {
 					alert('ID 를 입력하지 않으셨습니다.');
-					$("#email").focus();
+					$("input[name='email']").focus();
 					return;
 				}
 				
 				if(pw == null || pw.length <1) {
 					alert('패스워드를 입력하지 않으셨습니다.');
-					$("#password").focus();
+					$("input[name='password']").focus();
 					return;
 				}
 				
@@ -60,22 +132,22 @@
 		});	
 		
 		
-		//============= 회원가입화면이동 =============
+		//회원가입, 이메일찾기, 비밀번호찾기, 계정복구하기 event
 		$( function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
+	
+			$("input[name='signup']").on("click" , function() {
 				self.location = "/user/addUser"
 			});
 			
-			$("a[class='findEmail']").on("click" , function() {
+			$(".findEmail").on("click" , function() {
 				self.location = "/user/findEmail"
 			});
 			
-			$("a[class='findPassword']").on("click" , function() {
+			$(".findPassword").on("click" , function() {
 				self.location = "/user/findPassword"
 			});
 			
-			$("a[class='returnUser']").on("click" , function() {
+			$(".returnUser").on("click" , function() {
 				self.location = "/user/returnUser"
 			});
 			
@@ -88,67 +160,53 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
-   		</div>
-   	</div>
-   	 ToolBar End /////////////////////////////////////-->	
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		<!--  row Start /////////////////////////////////////-->
 		<div class="row">
-		
+			
+	 	 	<div class="col-md-3">
+			</div><!-- 첫번째 4 -->
+			
 			<div class="col-md-6">
-					<img src="/image/AAAA.jpg" class="img-rounded" width="100%" />
-			</div>
-	   	 	
-	 	 	<div class="col-md-6">
-	 	 	
-		 	 	<br/><br/>
+			
+				<br/><br/>
+					
+					<div class="jumbotron">	 	 	
+			 	 		<h3 class="text-center">Login</h3>
+	
+				        <form class="form-horizontal">
+				        
+				        	<div class="input-box">
+				                <input type="text" id="email" name="email" placeholder="email">
+				                <label for="username">아이디(email)</label>
+				            </div>
+				            
+				            <div class="input-box">
+				                <input type="password" id="password" name="password" placeholder="비밀번호">
+				            	<label for="password">비밀번호</label>
+				            </div>
+			  				
+			  				<div>&nbsp;</div>
+						  	<div><strong><span class="loginMessage"></span></strong></div>
+						  	<div>&nbsp;</div>
+						  	<div class="findEmail" id="forgot">Email 찾기</div>
+						  	<div class="findPassword" href="#" id="forgot">비밀번호 찾기</div>
+						  	<div class="returnUser" href="#" id="forgot">계정 복구하기</div>
+	            			<input type="button" class="login" id="a" value="로그인">
+	            			<input type="button" class="signup" name="signup" id="a" value="회원가입">
+						  
 				
-				<div class="jumbotron">	 	 	
-		 	 		<h1 class="text-center">로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h1>
-
-			        <form class="form-horizontal">
-		  
-					  <div class="form-group">
-					    <label for="email" class="col-sm-4 control-label">아 이 디</label>
-					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="email" id="email"  placeholder="아이디" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <label for="password" class="col-sm-4 control-label">패 스 워 드</label>
-					    <div class="col-sm-6">
-					      <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
-					    </div>
-					  </div>
-					  
-					  <span name="loginMessage"></span>
-					  
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <button type="button" class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
-					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
-					    </div>
-					  </div>
-					  
-					  <span><a class="findEmail" href="#" >Email찾기</a></span> &nbsp; &nbsp; &nbsp; 
-					  <span><a class="findPassword">비밀번호 찾기</a></span>
-					  <div><a class="returnUser" href="#">계정 복구하기</a></div>
-			
-					</form>
-					
-					
-					
-			   	 
-			   	 </div>
-			
+						</form>
+						
+				   	 </div>
+				
 			</div>
+			
+			<div class="col-md-3">
+			</div>
+			
 			
   	 	</div>
   	 	<!--  row Start /////////////////////////////////////-->

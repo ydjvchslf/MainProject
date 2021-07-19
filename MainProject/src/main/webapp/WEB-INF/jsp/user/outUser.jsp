@@ -22,7 +22,7 @@
 						
 						fncCheckPassword();
 						
-					});
+			});
 			
 			//현재 비밀번호 맞는지 확인
 			function fncCheckPassword() {
@@ -59,6 +59,8 @@
 										
 									} else if (JSONData.result == "ok") {
 										console.log("비번 OK");
+										
+										$('button[name="out"]').prop('disabled', false);
 										$(".password_check").text("비밀번호가 맞습니다");
 										$(".password_check").css("color", "blue");
 									}
@@ -73,6 +75,7 @@
 			 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				$( "button.btn.btn-primary" ).on("click" , function() {
+					alert("안녕히 가세요. 복구가능기간은 30일 이내입니다!")
 					//console.log("잘나오니");
 					fncOutUser();
 				});
@@ -186,7 +189,7 @@
 						      정말 탈퇴하시겠습니까? </br>
 							  계정복구는 신청한 날짜로부터 30일 이내만 가능합니다. 
 							 
-						  <button type="button" class="btn btn-primary" id="out" name="out">탈퇴하기</button>
+						  <button type="button" class="btn btn-primary" id="out" name="out" disabled="disabled">탈퇴하기</button>
 						  	
 						  </div>
 						 
