@@ -124,69 +124,78 @@
             <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
-				         <div class="page-header">
-					       <h3 class=" text-info">내정보보기 화면</h3>
-					       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-					    </div>
-					
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
-							<div class="col-xs-8 col-md-4">${user.email}</div>
-						</div>
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
-							<div class="col-xs-8 col-md-4">${user.name}</div>
-						</div>
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>역할</strong></div>
-							<div class="col-xs-8 col-md-4">${user.role}</div>
-						</div>
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
-							<div class="col-xs-8 col-md-4">${user.phone}</div>
-						</div>
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
-							<div class="col-xs-8 col-md-4">${user.inDate}</div>
-						</div>
-						
-						 <!--  input type="hidden" id="userNo" name="userNo" value="${user.userNo}"> -->
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-md-12 text-center ">
-					  			<button type="button" class="btn btn-primary">회원정보수정</button>
-					  		</div>
-						</div>
-						
-						<!-- 임시추가 -->
-						<div class="row">
-					  		<div class="col-md-12 text-center ">
-					  			<span><br></br></span>
-					  			<input type="button" name="logout" value="로그아웃">
-					  		</div>
-						</div>
-						<!-- 임시추가 -->
-						
-						<br/>
-                    </div>
+                    
+                     <div class="container">
+				      <div class="row">
+				      <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+				       <br>
+				      </div>
+				        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+				   
+				          <div class="panel panel-info">
+				            <div class="panel-heading">
+				              <h3 class="panel-title">${user.name}님의 프로필 정보</h3>
+				            </div>
+				            <div class="panel-body">
+				              <div class="row">
+				                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Picture" src="${pageContext.request.contextPath}/assets/rion.png" class="img-circle img-responsive"> </div>
+				 
+				                <div class=" col-md-9 col-lg-9 "> 
+				                  <table class="table table-user-information">
+				                    <tbody>
+				                      <tr>
+				                        <td>닉네임:</td>
+				                        <td>${userinfo.bNick}</td>
+				                      </tr>                 
+				                      <tr>
+				                        <td>학교:</td>
+				                        <td>${userinfo.bSchool}</td>
+				                      </tr>
+				                   
+				                         <tr>
+				                             <tr>
+				                      </tr>
+				                        <tr>
+				                        <td>학년:</td>
+				                        <td>${userinfo.bGrade}</td>
+				                      </tr>
+				                      <tr>
+				                        <td>전공:</td>
+				                        <td>${userinfo.bMajor}</td>
+				                           
+				                      </tr>
+				                      <tr>
+				                        <td>이메일 주소:</td>
+				                        <td><a href="mailto:info@support.com">${userinfo.bEmail}</a></td>
+				                      </tr>
+				                      
+				                     
+				                    </tbody>
+				                  </table>
+				                  
+				                 <!--   <a href="#" class="btn btn-primary">My Sales Performance</a>
+				                  <a href="#" class="btn btn-primary">Team Sales Performance</a>-->
+				                  
+				                </div>
+				              </div>
+				            </div>
+				                 <div class="panel-footer">
+				                        <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+				                        <span class="pull-right">
+				                            <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+				                            <a data-original-title="Remove this user" data-toggle="tooltip"  type="button" class="btn btn-sm btn-danger" onClick="self.close();"><i class="glyphicon glyphicon-remove"></i></a>
+				                        </span>
+				                    </div>
+				            
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+                    
                 </main>
             </div>
         </div>
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
