@@ -289,12 +289,16 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="loginacademy", method=RequestMethod.GET )
-	public String login( @RequestParam String email ) throws Exception{
+	public String login( @RequestParam String email, Model model ) throws Exception{
 		
 		System.out.println("/user/logon : 학원에서 프로필선택으로 메인창");
 		System.out.println("로그인 화면으로 단순 네비게이션");
 		
 		User dbUser=userService.getUser(email);
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+		
+		model.addAttribute("list", map.get("list"));
 		
 		System.out.println("겟유저 가져온 dbUser=>" + dbUser);
 		
