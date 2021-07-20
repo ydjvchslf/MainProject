@@ -132,5 +132,30 @@ public class AcademyRestController {
 		return strResult;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "json/deleteMultimedia/{multimediano}", method = RequestMethod.POST)
+	private int deleteMultimedia(@PathVariable int multimediano) throws Exception{
+		
+		String multimedia = academyService.getMultimedia(multimediano);
+		
+		System.out.println("삭제 파일 이름 = " + multimedia);
+		
+		String fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\image\\";
+		
+		File file = new File(fileRoot+multimedia);
+		
+		if (file.exists()) {
+			if (file.delete()) {
+				System.out.println("파일 삭제 성공!!");
+			}else {
+				System.err.println("파일 삭제 실패 ㅜ.ㅜ");
+			}
+		} else {
+			System.err.println("폴더 안에 파일이 존재하지 않습니다.");
+		}
+		
+		return academyService.deleteMultimedia(multimediano);
+	}
+	
 
 }

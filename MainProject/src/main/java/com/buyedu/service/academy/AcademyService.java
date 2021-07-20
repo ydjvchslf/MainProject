@@ -81,6 +81,13 @@ public class AcademyService {
 		return map;
 	}
 	
+	public String getMultimedia(int multimediaNo) throws Exception{
+		
+		String multimedia = academyDao.getMultimedia(multimediaNo);
+		
+		return multimedia;
+	};
+	
 	public int getImageCount(String academyCode) throws Exception{
 		
 		int imgcount = academyDao.getImageCount(academyCode);
@@ -96,8 +103,8 @@ public class AcademyService {
 	};
 	
 	
-	public void deleteMultimedia(int multimediaNo) throws Exception{
-		academyDao.deleteMultimedia(multimediaNo);
+	public int deleteMultimedia(int multimediaNo) throws Exception{
+		return academyDao.deleteMultimedia(multimediaNo);
 	}
 	
 

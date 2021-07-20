@@ -21,10 +21,12 @@
 		
 		var academyCode = '${academy.academyCode}';
 		var academyName = '${academy.academyName}';
+		var count = '${imgcount+vidcount}';
 		var imgcount = '${imgcount}';
 		var vidcount = '${vidcount}';
 		
-		alert("학원 코드 = " + academyCode + " 학원 이름 = " + academyName + " \n이미지 파일 갯수 = " + imgcount + " 비디오 파일 갯수 = " + vidcount);
+		alert("학원 코드 = " + academyCode + " 학원 이름 = " + academyName + " \n이미지 파일 갯수 = " + imgcount + " 비디오 파일 갯수 = " + vidcount
+				+"\n총 갯수 = " + count);
 		
 		
 		$(document).ready(function()
@@ -42,9 +44,10 @@
 		});
 
 		// 파일 현재 필드 숫자 totalCount랑 비교값
-		var fileCount = 0;
+		var fileCount = count;
+		//fileCount *= 1;
 		// 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
-		var totalCount = 3;
+		var totalCount = 5;
 		// 파일 고유넘버
 		var fileNum = 0;
 		// 첨부파일 배열
@@ -57,11 +60,12 @@
 		    var filesArr = Array.prototype.slice.call(files);
 		    
 		    // 파일 개수 확인 및 제한
-		    if (fileCount + filesArr.length > totalCount) {
-		      $.alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+		    if ((parseInt(fileCount)+filesArr.length) > totalCount) {
+		      alert('파일갯수 = '+(fileCount+filesArr.length)+' \n파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
 		      return;
 		    } else {
 		    	 fileCount = fileCount + filesArr.length;
+		    	 alert("업로드 할 파일 갯수 = "+filesArr.length+"개")
 		    }
 		    
 		    // 각각의 파일 배열담기 및 기타
@@ -104,8 +108,8 @@
 					if(!content_files[x].is_delete){
 						 formData.append("article_file", content_files[x]);
 					}
-				}
-		   
+				}		
+				
 		   // 파일업로드 multiple ajax처리
 		       
 			$.ajax({
@@ -118,16 +122,52 @@
 		   	      success: function (data) {
 		   	    	if(JSON.parse(data)['result'] == "OK"){
 		   	    		alert("파일업로드 성공");
-					} else
+					} else{
 						alert("파일업로드 실패");
+					}
+		   	    	
+		   	    	location.reload();
+		   	    	
 		   	      },
 		   	      error: function (xhr, status, error) {
 		   	    	alert("에러 났음 ㅠㅠ");
 		   	     return false;
 		   	      }
 		   	    });
+
+		   
 		   	    return false;
 			}
+		 
+		 
+		 
+			//  파일 삭제 
+			function deleteMultimedia(multimediano){
+				if(confirm('삭제하시겠습니까?')){
+					
+				    $.ajax({
+				    	
+				        url : '/academy/json/deleteMultimedia/'+multimediano,
+				        type : 'post',
+				        success : function(data){
+				            if(data == 1) commentList(boardNo);
+				        }
+				    });
+				}else{
+					return false;
+				}
+				
+				location.reload();
+			}
+			
+			 $(function() {
+					//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 $( ".button:contains('삭제')" ).on("click" , function() {
+						 var multimediano = $("div").find('button#delete').val();
+							self.location = "/academy/deleteMultimedia?multimediano="+multimediano
+						});
+				});
+
 		
 		</script>
 		
@@ -227,7 +267,6 @@
                 </nav>
             </div>
             
-            
             <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
             <div id="layoutSidenav_content">
                 <main>
@@ -244,17 +283,19 @@
                                     학원 번호	: ${academy.academyPhone}<br/>
                                     
                                     학원 이미지 :
-
+                    <div class="card-image">
+				
            		    <c:set var="i" value="0" />
 					<c:forEach var="academy" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
 					
-					
 					<c:if test="${academy.multimediarole == 'I'}">
 							<img height="200" src="/image/${academy.multimedia}"/>
-							<button> 삭제 </button>
+							<a onclick="deleteMultimedia(${academy.multimediano})">삭제</a>
 					</c:if>
 		        	</c:forEach>	
+		        	
+		        	</div>
 		        	
 		        	<br/><br/><br/>
 		        					샘플 영상 : 
@@ -265,8 +306,9 @@
 					<c:if test="${academy.multimediarole == 'V'}">
 							<video controls>
 								<source src="/image/KakaoTalk_20210719_213033364.mp4">
+								<source src="/image/${academy.multimedia}">
 							</video>
-							<button> 삭제 </button>
+							<a onclick="deleteMultimedia(${academy.multimediano})">삭제</a>
 					</c:if>
 		        	</c:forEach>
 		        	
@@ -280,7 +322,7 @@
   <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
   	<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
   	<input id="input_file" multiple="multiple" type="file" style="display:none;">
-  	<span style="font-size:10px; color: gray;">※첨부파일은 최대 3개까지 등록이 가능합니다.</span>
+  	<span style="font-size:10px; color: gray;">※첨부파일은 최대 5개까지 등록이 가능합니다.</span>
   	<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
 		<span>첨부 파일</span>
 		<br />
