@@ -151,20 +151,20 @@ public class AcademyController {
 		return "academy/academySampleEdu";
 	}
 	
-	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
-	public StreamingResponseBody getVideo() throws Exception{
-		File file = new ClassPathResource("static/image/KakaoTalk_20210719_213033364.mp4").getFile();
-		@SuppressWarnings("resource")
-		final InputStream is = new FileInputStream(file);
-		return video -> {
-			byte[] data = new byte[2048];
-	        int read = 0;
-	        while ((read = is.read(data)) > 0) {
-	        	video.write(data, 0, read);
-	        }
-	        video.flush();
-		};
-	}
+//	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
+//	public StreamingResponseBody getVideo() throws Exception{
+//		File file = new ClassPathResource("static/image/KakaoTalk_20210719_213033364.mp4").getFile();
+//		@SuppressWarnings("resource")
+//		final InputStream is = new FileInputStream(file);
+//		return video -> {
+//			byte[] data = new byte[2048];
+//	        int read = 0;
+//	        while ((read = is.read(data)) > 0) {
+//	        	video.write(data, 0, read);
+//	        }
+//	        video.flush();
+//		};
+//	}
 	
 
 }
