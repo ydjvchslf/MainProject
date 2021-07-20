@@ -16,6 +16,8 @@ public class Review {
 	private String reviewContent;
 	private Date reviewDate;
 	private int totalCount;
+	
+	
 	public Academy getAcademy() {
 		return academy;
 	}
@@ -68,7 +70,7 @@ public class Review {
 	public String toString() {
 		return "Review [academy=" + academy + ", reviewWriter=" + reviewWriter + ", reviewNo=" + reviewNo
 				+ ", reviewState=" + reviewState + ", reviewTitle=" + reviewTitle + ", reviewContent=" + reviewContent
-				+ ", reviewDate=" + reviewDate + ", totalCount=" + totalCount + "]";
+				+ ", reviewDate=" + reviewDate + ", totalCount=" + totalCount + "]////";
 	}
 
 }

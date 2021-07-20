@@ -48,9 +48,7 @@
 	   	UPDATE users
 	   	<set>
 	   	 	name = #{name}, 
-	   	 	phone = #{phone}, 
-	   		password = #{password},
-	   		account_state = #{accountState}, 
+	   	 	phone = #{phone},
 	   	</set>
 	   	WHERE user_no = #{userNo}
 	 </update>
@@ -90,6 +88,7 @@
 		WHERE name = #{name}
 		AND phone = #{phone}
 	 </select>
+	 
 	 
 	 <select 	id="findPassword"	parameterType="user"	resultMap="userSelectMap">
 		SELECT *		
@@ -165,11 +164,13 @@
 														</when>
 													</choose>
 													
-													<if test="searchRole != null and searchRole != ''">
-														AND role = #{searchRole}
-													</if>
+													<foreach collection="searchRole" item="role" 
+															open='AND role IN (' close=')' separator=",">
+														#{role}
+													</foreach>
 													
-													<foreach collection="searchAccountState" item="accountState" open='AND account_state IN (' close=')' separator=",">
+													<foreach collection="searchAccountState" item="accountState" 
+															open='AND account_state IN (' close=')' separator=",">
 														#{accountState}
 													</foreach>
 												</where>
@@ -198,11 +199,13 @@
 								</when>
 							</choose>
 							
-							<if test="searchRole != null and searchRole != ''">
-								AND role = #{searchRole}
-							</if>
+							<foreach collection="searchRole" item="role" 
+									open='AND role IN (' close=')' separator=",">
+								#{role}
+							</foreach>
 							
-							<foreach collection="searchAccountState" item="accountState" open='AND account_state IN (' close=')' separator=",">
+							<foreach collection="searchAccountState" item="accountState" 
+									 open='AND account_state IN (' close=')' separator=",">
 									#{accountState}
 							</foreach>
 						</where>

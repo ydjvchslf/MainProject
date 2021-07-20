@@ -71,12 +71,12 @@ public class ReviewController {
 		reviewService.addReview(review);
 		
 		
-		return "/review/listReview";
+		return "redirect:/review/listReview";
 	}
 
 	@RequestMapping (value = "getReview" , method=RequestMethod.GET)
 	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
-		System.out.println("리뷰넘 : "+reviewNo);
+		System.out.println("리뷰넘버 : "+reviewNo);
 		Review review = reviewService.getReview(reviewNo);
 		
 		
@@ -100,6 +100,10 @@ public class ReviewController {
 	
 	@RequestMapping( value="updateReview", method=RequestMethod.POST)
 	public String updateReview( @ModelAttribute("review") Review review, Model model) throws Exception{
+		
+		
+		reviewService.updateReview(review);
+		
 		
 		return "redirect:/review/getReview?reviewNo="+review.getReviewNo();
 		
@@ -128,12 +132,13 @@ public class ReviewController {
 		return "/review/listReview";
 	}
 	
-	@RequestMapping(value="deleteReview", method = RequestMethod.GET)
-	public String deleteReview(@RequestParam("reviewNo") int reviewNo) throws Exception{
+	/*@RequestMapping(value="deleteReview", method = RequestMethod.POST)
+	public int deleteReview(@RequestParam("review") Review r) throws Exception{
 		
-		reviewService.deleteReview(reviewNo);
+		reviewService.deleteReview(review);
 		
-		return "/review/listReview";
+		return "redirect:/review/listReview";
 	}
+	*/
 
 }
