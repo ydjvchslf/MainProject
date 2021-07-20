@@ -21,7 +21,7 @@ public interface ReviewDao {
 	
 	public int getTotalCount(Search search);
 	
-	public Review deleteReview(int reviewNo);
+	public int deleteReview(Review review);
 	
 	String getReviewWriter(int userNo);
 

@@ -9,7 +9,7 @@
 
 <html>
 <head> 
-<title>JENNYSHOP</title>
+<title>updateReviewView.jsp</title>
 
  <meta charset="EUC-KR">
 	
@@ -85,7 +85,7 @@ function fncupdateReview(){
 
 	<div class="navbar  navbar-default">
 	 <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">후기게시판</a>
+        	<a class="navbar-brand">후기게시판</a>
    		</div>
    	</div>
    	
@@ -93,7 +93,7 @@ function fncupdateReview(){
 	
 		<div class="page-header text-default">
 		
-		<h3 style="text-align:center;">게시글 수정</h3> 
+		<h3 style="text-align:center;">후기 수정</h3> 
 		</div>
 		
 	
@@ -102,23 +102,23 @@ function fncupdateReview(){
 	<form class="form-horizontal">
 	<input type="hidden" name="reviewNo" value="${review.reviewNo}" />
 		
- 	<div id="updatebrdview" class="form-group">
+ 	<div id="updateReview" class="form-group">
 		    <label for="reviewTitle" class="col-sm-offset-1 col-sm-1 control-label">제목</label>
 		    <div class="col-sm-8">
 		      <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" value="${review.reviewTitle}">
 		    </div>
 		</div>
 		
-		<div id="updatebrdview" class="form-group">
-		    <label for="reviewWriter" class="col-sm-offset-1 col-sm-1 control-label">작성자</label>
+		<div id="updateReview" class="form-group">
+		    <label for="reviewWriter.name" class="col-sm-offset-1 col-sm-1 control-label">작성자</label>
 		    <div class="col-sm-8">
-		      <input type="text" class="form-control" id="reviewWriter" name="reviewWriter" value="${review.reviewWriter.name}">
+		      <input type="text" class="form-control" id="reviewWriter.name" name="reviewWriter.name" value="${review.reviewWriter.name}" readonly="true"/>
 		    </div>
 		</div>
 			
 	 	<div class="form-group">
 		    <label for="reviewContent" height=100px class="col-sm-offset-1 col-sm-1 control-label">내용</label>
-		    <div class="col-sm-8" height=100px>
+		    <div class="col-sm-12" height=100px>
 		      <textarea class="form-control col-sm-5" rows="5" name="reviewContent"
 						placeholder="내용" style="resize: none;">${review.reviewContent}</textarea>
 		    </div>

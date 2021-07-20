@@ -34,7 +34,7 @@
 			
 			var valid = false;
 			
-			if( checkEmail() && fncCheckPw() && fncCheckName() && fncCheckPhone ){
+			if( fncCheckPw() && fncCheckName() && fncCheckPhone ){
 				valid = true;
 			}
 			
@@ -50,9 +50,6 @@
 			
 			//취소 event form 초기화
 			$('button[name="cancel"]').on("click" , events.click.cancel);
-			
-			//이메일칸 변화 event
-			$("input[name='email']").on("change" , events.change.email);
 			
 			//비밀번호1 변화 event
 			$('#password').on("change", events.change.password);
@@ -91,10 +88,6 @@
 		
 			change : {
 				
-				email : function() {
-					emailChange();
-				},
-				
 				password : function(){
 					fncCheckPw("first");
 				},
@@ -113,62 +106,6 @@
 			}
 		}
 		
-		
-		
-		
-		
-		
-		function emailChange(){
-			
-			var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-			var email=$("input[name='email']").val();
-			
-			// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
-			if (email) {
-				
-				if(emailRegExp.test(email)){
-					fncCheckEmailDuplication();
-				}else{
-					$(".email_check").text("올바른 이메일 형식이 아닙니다.");
-					$(".email_check").css("color", "red");
-				}
-			
-			}else{
-				$(".email_check").text("이메일을 입력하세요.");
-				$(".email_check").css("color", "red");
-			}
-			
-		}
-		
-		
-	
-		//이메일유효성 함수
-	    function checkEmail() {
-			
-			var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-			var email=$("input[name='email']").val();
-			
-			// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
-			if (email) {
-				
-				if(emailRegExp.test(email)){
-					
-					if(emailDuplicationCheck){
-						return true;
-					} else {
-						$(".email_check").text("중복된 이메일입니다.");
-						$(".email_check").css("color", "red");
-					}
-				} else {
-					$(".email_check").text("올바른 이메일 형식이 아닙니다.");
-					$(".email_check").css("color", "red");
-				}
-			} else {
-				$(".email_check").text("이메일을 입력하세요.");
-				$(".email_check").css("color", "red");
-			}
-			return false;
-	    }
 		
 		
 		
@@ -338,7 +275,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">회원가입 화면</h1>
+		<h1 class="bg-primary text-center">SNS 전용 회원가입 화면</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form name="signupForm" class="form-horizontal">
@@ -351,31 +288,15 @@
 		            <label><input name="role" id="parents" name="parents" type="radio" value="parents">학부모</label>
 	             </div>
 		 	</div>
-			<!-- 일반회원가입 경로 -->
-		   <c:choose>
-			   <c:when test="${empty snsEmail}">
-			   		<div class="form-group">
-			  	   	  <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
-					  	<div class="col-sm-4">
-					  	   <input type="text" class="form-control" id="email" name="email" placeholder="ex) buyedu@co.kr">
-					       		<span id="helpBlock" class="help-block">
-					      			<strong class="email_check"></strong>
-					      		</span>
-					 	</div>
-					</div>
-			   </c:when>
-			   <c:otherwise> <!-- SNS 회원가입 경로 : ${snsEmail} 값이 있음-->
-			   		<div class="form-group">
-					  	<div class="col-sm-4">
-					  	   <input type="text" class="form-control" id="email" name="email" value="${snsEmail}">
-					 			<span id="helpBlock" class="help-block">
-					      			<strong class="email_check"></strong>
-					      		</span>
-					 	</div>
-					</div>
-			   </c:otherwise>
-		   </c:choose>
-		   
+			<!-- SNS 회원가입 경로 : ${snsEmail} 값이 있음-->
+	   		<div class="form-group">
+			  	<div class="col-sm-4">
+			  	   <input type="hidden" class="form-control" id="email" name="email" value="${snsEmail}">
+			 			<span id="helpBlock" class="help-block">
+			      			<strong class="email_check"></strong>
+			      		</span>
+			 	</div>
+			</div>
 		   
 			<div class="form-group">
 			   <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>

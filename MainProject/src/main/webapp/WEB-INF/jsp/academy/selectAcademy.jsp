@@ -68,7 +68,7 @@
 	
 	</script>
 
-<title>Academy main page</title>
+<title>Select Academy page</title>
 </head>
 <body>
 
@@ -133,28 +133,26 @@
 							<i class="glyphicon glyphicon-briefcase"></i> 학원 프로필
          			</div>
 					<ul class="list-group">
-					<!-- userController 에서 count 를 넘겨줘야 ~~ -->
-					<c:forEach var="academy" items="${count}">
-					 <c:if test="${academy.count<=3}">
+
+					<c:if test="${list.size()<=2}">
 						<li class="list-group-item">
 						 	<a href="#">학원 등록</a>
 						 </li>
 					</c:if>
-					</c:forEach>
-					
-					<li class="list-group-item">
-						 	<a href="#">학원 등록</a>
-						 </li>
 					
 				<c:set var="i" value="0" />
 				 <c:forEach var="academy" items="${list}">
-							 <c:set var="i" value="${ i+1 }" />
-					  
+					 <c:set var="i" value="${ i+1 }" />
+							 
 					  <li class="list-group-item">
 						 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
 						 </li>
 					
-		          </c:forEach>								 
+		          </c:forEach>	
+		          	
+						<li class="list-group-item">
+						 	<a href="#">리스트 갯수 -> ${list.size() } 3개면 학원 등록 안뜸</a>
+						 </li>					 
 
 					</ul>
 		        </div>
@@ -168,6 +166,8 @@
 			<h1>학원 프로필을 선택 해 주세요.</h1> 		
 			
 			<a href="/main/academyMain">학원메인으로</a>
+			</br>
+			<a href="/academy/academySampleEdu?academyCode=xrYC6SH"> 테스트 학원 멀티미디어</a>
 	 	 	
 		</div>
 		<!-- 다단레이아웃  end /////////////////////////////////////-->

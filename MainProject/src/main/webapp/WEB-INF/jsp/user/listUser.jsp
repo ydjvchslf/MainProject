@@ -20,50 +20,59 @@
 		<script type="text/javascript">
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
 			
-			function fncGetList(currentPage) {
-				
-				$("#currentPage").val(currentPage)
-			   	$("form").attr("method", "POST").attr("action","/user/listUser").submit();	
-			};
+		function fncGetList(currentPage) {
+			//alert(currentPage)
+			$("#currentPage").val(currentPage)
+		   	$("form").attr("method", "POST").attr("action","/user/listUser").submit();	
+		};
+		
+		//너왜 안되는거야
+		function enterEvent(){
+			if(window.event.keyCode == 13){
+				alert("엔터")
+				fncGetList(1);
+			}
+		}
+		
+		//검색버튼 클릭 event
+		$(function() {
 			
-			
-			$(function() {
-				
-				$( "button.btn.btn-default" ).on("click" , function() {
-					fncGetList(1);
-				});
-				 
+			$( "button.btn.btn-default" ).on("click" , function() {
+				fncGetList(1);
 			});
+			 
+		});
+		
+		
+		
+		$(function() {
 			
+			$("input[name=searchRole]").each(function(index, item){
+				var $check = $(this)
+				var roles = '${roles}';
+				
+				console.log(item)
+				if (roles.indexOf(item.value) > -1) {
+				//	item.checked = true;
+					$check.attr("checked", "checked");
+				}
+			})
 			
+			$("input[name=searchAccountState]").each(function(index, item){
+				var states = '${states}';
+				if (states.indexOf(item.value) > -1 )
+					item.checked = true;
+			})
 			
-			$(function() {
-				
-				$("input[name=searchRole]").each(function(index, item){
-					var $check = $(this)
-					var roles = '${roles}';
-					
-					console.log(item)
-					if (roles.indexOf(item.value) > -1) {
-					//	item.checked = true;
-						$check.attr("checked", "checked");
-					}
-				})
-				
-				$("input[name=searchAccountState]").each(function(index, item){
-					var states = '${states}';
-					if (states.indexOf(item.value) > -1 )
-						item.checked = true;
-				})
-				
-
-				$( "button[name='detailFormButton']" ).on("click" , function() {
-				
-					fncGetList(1);
-				});
-				 
+			/*
+			$( "button[name='detailFormButton']" ).on("click" , function() {
+			
+				fncGetList(1);
 			});
-			
+			*/
+			 
+		});
+		
 			
 		</script>
 		
@@ -193,7 +202,7 @@
 								  
 								  <div class="form-group">
 								    <label class="sr-only" for="searchKeyword">검색어</label>
-								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+								    <input type="text" class="form-control" onkeyup="enterEvent()" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 								    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 								  </div>
 								  
