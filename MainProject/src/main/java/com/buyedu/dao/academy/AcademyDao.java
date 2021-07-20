@@ -34,10 +34,12 @@ public interface AcademyDao {
 	
 	List<Academy> getMultimediaList(String academyCode) throws Exception;
 	
+	String getMultimedia(int multimediaNo) throws Exception;
+	
 	int getImageCount(String academyCode) throws Exception;
 	
 	int getVideoCount(String academyCode) throws Exception;
 	
-	void deleteMultimedia(int multimediaNo) throws Exception;
+	int deleteMultimedia(int multimediaNo) throws Exception;
 
 }
