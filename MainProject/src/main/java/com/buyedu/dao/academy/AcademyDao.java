@@ -41,5 +41,5 @@ public interface AcademyDao {
 	int getVideoCount(String academyCode) throws Exception;
 	
 	int deleteMultimedia(int multimediaNo) throws Exception;
-
+	
 }

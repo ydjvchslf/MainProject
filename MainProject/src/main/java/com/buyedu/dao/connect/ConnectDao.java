@@ -23,10 +23,15 @@ public interface ConnectDao {
 	// 인증요청 INSERT
 	public void addConnect(Connect connect) throws Exception;
 	
-	public void updateConnectAccept(Connect connect) throws Exception;
+	public String updateConnectAccept(int connectNo) throws Exception;
 	
 	public void updateConnectReject(Connect connect) throws Exception;
 
 	public void deleteConnect(Connect connect) throws Exception;
+	
+	// 아카데미에서 쓰는 커넥트 입니당 >.<
+	List<Connect> academyConnect(String academyCode) throws Exception;
+	
+	void deleteConnectfromAca(int connectNo) throws Exception;
 
 }

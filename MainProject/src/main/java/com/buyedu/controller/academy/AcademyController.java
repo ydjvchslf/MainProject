@@ -28,9 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
+import com.buyedu.service.user.UserService;
 
 
 @Controller
@@ -39,6 +41,9 @@ public class AcademyController {
 	
 	@Autowired
 	public AcademyService academyService;
+	
+	@Autowired
+	public UserService userService;
 	
 	public String random() {
 		StringBuffer temp = new StringBuffer();
@@ -165,6 +170,28 @@ public class AcademyController {
 //	        video.flush();
 //		};
 //	}
+	
+	
+//	academyConnects
+	
+	@RequestMapping(value = "academyConnects", method = RequestMethod.GET)
+	public String academyConnectList(@RequestParam("academyCode") String academyCode, Model model, HttpSession session) throws Exception{
+		
+		System.out.println("/academy/academyConnects : GET");
+		
+		System.out.println("academyConnect 아카데미 코드 = " + academyCode);
+		
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		Map<String, Object> map = academyService.academyConnect(academyCode);
+		
+		model.addAttribute("academy", academy);
+		model.addAttribute("connect", map.get("connect"));
+		
+		System.out.println("academyConnects map = "+map.get("connect"));
+		
+		return "academy/academyConnect";
+	}
 	
 
 }

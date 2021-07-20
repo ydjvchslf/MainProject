@@ -8,8 +8,10 @@
 	
 	<resultMap id="connectSelectMap"	type="connect">
 	
+		<result property="connectNo" 			column="connection_no" 		jdbcType="NUMERIC" />
 		<result property="connectState" 		column="connect_state" 		jdbcType="CHAR" />
 		<result property="user.userNo" 			column="user_no" 			jdbcType="NUMERIC"/>
+		<result property="user.name" 			column="name" 				jdbcType="VARCHAR"/>
 		<result property="academy.academyCode" 	column="academy_code" 		jdbcType="VARCHAR"/>
 		<result property="academy.academyName" 	column="academy_name" 		jdbcType="VARCHAR"/>
 
@@ -59,14 +61,18 @@
 	 </select>
 	  
 	  
-	 <update	id="updateConnectAccept"	parameterType="connect" >
+	 <update	id="updateConnectAccept"	parameterType="int" >
 	   	UPDATE connection
 	   	<set>
 	   	 	connect_state = '1'
 	   	</set>
-	   	WHERE user_no = #{user.userNo}
-	   	AND academy_code = #{academy.academyCode}
+	   	WHERE connection_no = #{connectNo}
 	 </update>
+	 
+	 <delete id="deleteConnectfromAca"	parameterType="int">
+		DELETE connection
+		WHERE connection_no = #{connectNo}
+	</delete>
 	 
 	 
 	 <update	id="updateConnectReject"	parameterType="connect" >
@@ -84,6 +90,18 @@
 		WHERE user_no = #{user.userNo}
 	   	AND academy_code = #{academy.academyCode}
 	</delete>
+	
+	
+	<!-- 아카데미에서 사용하는 커넥트 입니당 -->
+	
+	 <!-- SQL : SELECT ONE 인증 학생 리스트 뽑기 -->
+	<select 	id="academyConnect"		parameterType="String"	resultMap="connectSelectMap">
+		SELECT
+		c.connection_no, c.connect_state, c.user_no, c.academy_code, u.name
+		FROM connection c, users u
+		WHERE c.academy_code = #{value}
+		AND c.user_no = u.user_no
+	 </select>
 	 
 	 
 	 
