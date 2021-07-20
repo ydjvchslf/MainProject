@@ -19,6 +19,7 @@ public class ReviewService {
 			
 	public void addReview(Review review) throws Exception {
 		reviewDao.addReview(review);
+		System.out.println("여기는 애드서비스");
 	}
 
 	public Review getReview(int reviewNo) throws Exception {
@@ -37,11 +38,14 @@ public class ReviewService {
 
 	public void updateReview (Review review) throws Exception {
 		reviewDao.updateReview(review);
+		System.out.println("여기는 업데이트리뷰");
 
 	}
 	
-	public Review deleteReview(int reviewNo) throws Exception {
-		return reviewDao.deleteReview(reviewNo);
+	public int deleteReview(Review review) throws Exception {
+		System.out.println("여기는 딜리트리뷰");
+		return reviewDao.deleteReview(review);
+		
 	}
 	
 	public String getReviewWriter(int userNo) throws Exception {
