@@ -22,9 +22,9 @@ public interface AcademyDao {
 	
 	String checkAcademyCode(String academyCode) throws Exception;
 	
-	String updateAcademyHistory(String academyCode) throws Exception;
-	
 	String updateAcademyIntro(Academy academy) throws Exception;
+	
+	String updateAcademyHistory(Academy academy) throws Exception;
 	
 	// 여기서 메소드 이름이 매퍼에 sql id 랑 동일해야합니다.
 	public List<Academy> getSearchList(Search search);
@@ -33,6 +33,10 @@ public interface AcademyDao {
 	void addMultimedia(Academy academy) throws Exception;
 	
 	List<Academy> getMultimediaList(String academyCode) throws Exception;
+	
+	int getImageCount(String academyCode) throws Exception;
+	
+	int getVideoCount(String academyCode) throws Exception;
 	
 	void deleteMultimedia(int multimediaNo) throws Exception;
 

@@ -17,13 +17,86 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-		<script type="text/javascript">
-			$("#layoutSidenav_content").on("click", ".")
+		<script>
+		var academyCode = '${academy.academyCode}';
 		
+		 alert("학원 코드 = "+academyCode);
+			
 		
+		function getAcademy(){
+			$.ajax({
+				 url : '/academy/json/getacademy/'+academyCode,
+			     method : 'GET',
+			     dataType : "json",
+			     headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+			     },
+				 success : function(data, status){
+					 
+					 var a =''; 
+			         var cnt = data[0].commentCount;
+
+			        $(".commentCount").html(cnt);
+			        console.log(cnt)
+			       		
+			        $.each(data, function(key, value){ 
+			          	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+			            a += '<div class="commentInfo'+value.COMMENT_NO+'">'+'작성일자 : '+value.COMMENT_DATE+' / 작성자 : '+value.EMAIL;
+			            <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
+			            if (sessionId == value.COMMENT_WRITER){
+			            a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
+			            a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
+			            if (sessionId != value.COMMENT_WRITER){
+			            a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
+			            a += '</div>';
+			            a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> 내용 : '+value.COMMENT_CONTENT+'</p>';
+			            a += '</div></div>';
+			        });
+			            
+			            $(".commentList").html(a);
+				 }							
+			});		
+		}
+		
+		// 텍스트 박스 
+		function introUpdate(academyCode, academyIntro){
+		    var intro ='';
+		    
+		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
+		    
+		    	intro += '<div class="input-group">';
+		   	 	intro += '<input type="text" class="form-control" name="content_'+academyCode+'" value="'+academyIntro+'"/>';
+		    	intro += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="acaIntroUpdate('+academyCode+');">저장</button> </span>';
+		   		intro += '</div>';
+		    
+		    $('.card-body2').html(intro);
+		    
+		}
+		 
+		// 수정
+		function acaIntroUpdate(academyCode){
+		    var updateIntro = $('[name=academy'+academyCode+']').val();
+		    
+		    $.ajax({
+		        url : '/academy/json/updateIntro',
+		        type : 'post',
+		        data : {'academyCode' : academyCode, 'intro' : academyIntro}
+		    });
+		}
+
+		
+
+		$(document).ready(function(){
+			getAcademy(); 
+		});
+		 
+		
+	
 		
 		</script>
 		
+	<title>Academy Info page</title>	
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -134,23 +207,14 @@
                                     지역 구 : ${academy.academyArea }<br/>
                                     위도 : ${academy.academyLat }<br/>
                                     경도 : ${academy.academyLng }<br/>
-                                    
-                                    <div class="container">
-                                    
-                                    	<div class="col-xs-8">
-                                    		<input class="form-control" type="text" size="80">
-                                    		소개	: ${academy.academyIntro }<br/>
-		      								<button class="btn success" id="update" value="${academy.academyCode}"> 수 정 </button>
-		    							</div>
-		    							
-		    							<div class="col-xs-8">
-                                    		실적 : ${academy.academyHistory }<br/>
-		      								<button class="btn success" id="update" value="${academy.academyCode}"> 수 정 </button>
-		    							</div>
-                                  
-                                    </div>
+                                   
                                     
                             </div>
+                            
+                            <div class="card-body2">  </div>
+                            
+                            
+                            
                         </div>
                         <div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>

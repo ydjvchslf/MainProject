@@ -47,7 +47,7 @@
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">search</div>
-                            <a class="nav-link" href="/academy/listSearch">
+                            <a class="nav-link" href="/search/searchAcademy">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 학원검색
                             </a>

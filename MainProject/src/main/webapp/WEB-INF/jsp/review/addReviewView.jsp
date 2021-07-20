@@ -81,7 +81,7 @@ function fncAddReview(){
 	
 
 	
-	$("form").attr("method" , "POST").attr("action" , "/review/listReview").submit();
+	$("form").attr("method" , "POST").attr("action" , "/review/addReview").submit();
 }
 </script>
 

@@ -46,6 +46,14 @@
 						self.location = "/review/updateReview?reviewNo="+reviewNo
 					});
 			});
+		 
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( ".btn:contains('뒤')" ).on("click" , function() {
+					 var reviewNo = $("div").find('button#confirm').val();
+						self.location = "/review/listReview"
+					});
+			});
 		
 		
 	</script>
@@ -55,7 +63,7 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<title>Insert title here</title>
+<title>getReivew.jsp</title>
 </head>
 
 <body>
@@ -118,13 +126,17 @@
 
 	 <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="confirm" value="${review.reviewNo}">수 &nbsp;정</button>
-		    </div>
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="confirm2" >삭&nbsp;제
-	</div>
+		      <button class="btn btn-primary" id="confirm" value="${review.reviewNo}">수 &nbsp;정</button>
+		    &nbsp;
+		      <button class="btn btn-primary" id="confirm2" >삭&nbsp;제</button>
 	
+	&nbsp;
+
+		<butten class="btn btn-primary" id="confirm3" >뒤&nbsp;로</butten>
+	</div>
+	</div>
 
 
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 </html>
