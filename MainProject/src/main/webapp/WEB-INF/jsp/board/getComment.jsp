@@ -77,7 +77,7 @@ function commentList(){
                 if (sessionId == value.COMMENT_WRITER){
                 a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
                 a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
-                if (sessionId != value.COMMENT_WRITER){
+                if (sessionId != value.COMMENT_WRITER){1
                 a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
                 a += '</div>';
                 a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> 내용 : '+value.COMMENT_CONTENT+'</p>';

@@ -119,6 +119,14 @@
 		WHERE academy_code = #{academyCode}
 	 </select>
 	 
+	  <!-- SQL : SELECT ONE -->
+	 <select 	id="getMultimedia"	parameterType="int" resultType="String">
+		SELECT
+		academy_multimedia
+		FROM multimedia
+		WHERE multimedia_no = #{multimediano}
+	 </select>
+	 
 	  <!-- SQL : SELECT ONE 이미지 파일 갯수 찾기 -->
 	 <select 	id="getImageCount"	parameterType="String"	resultType="int">
 		SELECT

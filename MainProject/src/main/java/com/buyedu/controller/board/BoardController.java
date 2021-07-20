@@ -57,8 +57,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@Value("10")
 		int pageSize;
 		
-		
-
 		@RequestMapping( value="addBoard", method=RequestMethod.GET )
 		public String addBoard(Model model) throws Exception {
 			
@@ -73,8 +71,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@RequestMapping( value="addBoard", method=RequestMethod.POST)
 		public String addBoard( @ModelAttribute("board") Board board, Model model, @ModelAttribute("user") User user, HttpServletRequest httpRequest ) throws Exception {
 
-			 int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();   
-			board.setBoardWriter(userNo);	
+			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();   
+		//	board.setBoardWriter(userNo);	
 			System.out.println("/board/addBoard : POST");
 			System.err.println(board);
 			//Business Logic
@@ -82,26 +80,29 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			Board board1 = boardService.getBoard(board.getBoardNo());
 			System.out.println("insert??");
 			model.addAttribute("board", board1);
+			model.addAttribute(userNo);
 			System.out.println("들어갔나 정보 : "+board1);
-			
-	
-			
 			
 			return "/board/getBoard";
 		}
 		
 		//@RequestMapping("/getProduct.do")
 		@RequestMapping( value="getBoard", method = RequestMethod.GET)
-		public String  getBoard( @RequestParam("boardNo") int boardNo, Model model, HttpServletRequest httpRequest ) throws Exception {
+		public String  getBoard( @RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request ) throws Exception {
 			
 			System.out.println("/board/getBoard : GET");
 			//Business Logic
+			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
+			String category = request.getParameter("cateCode");
 			Board board = boardService.getBoard(boardNo);
 			System.out.println(recommendCnt);
 			board.setRecommendCnt(recommendCnt);
+			board.setCateCode(category);
+		//	board.setBoardWriter(boardWriter);
 			System.out.println("컨트롤러 : "+board);
 			System.err.println(boardNo);
+		//	System.out.println("컨트롤러 boardWriter : "+boardWriter);
 //			int board1 = boardService.updateViewcnt(brdNo);
 			// *조회수 증가시키기
 			boardService.updateViewcnt(boardNo);
@@ -109,8 +110,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			model.addAttribute("board", board);
 			System.out.println("겟 프로덕트 : "+board);
 			System.err.println(board.getEmail());
-			
-			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("boardNo", boardNo);
@@ -124,9 +123,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //	        int complainBoard = complainService.addComplainBoard(map);
 //	        System.out.println("컴플레인"+complainBoard);
 //	        model.addAttribute("complainBoard",complainBoard);
-	        
-	        
-			
 			return "/board/getBoard";
 		}
 		
@@ -178,9 +174,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.err.println("condition : " +search.getSearchConditionb());
 			
 			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
-
 			
-			String category = request.getParameter("category"); // 게시판 종류
+			String category = request.getParameter("cateCode"); // 게시판 종류
 			
 			
 			if(search.getCurrentPage() ==0 ){
@@ -189,6 +184,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			search.setPageSize(pageSize);
 			
 			System.out.println("현재 :: " + search.getCurrentPage());
+			search.setCateCode(category);
+			System.out.println("list 컨트롤러 카테고리: " +category);
 			
 			// Business logic 수행
 			List<Board> list =boardService.getBoardList(search);
@@ -198,7 +195,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
 			 
-			
 			// Model 과 View 연결
 			model.addAttribute("list", list);
 			model.addAttribute("resultPage", resultPage);
@@ -226,13 +222,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			// Model 과 View 연결
 			//model.addAttribute("board", board);
 			//System.err.println("겟 프로덕트 : "+board);
-			
-			
-			
+
 			return "redirect:/board/listBoard";
 		}
-		
-	
 
 	}
 
