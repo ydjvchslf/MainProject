@@ -288,6 +288,19 @@ public class UserController {
 		return "/user/loginView";
 	}
 	
+	@RequestMapping( value="loginacademy", method=RequestMethod.GET )
+	public String login( @RequestParam String email ) throws Exception{
+		
+		System.out.println("/user/logon : 학원에서 프로필선택으로 메인창");
+		System.out.println("로그인 화면으로 단순 네비게이션");
+		
+		User dbUser=userService.getUser(email);
+		
+		System.out.println("겟유저 가져온 dbUser=>" + dbUser);
+		
+		return "academyMain";
+	}
+	
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public String login(@ModelAttribute("user") User user , Model model, HttpSession session ) throws Exception{
