@@ -119,6 +119,30 @@
 		WHERE academy_code = #{academyCode}
 	 </select>
 	 
+	  <!-- SQL : SELECT ONE -->
+	 <select 	id="getMultimedia"	parameterType="int" resultType="String">
+		SELECT
+		academy_multimedia
+		FROM multimedia
+		WHERE multimedia_no = #{multimediano}
+	 </select>
+	 
+	  <!-- SQL : SELECT ONE 이미지 파일 갯수 찾기 -->
+	 <select 	id="getImageCount"	parameterType="String"	resultType="int">
+		SELECT
+		count(*)
+		FROM multimedia
+		WHERE academy_code = #{academyCode} AND media_role = 'I'
+	 </select>
+	 
+	 <!-- SQL : SELECT ONE 비디오 파일 갯수 찾기 -->
+	 <select 	id="getVideoCount"	parameterType="String"	resultType="int">
+		SELECT
+		count(*)
+		FROM multimedia
+		WHERE academy_code = #{academyCode} AND media_role = 'V'
+	 </select>
+	 
 	 <!-- SQL : DELETE -->
 	 <delete 	id="deleteMultimedia"	parameterType="int">
 		DELETE

@@ -25,6 +25,7 @@ public class Search {
 	private int startRowNum;
 	
 	private int searchUserNo;
+	private String cateCode;
 	
 	///Constructor
 	public Search() {
@@ -151,8 +152,15 @@ public class Search {
 		this.searchEduState = searchEduState;
 	}
 
-	
-	
+		
+	public String getCateCode() {
+		return cateCode;
+	}
+
+	public void setCateCode(String cateCode) {
+		this.cateCode = cateCode;
+	}
+
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchConditionb="
@@ -160,7 +168,8 @@ public class Search {
 				+ ", searchAcademyAddr=" + searchAcademyAddr + ", searchAcademyGrade=" + searchAcademyGrade
 				+ ", searchAcademySubject=" + searchAcademySubject + ", pageSize=" + pageSize + ", searchRole="
 				+ searchRole + ", searchAccountState=" + searchAccountState + ", searchEduState=" + searchEduState
-				+ ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", searchUserNo=" + searchUserNo + "]";
+				+ ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", searchUserNo=" + searchUserNo
+				+ ", cateCode=" + cateCode + "]";
 	}
 
 	

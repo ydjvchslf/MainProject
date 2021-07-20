@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>academyInfo</title>
+        <title>academyMain</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -18,84 +18,160 @@
 		</script>
 		
 		<script>
+		
 		var academyCode = '${academy.academyCode}';
+		var academyName = '${academy.academyName}';
+		var count = '${imgcount+vidcount}';
+		var imgcount = '${imgcount}';
+		var vidcount = '${vidcount}';
 		
-		 alert("학원 코드 = "+academyCode);
-			
+		alert("학원 코드 = " + academyCode + " 학원 이름 = " + academyName + " \n이미지 파일 갯수 = " + imgcount + " 비디오 파일 갯수 = " + vidcount
+				+"\n총 갯수 = " + count);
 		
-		function getAcademy(){
-			$.ajax({
-				 url : '/academy/json/getacademy/'+academyCode,
-			     method : 'GET',
-			     dataType : "json",
-			     headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-			     },
-				 success : function(data, status){
-					 
-					 var a =''; 
-			         var cnt = data[0].commentCount;
-
-			        $(".commentCount").html(cnt);
-			        console.log(cnt)
-			       		
-			        $.each(data, function(key, value){ 
-			          	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-			            a += '<div class="commentInfo'+value.COMMENT_NO+'">'+'작성일자 : '+value.COMMENT_DATE+' / 작성자 : '+value.EMAIL;
-			            <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
-			            if (sessionId == value.COMMENT_WRITER){
-			            a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
-			            a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
-			            if (sessionId != value.COMMENT_WRITER){
-			            a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
-			            a += '</div>';
-			            a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> 내용 : '+value.COMMENT_CONTENT+'</p>';
-			            a += '</div></div>';
-			        });
-			            
-			            $(".commentList").html(a);
-				 }							
-			});		
-		}
 		
-		// 텍스트 박스 
-		function introUpdate(academyCode, academyIntro){
-		    var intro ='';
-		    
-		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
-		    
-		    	intro += '<div class="input-group">';
-		   	 	intro += '<input type="text" class="form-control" name="content_'+academyCode+'" value="'+academyIntro+'"/>';
-		    	intro += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="acaIntroUpdate('+academyCode+');">저장</button> </span>';
-		   		intro += '</div>';
-		    
-		    $('.card-body2').html(intro);
-		    
-		}
-		 
-		// 수정
-		function acaIntroUpdate(academyCode){
-		    var updateIntro = $('[name=academy'+academyCode+']').val();
-		    
-		    $.ajax({
-		        url : '/academy/json/updateIntro',
-		        type : 'post',
-		        data : {'academyCode' : academyCode, 'intro' : academyIntro}
-		    });
-		}
-
-		
-
-		$(document).ready(function(){
-			getAcademy(); 
+		$(document).ready(function()
+		// input file 파일 첨부시 fileCheck 함수 실행
+		{
+			$("#input_file").on("change", fileCheck);
 		});
+
+		 // 첨부파일로직
+		$(function () {
+		    $('#btn-upload').click(function (e) {
+		        e.preventDefault();
+		        $('#input_file').click();
+		    });
+		});
+
+		// 파일 현재 필드 숫자 totalCount랑 비교값
+		var fileCount = count;
+		// 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
+		var totalCount = 5;
+		// 파일 고유넘버
+		var fileNum = 0;
+		// 첨부파일 배열
+		var content_files = new Array();
+
+		function fileCheck(e) {
+		    var files = e.target.files;
+		    
+		    // 파일 배열 담기
+		    var filesArr = Array.prototype.slice.call(files);
+		    
+		    // 파일 개수 확인 및 제한
+		    if ((Number(fileCount)+filesArr.length) > totalCount) {
+		      alert('파일갯수 = '+((Number(fileCount)+filesArr.length))+' \n파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+		      return;
+		    } else {
+		    	 fileCount = fileCount + filesArr.length;
+		    	 alert("업로드 할 파일 갯수 = "+filesArr.length+"개")
+		    }
+		    
+		    // 각각의 파일 배열담기 및 기타
+		    filesArr.forEach(function (f) {
+		      var reader = new FileReader();
+		      reader.onload = function (e) {
+		        content_files.push(f);
+		        $('#articlefileChange').append(
+		       		'<div id="file' + fileNum + '" onclick="fileDelete(\'file' + fileNum + '\')">'
+		       		+ '<font style="font-size:12px">' + f.name + '</font>'  
+		       		+ '<img src="/img/icon_minus.png" style="width:20px; height:auto; vertical-align: middle; cursor: pointer;"/>' 
+		       		+ '<div/>'
+				);
+		        fileNum ++;
+		      };
+		      reader.readAsDataURL(f);
+		    });
+		    console.log(content_files);
+		    //초기화 한다.
+		    $("#input_file").val("");
+		  }
+
+		// 파일 부분 삭제 함수
+		function fileDelete(fileNum){
+		    var no = fileNum.replace(/[^0-9]/g, "");
+		    content_files[no].is_delete = true;
+			$('#' + fileNum).remove();
+			fileCount --;
+		    console.log(content_files);
+		}
 		
-	
+		 // 폼 submit 로직
+		
+			function registerAction(){
+				
+			var form = $("form")[0];        
+		 	var formData = new FormData(form);
+				for (var x = 0; x < content_files.length; x++) {
+					// 삭제 안한것만 담아 준다. 
+					if(!content_files[x].is_delete){
+						 formData.append("article_file", content_files[x]);
+					}
+				}		
+				
+		   // 파일업로드 multiple ajax처리
+		       
+			$.ajax({
+		   	      type: "POST",
+		   	   	  enctype: "multipart/form-data",
+		   	      url: "/academy/file-upload/${academy.academyCode}",
+		       	  data : formData,
+		       	  processData: false,
+		   	      contentType: false,
+		   	      success: function (data) {
+		   	    	if(JSON.parse(data)['result'] == "OK"){
+		   	    		alert("파일업로드 성공");
+					} else{
+						alert("파일업로드 실패");
+					}
+		   	    	
+		   	    	location.reload();
+		   	    	
+		   	      },
+		   	      error: function (xhr, status, error) {
+		   	    	alert("에러 났음 ㅠㅠ");
+		   	     return false;
+		   	      }
+		   	    });
+
+		   
+		   	    return false;
+			}
+		 
+		 
+		 
+			//  파일 삭제 
+			function deleteMultimedia(multimediano){
+				if(confirm('삭제하시겠습니까?')){
+					
+				    $.ajax({
+				    	
+				        url : '/academy/json/deleteMultimedia/'+multimediano,
+				        type : 'post',
+				        success : function(data){
+				            if(data == 1) commentList(boardNo);
+				        }
+				    });
+				}else{
+					return false;
+				}
+				
+				location.reload();
+			}
+			
+			 $(function() {
+					//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					 $( ".button:contains('삭제')" ).on("click" , function() {
+						 var multimediano = $("div").find('button#delete').val();
+							self.location = "/academy/deleteMultimedia?multimediano="+multimediano
+						});
+				});
+
 		
 		</script>
 		
-	<title>Academy Info page</title>	
+	<title>Academy Sample Edu page</title>
+
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -152,7 +228,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="#">기본 정보</a>
                                     <a class="nav-link" href="#">멀티미디어 정보</a>
-                                    <a class="nav-link" href="#">학원 후기 보기</a>
+                                    <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
                                     <a class="nav-link" href="#">원생 관리</a>
                                 </nav>
                             </div>                            
@@ -189,6 +265,7 @@
 
                 </nav>
             </div>
+            
             <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
             <div id="layoutSidenav_content">
                 <main>
@@ -198,35 +275,76 @@
                             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                             <li class="breadcrumb-item active">Static Navigation</li>
                         </ol>
+                        
                         <div class="card mb-4">
                             <div class="card-body">
                                 <p class="mb-0">
                                     학원 번호	: ${academy.academyPhone}<br/>
-                                    학원 주소 : ${academy.academyAddr}<br/>
-                                    지역 구 : ${academy.academyArea }<br/>
-                                    위도 : ${academy.academyLat }<br/>
-                                    경도 : ${academy.academyLng }<br/>
-                                   
+                                    
+                                    학원 이미지 :
+                    <div class="card-image">
+				
+           		    <c:set var="i" value="0" />
+					<c:forEach var="academy" items="${list}">
+							<c:set var="i" value="${ i+1 }" />
+					
+					<c:if test="${academy.multimediarole == 'I'}">
+							<img height="200" src="/image/${academy.multimedia}"/>
+							<a onclick="deleteMultimedia(${academy.multimediano})">삭제</a>
+					</c:if>
+		        	</c:forEach>	
+		        	
+		        	</div>
+		        	
+		        	<br/><br/><br/>
+		        					샘플 영상 : 
+		        	
+		        	<c:set var="i" value="0" />
+					<c:forEach var="academy" items="${list}">
+							<c:set var="i" value="${ i+1 }" />
+					<c:if test="${academy.multimediarole == 'V'}">
+							<video controls>
+								<source src="/image/KakaoTalk_20210719_213033364.mp4">
+								<source src="/image/${academy.multimedia}">
+							</video>
+							<a onclick="deleteMultimedia(${academy.multimediano})">삭제</a>
+					</c:if>
+		        	</c:forEach>
+		        	
                                     
                             </div>
-                            
-                            <div class="card-body2">  </div>
-                            
-                            
-                            
+
                         </div>
+            
+            <div class="container">
+  <h2>파일업로드</h2>
+  <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
+  	<button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
+  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
+  	<span style="font-size:10px; color: gray;">※첨부파일은 최대 5개까지 등록이 가능합니다.</span>
+  	<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
+		<span>첨부 파일</span>
+		<br />
+		<div id="articlefileChange">
+		</div>
+	</div>
+  	<button type="submit" style="border: 1px solid #ddd; outline: none;">전송</button>
+  </form>
+</div>
+
+            
+            
                         <div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
                     </div>
                 </main>
             </div>
+            
+            
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        
-        
-        
     </body>
 </html>
     

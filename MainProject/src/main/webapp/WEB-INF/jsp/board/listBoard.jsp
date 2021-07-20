@@ -99,23 +99,21 @@
 		<div class="page-header text-default">
 		<br/><br/><br/>
 		
+		
 		<c:choose>
-			<c:when test="${category eq 10001 }">
-				<h3>공지사항</h3>
+			<c:when test="${search.cateCode eq '0' }">
+				<h3>사!교육 공지사항</h3>
 			</c:when>
-			<c:when test="${category eq 10002 }">
+			<c:when test="${search.cateCode eq '1' }">
+				<h3>사!교육 Q&A</h3>
+			</c:when>
+			<c:when test="${search.cateCode eq '2' }">
+				<h3>자유 게시판</h3>
+			</c:when>
+			<c:when test="${search.cateCode eq '3' }">
 				<h3>학원 공지사항</h3>
 			</c:when>
-			<c:when test="${category eq 10003 }">
-				<h3>자주 묻는 질문</h3>
-			</c:when>
-		</c:choose>
-							<h3>자유 게시판</h3> 
-						
-					
-
-
-					
+		</c:choose>					
 	    </div>
 	    
 
@@ -202,12 +200,38 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
-		    <div class="col-sm-offset-11  col-sm-1 text-center">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
-		      <a href="/board/addBoard" >글쓰기</a></button>
-			 
-		    </div>
+	  카테고리 :  ${search.cateCode}
+	  userNo : ${user.userNo}
+		    
+		   
+		 <c:choose>
+			<c:when test="${search.cateCode eq '0' && user.userNo eq 140 }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '1' }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '2' }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '3' && user.role eq 'academy'}">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+		  </c:choose>	
 		</div>
+		
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
