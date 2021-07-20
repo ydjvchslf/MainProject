@@ -96,9 +96,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			Board board = boardService.getBoard(boardNo);
 			System.out.println(recommendCnt);
 			board.setRecommendCnt(recommendCnt);
-			board.setBoardWriter(userNo);
+		//	board.setBoardWriter(boardWriter);
 			System.out.println("컨트롤러 : "+board);
 			System.err.println(boardNo);
+		//	System.out.println("컨트롤러 boardWriter : "+boardWriter);
 //			int board1 = boardService.updateViewcnt(brdNo);
 			// *조회수 증가시키기
 			boardService.updateViewcnt(boardNo);
@@ -171,7 +172,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			
 			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
 			
-			String category = request.getParameter("category"); // 게시판 종류
+			String category = request.getParameter("cateCode"); // 게시판 종류
+			
 			
 			if(search.getCurrentPage() ==0 ){
 				search.setCurrentPage(1);
@@ -179,6 +181,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			search.setPageSize(pageSize);
 			
 			System.out.println("현재 :: " + search.getCurrentPage());
+			search.setCateCode(category);
+			System.out.println("list 컨트롤러 카테고리: " +category);
 			
 			// Business logic 수행
 			List<Board> list =boardService.getBoardList(search);

@@ -53,11 +53,12 @@
 		 
    <!-- SQL : SELECT LIST -->
    <select  id="getBoardList"  parameterType="search"   resultMap="boardSelectMap">
- 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt
+ 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt, category_code
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
-	  					FROM		(	SELECT b.*, u.email, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt
+	  					FROM		(	SELECT b.*, u.email, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt 
+	  									
 											FROM board b, users u 
-											WHERE b.board_writer=u.user_no and b.board_state='0' 
+											WHERE b.board_writer=u.user_no and b.board_state='0' and b.category_code = #{cateCode}
 											<if test="searchConditionb != null">
 											 	<if test="searchConditionb == 0 and searchKeyword !='' ">
 											 		and b.board_title LIKE '%' || #{searchKeyword} || '%'
@@ -89,7 +90,7 @@
 	  		  	SELECT COUNT(*)
 	  	FROM(	SELECT b.*, u.email 
 						FROM board b, users u
-						where b.board_writer=u.user_no and b.board_state='0'
+						where b.board_writer=u.user_no and b.board_state='0' and b.category_code = #{cateCode}
 						<if test="searchConditionb != null">
 								<if test="searchConditionb == 0 and searchKeyword !='' ">
 									and b.board_title LIKE '%' || #{searchKeyword} || '%'
