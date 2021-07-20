@@ -78,9 +78,23 @@ public class AcademyService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		
-		
 		return map;
 	}
+	
+	public int getImageCount(String academyCode) throws Exception{
+		
+		int imgcount = academyDao.getImageCount(academyCode);
+		
+		return imgcount;
+	};
+	
+	public int getVideoCount(String academyCode) throws Exception{
+		
+		int vidcount = academyDao.getVideoCount(academyCode);
+		
+		return vidcount;
+	};
+	
 	
 	public void deleteMultimedia(int multimediaNo) throws Exception{
 		academyDao.deleteMultimedia(multimediaNo);

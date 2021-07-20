@@ -33,16 +33,28 @@
 					"Content-Type" : "application/json"
 			     },
 				 success : function(data, status){
-					 var str = '';
 					 
-						 str += '<div class="historyIntro" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-						 str += '<div class="academyIntro'+data.academyCode+'"> &nbsp; 소개 : '+data.academyIntro+'</p>';
-						 str += '<a onclick="introUpdate('+data.academyCode+',\''+data.academyIntro+'\');"> 수정 </a>';
-						 str += '<div class="academyHistory'+data.academyCode+'"> &nbsp; 실적 : '+data.academyHistory+'</p>';
-						 str += '<a onclick="historyUpdate('+data.academyCode+',\''+data.academyHistory+'\');"> 수정 </a>';
-						 str += '</div></div>';
+					 var a =''; 
+			         var cnt = data[0].commentCount;
+
+			        $(".commentCount").html(cnt);
+			        console.log(cnt)
+			       		
+			        $.each(data, function(key, value){ 
+			          	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+			            a += '<div class="commentInfo'+value.COMMENT_NO+'">'+'작성일자 : '+value.COMMENT_DATE+' / 작성자 : '+value.EMAIL;
+			            <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
+			            if (sessionId == value.COMMENT_WRITER){
+			            a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
+			            a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
+			            if (sessionId != value.COMMENT_WRITER){
+			            a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
+			            a += '</div>';
+			            a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> 내용 : '+value.COMMENT_CONTENT+'</p>';
+			            a += '</div></div>';
+			        });
 			            
-					 $('.card-body2').html(str);
+			            $(".commentList").html(a);
 				 }							
 			});		
 		}
@@ -50,6 +62,8 @@
 		// 텍스트 박스 
 		function introUpdate(academyCode, academyIntro){
 		    var intro ='';
+		    
+		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
 		    
 		    	intro += '<div class="input-group">';
 		   	 	intro += '<input type="text" class="form-control" name="content_'+academyCode+'" value="'+academyIntro+'"/>';
@@ -82,6 +96,7 @@
 		
 		</script>
 		
+	<title>Academy Info page</title>	
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -195,7 +210,11 @@
                                    
                                     
                             </div>
+                            
                             <div class="card-body2">  </div>
+                            
+                            
+                            
                         </div>
                         <div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>

@@ -26,7 +26,7 @@ public class Academy {
 	private String multimediarole;
 	
 	private int count;
-	
+
 	//추가
 	private String academyArea;
 	

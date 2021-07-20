@@ -68,7 +68,7 @@
 	
 	</script>
 
-<title>Academy main page</title>
+<title>Select Academy page</title>
 </head>
 <body>
 
