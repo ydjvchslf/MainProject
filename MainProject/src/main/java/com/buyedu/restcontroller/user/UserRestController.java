@@ -3,6 +3,8 @@ package com.buyedu.restcontroller.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,8 @@ public class UserRestController {
 	public UserRestController(){
 		System.out.println(this.getClass());
 	}
+	
+	
 	
 	//회원가입창 이메일 중복확인
 	@GetMapping("json/checkEmail/{email}")
@@ -202,7 +206,7 @@ public class UserRestController {
 		}
 	
 	
-	@PostMapping ("json/returnUser") //mappper 손보고 확인해야행 
+	@PostMapping ("json/returnUser") 
 	public Map returnUser(@RequestBody Map<String, String> map ) throws Exception{
 			
 		System.out.println("/user/json/returnUser : POST");
