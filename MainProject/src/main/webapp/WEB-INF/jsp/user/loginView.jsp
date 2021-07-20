@@ -20,7 +20,8 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script> 
+	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
     	 body >  div.container{ 
@@ -223,13 +224,15 @@
 		            success: function(res) {
 		            	
 		            	console.log("카톡고유아이디 : "+res.id);
+		            	console.log("토큰값 : "+authObj.access_token);
 		            	
 		            	var id = res.id;
 		            	var kakaoEmail = res.id+("@kakao.com")
 		            	console.log("만들어준 카톡이메일 : "+kakaoEmail);
 		              
 			              $.ajax({
-			                  url : "/user/json/checkEmail/"+kakaoEmail,
+			                 
+			            	  url : "/user/json/checkEmail/"+kakaoEmail,
 			                  headers : {
 			                      "Accept" : "application/json",
 			                      "Content-Type" : "application/json"
@@ -258,9 +261,24 @@
 		        }
 		      });
 		        
-		})//e.o.kakao
+		})
 		
+	})//e.o.kakao
+	
+	
+	//네이버 로그인
+	$( function() {
+	    var naverLogin = new naver.LoginWithNaverId({
+	        clientId: "vqx5V5ejE6mgkpcPu2vP",
+	        callbackUrl: "http://localhost:8081/user/callback",
+	        isPopup: false,
+	        loginButton: {color: "green", type: 3, height: 45}
+	    });
+	    naverLogin.init();
+	    
 	})
+	    
+
 		
 	</script>		
 	
@@ -306,12 +324,13 @@
 	            			<input type="button" class="signup" name="signup" id="a" value="회원가입">
 						  	<!-- 카카오 로그인 추가 -->
 							<div id="kakaoLogin" align="center">
-							   
-							    <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%" id="kakao-login-btn"/>
-								<a href="http://developers.kakao.com/logout"></a>
+							   <img src="//k.kakaocdn.net/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%" id="kakao-login-btn"/>
 							</div>
-						
-						
+							<a href="http://developers.kakao.com/logout"></a>
+							<!-- 네이버 로그인 추가 -->
+							<div id="naverIdLogin" align="center">
+							   <img src="https://static.nid.naver.com/oauth/big_g.PNG" width="80%" height="45"/>
+							</div>
 						</form>
 						
 							
