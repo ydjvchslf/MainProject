@@ -23,7 +23,7 @@
 				 $(function() {
 					 $(".addConnect").on("click" , function() {
 						
-						alert("잘접근?");
+						//alert("잘접근?");
 						var userNo = ${user.userNo};
 						var academyCode = $("#academyCode").val();
 						
@@ -52,8 +52,7 @@
 												}else if(JSONData.message == "ok"){
 													
 													$(".connect_text").val("")
-													displayValue = "정상등록 되었습니다."
-													$(".connect_text").css("color", "blue");
+													alert("정상등록 되었습니다.")
 													self.location = "/user/listConnect"
 													
 												}else if(JSONData.message == "duplication"){
@@ -125,9 +124,10 @@
 				//등록한 학원 상세보기 페이지 이동 event
 				 $(function() {
 					 $('span[name="cntAcademyName"]').on("click" , function() {
-						 alert("이동할겨")
-						 //self.location = "/user/listConnect"
-						 //재현이꺼 링크받아 바꾸기
+						 //alert("이동할겨")
+						 var academyCode = $('input[name="cntAcademyCode"]').val();
+						 //alert(academyCode);
+						 self.location = "/academy/academyInfo?academyCode="+academyCode;
 					 })
 					 
 				 })
@@ -263,7 +263,7 @@
 										<tr>
 										  <td align="left">${ i }</td>
 										  <td align="left">
-										  	<span class="cntAcademyName"><u>${connect.academy.academyName}</u></span>
+										  	<span class="cntAcademyName" name="cntAcademyName"><u>${connect.academy.academyName}</u></span>
 										  	<input type="hidden" name="cntAcademyCode" value="${connect.academy.academyCode}">
 										  </td>
 										  <td align="left">

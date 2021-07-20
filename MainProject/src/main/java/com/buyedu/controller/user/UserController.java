@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,7 @@ public class UserController {
 		
 		return "/user/addUserView";
 	}
+	
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser( @ModelAttribute("user") User user ) throws Exception {
@@ -322,9 +324,59 @@ public class UserController {
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
 			return "/user/loginView";
 		
+		}	
+	}
+	
+	
+	//sns로긴-> db없어서 회원가입창 이동
+	@RequestMapping( value="snsAddUser", method=RequestMethod.GET )
+	public String snsAddUser( @RequestParam("id") String id , Model model ) throws Exception{
+	
+		System.out.println("/user/addUser : GET (SNS 버전)");
+		
+		System.out.println("sns에서 가져온 id => " + id);
+		
+		String snsEmail = id + "@kakao.com";
+		
+		//model.addAttribute("id", id);
+		model.addAttribute("snsEmail", snsEmail);
+		
+		System.out.println("SNS 버전 끝");
+		return "/user/snsAddUserView";
+	}
+	
+	
+	
+	//카카오 로그인
+	@RequestMapping( value="/snsLogin/{email}" )
+	public String snsLogin( @PathVariable String email, Model model, HttpSession session ) throws Exception{
+	    
+		System.out.println("/user/snsLogin");
+		
+		System.err.println("패쓰받아온 email => "+email);
+	        
+	    User dbUser = userService.getUser(email);
+	    
+	    System.out.println("로긴한 user=>" + dbUser);
+	        
+	    session.setAttribute("user", dbUser);
+	    model.addAttribute("user", dbUser);
+		
+		if ( dbUser.getRole().equals("academy") ) {
+			
+			Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+            
+            model.addAttribute("list",map.get("list"));
+			
+			return "/academy/selectAcademy";
+			
+		}else if( dbUser.getRole().equals("admin") ) {
+			
+			return "adminMain";
+			
 		}
-		
-		
+	        
+	    return "userMain";
 	}
 		
 	
@@ -409,5 +461,7 @@ public class UserController {
 		
 		return "/user/listConnect";
 	}
+	
+
 	
 }
