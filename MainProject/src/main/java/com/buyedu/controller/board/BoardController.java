@@ -72,7 +72,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		public String addBoard( @ModelAttribute("board") Board board, Model model, @ModelAttribute("user") User user, HttpServletRequest httpRequest ) throws Exception {
 
 			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();   
-			board.setBoardWriter(userNo);	
+		//	board.setBoardWriter(userNo);	
 			System.out.println("/board/addBoard : POST");
 			System.err.println(board);
 			//Business Logic
@@ -80,6 +80,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			Board board1 = boardService.getBoard(board.getBoardNo());
 			System.out.println("insert??");
 			model.addAttribute("board", board1);
+			model.addAttribute(userNo);
 			System.out.println("들어갔나 정보 : "+board1);
 			
 			return "/board/getBoard";
@@ -87,15 +88,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		
 		//@RequestMapping("/getProduct.do")
 		@RequestMapping( value="getBoard", method = RequestMethod.GET)
-		public String  getBoard( @RequestParam("boardNo") int boardNo, Model model, HttpServletRequest httpRequest ) throws Exception {
+		public String  getBoard( @RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request ) throws Exception {
 			
 			System.out.println("/board/getBoard : GET");
 			//Business Logic
-			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
+			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
+			String category = request.getParameter("cateCode");
 			Board board = boardService.getBoard(boardNo);
 			System.out.println(recommendCnt);
 			board.setRecommendCnt(recommendCnt);
+			board.setCateCode(category);
 		//	board.setBoardWriter(boardWriter);
 			System.out.println("컨트롤러 : "+board);
 			System.err.println(boardNo);
@@ -222,8 +225,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 			return "redirect:/board/listBoard";
 		}
-		
-	
 
 	}
 

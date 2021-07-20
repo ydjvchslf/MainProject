@@ -20,14 +20,35 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+	<link rel="stylesheet2" href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-	
+	<style>
+		.complainButton{
+	      background-color:white;
+	      top:0px; right:-460px;
+	      position:absolute;
+	      z-index:3;
+	    }
+	    
+	    .updateButton{
+	      background-color:white;
+	      top:0px; right:-395px;
+	      position:absolute;
+	      z-index:3;
+	    }
+	    
+	    .deleteButton{
+	      background-color:white;
+	      top:0px; right:-460px;
+	      position:absolute;
+	      z-index:3;
+	    }
+	</style>
 	<script type="text/javascript">
 		
 		//============= 회원정보수정 Event  처리 =============	
@@ -91,9 +112,32 @@
 	<div class="container">
 	
 <br/><br/><br/><br/>
-<div class="page-header text-default">
-<h1 style="font-family:a옛날사진관4;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.boardTitle}</h1>
-</div>
+<div class="content sub">
+		<div class="viewarea">
+
+			<!-- S : 헤드라인 배너 -->
+			<!-- E : 헤드라인 배너 -->
+	
+				<div class="view-wrap">
+				<!-- google_ad_section_start(name=post) -->
+				<!-- 본문 타이틀&정보 -->
+				
+				<div class="post-tit-info">
+	
+					<hr>
+					
+					<h3 id="boardTitle"><b>${board.boardTitle}</h3></b>
+
+					<div class="info">
+						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.email}</span>
+						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> ${board.boardDate}</span>
+						&nbsp;&nbsp;<span id="count"><i class="glyphicon glyphicon-eye-open" ></i> ${board.viewCnt+1}</span>
+					</div>
+					<hr>
+					<div id=boardContent>
+					<p>${board.boardContent}</p>
+					</br></br><hr>
+					</div>
 <br/>
 	<div class="container">
       		<div class="row">
@@ -105,62 +149,27 @@
 	<table class="table" >
 	<br/><br/>
 		<!-- On rows -->
-		<tr height="50" >
-			<td id="gettable" class="success" width="280"><b>&nbsp;&nbsp; 제목 </b></td>
-			<td id="content" width="825">&nbsp;&nbsp;${board.boardTitle}</td>
-		</tr>
-		<tr height="50" >
-			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp;작성자</b></td>
-			<td id="content" width="825">&nbsp;&nbsp;${board.email}</td>
-		</tr>
 		
-		<tr height="50">
-			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp; 작성일자</b></td>
-			<td width="825">&nbsp;&nbsp;${board.boardDate}</td> 
-		</tr>
 		
-		<tr height="50">
-			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp; 조회수</b></td>
-			<td width="825">&nbsp;&nbsp;${board.viewCnt+1}</td> 
-		</tr>
-		<tr height="50">
-			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp; 추천수</b></td>
-			<td width="825">&nbsp;&nbsp;${board.recommendCnt}</td> 
-		</tr>
-		
-		<tr height="300">
-			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp;내용</b></td>
-			<td id="content" width="825">&nbsp;&nbsp;${board.boardContent}</td>
-		</tr>	
-		<%-- <tr>
-			<td class="success" width="135"><b>&nbsp;&nbsp;</b></td>
-			<img src = "/images/uploadFiles/${ board.fileName }"/>
-			<td width="825">&nbsp;&nbsp;</td>
-		</tr>	 --%>	
-		
-		<tr height="50">
-			<td width="280"></td>
-			<td width="825"></td>
-		</tr>	
-	</table>
 	</div>
 	</div>
 	</div>
 	
 
 	<div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		    <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
+		    <c:if test="${userNo ne board.boardWriter}">
+		    <div class="complainButton">
 		      <button class="btn success" id="complain" value="${board.boardNo}">신 &nbsp;고</button>
-		    </div>
-		    <span>세션 : ${user.userNo}</span>
-		    <span>세션 : ${board.boardWriter}</span>
+		    </div></c:if>
 		    
+		    <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
 		    <c:if test="${userNo eq board.boardWriter}">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		    <div class="updateButton">
 		      <button class="btn success" id="update" value="${board.boardNo}">수 &nbsp;정</button>   
 		   	</div>
 		    
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		    <div class="deleteButton">
 		      <button class="btn success" id="delete" value="${board.boardNo}">삭&nbsp;제
 			</div>
 			</c:if>
@@ -192,7 +201,7 @@
         }
 
         $(".heart").on("click", function () {
-
+			
             var that = $(".heart");
 
             var sendData = {'boardNo' : '${board.boardNo}','heart' : that.prop('name')};
