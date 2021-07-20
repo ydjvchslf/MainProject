@@ -45,7 +45,6 @@
 
 		// 파일 현재 필드 숫자 totalCount랑 비교값
 		var fileCount = count;
-		//fileCount *= 1;
 		// 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
 		var totalCount = 5;
 		// 파일 고유넘버
@@ -60,8 +59,8 @@
 		    var filesArr = Array.prototype.slice.call(files);
 		    
 		    // 파일 개수 확인 및 제한
-		    if ((parseInt(fileCount)+filesArr.length) > totalCount) {
-		      alert('파일갯수 = '+(fileCount+filesArr.length)+' \n파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+		    if ((Number(fileCount)+filesArr.length) > totalCount) {
+		      alert('파일갯수 = '+((Number(fileCount)+filesArr.length))+' \n파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
 		      return;
 		    } else {
 		    	 fileCount = fileCount + filesArr.length;
