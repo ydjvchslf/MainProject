@@ -1,5 +1,6 @@
 package com.buyedu.controller.user;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -256,6 +257,16 @@ public class UserController {
 	}
 	
 	
+	//네이버 콜백jsp 이동
+	@RequestMapping( value="callback" )
+	public String callback() throws Exception{
+		
+		System.out.println("네이버 콜백jsp 단순 네비게이션");
+		
+		return "/user/callback";
+	}
+	
+	
 	
 	
 	//index에서 어케 jsp로 가는지 아직 해결중, 지금은 이렇게
@@ -309,7 +320,7 @@ public class UserController {
 	            
 	            model.addAttribute("list",map.get("list"));
 				
-				return "/academy/selectAcademy";
+				return "academyMain";
 				
 			}else if( dbUser.getRole().equals("admin") ) {
 				
@@ -342,6 +353,7 @@ public class UserController {
 		model.addAttribute("snsEmail", snsEmail);
 		
 		System.out.println("SNS 버전 끝");
+		
 		return "/user/snsAddUserView";
 	}
 	
@@ -368,7 +380,7 @@ public class UserController {
             
             model.addAttribute("list",map.get("list"));
 			
-			return "/academy/selectAcademy";
+			return "academyMain";
 			
 		}else if( dbUser.getRole().equals("admin") ) {
 			
@@ -378,6 +390,53 @@ public class UserController {
 	        
 	    return "userMain";
 	}
+	
+	
+	//네이버 로그인
+	@RequestMapping( value="naverLogin", method=RequestMethod.GET )
+	public String naverLogin( @RequestParam String email, Model model, HttpSession session ) throws Exception{
+		
+		System.out.println("/user/naverLogin : GET");
+		
+		System.out.println("네이버 로긴으로 받아온 email=> "+email);
+		
+		int result = userService.checkEmail(email);
+		//아이디 중복 없음 -> sns 회원가입 창으로 이동
+		if (result == 0) {
+			
+			model.addAttribute("snsEmail", email);
+			return "/user/snsAddUserView";
+			
+		}else{//네이버 로그인 기존회원
+			
+			User dbUser = userService.getUser(email);
+		    
+		    System.out.println("로긴한 user=>" + dbUser);
+		        
+		    session.setAttribute("user", dbUser);
+		    
+		    model.addAttribute("user", dbUser);
+				
+				if ( dbUser.getRole().equals("academy") ) {
+					
+					Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+		            
+		            model.addAttribute("list",map.get("list"));
+					
+					return "academyMain";
+					
+				}else if( dbUser.getRole().equals("admin") ) {
+					
+					return "adminMain";
+					
+				}
+			        
+			    return "userMain";
+			
+		}
+		
+	}
+	
 		
 	
 	@RequestMapping( value="logout", method=RequestMethod.GET )
