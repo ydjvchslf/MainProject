@@ -21,6 +21,7 @@ import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.review.ReviewService;
+import com.buyedu.service.user.UserService;
 
 @Controller
 @RequestMapping("/review/*")
@@ -30,6 +31,8 @@ public class ReviewController {
 	private ReviewService reviewService;
 	@Autowired
 	private AcademyService acaService;
+	@Autowired
+	private UserService userService;
 	
 	public ReviewController() {
 		System.out.println(this.getClass());
@@ -54,8 +57,9 @@ public class ReviewController {
 		
 		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
 		System.out.println(userNo);
-		//String academyCode = ( acaService.getAcademyCode(userNo) ); 하단 테스트중... AcademyCode String용으로 요청해야
-		String academyCode = ( "A02" );
+		//String academyCode = ( acaService.getAcademyCode(userNo) );
+		//String academyCode = ( "A02" );
+		//System.out.println(academyCode);
 		
 		System.out.println("review :" + review);
 		User user = new User();
@@ -63,11 +67,13 @@ public class ReviewController {
 		review.setReviewWriter(user);
 		
 		Academy academy = new Academy();
+		String academyCode = ( acaService.getAcademyCode(userNo) );
 		academy.setAcademyCode(academyCode);
+		
 		System.out.println("academyCode : "+ academy);
 		review.setAcademy(academy);
 		
-		System.out.println("review :" +review);
+		System.out.println("리뷰가 들어가야함 review :" +review);
 		reviewService.addReview(review);
 		
 		
@@ -75,12 +81,15 @@ public class ReviewController {
 	}
 
 	@RequestMapping (value = "getReview" , method=RequestMethod.GET)
-	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
+	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model , HttpServletRequest httpRequest) throws Exception {
 		System.out.println("리뷰넘버 : "+reviewNo);
 		Review review = reviewService.getReview(reviewNo);
 		
+		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
 		
 		model.addAttribute("review" , review);
+		model.addAttribute("user", userNo);
+		System.out.println(userNo);
 		System.out.println(review);
 		
 		

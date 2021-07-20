@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 
 <html lang="ko">
-<title>사!교육</title>
+<title>getReview.jsp</title>
 <head>
 	<meta charset="UTF-8">
 	
@@ -38,6 +38,13 @@
 					self.location = "/review/deleteReview?reviewNo="+reviewNo
 				});
 		});
+		
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				$( ".btn:contains('신')" ).on("click" , function() {
+					fncaddComplainReview();
+				});
+			});	
 		
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -124,16 +131,32 @@
 	</div>
 	
 
+	
+<c:if test="${userNo == review.reviewWriter.userNo }"
 	 <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn btn-primary" id="confirm" value="${review.reviewNo}">수 &nbsp;정</button>
 		    &nbsp;
-		      <button class="btn btn-primary" id="confirm2" >삭&nbsp;제</button>
+		      <button class="btn btn-primary" id="confirm2" value="${review.reviewNo}">삭&nbsp;제</button>
 	
 	&nbsp;
 
 		<butten class="btn btn-primary" id="confirm3" >뒤&nbsp;로</butten>
 	</div>
+	</c:if>
+	
+	<c:if>
+		 <div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+
+		<butten class="btn btn-primary" id="confirm3" >뒤&nbsp;로</butten>
+		
+		<butten class="btn btn-primary" id="complain" value="${review.reviewNo}">신&nbsp;고</butten>
+	</div>
+	</div>
+		
+	
+	</choose>
 	</div>
 
 

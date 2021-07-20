@@ -58,6 +58,14 @@
 		</set>
 		WHERE review_no = '${reviewNo}'
 	</update>
+	
+	<delete id="deleteReview" parameterType="review">
+		update review
+		<set>
+			review_state = #{reviewState}
+		</set>
+		WHERE review_state = '2'
+	</delete>
 		 
 
 	
