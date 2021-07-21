@@ -21,6 +21,7 @@ import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.review.ReviewService;
+import com.buyedu.service.user.UserService;
 
 @Controller
 @RequestMapping("/review/*")
@@ -30,6 +31,8 @@ public class ReviewController {
 	private ReviewService reviewService;
 	@Autowired
 	private AcademyService acaService;
+	@Autowired
+	private UserService userService;
 	
 	public ReviewController() {
 		System.out.println(this.getClass());
@@ -48,26 +51,28 @@ public class ReviewController {
 		return "/review/addReviewView";
 	}
 	@RequestMapping (value="addReview", method=RequestMethod.POST)
-	public String addReview(@ModelAttribute("review") Review review , HttpServletRequest httpRequest) throws Exception {
+	public String addReview(@ModelAttribute("review") Review review , @ModelAttribute("uesr") User user ,  HttpServletRequest httpRequest) throws Exception {
 		
 		System.out.println("애드리뷰포스트 시작");
 		
 		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
 		System.out.println(userNo);
-		//String academyCode = ( acaService.getAcademyCode(userNo) ); 하단 테스트중... AcademyCode String용으로 요청해야
-		String academyCode = ( "A02" );
+		//String academyCode = ( acaService.getAcademyCode(userNo) );
+		//String academyCode = ( "A02" );
+		//System.out.println(academyCode);
 		
 		System.out.println("review :" + review);
-		User user = new User();
 		user.setUserNo(userNo);
 		review.setReviewWriter(user);
 		
 		Academy academy = new Academy();
+		String academyCode = ( acaService.getAcademyCode(userNo) );
 		academy.setAcademyCode(academyCode);
+		
 		System.out.println("academyCode : "+ academy);
 		review.setAcademy(academy);
 		
-		System.out.println("review :" +review);
+		System.out.println("리뷰가 들어가야함 review :" +review);
 		reviewService.addReview(review);
 		
 		
@@ -75,12 +80,16 @@ public class ReviewController {
 	}
 
 	@RequestMapping (value = "getReview" , method=RequestMethod.GET)
-	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model) throws Exception {
+	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model , HttpServletRequest httpRequest) throws Exception {
 		System.out.println("리뷰넘버 : "+reviewNo);
 		Review review = reviewService.getReview(reviewNo);
 		
+		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
+		//String name = ((User)httpRequest.getSession().getAttribute("user")).getName();
 		
 		model.addAttribute("review" , review);
+		model.addAttribute("userNo", userNo);
+		System.out.println(userNo);
 		System.out.println(review);
 		
 		

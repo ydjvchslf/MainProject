@@ -201,10 +201,12 @@
 										  <td align="left">
 										  		<c:choose>
 												  <c:when test= "${connect.connectState == '0'}">
-													<a onclick="deleteConnect(${connect.connectNo})">취소</a>
+													<a onclick="deleteConnect(${connect.connectNo})">인증 거부</a>
+												  </c:when>
+												  <c:when test= "${connect.connectState == '1'}">
+													<a onclick="deleteConnect(${connect.connectNo})">원생 삭제</a>
 												  </c:when>
 											  </c:choose>
-																	  
 										  </td>
 										</tr>
 							          </c:forEach>

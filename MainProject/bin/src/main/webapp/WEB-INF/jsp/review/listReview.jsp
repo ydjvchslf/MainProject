@@ -176,6 +176,9 @@
       
       </table>
 	  <!--  table End /////////////////////////////////////-->
+	  
+	
+	  <c:if test="${user.role eq 'student' && uesr.role eq 'parents'}">
 	  <div class="form-group">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
@@ -183,7 +186,7 @@
 			 
 		    </div>
 		</div>
-	  
+	  </c:if>
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
