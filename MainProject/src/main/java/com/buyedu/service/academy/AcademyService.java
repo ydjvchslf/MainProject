@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buyedu.dao.academy.AcademyDao;
+import com.buyedu.dao.connect.ConnectDao;
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
 
 @Service
@@ -16,6 +18,9 @@ public class AcademyService {
 	
 	@Autowired
 	private AcademyDao academyDao;
+	
+	@Autowired
+	private ConnectDao connectDao;
 	
 	
 	// 학원 등록
@@ -107,6 +112,27 @@ public class AcademyService {
 		return academyDao.deleteMultimedia(multimediaNo);
 	}
 	
+	
+	// 인증 --------------------------------------------------
+	public Map<String, Object> academyConnect(String academyCode) throws Exception{
+		
+		List<Connect> connect = connectDao.academyConnect(academyCode);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("connect", connect);
+		
+		return map;
+	};
+	
+	public String updateConnect(int connectNo) throws Exception{
+		
+		return connectDao.updateConnectAccept(connectNo);
+	}
+	
+	public void deleteConnect(int connectNo) throws Exception{
+		
+		connectDao.deleteConnectfromAca(connectNo);
+	}
 
 
 }

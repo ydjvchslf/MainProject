@@ -157,5 +157,27 @@ public class AcademyRestController {
 		return academyService.deleteMultimedia(multimediano);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "json/updateConnect/{connectNo}", method = RequestMethod.POST)
+	private String updateConnect(@PathVariable int connectNo) throws Exception{
+		
+		System.out.println(" ajax updateConnect -> 인증 완료");
+		
+		System.out.println("json 으로 받은 connectNo " + connectNo);
+		
+		return academyService.updateConnect(connectNo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "json/deleteConnect/{connectNo}", method = RequestMethod.POST)
+	private void deleteConnect(@PathVariable int connectNo) throws Exception{
+		
+		System.out.println(" ajax updateConnect -> 인증 거부, 정보 삭제됨");
+		
+		System.out.println("json 으로 받은 connectNo " + connectNo);
+		
+		academyService.deleteConnect(connectNo);
+	}
+	
 
 }
