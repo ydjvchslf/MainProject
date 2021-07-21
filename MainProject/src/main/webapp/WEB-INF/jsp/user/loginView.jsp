@@ -231,12 +231,26 @@
 		            	
 		            	console.log("카톡고유아이디 : "+res.id);
 		            	console.log("토큰값 : "+authObj.access_token);
-		            	//debugger;
+		            	
 		            	
 		            	var id = res.id;
 		            	var email = res.kakao_account.email
+		            	
+		            	console.log(id);
 		            	console.log(email);
+		            	
+		            	
+		            	if ("email" != null){
+		            		email = res.kakao_account.email;
+		            	}
+		            	
+		            	if ( typeof email === 'undefined' ){
+		            		email = id+"@kakao.com";
+		            		console.log("동의안했어->" +email)
+		            	}
 		              
+		            	debugger;
+		            	
 			              $.ajax({
 			                 
 			            	  url : "/user/json/checkEmail/"+email,

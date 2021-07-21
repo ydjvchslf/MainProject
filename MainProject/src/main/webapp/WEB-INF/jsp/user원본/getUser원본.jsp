@@ -28,17 +28,6 @@
 					});
 			});
 			
-			
-			//=========로그아웃 테스트 중 =============
-			$(function() {	
-				 $('input[name=kakaologout]').on("click" , function() {
-						alert("하이")
-						
-						
-				 });
-			});
-			
-			
 		
 			
 		</script>
