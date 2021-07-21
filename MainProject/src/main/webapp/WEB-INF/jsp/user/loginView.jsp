@@ -221,18 +221,25 @@
 		          //2. 로그인 성공시, API를 호출합니다.
 		          Kakao.API.request({
 		            url: '/v2/user/me',
+		            data: {
+		                property_keys: ["kakao_account.email"]
+		            },
 		            success: function(res) {
+		            
+		            	console.log("res : ", res);
+		            	console.log(authObj)
 		            	
 		            	console.log("카톡고유아이디 : "+res.id);
 		            	console.log("토큰값 : "+authObj.access_token);
+		            	//debugger;
 		            	
 		            	var id = res.id;
-		            	var kakaoEmail = res.id+("@kakao.com")
-		            	console.log("만들어준 카톡이메일 : "+kakaoEmail);
+		            	var email = res.kakao_account.email
+		            	console.log(email);
 		              
 			              $.ajax({
 			                 
-			            	  url : "/user/json/checkEmail/"+kakaoEmail,
+			            	  url : "/user/json/checkEmail/"+email,
 			                  headers : {
 			                      "Accept" : "application/json",
 			                      "Content-Type" : "application/json"
@@ -242,10 +249,10 @@
 			                    	console.log("결과->" +JSONData.result);
 			                        if(JSONData.result == 0){ //DB에 아이디가 없을 경우 => 회원가입
 			                        	console.log("회원가입화면 이동...");
-			                        	self.location = "/user/snsAddUser?id="+id;
+			                        	self.location = "/user/snsAddUser?email="+email;
 			                        }else{ //DB에 아이디가 존재할 경우 => 로그인
 			                        	console.log("로그인중...");
-			                        	self.location = "/user/snsLogin/"+kakaoEmail;
+			                        	self.location = "/user/snsLogin/"+email;
 			                        }
 			                    }
 			              })

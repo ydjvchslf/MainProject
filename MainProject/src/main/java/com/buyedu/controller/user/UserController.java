@@ -5,7 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -307,7 +309,7 @@ public class UserController {
 	
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user , Model model, HttpSession session ) throws Exception{
+	public String login(@ModelAttribute("user") User user , Model model, HttpSession session , HttpServletResponse res) throws Exception{
 		
 		System.out.println("/user/login : POST");
 		//Business Logic
@@ -330,6 +332,11 @@ public class UserController {
 			
 			session.setAttribute("user", dbUser);
 			model.addAttribute("user", user);
+			
+			// 쿠키에 로그인 타입 값 설정
+			Cookie ck = new Cookie("loginType", "normal");
+			ck.setPath("/");
+			res.addCookie(ck);
 			
 			if ( dbUser.getRole().equals("academy") ) {
 				
@@ -358,16 +365,13 @@ public class UserController {
 	
 	//sns로긴-> db없어서 회원가입창 이동
 	@RequestMapping( value="snsAddUser", method=RequestMethod.GET )
-	public String snsAddUser( @RequestParam("id") String id , Model model ) throws Exception{
+	public String snsAddUser( @RequestParam("email") String email , Model model ) throws Exception{
 	
 		System.out.println("/user/addUser : GET (SNS 버전)");
 		
-		System.out.println("sns에서 가져온 id => " + id);
+		System.out.println("sns에서 가져온 email => " + email);
 		
-		String snsEmail = id + "@kakao.com";
-		
-		//model.addAttribute("id", id);
-		model.addAttribute("snsEmail", snsEmail);
+		model.addAttribute("snsEmail", email);
 		
 		System.out.println("SNS 버전 끝");
 		
@@ -378,7 +382,7 @@ public class UserController {
 	
 	//카카오 로그인
 	@RequestMapping( value="/snsLogin/{email}" )
-	public String snsLogin( @PathVariable String email, Model model, HttpSession session ) throws Exception{
+	public String snsLogin( @PathVariable String email, Model model, HttpSession session , HttpServletResponse res) throws Exception{
 	    
 		System.out.println("/user/snsLogin");
 		
@@ -390,6 +394,11 @@ public class UserController {
 	        
 	    session.setAttribute("user", dbUser);
 	    model.addAttribute("user", dbUser);
+	    
+	    // 쿠키에 로그인 타입 값 설정
+		Cookie ck = new Cookie("loginType", "kakao");
+		ck.setPath("/");
+		res.addCookie(ck);
 		
 		if ( dbUser.getRole().equals("academy") ) {
 			
@@ -411,7 +420,7 @@ public class UserController {
 	
 	//네이버 로그인
 	@RequestMapping( value="naverLogin", method=RequestMethod.GET )
-	public String naverLogin( @RequestParam String email, Model model, HttpSession session ) throws Exception{
+	public String naverLogin( @RequestParam String email, Model model, HttpSession session , HttpServletResponse res ) throws Exception{
 		
 		System.out.println("/user/naverLogin : GET");
 		
@@ -433,6 +442,11 @@ public class UserController {
 		    session.setAttribute("user", dbUser);
 		    
 		    model.addAttribute("user", dbUser);
+		    
+		    // 쿠키에 로그인 타입 값 설정
+			Cookie ck = new Cookie("loginType", "naver");
+			ck.setPath("/");
+			res.addCookie(ck);
 				
 				if ( dbUser.getRole().equals("academy") ) {
 					
