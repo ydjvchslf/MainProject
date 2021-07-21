@@ -81,7 +81,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println("insert??");
 			model.addAttribute("board", board1);
 			model.addAttribute(userNo);
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("boardNo", board.getBoardNo());
+			map.put("userNo", userNo);
+			int boardLike = boardService.getRecommend(map);
+			model.addAttribute("heart",boardLike);
 			System.out.println("들어갔나 정보 : "+board1);
+			System.out.println("추천수가 안나오지? "+boardLike);
 			
 			return "/board/getBoard";
 		}

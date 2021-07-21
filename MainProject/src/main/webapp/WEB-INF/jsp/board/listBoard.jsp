@@ -200,6 +200,7 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
+	  
 	  카테고리 :  ${search.cateCode}
 	  userNo : ${user.userNo}
 		    
