@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html >
     <head>
-        <meta charset="utf-8" />
+        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -20,43 +20,134 @@
 		
 		<script type="text/javascript">
 		
-			//============= "����"  Event ���� =============
-			 $(function() {
-				//==> DOM Object GET 3���� ��� ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$( "button.btn.btn-primary" ).on("click" , function() {
-					fncUpdateUser();
-				});
-			});	
-			
-			
-			//============= "���"  Event ó�� ��  ���� =============
-			$(function() {
-				//==> DOM Object GET 3���� ��� ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		var duplicationCheck = false;
 				
-				$("a[href='#' ]").on("click" , function() {
-					$("#myform")[0].reset();
-				});
-			});	
+		//가입버튼 눌렀을때 모든 true 값 체크 메서드
+		function fncCheckAll() {
 			
+			var valid = false;
 			
-			///////////////////////////////////////////////////////////////////////
-			function fncUpdateUser() {
-				var name=$("input[name='name']").val();
-				
-				if(name == null || name.length <1){
-					alert("�̸��� �ݵ�� �Է��ϼž� �մϴ�.");
-					return;
-				}
-				
-				var phone=$("input[name='phone']").val();
-				
-				if(phone == null || phone.length <1){
-					alert("�ڵ�����ȣ�� �ݵ�� �Է��ϼž� �մϴ�.");
-					return;
-				}
-					
-				$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+			if( fncCheckName() && fncCheckPhone ){
+				valid = true;
 			}
+			
+			return valid;
+		}
+		
+		
+		$(function() {
+			
+			//수정하기 event
+			$("#update").on("click" , events.click.update);
+			
+			//뒤로가기 event 
+			$("#back").on("click" , events.click.back);
+			
+			//이름 변화 event
+			$("#name").on("change", events.change.name);
+			
+			//핸드폰 변화 event
+			$("#phone").on("change", events.change.phone);
+			
+		});	
+		
+		
+	
+		var events = {
+				
+				click : {
+					
+					update : function() {
+						if(fncCheckAll()){
+							
+							fncUpdateUser();
+						}
+					},
+					
+					back : function() {
+						window.history.back();
+					}
+				},
+			
+				change : {
+	
+					name : function(){
+						fncCheckName();
+					},
+					
+					phone : function(){
+						fncCheckPhone();
+					}
+				}
+			}
+		
+		
+		
+		//이름 체크 함수
+	    function fncCheckName() {
+			
+			var name = $("#name").val();
+			
+	        if(name){
+	        	var nameRegExp = /^[가-힣]{2,20}$/;
+	        	
+	        	if(nameRegExp.test(name)){
+	        		$(".text_name").text("올바른 이름 형식입니다.");
+					$(".text_name").css("color", "blue");
+	        		return true;
+	        	}else{
+	        		$(".text_name").text("올바른 이름 형식이 아닙니다");
+					$(".text_name").css("color", "red");
+	        	}
+	        } else{
+	        	$(".text_name").text("이름을 필수로 입력하세요!");
+				$(".text_name").css("color", "red");
+	        }
+	        return false; 
+	    }
+		
+		
+
+		//핸드폰 체크 함수 
+	    function fncCheckPhone(){
+	    	
+	    	var phone = $("#phone").val();
+	    	
+	    	if(phone){
+	    		
+	    		var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+	    		
+	    		if(regExp.test(phone)){
+	    			
+	    			$(".text_phone").text("올바른 휴대폰 형식입니다.");
+					$(".text_phone").css("color", "blue");
+					
+					return true;
+					
+	    		}else{
+	    			
+	    			$(".text_phone").text("올바르지 않은 휴대폰 형식입니다.");
+					$(".text_phone").css("color", "red");
+	    			
+	    		}
+	    	}else{
+	    		
+	    		$(".text_phone").text("휴대폰번호를 필수로 적어주세요!");
+				$(".text_phone").css("color", "red");
+	    		
+	    	}
+	    	return false;
+	    }
+		
+		
+		
+		//수정하기 함수
+		function fncUpdateUser() {
+			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+		}
+	
+		
+		
 		
 		</script>
 		
@@ -92,48 +183,48 @@
                             <div class="sb-sidenav-menu-heading">search</div>
                             <a class="nav-link" href="/academy/listSearch">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                �п��˻�
+                                학원검색
                             </a>
                             <div class="sb-sidenav-menu-heading">information</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                �� ���� ����
+                                내 정보 관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/user/getUser?email=${user.email}">�� ���� ����</a>
-                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">��й�ȣ ����</a>
-                                    <a class="nav-link" href="/user/outUser?email=${user.email}">Ż�� �ϱ�</a>
-                                    <a class="nav-link" href="#">���� �ۼ��� �ı�</a>
-                                    <a class="nav-link" href="/user/listConnect">���� �ٴϴ� �п�</a>
+                                    <a class="nav-link" href="/user/getUser?email=${user.email}">내 정보 보기</a>
+                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">비밀번호 변경</a>
+                                    <a class="nav-link" href="/user/outUser?email=${user.email}">탈퇴 하기</a>
+                                    <a class="nav-link" href="#">내가 작성한 후기</a>
+                                    <a class="nav-link" href="/user/listConnect">내가 다니는 학원</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                �� ���� ����
+                                내 수업 관리
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">���� ����</a>
-                                    <a class="nav-link" href="#">���� ���</a>
+                                    <a class="nav-link" href="#">관심 수업</a>
+                                    <a class="nav-link" href="#">구매 목록</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">board</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBoard" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                �Խ���
+                                게시판
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseBoard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#">��������</a>
-                                	<a class="nav-link" href="#">QnA �Խ���</a>
-                                    <a class="nav-link" href="/board/listBoard">�����Խ���</a>
-                                    <a class="nav-link" href="#">�п� ��������</a>
-                                    <a class="nav-link" href="#">���� �ۼ��� �Խñ�</a>
-                                    <a class="nav-link" href="#">���� �ۼ��� ���</a>
+                                	<a class="nav-link" href="#">공지사항</a>
+                                	<a class="nav-link" href="#">QnA 게시판</a>
+                                    <a class="nav-link" href="/board/listBoard">자유게시판</a>
+                                    <a class="nav-link" href="#">학원 공지사항</a>
+                                    <a class="nav-link" href="#">내가 작성한 게시글</a>
+                                    <a class="nav-link" href="#">내가 작성한 댓글</a>
                                 </nav>
                             </div>
                         </div>
@@ -141,24 +232,24 @@
 
                 </nav>
             </div>
-            <!-- ���Ⱑ ��� �� ȭ�� (�ٲ�� ��) -->
+            <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
 				        <div class="page-header text-center">
-					       <h3 class=" text-info">ȸ����������</h3>
-					       <h5 class="text-muted">�� ������ <strong class="text-danger">�ֽ������� ����</strong>�� �ּ���.</h5>
+					       <h3 class=" text-info">회원정보수정</h3>
+					       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
 					    </div>
 					    
 					    <!-- form Start /////////////////////////////////////-->
 						<form class="form-horizontal" id="myform">
 						
 						  <div class="form-group">
-						    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">�� �� ��</label>
+						    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="�ߺ�Ȯ���ϼ���"  readonly>
+						      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="중복확인하세요"  readonly>
 						       <span id="helpBlock" class="help-block">
-						      	<strong class="text-danger">���̵�� �����Ұ�</strong>
+						      	<strong class="text-danger">아이디는 수정불가</strong>
 						      </span>
 						    </div>
 						  </div>
@@ -166,28 +257,30 @@
 						  
 						  
 						  <div class="form-group">
-						    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">�̸�</label>
+						    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="name" name="name" value="${user.name}" placeholder="����ȸ���̸�">
+						      <input type="hidden" name="userNo" value="${user.userNo}">
+						      <input type="text" class="form-control" id="name" name="name" value="${user.name}" placeholder="변경회원이름">
+							    <span id="helpBlock" class="help-block">
+							      <strong class="text_name"></strong>
+							    </span>
 						    </div>
 						  </div>
 						  
 						  <div class="form-group">
-						    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">�ڵ���</label>
+						    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호( - 포함)</label>
 						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="phone" name="phone"  value="${user.phone}" placeholder="�����޴�����ȣ">
+						      <input type="text" class="form-control" id="phone" name="phone"  value="${user.phone}" placeholder="변경휴대폰번호">
+						      <span id="helpBlock" class="help-block">
+							     <strong class="text_phone"></strong>
+							  </span>
 						    </div>
 						  </div>
-						  
-						  <input type="hidden" id="password" name="password" value="${user.password}">
-						  <input type="hidden" id="role" name="role" value="${user.role}">
-						  <input type="hidden" id="userNo" name="userNo" value="${user.userNo}">
-						  <input type="hidden" id="accountState" name="accountState" value="${user.accountState}">
 						  
 						  <div class="form-group">
 						    <div class="col-sm-offset-4  col-sm-4 text-center">
-						      <button type="button" class="btn btn-primary"  >�� &nbsp;��</button>
-							  <a class="btn btn-primary btn" href="#" role="button">�� &nbsp;��</a>
+						      <button type="button" id="update" name="update" class="btn btn-primary">수정하기</button>
+						      <button type="button" id="back" name="back" class="btn btn-primary">뒤로가기</button>
 						    </div>
 						  </div>
 						</form>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -14,47 +14,207 @@
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="/assets/demo/jquery.ajax-cross-origin.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
-		</script>
+        </script>
+        <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+        <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
+        
 		
 		<script type="text/javascript">
-		// °Ë»ö / page µÎ°¡Áö °æ¿ì ¸ğµÎ Form Àü¼ÛÀ» À§ÇØ JavaScrpt ÀÌ¿ë 
+		// ê²€ìƒ‰ / page ë‘ê°€ì§€ ê²½ìš° ëª¨ë‘ Form ì „ì†¡ì„ ìœ„í•´ JavaScrpt ì´ìš© 
 			
-			function fncGetList(currentPage) {
-				
-				$("#currentPage").val(currentPage)
-			   	$("form").attr("method", "POST").attr("action","/user/listUser").submit();	
-			};
-			
-			
-			$(function() {
-				
-				$( "button.btn.btn-default" ).on("click" , function() {
-					fncGetList(1);
-				});
-				 
-			});
-			
+		function fncGetList(currentPage) {
+			//alert(currentPage)
+			$("#currentPage").val(currentPage)
+		   	$("form").attr("method", "POST").attr("action","/user/listUser").submit();	
+		};
 		
-			$(function() {
-				
-				$( "input:radio" ).on("click" , function() {
-					//alert("ÀßÁ¢±Ù")
-					fncGetList(1);
-				});
-				 
+		//ë„ˆì™œ ì•ˆë˜ëŠ”ê±°ì•¼
+		function enterEvent(){
+			if(window.event.keyCode == 13){
+				alert("ì—”í„°")
+				fncGetList(1);
+			}
+		}
+		
+		//ê²€ìƒ‰ë²„íŠ¼ í´ë¦­ event
+		$(function() {
+			
+			Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
+			
+			$( "button.btn.btn-default" ).on("click" , function() {
+				fncGetList(1);
 			});
+			 
+		});
+		
+		
+		
+		$(function() {
+			
+			$("input[name=searchRole]").each(function(index, item){
+				var $check = $(this)
+				var roles = '${roles}';
+				
+				console.log(item)
+				if (roles.indexOf(item.value) > -1) {
+				//	item.checked = true;
+					$check.attr("checked", "checked");
+				}
+			})
+			
+			$("input[name=searchAccountState]").each(function(index, item){
+				var states = '${states}';
+				if (states.indexOf(item.value) > -1 )
+					item.checked = true;
+			})
 			
 			
-			$(function() {
+			//=========ë¡œê·¸ì•„ì›ƒ í…ŒìŠ¤íŠ¸ ì¤‘ =============
+			$(function() {	
 				
-				$( "button[name='detailFormButton']" ).on("click" , function() {
-				
-					fncGetList(1);
-				});
-				 
+				 $('input[name=allLogout]').on("click" , function() {
+					 
+					 let x = document.cookie;
+					 
+					 const words = x.split("; ");
+					 
+					 var loginType = "";
+					 
+					 for(var i=0; i < words.length; i++ ){
+						 
+						if( words[i].split("=")[0] === "loginType" ){
+							 console.log( words[i].split("=")[1] )
+							 loginType = words[i].split("=")[1];
+						}
+					 }
+					 
+					 if(loginType == "kakao"){
+						 
+						 alert("ì¹´ì¹´ì˜¤ ë¡œê·¸ì•„ì›ƒ!")
+						 if (!Kakao.Auth.getAccessToken()) {
+							  console.log('Not logged in.');
+							  return;
+							}
+						 
+							 Kakao.API.request({
+							  url: '/v1/user/unlink',
+							  success: function(response) {
+							    console.log(response);
+							    
+							    self.location = "/"
+							  },
+							  fail: function(error) {
+							    console.log(error);
+							  },
+							});
+						 
+						 
+							Kakao.Auth.logout(function() {
+							  console.log(Kakao.Auth.getAccessToken());
+							  
+							  if(Kakao.Auth.getAccessToken()){
+								  alert('ë¡œê·¸ì•„ì›ƒì‹¤íŒ¨');
+							  }else{
+								  
+							  }
+							 
+							});
+							
+						 
+						 
+					 }else if(loginType == "naver"){
+						 
+						 alert("ë„¤ì´ë²„ ë¡œê·¸ì•„ì›ƒ!")
+						 
+						 /*
+						 localStorage.removeItem('com.naver.nid.access_token');
+						 
+						 function Logout(){
+							 sessionStorage.clear();
+						 }
+						 
+						 //self.location = "/"
+						 
+						 */
+						 //ajax ë¡œ
+						 
+						 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+						 
+						 //console.log(accessToken)
+						 
+						 var tokenArray = accessToken.split(".");
+						 
+						 //console.log(tokenArray)
+						 
+						 var finalToken = tokenArray[1]
+						 
+						 console.log(finalToken)
+						 //return
+						 
+							  $.ajax({
+			                 		
+								  crossOrigin : true,
+								  
+				            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+finalToken,
+				                  headers : {
+				                	  
+				                      "Accept" : "application/json",
+				                      "Content-Type" : "application/json"
+				                    },
+				                    success : function(JSONData, status){
+				                        alert("ì–")
+				                    	console.log("ê²°ê³¼->" +JSONData);
+				                        
+				                    }
+			              })
+								
+			              
+						 
+					 }else{
+						 alert("ì¼ë°˜ ë¡œê·¸ì•„ì›ƒ");
+						 self.location = "logout"
+					 }
+					 
+					 /*
+					 
+					 if (!Kakao.Auth.getAccessToken()) {
+						  console.log('Not logged in.');
+						  return;
+						}
+					 
+						 Kakao.API.request({
+						  url: '/v1/user/unlink',
+						  success: function(response) {
+						    console.log(response);
+						    
+						    self.location = "/"
+						  },
+						  fail: function(error) {
+						    console.log(error);
+						  },
+						});
+					 
+					 
+					 
+						Kakao.Auth.logout(function() {
+						  console.log(Kakao.Auth.getAccessToken());
+						  
+						  if(Kakao.Auth.getAccessToken()){
+							  alert('ë¡œê·¸ì•„ì›ƒì‹¤íŒ¨');
+						  }else{
+							  
+						  }
+						 
+						});
+						
+						*/
+				 });
 			});
-			
+			 
+		});
+		
 			
 		</script>
 		
@@ -90,46 +250,46 @@
                             <div class="sb-sidenav-menu-heading">search</div>
                             <a class="nav-link" href="/academy/listSearch">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                ÇĞ¿ø°Ë»ö
+                                í•™ì›ê²€ìƒ‰
                             </a>
                             <div class="sb-sidenav-menu-heading">information</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                »çÀÌÆ® °ü¸®
+                                ì‚¬ì´íŠ¸ ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/user/listUser">ÀüÃ¼ »ç¿ëÀÚ º¸±â</a>
-                                    <a class="nav-link" href="/chart/getChart">»çÀÌÆ® ÇöÈ² º¸±â</a>
+                                    <a class="nav-link" href="/user/listUser">ì „ì²´ ì‚¬ìš©ì ë³´ê¸°</a>
+                                    <a class="nav-link" href="/chart/getChart">ì‚¬ì´íŠ¸ í˜„í™© ë³´ê¸°</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                ½Å°í °ü¸®
+                                ì‹ ê³  ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">½Å°í °Ô½Ã±Û º¸±â</a>
-                                    <a class="nav-link" href="#">½Å°í ´ñ±Û º¸±â</a>
-                                    <a class="nav-link" href="#">½Å°í ÈÄ±â º¸±â</a>
+                                    <a class="nav-link" href="#">ì‹ ê³  ê²Œì‹œê¸€ ë³´ê¸°</a>
+                                    <a class="nav-link" href="#">ì‹ ê³  ëŒ“ê¸€ ë³´ê¸°</a>
+                                    <a class="nav-link" href="#">ì‹ ê³  í›„ê¸° ë³´ê¸°</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">board</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBoard" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                °Ô½ÃÆÇ
+                                ê²Œì‹œíŒ
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseBoard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#">°øÁö»çÇ×</a>
-                                	<a class="nav-link" href="#">QnA °Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="/board/listBoard">ÀÚÀ¯°Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="#">ÇĞ¿ø °øÁö»çÇ×</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ °Ô½Ã±Û</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ ´ñ±Û</a>
+                                	<a class="nav-link" href="#">ê³µì§€ì‚¬í•­</a>
+                                	<a class="nav-link" href="#">QnA ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="/board/listBoard">ììœ ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="#">í•™ì› ê³µì§€ì‚¬í•­</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œê¸€</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ëŒ“ê¸€</a>
                                 </nav>
                             </div>
                         </div>
@@ -137,70 +297,67 @@
 
                 </nav>
             </div>
-            <!-- ¿©±â°¡ °¡¿îµ¥ µé¾î°¥ È­¸é (¹Ù²î´Â °÷) -->
+            <!-- ì—¬ê¸°ê°€ ê°€ìš´ë° ë“¤ì–´ê°ˆ í™”ë©´ (ë°”ë€ŒëŠ” ê³³) -->
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
                         	
 						<div class="page-header text-info">
-					       <h3>È¸¿ø¸ñ·ÏÁ¶È¸</h3>
+					       <h3>íšŒì›ëª©ë¡ì¡°íšŒ</h3>
 					    </div>
 					    
-					    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+					    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 					    <div class="row">
 					    
 						    <div class="col-md-6 text-left">
 						    	<p class="text-primary">
-						    		ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö
+						    		ì „ì²´ íšŒì› ${resultPage.totalCount } ëª…, í˜„ì¬ ${resultPage.currentPage}  í˜ì´ì§€
 						    	</p>
 						    </div>
 						    
 						   
-						    
-						    </br></br>
+						    <div><br></br></div>
 						    
 						    <div class="col-md-6 text-right">
 							    <form class="form-inline" name="detailForm">
 							    
 							     <div class="col-md-6 text-right">
 							    	<p>
-							    		<span><strong> »ç¿ëÀÚ ¿ªÇÒ </strong></span>
-							    		<input type="radio" name="searchRole" value="student"> ÇĞ»ı
-							    		<input type="radio" name="searchRole" value="parents"> ÇĞºÎ¸ğ
-							    		<input type="radio" name="searchRole" value="academy"> ÇĞ¿ø
+							    		<span><strong> ì‚¬ìš©ì ì—­í•  </strong></span>
+							    		<input type="checkbox" name="searchRole" value="student"> í•™ìƒ
+							    		<input type="checkbox" name="searchRole" value="parents"> í•™ë¶€ëª¨
+							    		<input type="checkbox" name="searchRole" value="academy"> í•™ì›
 							    	</p>
 							    	<p>
-							    		<span><strong> È¸¿ø »óÅÂ </strong></span>
-							    		<input type="checkbox" name="searchAccountState" value="0"> È°µ¿Áß
-							    		<input type="checkbox" name="searchAccountState" value="1"> Å»Åğ
-							    		<input type="checkbox" name="searchAccountState" value="2"> º¹±¸½ÅÃ»
+							    		<span><strong> íšŒì› ìƒíƒœ </strong></span>
+							    		<input type="checkbox" name="searchAccountState" value="0"> í™œë™ì¤‘
+							    		<input type="checkbox" name="searchAccountState" value="1"> íƒˆí‡´
 							    	</p>
 						   		 </div>
-							    
 							    
 								  <div class="form-group">
 								    <select class="form-control" name="searchCondition" >
 										<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>Email</option>
-										<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>È¸¿ø¸í</option>
+										<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>íšŒì›ëª…</option>
 									</select>
 								  </div>
 								  
 								  <div class="form-group">
-								    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
+								    <label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+								    <input type="text" class="form-control" onkeyup="enterEvent()" id="searchKeyword" name="searchKeyword"  placeholder="ê²€ìƒ‰ì–´"
 								    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 								  </div>
 								  
-								  <button type="button" class="btn btn-default">°Ë»ö</button>
+								  <button type="button" class="btn btn-default">ê²€ìƒ‰</button>
 								  
-								  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+								  <!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 								  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 								  
 								</form>
 					    	</div>
 					    	
 						</div>
-						<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+						<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 						
 						
 				      <!--  table Start /////////////////////////////////////-->
@@ -209,11 +366,12 @@
 				        <thead>
 				          <tr>
 				            <th align="center">No</th>
-				            <th align="left" >È¸¿ø Email</th>
-				            <th align="left">È¸¿ø¸í</th>
-				            <th align="left">±¸ºĞ</th>
-				            <th align="left">°¡ÀÔÀÏ</th>
-				            <th align="left">°èÁ¤»óÅÂ</th>
+				            <th align="left">êµ¬ë¶„</th>
+				            <th align="left">íšŒì›ëª…</th>
+				            <th align="left">Email</th>
+				            <th align="left">ê°€ì…ì¼</th>
+				            <th align="left">ê³„ì •ìƒíƒœ</th>
+				            <th align="left">íƒˆí‡´ë‚ ì§œ</th>
 				          </tr>
 				        </thead>
 				       
@@ -223,27 +381,29 @@
 						  <c:forEach var="user" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
 							<tr>
-							  <td align="center">${ i }</td>
-							  <td align="left"  title="Click : È¸¿øÁ¤º¸ È®ÀÎ">${user.email}</td>
-							  <td align="left">${user.name}</td>
+							  <td align="center">${i+(resultPage.currentPage-1)*10}</td>
 							  <td align="left">${user.role}</td>
+							  <td align="left">${user.name}</td>
+							  <td align="left">${user.email}</td>
 							  <td align="left">${user.inDate}</td>
 							  <td align="left">
 								  <c:choose>
 									  <c:when test= "${user.accountState == '0' }">
-										È°µ¿Áß
+										í™œë™ì¤‘
 									  </c:when>
 									  <c:when test= "${user.accountState == '1' }">
-										Å»Åğ
+										íƒˆí‡´
 									  </c:when>
 								  </c:choose>
 							  </td>
+							  <td align="left">${ ! empty user.outDate ? user.outDate : "-"}</td>
 							</tr>
 				          </c:forEach>
 				        
 				        </tbody>
 				      
 				      </table>
+				      <input type="button" name="allLogout" value="ë¡œê·¸ì•„ì›ƒ"></input>
 				      <jsp:include page="../common/pageNavigator_new.jsp"/>
                     </div>
                 </main>

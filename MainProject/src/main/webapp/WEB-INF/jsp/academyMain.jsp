@@ -22,7 +22,7 @@
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/main/academyMain">Buy! Edu</a>
+            <a class="navbar-brand ps-3" href="/user/loginacademy?email=${user.email}">Buy! Edu</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -72,6 +72,7 @@
                             </a>
                             <div class="collapse" id="collapseAcademy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+                                	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
                                     <a class="nav-link" href="#">기본 정보</a>
                                     <a class="nav-link" href="#">멀티미디어 정보</a>
                                     <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
@@ -123,11 +124,36 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <p class="mb-0">
-                                    여기에다 여러분의 
-                                    <code>jsp를</code>
-                                    넣으십쇼!
-                                    <code>하지만! 제발!!!</code>
-                                    알맞게 넣으셔야 깨지지 않습니다. 깨지는 순간... 그건 여러분의 잘못 입니다 -형래올림-
+                                    
+                                    <div class="panel panel-primary">
+									<div class="panel-heading">
+											<i class="glyphicon glyphicon-briefcase"></i> 학원 프로필
+				         			</div>
+									<ul class="list-group">
+				
+									<c:if test="${list.size()<=2}">
+										<li class="list-group-item">
+										 	<a href="#">학원 등록</a>
+										 </li>
+									</c:if>
+									
+								<c:set var="i" value="0" />
+								 <c:forEach var="academy" items="${list}">
+									 <c:set var="i" value="${ i+1 }" />
+											 
+									  <li class="list-group-item">
+										 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
+										 </li>
+									
+						          </c:forEach>	
+						          	
+									</ul>
+						        </div>
+						        
+								</br>
+								<a href="/academy/academySampleEdu?academyCode=xrYC6SH"> 테스트 학원 멀티미디어</a>
+						        
+						        
                                 </p>
                             </div>
                         </div>

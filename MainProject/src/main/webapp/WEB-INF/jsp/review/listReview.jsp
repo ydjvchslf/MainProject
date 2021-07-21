@@ -10,7 +10,7 @@
 
 
 <html>
-<title>JENNYSHOP</title>
+<title>listReview.jsp</title>
 <head>
 	<meta charset="UTF-8">
 	
@@ -41,7 +41,7 @@
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
-			function fncGetReviewList(currentPage) {
+			function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
 			$("form").attr("method" , "POST").attr("action" , "/review/listReview").submit();
 			//$("form").submit();
@@ -60,6 +60,8 @@
 				fncAddReviewView();
 			});
 		});	
+		
+		
 		
 		function fncAddReviewView(){
 			
@@ -116,8 +118,8 @@
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" style="width:120px;">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>선택하세요.</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
-						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>작성자</option>
+						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>내용</option>
 					</select>
 				  </div>
 				  
@@ -177,10 +179,17 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
+	  	<c:if test="${user.role eq 'student' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
 		      <a href="/review/addReviewView" >글쓰기</a></button>
-			 
+		</c:if>	 
+		
+		<c:if test="${user.role eq 'parents' }">
+		    <div class="col-sm-offset-11  col-sm-1 text-center">
+		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		      <a href="/review/addReviewView" >글쓰기</a></button>
+		</c:if>
 		    </div>
 		</div>
 	  

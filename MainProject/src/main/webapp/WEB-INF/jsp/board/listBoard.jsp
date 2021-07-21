@@ -10,7 +10,7 @@
 
 
 <html>
-<title>JENNYSHOP</title>
+<title>사!교육</title>
 <head>
 
 	
@@ -41,10 +41,16 @@
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
-			function fncGetList(currentPage) {
+		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
 			$("form").attr("method" , "POST").attr("action" , "/board/listBoard").submit();
 			//$("form").submit();
+		}
+		
+		function enterEvent(){
+			if(window.event.keyCode == 13){
+				fncGetList(1);
+			}
 		}
 		
 		$(function() {
@@ -54,11 +60,7 @@
 			});
 		 });
 		
-		function fncGetList2(currentPage, category) {
-			document.getElementById("currentPage").value = currentPage;
-			document.getElementById("searchCategory").value = category;
-			$("form").attr("method" , "POST").attr("action" , "/board/listBoard").submit();
-		}
+	
 		
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -94,12 +96,20 @@
 		<br/><br/><br/>
 		
 		
-							<h3>자유 게시판</h3> 
-						
-					
-
-
-					
+		<c:choose>
+			<c:when test="${search.cateCode eq '0' }">
+				<h3>사!교육 공지사항</h3>
+			</c:when>
+			<c:when test="${search.cateCode eq '1' }">
+				<h3>사!교육 Q&A</h3>
+			</c:when>
+			<c:when test="${search.cateCode eq '2' }">
+				<h3>자유 게시판</h3>
+			</c:when>
+			<c:when test="${search.cateCode eq '3' }">
+				<h3>학원 공지사항</h3>
+			</c:when>
+		</c:choose>					
 	    </div>
 	    
 
@@ -118,12 +128,19 @@
 		    
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" >
-			    <input type="hidden" name="searchCategory" id="searchCategory" value="0" />
+			    <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
 			    
+			    <div class="form-group">
+				    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
+						<option value="0"  ${ ! empty search.searchConditionb && search.searchConditionb==0 ? "selected" : "" }>제목</option>
+						<option value="1"  ${ ! empty search.searchConditionb && search.searchConditionb==1 ? "selected" : "" }>내용</option>
+						<option value="2"  ${ ! empty search.searchConditionb && search.searchConditionb==2 ? "selected" : "" }>작성자</option>
+					</select>
+				  </div>
 				  
 				  <div class="form-group">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    <input type="text" class="form-control" onkeyup="enterEvent()" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : null }"  >
 				  </div>
 				  
@@ -164,7 +181,7 @@
 			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
 		
 	
-		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}">${board.boardTitle} (${commentCount})</a></td>
+		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt }</span>)</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${board.email}</td>
@@ -179,12 +196,39 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
-		    <div class="col-sm-offset-11  col-sm-1 text-center">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
-		      <a href="/board/addBoard" >글쓰기</a></button>
-			 
-		    </div>
+	  
+	  카테고리 :  ${search.cateCode}
+	  userNo : ${user.userNo}
+		    
+		   
+		 <c:choose>
+			<c:when test="${search.cateCode eq '0' && user.userNo eq 140 }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '1' }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '2' }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '3' && user.role eq 'academy'}">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+		  </c:choose>	
 		</div>
+		
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->

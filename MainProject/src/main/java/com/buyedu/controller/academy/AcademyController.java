@@ -1,21 +1,38 @@
 package com.buyedu.controller.academy;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.filechooser.FileSystemView;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
+import com.buyedu.service.user.UserService;
 
 
 @Controller
@@ -24,6 +41,9 @@ public class AcademyController {
 	
 	@Autowired
 	public AcademyService academyService;
+	
+	@Autowired
+	public UserService userService;
 	
 	public String random() {
 		StringBuffer temp = new StringBuffer();
@@ -96,32 +116,12 @@ public class AcademyController {
 	}
 	
 	
-	@RequestMapping("listSearch")
-	public String listSearch(Model model,
-							@ModelAttribute("search") Search search)	throws Exception {
-		
-		System.out.println("listAcademy");
-		System.out.println(search);
-		
-		System.out.println(academyService.getSearchList(search));
-
-		if(academyService.getSearchList(search).size() != 0) {
-			
-			model.addAttribute("list", academyService.getSearchList(search));
-			model.addAttribute("lat", academyService.getSearchList(search).get(0).getAcademyLat());
-			model.addAttribute("lng", academyService.getSearchList(search).get(0).getAcademyLng());		
-		}
-		
-		
-		return "academy/listAcademy";
-	}
-	
 	@RequestMapping(value = "academyInfo", method = RequestMethod.GET)
 	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, Model model, HttpSession session ) throws Exception{
 		
 		System.out.println("/academy/academyInfo : GET");
 		
-		System.out.println(academyCode);
+		System.out.println("academyInfo 아카데미 코드 = " + academyCode);
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
@@ -130,6 +130,67 @@ public class AcademyController {
 		System.out.println(academy);
 		
 		return "academy/academyInfo";
+	}
+	
+	@RequestMapping(value = "academySampleEdu", method = RequestMethod.GET)
+	public String getAcademySampleEdu(@RequestParam("academyCode") String academyCode, Model model) throws Exception{
+		
+		System.out.println("/academy/academySampleEdu : GET 테스트 학원만 뽑는중");
+		
+		System.out.println("academySampleEdu 아카데미 코드 = " + academyCode);
+		
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		Map<String, Object> map = academyService.getMultimediaList(academyCode);
+		
+		int imgcount = academyService.getImageCount(academyCode);
+		int vidcount = academyService.getVideoCount(academyCode);
+		
+		model.addAttribute("academy", academy);
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("imgcount", imgcount);
+		model.addAttribute("vidcount", vidcount);
+		
+		System.out.println("academySampleEdu map = "+map.get("list"));
+		
+		return "academy/academySampleEdu";
+	}
+	
+//	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
+//	public StreamingResponseBody getVideo() throws Exception{
+//		File file = new ClassPathResource("static/image/KakaoTalk_20210719_213033364.mp4").getFile();
+//		@SuppressWarnings("resource")
+//		final InputStream is = new FileInputStream(file);
+//		return video -> {
+//			byte[] data = new byte[2048];
+//	        int read = 0;
+//	        while ((read = is.read(data)) > 0) {
+//	        	video.write(data, 0, read);
+//	        }
+//	        video.flush();
+//		};
+//	}
+	
+	
+//	academyConnects
+	
+	@RequestMapping(value = "academyConnects", method = RequestMethod.GET)
+	public String academyConnectList(@RequestParam("academyCode") String academyCode, Model model, HttpSession session) throws Exception{
+		
+		System.out.println("/academy/academyConnects : GET");
+		
+		System.out.println("academyConnect 아카데미 코드 = " + academyCode);
+		
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		Map<String, Object> map = academyService.academyConnect(academyCode);
+		
+		model.addAttribute("academy", academy);
+		model.addAttribute("connect", map.get("connect"));
+		
+		System.out.println("academyConnects map = "+map.get("connect"));
+		
+		return "academy/academyConnect";
 	}
 	
 

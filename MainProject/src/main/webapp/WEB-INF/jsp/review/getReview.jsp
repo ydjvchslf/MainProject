@@ -4,11 +4,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
 <html lang="ko">
-<title>사!교육</title>
+<title>getReview.jsp</title>
 <head>
 	<meta charset="UTF-8">
 	
@@ -34,16 +35,31 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( ".btn:contains('삭')" ).on("click" , function() {
-				 var reviewNo = $("div").find('button#confirm').val();
+				 var reviewNo = $("div").find('button#delete').val();
 					self.location = "/review/deleteReview?reviewNo="+reviewNo
 				});
 		});
 		
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				$( ".btn:contains('신')" ).on("click" , function() {
+					fncaddComplainReview();
+				});
+			});	
+		
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( ".btn:contains('수')" ).on("click" , function() {
-					 var reviewNo = $("div").find('button#confirm').val();
+					 var reviewNo = $("div").find('button#update').val();
 						self.location = "/review/updateReview?reviewNo="+reviewNo
+					});
+			});
+		 
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( ".btn:contains('뒤')" ).on("click" , function() {
+					 var reviewNo = $("div").find('button#back').val();
+						self.location = "/review/listReview"
 					});
 			});
 		
@@ -55,7 +71,7 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<title>Insert title here</title>
+<title>getReivew.jsp</title>
 </head>
 
 <body>
@@ -113,16 +129,39 @@
 	</table>
 	</div>
 	</div>
-	</div>
-	
+    </div>
+
+작성자 번호 : ${review.reviewWriter.userNo }
+유저넘버 : ${ userNo }
 
 	 <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="confirm" value="${review.reviewNo}">수 &nbsp;정</button>
-		    </div>
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="confirm2" >삭&nbsp;제
+	
+	   <c:if test="${userNo eq review.reviewWriter.userNo }">
+		 <div class="col-sm-offset-4  col-sm-4 text-center">
+
+		      <button class="btn btn-primary" id="update" value="${review.reviewNo}">수 &nbsp;정</button>
+		    &nbsp;
+		      <button class="btn btn-primary" id="delete" value="${review.reviewNo}">삭&nbsp;제</button>
+			&nbsp;
+			  <butten class="btn btn-primary" id="back" >뒤&nbsp;로</butten>
+		</div>
+		</c:if>
+		
+	
+	
+	
+	<c:if test="${userNo ne review.reviewWriter.userNo }">
+   <div class="col-sm-offset-4  col-sm-4 text-center">
+
+		<butten class="btn btn-primary" id="back" >뒤&nbsp;로</butten>
+		
+		<butten class="btn btn-primary" id="complain" value="${review.reviewNo}">신&nbsp;고</butten>
 	</div>
+	</c:if>
+
+	</div>
+	</div>
+	
 	
 
 

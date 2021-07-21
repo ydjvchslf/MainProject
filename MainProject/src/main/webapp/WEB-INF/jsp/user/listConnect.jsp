@@ -23,7 +23,7 @@
 				 $(function() {
 					 $(".addConnect").on("click" , function() {
 						
-						alert("잘접근?");
+						//alert("잘접근?");
 						var userNo = ${user.userNo};
 						var academyCode = $("#academyCode").val();
 						
@@ -42,23 +42,99 @@
 										success : function(JSONData, status) {
 											
 											console.log(JSONData)
-											//alert(JSONData);
 		
-											if (JSONData.message == "no") {
-												$("#academyCode").val("");
-												$(".connect_text").text("최대 인증 갯수(3개)를 초과했습니다.");
-												$(".connect_text").css("color", "red");
-												
-											} 
+												if (JSONData.message == "no") {
+													
+													$(".connect_text").val("")
+													displayValue = "최대 인증 갯수를 초과했습니다."
+													$(".connect_text").css("color", "red");
+													
+												}else if(JSONData.message == "ok"){
+													
+													$(".connect_text").val("")
+													alert("정상등록 되었습니다.")
+													self.location = "/user/listConnect"
+													
+												}else if(JSONData.message == "duplication"){
+													
+													$(".connect_text").val("")
+													displayValue = "이미 등록된 학원입니다."
+													$(".connect_text").css("color", "red");
+													
+												}else if(JSONData.message == "notExist"){
+													
+													$(".connect_text").val("")
+													displayValue = "유효하지 않은 학원코드입니다."
+													$(".connect_text").css("color", "red");
+													
+												}
+											
+											$("#academyCode").val("");
+											$(".connect_text").append(displayValue);
+											
 										}
 							});
 						 
 						});
 				 });
 				
+				//인증취소 버튼 event
 				
+				$(function() {
+					
+					$('input[name="delete"]').on("click" , function() {
+						
+						if (confirm("학원 인증을 취소하시겠습니까?")) {
+				           //alert("yes 누름")
+				           var userNo = ${user.userNo};
+				           var academyCode = $('input[name="cntAcademyCode"]').val();
+				           
+				           console.log("userNo=> "+userNo);
+						   console.log("academyCode=> "+academyCode);
+				           
+						   $.ajax( 
+									{
+										url : "/user/json/deleteConnect/${user.userNo}/"+academyCode,
+										method : "GET" ,
+										dataType : "json" ,
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},
+										success : function(JSONData, status) {
+											
+											console.log(JSONData)
+		
+												if (JSONData.message == "ok") {
+													alert("학원 인증을 취소하였습니다.")
+													
+													self.location = "/user/listConnect"
+												}
+											
+										}
+							});
+				           
+				        } 
+						
+					});
+					
+				});
+				
+				
+				//등록한 학원 상세보기 페이지 이동 event
+				 $(function() {
+					 $('span[name="cntAcademyName"]').on("click" , function() {
+						 //alert("이동할겨")
+						 var academyCode = $('input[name="cntAcademyCode"]').val();
+						 //alert(academyCode);
+						 self.location = "/academy/academyInfo?academyCode="+academyCode;
+					 })
+					 
+				 })
+					 
 				
 		</script>
+		
 		
 
     </head>
@@ -145,8 +221,8 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
+                    
 				       <form class="form-horizontal">
-						  
 						  <div class="form-group">
 						    <h4><span class="label label-primary">우리학원 인증하기</span></h4>
 						    <div class="col-sm-4">
@@ -159,20 +235,56 @@
 						     </span>
 						  </div>
 						  
-						  <div class="form-group">
-						    <h4><span class="label label-primary">인증 요청</span></h4>
-						      <input type="text" id="acaName1" name="acaName1" placeholder="학원명1">
-						      <input type="text" id="state1" name="state1" placeholder="인증상태1">
-						      <input type="button" id="cancel1" name="cancel1" value="취소하기"></br>
-						      
-						      <input type="text" id="acaName2" name="acaName2" placeholder="학원명2">
-						      <input type="text" id="state2" name="state2" placeholder="인증상태2">
-						      <input type="button" id="cancel2" name="cancel2" value="취소하기"></br>
-						      
-						      <input type="text" id="acaName3" name="acaName3" placeholder="학원명3">
-						      <input type="text" id="state3" name="state3" placeholder="인증상태3">
-						      <input type="button" id="cancel3" name="cancel3" value="취소하기">
-						  </div>
+						  <br></br>
+						  
+						<table class="table table-hover table-striped" >
+				     		<h4>인증 학원 보기</h4>	
+				     		
+				     			<c:choose>
+								  <c:when test= "${empty list}">
+									<span><h5>
+										<img src="/image/crying.png">
+										인증된 학원이 없습니다. 학원을 인증해주세요!</h5></span>
+								  </c:when>
+								  <c:otherwise>
+								  	<thead>
+							          <tr>
+							          	<th align="center">No</th>
+							            <th align="center">학원이름</th>
+							            <th align="center">인증상태</th>
+							            <th align="center">인증취소</th>
+							          </tr>
+							        </thead>
+							        
+							        <tbody>
+									  <c:set var="i" value="0" />
+									  <c:forEach var="connect" items="${list}">
+										<c:set var="i" value="${ i+1 }" />
+										<tr>
+										  <td align="left">${ i }</td>
+										  <td align="left">
+										  	<span class="cntAcademyName" name="cntAcademyName"><u>${connect.academy.academyName}</u></span>
+										  	<input type="hidden" name="cntAcademyCode" value="${connect.academy.academyCode}">
+										  </td>
+										  <td align="left">
+											  <c:choose>
+												  <c:when test= "${connect.connectState eq '0'}">
+													인증신청
+												  </c:when>
+												  <c:when test= "${connect.connectState eq '1'}">
+													인증됨
+												  </c:when>
+											  </c:choose>
+										  </td>
+										  <td align="left">
+											<input type="button" name="delete" value="인증취소">							  
+										  </td>
+										</tr>
+							          </c:forEach>
+							        </tbody>
+								  </c:otherwise>
+							  	</c:choose>
+				    	  </table>
 						</form>
                     </div>
                 </main>

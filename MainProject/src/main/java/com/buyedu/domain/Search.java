@@ -8,6 +8,7 @@ public class Search {
 	///Field
 	private int currentPage;
 	private String searchCondition;
+	private String searchConditionb;
 	private String searchKeyword;
 	private String searchAcademyName;
 	private String searchAcademyAddr;
@@ -15,7 +16,7 @@ public class Search {
 	private String searchAcademySubject;
 	private int pageSize;
 	
-	private String searchRole;
+	private List<String> searchRole = new ArrayList<>();
 	private List<String> searchAccountState = new ArrayList<>();
 	
 	private String searchEduState;
@@ -24,6 +25,7 @@ public class Search {
 	private int startRowNum;
 	
 	private int searchUserNo;
+	private String cateCode;
 	
 	///Constructor
 	public Search() {
@@ -67,7 +69,15 @@ public class Search {
 		return searchCondition;
 	}
 	public void setSearchCondition(String searchCondition) {
-		this.searchAccountState = searchAccountState == null ? new ArrayList<>() : searchAccountState;
+		this.searchCondition = searchCondition;
+	}
+	
+	public String getSearchConditionb() {
+		return searchConditionb;
+	}
+
+	public void setSearchConditionb(String searchConditionb) {
+		this.searchConditionb = searchConditionb;
 	}
 	
 	public String getSearchKeyword() {
@@ -118,11 +128,11 @@ public class Search {
 		return (getCurrentPage()-1)*getPageSize()+1;
 	}
 
-	public String getSearchRole() {
+	public List<String> getSearchRole() {
 		return searchRole;
 	}
 
-	public void setSearchRole(String searchRole) {
+	public void setSearchRole(List<String> searchRole) {
 		this.searchRole = searchRole;
 	}
 
@@ -142,16 +152,27 @@ public class Search {
 		this.searchEduState = searchEduState;
 	}
 
-	@Override
-	public String toString() {
-		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
-				+ searchKeyword + ", searchAcademyName=" + searchAcademyName + ", searchAcademyAddr="
-				+ searchAcademyAddr + ", searchAcademyGrade=" + searchAcademyGrade + ", searchAcademySubject="
-				+ searchAcademySubject + ", pageSize=" + pageSize + ", searchRole=" + searchRole
-				+ ", searchAccountState=" + searchAccountState + ", searchEduState=" + searchEduState + ", endRowNum="
-				+ endRowNum + ", startRowNum=" + startRowNum + ", searchUserNo=" + searchUserNo + "]";
+		
+	public String getCateCode() {
+		return cateCode;
 	}
 
+	public void setCateCode(String cateCode) {
+		this.cateCode = cateCode;
+	}
+
+	@Override
+	public String toString() {
+		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchConditionb="
+				+ searchConditionb + ", searchKeyword=" + searchKeyword + ", searchAcademyName=" + searchAcademyName
+				+ ", searchAcademyAddr=" + searchAcademyAddr + ", searchAcademyGrade=" + searchAcademyGrade
+				+ ", searchAcademySubject=" + searchAcademySubject + ", pageSize=" + pageSize + ", searchRole="
+				+ searchRole + ", searchAccountState=" + searchAccountState + ", searchEduState=" + searchEduState
+				+ ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", searchUserNo=" + searchUserNo
+				+ ", cateCode=" + cateCode + "]";
+	}
+
+	
 
 	
 }

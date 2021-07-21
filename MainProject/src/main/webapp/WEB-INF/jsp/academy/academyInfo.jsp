@@ -17,18 +17,70 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-		<script type="text/javascript">
-			$("#layoutSidenav_content").on("click", ".")
+		<script>
+		var academyCode = '${academy.academyCode}';
 		
+		 alert("학원 코드 = "+academyCode);
+			
 		
+		function getAcademy(){
+			$.ajax({
+				 url : '/academy/json/getacademy/'+academyCode,
+			     method : 'GET',
+			     dataType : "json",
+			     headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+			     },
+				 success : function(data, status){
+					 
+					
+				 }							
+			});		
+		}
+		
+		// 텍스트 박스 
+		function introUpdate(academyCode, academyIntro){
+		    var intro ='';
+		    
+		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
+		    
+		    	intro += '<div class="input-group">';
+		   	 	intro += '<input type="text" class="form-control" name="content_'+academyCode+'" value="'+academyIntro+'"/>';
+		    	intro += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="acaIntroUpdate('+academyCode+');">저장</button> </span>';
+		   		intro += '</div>';
+		    
+		    $('.card-body2').html(intro);
+		    
+		}
+		 
+		// 수정
+		function acaIntroUpdate(academyCode){
+		    var updateIntro = $('[name=academy'+academyCode+']').val();
+		    
+		    $.ajax({
+		        url : '/academy/json/updateIntro',
+		        type : 'post',
+		        data : {'academyCode' : academyCode, 'intro' : academyIntro}
+		    });
+		}
+
+		
+
+		$(document).ready(function(){
+			getAcademy(); 
+		});
+		
+	
 		
 		</script>
 		
+	<title>Academy Info page</title>	
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/main/academyMain">Buy! Edu</a>
+            <a class="navbar-brand ps-3" href="/user/loginacademy?email=${user.email}">Buy! Edu</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -78,10 +130,11 @@
                             </a>
                             <div class="collapse" id="collapseAcademy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">기본 정보</a>
-                                    <a class="nav-link" href="#">멀티미디어 정보</a>
+                                	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
+                                    <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">기본 정보</a>
+                                    <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
                                     <a class="nav-link" href="#">학원 후기 보기</a>
-                                    <a class="nav-link" href="#">원생 관리</a>
+                                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생 관리</a>
                                 </nav>
                             </div>                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
@@ -134,23 +187,14 @@
                                     지역 구 : ${academy.academyArea }<br/>
                                     위도 : ${academy.academyLat }<br/>
                                     경도 : ${academy.academyLng }<br/>
-                                    
-                                    <div class="container">
-                                    
-                                    	<div class="col-xs-8">
-                                    		<input class="form-control" type="text" size="80">
-                                    		소개	: ${academy.academyIntro }<br/>
-		      								<button class="btn success" id="update" value="${academy.academyCode}"> 수 정 </button>
-		    							</div>
-		    							
-		    							<div class="col-xs-8">
-                                    		실적 : ${academy.academyHistory }<br/>
-		      								<button class="btn success" id="update" value="${academy.academyCode}"> 수 정 </button>
-		    							</div>
-                                  
-                                    </div>
+                                   
                                     
                             </div>
+                            
+                            <div class="card-body2">  </div>
+                            
+                            
+                            
                         </div>
                         <div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>

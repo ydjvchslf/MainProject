@@ -218,7 +218,7 @@ public class UserTestApp {
 				 search.setCurrentPage(1);
 				 search.setPageSize(3);
 				 
-				 search.setSearchRole("student");
+				 //search.setSearchRole("student");
 				 //search.setSearchRole("parents");
 				 //search.setSearchRole("academy");
 				 	
@@ -281,6 +281,25 @@ public class UserTestApp {
 				
 			}
 			
+			//@Test
+			public void testCheckAcademyCode() throws Exception{
+				
+				User user = new User();
+				user.setUserNo(11);
+				
+				Academy academy = new Academy();
+				academy.setAcademyCode("code99");
+				
+				Connect connect = new Connect();
+				connect.setUser(user);
+				connect.setAcademy(academy);
+				
+				int result = userService.checkAcademyCode(connect);
+				
+				System.out.println( "학원코드 중복 확인 => "+ result );
+				
+			}
+			
 			//@Test 
 			public void testAddConnect() throws Exception{
 					
@@ -328,7 +347,7 @@ public class UserTestApp {
 			//@Test // 인증한 학원 모두 뽑아내기
 			public void testGetConnectList() throws Exception{
 				
-				List<Object> list = userService.getConnectList(500);
+				List<Connect> list = userService.getConnectList(500);
 				
 				//Assert.assertNotNull(list);
 				

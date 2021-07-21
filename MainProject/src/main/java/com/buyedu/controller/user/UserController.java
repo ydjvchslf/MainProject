@@ -1,8 +1,13 @@
 package com.buyedu.controller.user;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +15,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
@@ -50,6 +57,7 @@ public class UserController {
 		
 		return "/user/addUserView";
 	}
+	
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
 	public String addUser( @ModelAttribute("user") User user ) throws Exception {
@@ -99,14 +107,21 @@ public class UserController {
 
 		System.out.println("/user/updateUser : POST");
 		
-		//Business Logic
-		userService.updateUser(user);
+		User dbUser = userService.getUserByUserNo(user.getUserNo());
 		
-		String sessionId=((User)session.getAttribute("user")).getEmail();
+		dbUser.setName(user.getName());
+		dbUser.setPhone(user.getPhone());
 		
-		if(sessionId.equals(user.getEmail())){
-			session.setAttribute("user", user);
+		
+		userService.updateUser(dbUser);
+		
+		String sessionEmail=((User)session.getAttribute("user")).getEmail();
+		
+		if(sessionEmail.equals(user.getEmail())){
+			session.setAttribute("user", dbUser);
 		}
+		
+		model.addAttribute("user", dbUser);
 		
 		return "/user/getUser";
 	}
@@ -244,6 +259,16 @@ public class UserController {
 	}
 	
 	
+	//네이버 콜백jsp 이동
+	@RequestMapping( value="callback" )
+	public String callback() throws Exception{
+		
+		System.out.println("네이버 콜백jsp 단순 네비게이션");
+		
+		return "/user/callback";
+	}
+	
+	
 	
 	
 	//index에서 어케 jsp로 가는지 아직 해결중, 지금은 이렇게
@@ -260,13 +285,31 @@ public class UserController {
 	public String login() throws Exception{
 		
 		System.out.println("/user/logon : GET");
+		System.out.println("로그인 화면으로 단순 네비게이션");
 
 		return "/user/loginView";
 	}
 	
+	@RequestMapping( value="loginacademy", method=RequestMethod.GET )
+	public String login( @RequestParam String email, Model model ) throws Exception{
+		
+		System.out.println("/user/logon : 학원에서 프로필선택으로 메인창");
+		System.out.println("로그인 화면으로 단순 네비게이션");
+		
+		User dbUser=userService.getUser(email);
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+		
+		model.addAttribute("list", map.get("list"));
+		
+		System.out.println("겟유저 가져온 dbUser=>" + dbUser);
+		
+		return "academyMain";
+	}
+	
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user , Model model, HttpSession session ) throws Exception{
+	public String login(@ModelAttribute("user") User user , Model model, HttpSession session , HttpServletResponse res) throws Exception{
 		
 		System.out.println("/user/login : POST");
 		//Business Logic
@@ -277,10 +320,23 @@ public class UserController {
 		
 		System.out.println("겟유저 가져온 dbUser=>" + dbUser);
 		
-		if( user.getPassword().equals(dbUser.getPassword())){
+		String accountState = dbUser.getAccountState();
+		
+		if ( dbUser == null || accountState.equals("1") ) {
+			
+			model.addAttribute("message", "회원정보가 맞지 않습니다.");
+			return "/user/loginView";
+		}
+		
+		if( user.getPassword().equals(dbUser.getPassword()) ){
 			
 			session.setAttribute("user", dbUser);
 			model.addAttribute("user", user);
+			
+			// 쿠키에 로그인 타입 값 설정
+			Cookie ck = new Cookie("loginType", "normal");
+			ck.setPath("/");
+			res.addCookie(ck);
 			
 			if ( dbUser.getRole().equals("academy") ) {
 				
@@ -288,17 +344,130 @@ public class UserController {
 	            
 	            model.addAttribute("list",map.get("list"));
 				
-				return "/academy/selectAcademy";
+				return "academyMain";
+				
+			}else if( dbUser.getRole().equals("admin") ) {
+				
+				return "adminMain";
+				
 			}
 			
 			return "userMain";
 			
-		}else {
+		}else{
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
 			return "/user/loginView";
-		}
+		
+		}	
 	}
+	
+	
+	//sns로긴-> db없어서 회원가입창 이동
+	@RequestMapping( value="snsAddUser", method=RequestMethod.GET )
+	public String snsAddUser( @RequestParam("email") String email , Model model ) throws Exception{
+	
+		System.out.println("/user/addUser : GET (SNS 버전)");
+		
+		System.out.println("sns에서 가져온 email => " + email);
+		
+		model.addAttribute("snsEmail", email);
+		
+		System.out.println("SNS 버전 끝");
+		
+		return "/user/snsAddUserView";
+	}
+	
+	
+	
+	//카카오 로그인
+	@RequestMapping( value="/snsLogin/{email}" )
+	public String snsLogin( @PathVariable String email, Model model, HttpSession session , HttpServletResponse res) throws Exception{
+	    
+		System.out.println("/user/snsLogin");
+		
+		System.err.println("패쓰받아온 email => "+email);
+	        
+	    User dbUser = userService.getUser(email);
+	    
+	    System.out.println("로긴한 user=>" + dbUser);
+	        
+	    session.setAttribute("user", dbUser);
+	    model.addAttribute("user", dbUser);
+	    
+	    // 쿠키에 로그인 타입 값 설정
+		Cookie ck = new Cookie("loginType", "kakao");
+		ck.setPath("/");
+		res.addCookie(ck);
+		
+		if ( dbUser.getRole().equals("academy") ) {
+			
+			Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+            
+            model.addAttribute("list",map.get("list"));
+			
+			return "academyMain";
+			
+		}else if( dbUser.getRole().equals("admin") ) {
+			
+			return "adminMain";
+			
+		}
+	        
+	    return "userMain";
+	}
+	
+	
+	//네이버 로그인
+	@RequestMapping( value="naverLogin", method=RequestMethod.GET )
+	public String naverLogin( @RequestParam String email, Model model, HttpSession session , HttpServletResponse res ) throws Exception{
+		
+		System.out.println("/user/naverLogin : GET");
+		
+		System.out.println("네이버 로긴으로 받아온 email=> "+email);
+		
+		int result = userService.checkEmail(email);
+		//아이디 중복 없음 -> sns 회원가입 창으로 이동
+		if (result == 0) {
+			
+			model.addAttribute("snsEmail", email);
+			return "/user/snsAddUserView";
+			
+		}else{//네이버 로그인 기존회원
+			
+			User dbUser = userService.getUser(email);
+		    
+		    System.out.println("로긴한 user=>" + dbUser);
+		        
+		    session.setAttribute("user", dbUser);
+		    
+		    model.addAttribute("user", dbUser);
+		    
+		    // 쿠키에 로그인 타입 값 설정
+			Cookie ck = new Cookie("loginType", "naver");
+			ck.setPath("/");
+			res.addCookie(ck);
+				
+				if ( dbUser.getRole().equals("academy") ) {
+					
+					Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+		            
+		            model.addAttribute("list",map.get("list"));
+					
+					return "academyMain";
+					
+				}else if( dbUser.getRole().equals("admin") ) {
+					
+					return "adminMain";
+					
+				}
+			        
+			    return "userMain";
+			
+		}
+		
+	}
+	
 		
 	
 	@RequestMapping( value="logout", method=RequestMethod.GET )
@@ -329,6 +498,15 @@ public class UserController {
 		
 		System.out.println("searchRole 잘받았나==>" + search.getSearchRole() );
 		
+		List<String> roles = search.getSearchRole();
+		List<String> states = search.getSearchAccountState();
+		
+		System.err.println(roles);
+		System.err.println(states);
+		
+		model.addAttribute("roles", roles);
+		model.addAttribute("states", states);
+			
 		// Business logic 수행
 		Map<String , Object> map=userService.getUserList(search);
 		
@@ -349,6 +527,25 @@ public class UserController {
 	}
 	
 	
+   @RequestMapping( value="deleteacademy", method=RequestMethod.GET )
+   public String deleteaca( @RequestParam String email, Model model ) throws Exception{
+      
+      System.out.println("/user/deleteacademy : 학원에서 프로필삭제");
+      
+      User dbUser=userService.getUser(email);
+      
+      Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+      
+      model.addAttribute("list", map.get("list"));
+      
+      System.out.println("겟유저 가져온 dbUser=>" + dbUser);
+      
+      System.out.println("학원 프로필 삭제 끝");
+      
+      return "/academy/deleteAcademy";
+   }
+	
+	
 	
 	// Connect 
 	
@@ -357,13 +554,23 @@ public class UserController {
 	
 		System.out.println("/user/myAcademy : GET");
 		
-		System.out.println(session.getAttribute("user"));
+		User user = (User)session.getAttribute("user");
 		
+		System.out.println("세션담긴 user=> "+ user );
+		
+		List<Connect> list = userService.getConnectList(user.getUserNo());
+
+		System.err.println("리스트에 담은 Connect => "+list);
+		
+			
+		model.addAttribute("list", list);
 		model.addAttribute( "user", session.getAttribute("user") );
 		
 		System.out.println("내가다니는학원 단순 네비게이션");
 		
 		return "/user/listConnect";
 	}
+	
+
 	
 }
