@@ -126,7 +126,7 @@ public class AcademyService {
 	
 	public String updateConnect(int connectNo) throws Exception{
 		
-		return connectDao.updateConnectAccept(connectNo);
+		return connectDao.updateConnectAcceptaca(connectNo);
 	}
 	
 	public void deleteConnect(int connectNo) throws Exception{

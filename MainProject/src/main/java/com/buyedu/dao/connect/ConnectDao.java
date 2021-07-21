@@ -23,7 +23,7 @@ public interface ConnectDao {
 	// 인증요청 INSERT
 	public void addConnect(Connect connect) throws Exception;
 	
-	public String updateConnectAccept(int connectNo) throws Exception;
+	public void updateConnectAccept(Connect connect) throws Exception;
 	
 	public void updateConnectReject(Connect connect) throws Exception;
 
@@ -33,5 +33,7 @@ public interface ConnectDao {
 	List<Connect> academyConnect(String academyCode) throws Exception;
 	
 	void deleteConnectfromAca(int connectNo) throws Exception;
+	
+	public String updateConnectAcceptaca(int connectNo) throws Exception;
 
 }

@@ -66,7 +66,8 @@
 	   	<set>
 	   	 	connect_state = '1'
 	   	</set>
-	   	WHERE connection_no = #{connectNo}
+	   	WHERE user_no = #{user.userNo}
+	   	AND academy_code = #{academy.academyCode}
 	 </update>
 	 
 	 <delete id="deleteConnectfromAca"	parameterType="int">
@@ -102,6 +103,14 @@
 		WHERE c.academy_code = #{value}
 		AND c.user_no = u.user_no
 	 </select>
+	 
+	 <update	id="updateConnectAcceptaca"	parameterType="int" >
+	   	UPDATE connection
+	   	<set>
+	   	 	connect_state = '1'
+	   	</set>
+	   	WHERE connection_no = #{connectNo}
+	 </update>
 	 
 	 
 	 
