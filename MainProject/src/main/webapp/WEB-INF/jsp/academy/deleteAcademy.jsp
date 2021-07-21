@@ -18,15 +18,21 @@
 		</script>
 		
 		<script>
-		function deleteMultimedia(multimediano){
+		
+		var academyCode = '${academy.academyCode}';
+		
+		
+		function deleteAcademyProfile(academyCode){
+			alert(academyCode)
+			
 			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
 				
 			    $.ajax({
 			    	
-			        url : '/academy/json/deleteMultimedia/'+multimediano,
+			        url : '/academy/json/deleteAcademyAll/'+academyCode,
 			        type : 'post',
-			        success : function(data){
-			            alert("삭제 완료!")
+			        success : function(){
+			            alert("삭제가 완료되었습니다!")
 			        }
 			    });
 			}
@@ -165,17 +171,13 @@
 											 
 									  <li class="list-group-item">
 										 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
-										 	<a onclick="deleteAcademy(${academy.academyCode})"> 학원 프로필 삭제하기 </a>
+										 	<a onclick="deleteAcademyProfile('${academy.academyCode}')"> 삭제 </a>
 										 </li>
 									
 						          </c:forEach>	
 						          	
 									</ul>
 						        </div>
-						        
-								</br>
-								<a href="/academy/academySampleEdu?academyCode=xrYC6SH"> 테스트 학원 멀티미디어</a>
-						        
 						        
                                 </p>
                             </div>

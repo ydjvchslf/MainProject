@@ -69,6 +69,8 @@ public class AcademyRestController {
 		return academy;
 	}
 	
+	
+	
 	@ResponseBody
 	@RequestMapping(value = "/file-upload/{academyCode}", method = RequestMethod.POST)
 	public String fileUpload(
@@ -172,11 +174,25 @@ public class AcademyRestController {
 	@RequestMapping(value = "json/deleteConnect/{connectNo}", method = RequestMethod.POST)
 	private void deleteConnect(@PathVariable int connectNo) throws Exception{
 		
-		System.out.println(" ajax updateConnect -> 인증 거부, 정보 삭제됨");
+		System.out.println(" ajax updateConnect -> 인증 거부시 정보 삭제됨");
 		
 		System.out.println("json 으로 받은 connectNo " + connectNo);
 		
 		academyService.deleteConnect(connectNo);
+	}
+	
+	// 학원 삭제!!!!! 진짜진짜진짜 중요함
+	@ResponseBody
+	@RequestMapping(value = "json/deleteAcademyAll/{academyCode}", method = RequestMethod.POST)
+	private void deleteAcademy(@PathVariable String academyCode) throws Exception{
+		
+		String name = academyService.getAcademy(academyCode).getAcademyName();
+		
+		System.out.println(" ajax deleteAcademy -> 해당 학원 :" +name+ "의 정보가 모두 삭제됨.");
+		
+		System.out.println("삭제되는 정보는 1. 학원 정보 2. 인증 정보 3. 후기 정보 4. 수업 정보 5. 게시글 ");
+		
+		
 	}
 	
 

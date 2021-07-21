@@ -151,10 +151,6 @@
 									</ul>
 						        </div>
 						        
-								</br>
-								<a href="/academy/academySampleEdu?academyCode=xrYC6SH"> 테스트 학원 멀티미디어</a>
-						        
-						        
                                 </p>
                             </div>
                         </div>

@@ -170,5 +170,29 @@
 			</if>
 		ORDER BY a.academy_addr
 	</select>
+	
+	
+	
+	<!-- SQL : DELETE All 진짜 위험위험 -->
+	<delete 	id="deleteedu"	parameterType="String">
+		DELETE 
+		FROM edu
+		WHERE academy_code = #{academyCode}
+	 </delete>
+	<delete 	id="deletereview"	parameterType="String">
+		DELETE
+		FROM review
+		WHERE a.academy_code = #{academyCode}
+	 </delete>
+	<delete 	id="deleteconnection"	parameterType="String">
+		DELETE 
+		FROM connection
+		WHERE a.academy_code = #{academyCode}
+	 </delete>
+	<delete 	id="deleteAcademy"	parameterType="String">
+		DELETE 
+		FROM academy
+		WHERE a.academy_code = #{academyCode}
+	 </delete>
 
 </mapper>
