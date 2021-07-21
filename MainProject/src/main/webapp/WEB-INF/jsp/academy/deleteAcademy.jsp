@@ -10,11 +10,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>academyMain</title>
+        <title>deleteAcademy</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
+		</script>
+		
+		<script>
+		function deleteMultimedia(multimediano){
+			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/deleteMultimedia/'+multimediano,
+			        type : 'post',
+			        success : function(data){
+			            alert("삭제 완료!")
+			        }
+			    });
+			}
+			
+			location.reload();
+		}
+		
+		
+		
 		</script>
 		
 
@@ -144,6 +165,7 @@
 											 
 									  <li class="list-group-item">
 										 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
+										 	<a onclick="deleteAcademy(${academy.academyCode})"> 학원 프로필 삭제하기 </a>
 										 </li>
 									
 						          </c:forEach>	

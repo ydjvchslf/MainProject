@@ -32,7 +32,7 @@
 					"Accept" : "application/json",
 					"Content-Type" : "application/json"
 			     },
-				 success : function(data, status){
+				 success : function(data){
 					 
 					
 				 }							
