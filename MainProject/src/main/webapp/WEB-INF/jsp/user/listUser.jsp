@@ -14,8 +14,12 @@
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="/assets/demo/jquery.ajax-cross-origin.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
-		</script>
+        </script>
+        <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+        <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
+        
 		
 		<script type="text/javascript">
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
@@ -36,6 +40,8 @@
 		
 		//검색버튼 클릭 event
 		$(function() {
+			
+			Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
 			
 			$( "button.btn.btn-default" ).on("click" , function() {
 				fncGetList(1);
@@ -64,12 +70,148 @@
 					item.checked = true;
 			})
 			
-			/*
-			$( "button[name='detailFormButton']" ).on("click" , function() {
 			
-				fncGetList(1);
+			//=========로그아웃 테스트 중 =============
+			$(function() {	
+				
+				 $('input[name=allLogout]').on("click" , function() {
+					 
+					 let x = document.cookie;
+					 
+					 const words = x.split("; ");
+					 
+					 var loginType = "";
+					 
+					 for(var i=0; i < words.length; i++ ){
+						 
+						if( words[i].split("=")[0] === "loginType" ){
+							 console.log( words[i].split("=")[1] )
+							 loginType = words[i].split("=")[1];
+						}
+					 }
+					 
+					 if(loginType == "kakao"){
+						 
+						 alert("카카오 로그아웃!")
+						 if (!Kakao.Auth.getAccessToken()) {
+							  console.log('Not logged in.');
+							  return;
+							}
+						 
+							 Kakao.API.request({
+							  url: '/v1/user/unlink',
+							  success: function(response) {
+							    console.log(response);
+							    
+							    self.location = "/"
+							  },
+							  fail: function(error) {
+							    console.log(error);
+							  },
+							});
+						 
+						 
+							Kakao.Auth.logout(function() {
+							  console.log(Kakao.Auth.getAccessToken());
+							  
+							  if(Kakao.Auth.getAccessToken()){
+								  alert('로그아웃실패');
+							  }else{
+								  
+							  }
+							 
+							});
+							
+						 
+						 
+					 }else if(loginType == "naver"){
+						 
+						 alert("네이버 로그아웃!")
+						 
+						 /*
+						 localStorage.removeItem('com.naver.nid.access_token');
+						 
+						 function Logout(){
+							 sessionStorage.clear();
+						 }
+						 
+						 //self.location = "/"
+						 
+						 */
+						 //ajax 로
+						 
+						 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+						 
+						 //console.log(accessToken)
+						 
+						 var tokenArray = accessToken.split(".");
+						 
+						 //console.log(tokenArray)
+						 
+						 var finalToken = tokenArray[1]
+						 
+						 console.log(finalToken)
+						 //return
+						 
+							  $.ajax({
+			                 		
+								  crossOrigin : true,
+								  
+				            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+finalToken,
+				                  headers : {
+				                	  
+				                      "Accept" : "application/json",
+				                      "Content-Type" : "application/json"
+				                    },
+				                    success : function(JSONData, status){
+				                        alert("얍")
+				                    	console.log("결과->" +JSONData);
+				                        
+				                    }
+			              })
+								
+			              
+						 
+					 }else{
+						 alert("일반 로그아웃");
+						 self.location = "logout"
+					 }
+					 
+					 /*
+					 
+					 if (!Kakao.Auth.getAccessToken()) {
+						  console.log('Not logged in.');
+						  return;
+						}
+					 
+						 Kakao.API.request({
+						  url: '/v1/user/unlink',
+						  success: function(response) {
+						    console.log(response);
+						    
+						    self.location = "/"
+						  },
+						  fail: function(error) {
+						    console.log(error);
+						  },
+						});
+					 
+					 
+					 
+						Kakao.Auth.logout(function() {
+						  console.log(Kakao.Auth.getAccessToken());
+						  
+						  if(Kakao.Auth.getAccessToken()){
+							  alert('로그아웃실패');
+						  }else{
+							  
+						  }
+						 
+						});
+						
+						*/
+				 });
 			});
-			*/
 			 
 		});
 		
@@ -261,6 +403,7 @@
 				        </tbody>
 				      
 				      </table>
+				      <input type="button" name="allLogout" value="로그아웃"></input>
 				      <jsp:include page="../common/pageNavigator_new.jsp"/>
                     </div>
                 </main>

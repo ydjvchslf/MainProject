@@ -151,7 +151,7 @@
 		          </c:forEach>	
 		          	
 						<li class="list-group-item">
-						 	<a href="#">리스트 갯수 -> ${list.size() } 3개면 학원 등록 안뜸</a>
+						 	<a href="#">리스트 갯수 -> ${list.size()} 3개면 학원 등록 안뜸</a>
 						 </li>					 
 
 					</ul>

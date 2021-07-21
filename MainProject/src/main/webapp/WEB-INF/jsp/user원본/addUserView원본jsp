@@ -18,152 +18,10 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	
-        body > div.container{
+       body > div.container{
+        	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
-        
-        html {
-    	height: 100%;
-		}
-		
-		body {
-		    margin: 0;
-		    height: 100%;
-		    background: #f5f6f7;
-		    font-family: Dotum,'돋움',Helvetica,sans-serif;
-		}
-		#logo {
-		    width: 200px;
-		    height: 80px;
-		    cursor: pointer;
-		}
-		
-		#header {
-		    padding-top: 62px;
-		    padding-bottom: 20px;
-		    text-align: center;
-		}
-		#wrapper {
-		    position: relative;
-		    height: 100%;
-		}
-		
-		#content {
-		    position: absolute;
-		    left: 50%;
-		    transform: translate(-50%);
-		    width: 460px;
-		}
-		
-		/* 입력폼 */
-		h3 {
-		    margin: 19px 0 8px;
-		    font-size: 14px;
-		    font-weight: 700;
-		}
-		
-		
-		.box {
-		    display: block;
-		    width: 100%;
-		    height: 51px;
-		    border: solid 1px #dadada;
-		    padding: 10px 14px 10px 14px;
-		    box-sizing: border-box;
-		    background: #fff;
-		    position: relative;
-		}
-		
-		.int {
-		    display: block;
-		    position: relative;
-		    width: 100%;
-		    height: 29px;
-		    border: none;
-		    background: #fff;
-		    font-size: 15px;
-		}
-		
-		input {
-		    font-family: Dotum,'돋움',Helvetica,sans-serif;    
-		}
-		
-		.box.int_id {
-		    padding-right: 110px;
-		}
-		
-		.box.int_pass {
-		    padding-right: 40px;
-		}
-		
-		.box.int_pass_check {
-		    padding-right: 40px;
-		}
-		
-		.step_url {
-		    /*@naver.com*/
-		    position: absolute;
-		    top: 16px;
-		    right: 13px;
-		    font-size: 15px;
-		    color: #8e8e8e;
-		}
-		
-		select {
-		    width: 100%;
-		    height: 29px;
-		    font-size: 15px;
-		    background: #fff url(https://static.nid.naver.com/images/join/pc/sel_arr_2x.gif) 100% 50% no-repeat;
-		    background-size: 20px 8px;
-		    -webkit-appearance: none;
-		    display: inline-block;
-		    text-align: start;
-		    border: none;
-		    cursor: default;
-		    font-family: Dotum,'돋움',Helvetica,sans-serif;
-		}
-		
-		/* 에러메세지 */
-		
-		.error_next_box {
-		    margin-top: 9px;
-		    font-size: 12px;
-		    color: red;    
-		    display: none;
-		}
-		
-		#alertTxt {
-		    position: absolute;
-		    top: 19px;
-		    right: 38px;
-		    font-size: 12px;
-		    color: red;
-		    display: none;
-		}
-		
-		/* 버튼 */
-		
-		.btn_area {
-		    margin: 30px 0 91px;
-		}
-		
-		#btnJoin, .cancel {
-		    width: 100%;
-		    padding: 10px 0 17px;
-		    border: 0;
-		    cursor: pointer;
-		    color: #fff;
-		    background-color: #0D85ED;
-		    font-size: 20px;
-		    font-weight: 400;
-		    font-family: Dotum,'돋움',Helvetica,sans-serif;
-		}
-		
-		.cancel {
-			margin-top: 3px;
-		}
-        
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -218,9 +76,9 @@
 				
 			click : {
 				signup : function() {
-					//alert("11111")
+					alert("11111")
 					if(fncCheckAll()){
-						//alert("222222")
+						alert("222222")
 						fncAddUser();
 					}
 					
@@ -457,7 +315,7 @@
 				
 			}else {
 				
-				var str = '비밀번호는 8자 이상, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
+				var str = '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
 				$('.text_password').text(str).css("color", "red");
 				$("#password").focus();
 			}
@@ -473,92 +331,99 @@
 
 <body>
 
+	<!-- ToolBar Start /////////////////////////////////////-->
+
+   	<!-- ToolBar End /////////////////////////////////////-->
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+	
+		<h1 class="bg-primary text-center">회원가입 화면</h1>
 		
+		<!-- form Start /////////////////////////////////////-->
+		<form name="signupForm" class="form-horizontal">
 		
-		<!-- header -->
-        <div id="header">
-             <a href="logout"><img src="/image/buyedu.jpg" id="logo"></a>
-        </div>
-
-
-        <!-- wrapper -->
-        <div id="wrapper">
-		   <form name="signupForm">
-            <!-- content-->
-            <div id="content">
-
-                <!-- 사용자역할 -->
-                <div>
-                    <h3 class="join_title">
-                        <label for="id">사용자 역할</label>
-                    </h3>
-                    <span class="radio">
-                        <label><input name="role" id="student" name="student" type="radio" class="radio-label" checked value="student">학생</label>
-			            <label><input name="role" id="parents" name="parents" type="radio" class="radio-label" value="parents">학부모</label>
-			            <label><input name="role" id="academy" name="academy" type="radio" class="radio-label" value="academy">학원</label>
-                    </span>
-                </div>
-                
-                <!-- EMAIL -->
-                <div>
-                    <h3 class="join_title"><label for="email">이메일</label></h3>
-                    <span class="box int_email">
-                        <input type="text" id="email" name="email" class="int" maxlength="100" placeholder="ex) buyedu@co.kr">
-                    </span>
-                    <span class="email_check"></span>   
-                </div>
-
-                <!-- PW1 -->
-                <div>
-                    <h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
-                    <span class="box int_pass">
-                        <input type="password" id="password" name="password" class="int" placeholder="비밀번호" maxlength="20">
-                    </span>
-                </div>
-
-                <!-- PW2 -->
-                <div>
-                    <h3 class="join_title"><label for="pswd2">비밀번호 확인</label></h3>
-                    <span class="box int_pass_check">
-                        <input type="password" id="password2" name="password2" class="int" placeholder="비밀번호 확인" maxlength="20">
-                    </span>
-                    <span class="text_password"></span>
-                </div>
-
-                <!-- NAME -->
-                <div>
-                    <h3 class="join_title"><label for="name">이름</label></h3>
-                    <span class="box int_name">
-                        <input type="text" id="name" name="name" placeholder="이름" class="int" maxlength="20">
-                    </span>
-                    <span class="text_name"></span>
-                </div>
-
-
-                <!-- MOBILE -->
-                <div>
-                    <h3 class="join_title"><label for="phoneNo">휴대전화( - 포함)</label></h3>
-                    <span class="box int_mobile">
-                        <input type="text" id="phone" name="phone" placeholder="휴대전화번호" class="int" maxlength="16" placeholder="전화번호 입력">
-                    </span>
-                    <span class="text_phone"></span>    
-                </div>
-
-
-                <!-- JOIN BTN-->
-                <div class="btn_area">
-                    <button type="button" class="signup" id="btnJoin">가&nbsp;입</button>
-                    <button type="button" name="cancel" class="cancel">취&nbsp;소</button>
-                </div>
-
-
-            </div> 
-            <!-- content-->
-		  </form>
-        </div> 
-        <!-- wrapper -->
+		    <div class="form-group">
+			  <label for="role" class="col-sm-offset-1 col-sm-3 control-label">사용자역할</label>
+			    <div class="col-sm-4">
+				  	<label><input name="role" id="academy" name="academy" type="radio" value="academy">학원</label>
+				  	<label><input name="role" id="student" name="student" type="radio" checked value="student">학생</label>
+		            <label><input name="role" id="parents" name="parents" type="radio" value="parents">학부모</label>
+	             </div>
+		 	</div>
+			<!-- 일반회원가입 경로 -->
+		   <c:choose>
+			   <c:when test="${empty snsEmail}">
+			   		<div class="form-group">
+			  	   	  <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
+					  	<div class="col-sm-4">
+					  	   <input type="text" class="form-control" id="email" name="email" placeholder="ex) buyedu@co.kr">
+					       		<span id="helpBlock" class="help-block">
+					      			<strong class="email_check"></strong>
+					      		</span>
+					 	</div>
+					</div>
+			   </c:when>
+			   <c:otherwise> <!-- SNS 회원가입 경로 : ${snsEmail} 값이 있음-->
+			   		<div class="form-group">
+					  	<div class="col-sm-4">
+					  	   <input type="text" class="form-control" id="email" name="email" value="${snsEmail}">
+					 			<span id="helpBlock" class="help-block">
+					      			<strong class="email_check"></strong>
+					      		</span>
+					 	</div>
+					</div>
+			   </c:otherwise>
+		   </c:choose>
+		   
+		   
+			<div class="form-group">
+			   <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
+			    <div class="col-sm-4">
+			      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+			    </div>
+			 </div>
+		  
+			 <div class="form-group">
+			   <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
+			    <div class="col-sm-4">
+			      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
+			     	<span id="helpBlock" class="help-block">
+			      	  <strong class="text_password"></strong>
+			      	</span>
+			  	</div>
+			  </div>
+		  
+			  <div class="form-group">
+			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control" id="name" name="name" placeholder="회원이름">
+				    <span id="helpBlock" class="help-block">
+				      <strong class="text_name"></strong>
+				    </span>
+			    </div>
+			  </div>
+		  
+			  <div class="form-group">
+			    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호( - 포함)</label>
+			     <div class="col-sm-4">
+			      <input type="text" class="form-control" id="phone" name="phone" placeholder="휴대전화번호">
+				     <span id="helpBlock" class="help-block">
+					      <strong class="text_phone"></strong>
+					  </span>
+			     </div> 
+			  </div>
+			  
+			  <div class="form-group">
+			    <div class="col-sm-offset-4  col-sm-4 text-center">
+			      <button type="button" class="signup">가&nbsp;입</button>
+			      <button type="button" name="cancel" class="cancel">취&nbsp;소</button>
+			    </div>
+			  </div>
+		    
+		  
+		</form>
+		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->

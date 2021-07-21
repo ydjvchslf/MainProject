@@ -179,10 +179,17 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
+	  	<c:if test="${user.role eq 'student' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
 		      <a href="/review/addReviewView" >글쓰기</a></button>
-			 
+		</c:if>	 
+		
+		<c:if test="${user.role eq 'parents' }">
+		    <div class="col-sm-offset-11  col-sm-1 text-center">
+		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		      <a href="/review/addReviewView" >글쓰기</a></button>
+		</c:if>
 		    </div>
 		</div>
 	  

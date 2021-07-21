@@ -45,7 +45,6 @@
 
 		// 파일 현재 필드 숫자 totalCount랑 비교값
 		var fileCount = count;
-		//fileCount *= 1;
 		// 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
 		var totalCount = 5;
 		// 파일 고유넘버
@@ -60,8 +59,8 @@
 		    var filesArr = Array.prototype.slice.call(files);
 		    
 		    // 파일 개수 확인 및 제한
-		    if ((parseInt(fileCount)+filesArr.length) > totalCount) {
-		      alert('파일갯수 = '+(fileCount+filesArr.length)+' \n파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+		    if ((Number(fileCount)+filesArr.length) > totalCount) {
+		      alert('파일갯수 = '+((Number(fileCount)+filesArr.length))+' \n파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
 		      return;
 		    } else {
 		    	 fileCount = fileCount + filesArr.length;
@@ -150,11 +149,9 @@
 				        url : '/academy/json/deleteMultimedia/'+multimediano,
 				        type : 'post',
 				        success : function(data){
-				            if(data == 1) commentList(boardNo);
+				            alert("삭제 완료!")
 				        }
 				    });
-				}else{
-					return false;
 				}
 				
 				location.reload();
@@ -177,7 +174,7 @@
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/main/academyMain">Buy! Edu</a>
+            <a class="navbar-brand ps-3" href="/user/loginacademy?email=${user.email}">Buy! Edu</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -227,10 +224,11 @@
                             </a>
                             <div class="collapse" id="collapseAcademy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">기본 정보</a>
-                                    <a class="nav-link" href="#">멀티미디어 정보</a>
+                                	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
+                                    <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">기본 정보</a>
+                                    <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
                                     <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
-                                    <a class="nav-link" href="#">원생 관리</a>
+                                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생 관리</a>
                                 </nav>
                             </div>                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
@@ -312,7 +310,6 @@
 					</c:if>
 		        	</c:forEach>
 		        	
-                                    
                             </div>
 
                         </div>
