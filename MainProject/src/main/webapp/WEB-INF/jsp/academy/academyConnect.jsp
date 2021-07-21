@@ -18,64 +18,45 @@
 		</script>
 		
 		<script>
-		var academyCode = '${academy.academyCode}';
 		
-		 alert("학원 코드 = "+academyCode);
+		//  인증 요청 수락
+		function updateConnect(connectNo){
+			if(confirm('인증 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/updateConnect/'+connectNo,
+			        type : 'post',
+			        success : function(){
+			        	alert("인증 되었습니다!")
+			        }
+			    });
+			}
 			
-		
-		function getAcademy(){
-			$.ajax({
-				 url : '/academy/json/getacademy/'+academyCode,
-			     method : 'GET',
-			     dataType : "json",
-			     headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-			     },
-				 success : function(data, status){
-					 
-					
-				 }							
-			});		
+			location.reload();
 		}
 		
-		// 텍스트 박스 
-		function introUpdate(academyCode, academyIntro){
-		    var intro ='';
-		    
-		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
-		    
-		    	intro += '<div class="input-group">';
-		   	 	intro += '<input type="text" class="form-control" name="content_'+academyCode+'" value="'+academyIntro+'"/>';
-		    	intro += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="acaIntroUpdate('+academyCode+');">저장</button> </span>';
-		   		intro += '</div>';
-		    
-		    $('.card-body2').html(intro);
-		    
+		//  인증 요청 거절 -> 데이터 삭제?
+		function deleteConnect(connectNo){
+			if(confirm('인증 요청을 삭제 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/deleteConnect/'+connectNo,
+			        type : 'post',
+			        success : function(){
+			        	alert("삭제 되었습니다!")
+			        }
+			    });
+			}
+			
+			location.reload();
 		}
-		 
-		// 수정
-		function acaIntroUpdate(academyCode){
-		    var updateIntro = $('[name=academy'+academyCode+']').val();
-		    
-		    $.ajax({
-		        url : '/academy/json/updateIntro',
-		        type : 'post',
-		        data : {'academyCode' : academyCode, 'intro' : academyIntro}
-		    });
-		}
-
 		
-
-		$(document).ready(function(){
-			getAcademy(); 
-		});
-		
-	
 		
 		</script>
 		
-	<title>Academy Info page</title>	
+	<title>Academy - Student Connect page</title>	
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -134,7 +115,7 @@
                                     <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">기본 정보</a>
                                     <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
                                     <a class="nav-link" href="#">학원 후기 보기</a>
-                                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생 관리</a>
+                                    <a class="nav-link" href="/academy/academyConnect?academyCode=${academy.academyCode}">원생 관리</a>
                                 </nav>
                             </div>                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
@@ -174,30 +155,64 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">${academy.academyName }</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Static Navigation</li>
-                        </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <p class="mb-0">
-                                    학원 번호	: ${academy.academyPhone}<br/>
-                                    학원 주소 : ${academy.academyAddr}<br/>
-                                    지역 구 : ${academy.academyArea }<br/>
-                                    위도 : ${academy.academyLat }<br/>
-                                    경도 : ${academy.academyLng }<br/>
-                                   
-                                    
-                            </div>
-                            
-                            <div class="card-body2">  </div>
-                            
-                            
-                            
-                        </div>
-                        <div style="height: 100vh"></div>
-                        <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+                    
+				       <form class="form-horizontal">
+						  
+						<table class="table table-hover table-striped" >
+							<br/><br/>
+				     		<h4>인증 신청한 학생 보기</h4>	
+				     		
+				     			<c:choose>
+								  <c:when test= "${empty connect}">
+									<span><h5>
+										<img src="/image/crying.png">
+										인증 신청한 학생이 없습니다.!</h5></span>
+								  </c:when>
+								  <c:otherwise>
+								  	<thead>
+							          <tr>
+							          	<th align="center">No</th>
+							            <th align="center">학생이름</th>
+							            <th align="center">인증상태</th>
+							            <th align="center">인증취소</th>
+							          </tr>
+							        </thead>
+							        
+							        <tbody>
+									  <c:set var="i" value="0" />
+									  <c:forEach var="connect" items="${connect}">
+										<c:set var="i" value="${ i+1 }" />
+										<tr>
+										  <td align="left">${ i }</td>
+										  <td align="left">
+										  	<span class="cntStudentName" name="cntStudentName">${connect.user.name}</span>
+										  	<input type="hidden" name="cntUserNo" value="${connect.user.userNo}">
+										  </td>
+										  <td align="left">
+											  <c:choose>
+												  <c:when test= "${connect.connectState == '0'}">
+													<a onclick="updateConnect(${connect.connectNo})">인증 대기중 입니다.</a>
+												  </c:when>
+												  <c:when test= "${connect.connectState == '1'}">
+													재학생
+												  </c:when>
+											  </c:choose>
+										  </td>
+										  <td align="left">
+										  		<c:choose>
+												  <c:when test= "${connect.connectState == '0'}">
+													<a onclick="deleteConnect(${connect.connectNo})">취소</a>
+												  </c:when>
+											  </c:choose>
+																	  
+										  </td>
+										</tr>
+							          </c:forEach>
+							        </tbody>
+								  </c:otherwise>
+							  	</c:choose>
+				    	  </table>
+						</form>
                     </div>
                 </main>
             </div>

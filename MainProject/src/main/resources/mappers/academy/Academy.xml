@@ -150,7 +150,6 @@
 		WHERE multimedia_no = #{multimediano}
 	 </delete>
 	 
-	 
 	 <!-- 검색 결과 -->
 	 <select id="getSearchList" parameterType="search" resultMap="academySelectMap">
 		SELECT

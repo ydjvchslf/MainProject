@@ -28,9 +28,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
+import com.buyedu.service.user.UserService;
 
 
 @Controller
@@ -39,6 +41,9 @@ public class AcademyController {
 	
 	@Autowired
 	public AcademyService academyService;
+	
+	@Autowired
+	public UserService userService;
 	
 	public String random() {
 		StringBuffer temp = new StringBuffer();
@@ -151,19 +156,41 @@ public class AcademyController {
 		return "academy/academySampleEdu";
 	}
 	
-	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
-	public StreamingResponseBody getVideo() throws Exception{
-		File file = new ClassPathResource("static/image/KakaoTalk_20210719_213033364.mp4").getFile();
-		@SuppressWarnings("resource")
-		final InputStream is = new FileInputStream(file);
-		return video -> {
-			byte[] data = new byte[2048];
-	        int read = 0;
-	        while ((read = is.read(data)) > 0) {
-	        	video.write(data, 0, read);
-	        }
-	        video.flush();
-		};
+//	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
+//	public StreamingResponseBody getVideo() throws Exception{
+//		File file = new ClassPathResource("static/image/KakaoTalk_20210719_213033364.mp4").getFile();
+//		@SuppressWarnings("resource")
+//		final InputStream is = new FileInputStream(file);
+//		return video -> {
+//			byte[] data = new byte[2048];
+//	        int read = 0;
+//	        while ((read = is.read(data)) > 0) {
+//	        	video.write(data, 0, read);
+//	        }
+//	        video.flush();
+//		};
+//	}
+	
+	
+//	academyConnects
+	
+	@RequestMapping(value = "academyConnects", method = RequestMethod.GET)
+	public String academyConnectList(@RequestParam("academyCode") String academyCode, Model model, HttpSession session) throws Exception{
+		
+		System.out.println("/academy/academyConnects : GET");
+		
+		System.out.println("academyConnect 아카데미 코드 = " + academyCode);
+		
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		Map<String, Object> map = academyService.academyConnect(academyCode);
+		
+		model.addAttribute("academy", academy);
+		model.addAttribute("connect", map.get("connect"));
+		
+		System.out.println("academyConnects map = "+map.get("connect"));
+		
+		return "academy/academyConnect";
 	}
 	
 
