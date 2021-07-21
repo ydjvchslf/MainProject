@@ -13,6 +13,7 @@
         <title>getUser</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
@@ -22,6 +23,9 @@
 			
 			//============= 회원정보수정 Event  처리 =============	
 			 $(function() {
+				 
+				 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
+				 
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( "button[name=updateInfo]" ).on("click" , function() {
 						self.location = "/user/updateUser?email=${user.email}"
@@ -80,6 +84,8 @@
 								 
 								});
 								
+							 
+							 
 						 }else if(loginType == "naver"){
 							 
 							 alert("네이버 로그아웃!")
@@ -125,17 +131,49 @@
 					                        
 					                    }
 				              })
-									
-				              
-							 
+								
 						 }else{
 							 alert("일반 로그아웃");
 							 self.location = "logout"
 						 }
 						 
-				
+						 /*
+						 
+						 if (!Kakao.Auth.getAccessToken()) {
+							  console.log('Not logged in.');
+							  return;
+							}
+						 
+							 Kakao.API.request({
+							  url: '/v1/user/unlink',
+							  success: function(response) {
+							    console.log(response);
+							    
+							    self.location = "/"
+							  },
+							  fail: function(error) {
+							    console.log(error);
+							  },
+							});
+						 
+						 
+						 
+							Kakao.Auth.logout(function() {
+							  console.log(Kakao.Auth.getAccessToken());
+							  
+							  if(Kakao.Auth.getAccessToken()){
+								  alert('로그아웃실패');
+							  }else{
+								  
+							  }
+							 
+							});
+							
+							*/
 					 });
 				});
+				 
+			
 				 
 			
 			
