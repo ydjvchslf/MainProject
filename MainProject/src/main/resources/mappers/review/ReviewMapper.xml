@@ -31,7 +31,8 @@
 	 <select 	id="getReview"	parameterType="int"	resultMap="reviewSelectMap">
 		SELECT
 		r.review_no ,
-		name ,
+		u.user_no review_writer ,
+		u.name ,
 		r.review_title ,
 		r.review_content ,
 		r.review_date 
@@ -58,6 +59,14 @@
 		</set>
 		WHERE review_no = '${reviewNo}'
 	</update>
+	
+	<delete id="deleteReview" parameterType="review">
+		update review
+		<set>
+			review_state = '2'
+		</set>
+		WHERE review_no = '${reviewNo}'
+	</delete>
 		 
 
 	
@@ -70,13 +79,13 @@
 											<if test="searchCondition != null">
 												
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				and review_title like '%${searchKeyword}%'
+										 				and r.review_title like '%${searchKeyword}%'
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				and review_content like '%${searchKeyword}%'
+										 				and u.name like '%${searchKeyword}%'
 													</if>
 													<if test="searchCondition == 2 and serachKeyword !='' ">
-														and review_writer like '%${searchKeyword}%'
+														and r.review_content like '%${searchKeyword}%'
 													</if>
 												
 											</if>
@@ -98,20 +107,21 @@
 <!-- 	SQL : SELECT ROW Count	 --> 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT review_title , review_content , review_writer , review_date
-						FROM review
+	  	FROM(	SELECT r.review_title , r.review_content , u.name , r.review_date
+						FROM review r , users u
+						WHERE r.review_writer = u.user_no
 						<if test="searchCondition != null">
-							<where>
+							
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-									review_title like '%${searchKeyword}%'
+									and review_title like '%${searchKeyword}%'
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-									review_content like '%${searchKeyword}%'
+									and review_content like '%${searchKeyword}%'
 								</if>
 								<if test="searchCondition == 2 and serachKeyword !='' ">
-									review_writer like '%${searchKeyword}%'
+									and review_content like '%${searchKeyword}%'
 								</if>							
-							</where>
+							
 						</if> ) countTable						
 	 </select>
 	 
