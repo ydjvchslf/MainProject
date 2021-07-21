@@ -249,7 +249,7 @@
 		            		console.log("동의안했어->" +email)
 		            	}
 		              
-		            	debugger;
+		            	//debugger;
 		            	
 			              $.ajax({
 			                 
