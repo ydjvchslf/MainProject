@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Edu;
 import com.buyedu.domain.PurchaseEdu;
 import com.buyedu.domain.Search;
 
@@ -16,5 +17,9 @@ public interface PurchaseEduDao {
 	PurchaseEdu getPurchaseEdu(String purchaseUid) throws Exception;
 	
 	int updatePurchaseEdu(PurchaseEdu purchaseEdu) throws Exception;
+	
+	List<PurchaseEdu> getPurchaseEduList(Search search);
 
+	int getPurchaseEduTotalCount(Search search);
+	
 }

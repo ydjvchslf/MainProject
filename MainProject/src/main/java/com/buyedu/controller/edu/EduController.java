@@ -3,7 +3,6 @@ package com.buyedu.controller.edu;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,8 +41,14 @@ public class EduController {
 	@Value("5")
 	int pageUnit;
 	
-	@Value("4")
+	@Value("6")
 	int pageSize;
+	
+	@RequestMapping( value = "cancle", method=RequestMethod.GET)
+	public String cancle() throws Exception {
+		
+		return "/purchase/cancle";
+	}
 	
 	@RequestMapping ( value = "addEdu", method=RequestMethod.GET )
 	public String addEduView() throws Exception {

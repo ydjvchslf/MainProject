@@ -25,6 +25,7 @@
 		<result property="eduGrade" 		column="edu_grade"	 	jdbcType="VARCHAR" />
 		<result property="eduSubject" 		column="edu_subject" 	jdbcType="VARCHAR" />
 		<result property="eduDate"			column="edu_date"		jdbcType="VARCHAR" />
+		<result property="academy.academyName"	column="academy_name"	jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- buyEdu : INSERT -->
@@ -68,11 +69,20 @@
 	   	WHERE edu_no = #{eduNo}
 	 </update>
 	 
+	 <update	id="updateEduRest"	parameterType="Edu" useGeneratedKeys="true" keyColumn="edu_no" keyProperty="eduNo">
+	   	UPDATE edu
+	   	<set>
+			edu_rest 	= #{eduRest} ,
+			edu_state	= #{eduState} ,
+	   	</set>
+	   	WHERE edu_no = #{eduNo}
+	 </update>
+	 
 	 <select  id="getEduList"  parameterType="Search"	resultMap="eduSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT e.edu_no, e.edu_name, e.edu_start_date, e.edu_end_date, e.edu_price, e.edu_state, e.edu_rest
-										FROM edu e
+	  					FROM		(	SELECT a.academy_name , e.edu_no, e.edu_name, e.edu_start_date, e.edu_end_date, e.edu_price, e.edu_state, e.edu_rest
+										FROM edu e , academy a
 										<if test="searchCondition != null">
 											<where>
 												<if test="searchCondition == 0 and searchKeyword !='' and searchEduState != null">

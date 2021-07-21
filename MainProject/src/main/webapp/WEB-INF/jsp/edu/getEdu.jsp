@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="EUC-KR"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -167,7 +168,14 @@
 	  			<button type="button" class="btn btn-primary">수업목록</button>
 	  			<button type="button" class="btn btn-primary">관심수업등록</button>
 	  			<button type="button" class="btn btn-primary">관심수업삭제</button>
-	  			<button type="button" class="btn btn-primary">수업구매</button>
+	  			<c:choose>
+					  <c:when test= "${edu.eduState == '1' }">
+						 <button type="button" class="btn btn-primary">수업구매</button>
+					  </c:when>
+					  <c:when test= "${edu.eduState == '2' }">
+					  </c:when>
+				</c:choose>
+
 	  		</div>
 		</div>
 		
