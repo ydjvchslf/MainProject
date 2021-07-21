@@ -70,6 +70,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( ".btn:contains('삭')" ).on("click" , function() {
 				 var boardNo = $("div").find('button#delete').val();
+				 document.getElementById("cateCode").value = cateCode;
 					self.location = "/board/deleteBoard?boardNo="+boardNo
 				});
 		});
@@ -199,21 +200,24 @@
 
 <div class="form-group">
 		    
-		    
+		  <form class="getBoardForm">
+		 	 <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
 		    <div class="complainButton">
 		      <a href="/complain/addComlainBoard"><img src="/image/complain.png" class="coplainButton" id="complain" value="${board.boardNo}"></a>
 		    </div>
 		    
-		    <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
-		    <c:if test="${userNo eq board.boardWriter}">
-		    <div class="updateButton">
+		 
+		  	  <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
+		  	  <c:if test="${userNo eq board.boardWriter}">
+		      <div class="updateButton">
 		      <button class="btn success" id="update" value="${board.boardNo}">수 &nbsp;정</button>   
-		   	</div>
+		   	  </div>
 		    
 		    <div class="deleteButton">
 		      <button class="btn success" id="delete" value="${board.boardNo}">삭&nbsp;제
 			</div>
 			</c:if>
+		</form>  
 	</div>
 	<hr>
 	

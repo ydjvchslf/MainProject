@@ -21,6 +21,23 @@
 	      height : 50px;
 	    }
 	    
+	    #commentInsert{
+	      width : 100px;
+	      height : 50px;
+	    }
+	    
+	    #buttons{
+	      text-align : right;
+	    }
+	    
+	    #commentwriterpr{
+	      color : #A804CD;
+	    }
+	    
+	    #commentDate{
+	      color : black;
+	    }
+	    
 	   </style>
  </br></br>
  
@@ -84,17 +101,19 @@ function commentList(){
             $.each(data, function(key, value){ 
             	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
                
+                a += '<div id="commentwriterpr" class="commentInfo'+value.COMMENT_NO+'">'+value.EMAIL;
+                a += '&nbsp;&nbsp;&nbsp;&nbsp;'
                 
-                a += '<div class="commentInfo'+value.COMMENT_NO+'">'+value.EMAIL+'  '+value.COMMENT_DATE;
-                
+                a += '<span id="commentDate" class="commentDate'+value.COMMENT_NO+'">'+value.COMMENT_DATE+'</span></div>';
                 <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
+                a += '<div id="buttons">'
                 if (sessionId == value.COMMENT_WRITER){
                 a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
                 a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
                 if (sessionId != value.COMMENT_WRITER){
                 a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
-                a += '</div>';
-                a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> 내용 : '+value.COMMENT_CONTENT+'</p>';
+        		a += '</div>'
+                a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> '+value.COMMENT_CONTENT+'</p>';
                 a += '</div></div>';
             });
             

@@ -86,7 +86,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			map.put("boardNo", board.getBoardNo());
 			map.put("userNo", userNo);
 			int boardLike = boardService.getRecommend(map);
-			model.addAttribute("heart",boardLike);
+			model.addAttribute("heart",0);
 			System.out.println("들어갔나 정보 : "+board1);
 			System.out.println("추천수가 안나오지? "+boardLike);
 			
@@ -220,8 +220,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		}
 		
 		@RequestMapping( value="deleteBoard", method = RequestMethod.GET)
-		public String  deleteBoard( @RequestParam("boardNo") int boardNo) throws Exception {
-			
+		public String  deleteBoard( @RequestParam(value = "boardNo",  required = true, defaultValue= "") int boardNo) throws Exception {
+		
 			System.out.println("/board/deleteBoard : GET");
 			//Business Logic
 			boardService.deleteBoard(boardNo);
@@ -229,8 +229,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			// Model 과 View 연결
 			//model.addAttribute("board", board);
 			//System.err.println("겟 프로덕트 : "+board);
+			//BoardService boardService.listBoard(null, null, null);
 
-			return "redirect:/board/listBoard";
+			return "/board/listBoard";
 		}
 
 	}
