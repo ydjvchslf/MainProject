@@ -226,6 +226,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			//Business Logic
 			boardService.deleteBoard(boardNo);
 			System.out.println("삭제성공");
+			System.out.println("살려주세요......................");
 			// Model 과 View 연결
 			//model.addAttribute("board", board);
 			//System.err.println("겟 프로덕트 : "+board);
