@@ -51,7 +51,7 @@ public class ReviewController {
 		return "/review/addReviewView";
 	}
 	@RequestMapping (value="addReview", method=RequestMethod.POST)
-	public String addReview(@ModelAttribute("review") Review review , HttpServletRequest httpRequest) throws Exception {
+	public String addReview(@ModelAttribute("review") Review review , @ModelAttribute("uesr") User user ,  HttpServletRequest httpRequest) throws Exception {
 		
 		System.out.println("애드리뷰포스트 시작");
 		
@@ -62,7 +62,6 @@ public class ReviewController {
 		//System.out.println(academyCode);
 		
 		System.out.println("review :" + review);
-		User user = new User();
 		user.setUserNo(userNo);
 		review.setReviewWriter(user);
 		
@@ -86,9 +85,10 @@ public class ReviewController {
 		Review review = reviewService.getReview(reviewNo);
 		
 		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
+		//String name = ((User)httpRequest.getSession().getAttribute("user")).getName();
 		
 		model.addAttribute("review" , review);
-		model.addAttribute("user", userNo);
+		model.addAttribute("userNo", userNo);
 		System.out.println(userNo);
 		System.out.println(review);
 		
