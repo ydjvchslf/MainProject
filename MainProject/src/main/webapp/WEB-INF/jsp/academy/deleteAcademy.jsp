@@ -17,34 +17,6 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-		<script>
-		
-		var academyCode = '${academy.academyCode}';
-		
-		
-		function deleteAcademyProfile(academyCode){
-			alert(academyCode)
-			
-			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
-				
-			    $.ajax({
-			    	
-			        url : '/academy/json/deleteAcademyAll/'+academyCode,
-			        type : 'post',
-			        success : function(data){
-			            alert("삭제가 완료되었습니다!")
-			        }
-			    });
-			}
-			
-			
-		}
-		
-		
-		
-		</script>
-		
-
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -100,10 +72,10 @@
                             <div class="collapse" id="collapseAcademy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                 	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
-                                    <a class="nav-link" href="#">기본 정보</a>
-                                    <a class="nav-link" href="#">멀티미디어 정보</a>
-                                    <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
-                                    <a class="nav-link" href="#">원생 관리</a>
+                                    <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">기본 정보</a>
+                                    <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
+                                    <a class="nav-link" href="/review/listReview?academyCode=${academy.academyCode}">학원 후기 보기</a>
+                                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생 관리</a>
                                     <a class="nav-link" href="/user/deleteacademy?email=${user.email}">학원 프로필 삭제</a>
                                 </nav>
                             </div>                            
@@ -174,6 +146,8 @@
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         
+        
+        
         <script>
         
         var userno = '${user.userNo}';
@@ -209,6 +183,29 @@
         		}
         	});
         }
+        
+
+		var academyCode = '${academy.academyCode}';
+		
+		
+		function deleteAcademyProfile(academyCode){
+			alert(academyCode)
+			
+			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/deleteAcademyAll/'+academyCode,
+			        type : 'post',
+			        success : function(data){
+			            alert("삭제가 완료되었습니다!")
+			        }
+			    });
+			}
+			
+			
+		}
+		
         
         $(document).ready(function(){
             academyList();

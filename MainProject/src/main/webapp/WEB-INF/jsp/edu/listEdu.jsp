@@ -45,9 +45,11 @@
 	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
 		
 		function fncGetList(currentPage) {
+		
+			var acaCode = ${ list.academyCode }
 			
 			$("#currentPage").val(currentPage)
-		   	$("form").attr("method", "POST").attr("action","/edu/listEdu").submit();
+		   	$("form").attr("method", "POST").attr("action","/edu/listEdu?acaCode=${edu.academy.academyCode}").submit();
 		};
 		
 		
@@ -173,14 +175,14 @@
 		
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover table-striped" >
-       
+      
 	  <div class="row">
 	      <c:forEach var="edu" items="${list}" >
 	        <div class="col-sm-6 col-md-4">
 	          <div class="thumbnail">
 	            <img src="/image/BBBB.png" width="200" height="auto">
 	            <div class="caption" align="center">
-	              <h2>${ edu.academy.academyName }</h2>
+	              <h2>${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
 	              <h5>${ edu.eduName }</h5>
 	              <p>&#8361; ${ edu.eduPrice } 원</p>
 	              <p>
