@@ -17,45 +17,6 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-		<script>
-		
-		//  인증 요청 수락
-		function updateConnect(connectNo){
-			if(confirm('인증 하시겠습니까?')){
-				
-			    $.ajax({
-			    	
-			        url : '/academy/json/updateConnect/'+connectNo,
-			        type : 'post',
-			        success : function(){
-			        	alert("인증 되었습니다!")
-			        }
-			    });
-			}
-			
-			location.reload();
-		}
-		
-		//  인증 요청 거절 -> 데이터 삭제?
-		function deleteConnect(connectNo){
-			if(confirm('인증 요청을 삭제 하시겠습니까?')){
-				
-			    $.ajax({
-			    	
-			        url : '/academy/json/deleteConnect/'+connectNo,
-			        type : 'post',
-			        success : function(){
-			        	alert("삭제 되었습니다!")
-			        }
-			    });
-			}
-			
-			location.reload();
-		}
-		
-		
-		</script>
-		
 	<title>Academy - Student Connect page</title>	
     </head>
     <body>
@@ -232,6 +193,42 @@
         		}
         	});
         }
+        
+    //  인증 요청 수락
+		function updateConnect(connectNo){
+			if(confirm('인증 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/updateConnect/'+connectNo,
+			        type : 'post',
+			        success : function(data){
+			        	alert("인증 되었습니다!")
+			        }
+			    });
+			}
+			
+			location.reload();
+		}
+		
+		//  인증 요청 거절 -> 데이터 삭제?
+		function deleteConnect(connectNo){
+			if(confirm('요청 학생을 삭제 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/deleteConnect/'+connectNo,
+			        type : 'post',
+			        success : function(data){
+			        	alert("삭제 되었습니다!")
+			        }
+			    });
+			}
+			
+			location.reload();
+		}
+        
+        
         
         $(document).ready(function(){
             connectList();

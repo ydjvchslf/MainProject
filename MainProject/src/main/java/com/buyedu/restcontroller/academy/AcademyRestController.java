@@ -60,31 +60,35 @@ public class AcademyRestController {
 	      return map;
 	}
 	
-	@RequestMapping(value = "json/getacademy/{academyCode}", method = RequestMethod.GET)
+	@RequestMapping(value = "json/getacademyInfo/{academyCode}", method = RequestMethod.GET)
 	public Academy academy(@PathVariable String academyCode) throws Exception{
+		
+		System.out.println("json/getacademyInfo : GET");
+		
+		System.out.println("academyInfo 아카데미 코드 = " + academyCode);
+		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		return academy;
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "json/updateIntro", method = RequestMethod.POST)
-	private Academy history(HttpServletRequest httpRequest,
-							@RequestParam String academyCode, 
-							@RequestParam String academyIntro) throws Exception{
+	@RequestMapping(value = "json/updateIntro/{academyCode}", method = RequestMethod.POST)
+	private Academy updateIntro(HttpServletRequest httpRequest,
+							@PathVariable String academyCode, 
+							@RequestParam String updateIntro) throws Exception{
 		
 		System.out.println("(수정 실적)json 으로 받은 academyCode"+academyCode);
 		
 		//String intro = httpRequest.getParameter("intro");
 		
-		Academy academy = new Academy();
+		Academy academy = academyService.getAcademy(academyCode);
 		
-		academy.setAcademyCode(academyCode);
-		academy.setAcademyIntro(academyIntro);
+		academy.setAcademyIntro(updateIntro);
+					
+		academyService.updateAcademyIntro(academy);
 		
-		System.out.println("수정 된 학원 소개"+academyIntro);
-		
-		//academyService.updateAcademyHistory(academy);
+		System.out.println("수정 된 학원 소개"+academyService.getAcademy(academyCode).getAcademyIntro());
 		
 		return academy;
 	}
