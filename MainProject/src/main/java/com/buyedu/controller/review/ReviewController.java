@@ -121,7 +121,7 @@ public class ReviewController {
 		
 	}
 	
-	@RequestMapping (value="listReview")
+	@RequestMapping (value="listReview" , method=RequestMethod.GET)
 	public String listReview( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		if(search.getCurrentPage() ==0) {
@@ -145,7 +145,7 @@ public class ReviewController {
 		
 		System.err.println(list);
 		
-		
+	
 		return "/review/listReview";
 	}
 	
