@@ -133,6 +133,21 @@ public class AcademyService {
 		
 		connectDao.deleteConnectfromAca(connectNo);
 	}
+	
+	
+	// 학원 정보 모두삭제 --------------------------------------------------
+	
+	public void deleteAcademyAll(String academyCode) throws Exception{
+		
+		academyDao.deleteReview(academyCode);
+		
+		academyDao.deleteEdu(academyCode);
+		
+		academyDao.deleteConnection(academyCode);
+		
+		academyDao.deleteAcademy(academyCode);
+		
+	}
 
 
 }

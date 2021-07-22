@@ -10,42 +10,41 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>academyInfo</title>
+        <title>deleteAcademy</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-		<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+		<script>
 		
-		<style>
-		    .btn{  <!-- 모든 버튼에대한 css설정 -->
-		      text-decoration: none;
-		      font-size:20px;
-		      font-weight:bolder;
-		      color:white;
-		      padding:5px 10px 5px 10px;
-		      margin:20px;
-		      display:inline-block;
-		      border-radius: 50px;
-		      transition:all 0.1s;
-		      font-family: 'Nanum Pen Script', cursive;
-		    }
-		    .btn:active{
-		      transform: translateY(3px);
-		    }
-		    .btn.blue{
-		      background-color: #1f75d9;
-		      border-bottom:5px solid #165195;
-		    }
-		    .btn.blue:active{
-		      border-bottom:2px solid #165195;
-		    }
+		var academyCode = '${academy.academyCode}';
+		
+		
+		function deleteAcademyProfile(academyCode){
+			alert(academyCode)
+			
+			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/deleteAcademyAll/'+academyCode,
+			        type : 'post',
+			        success : function(data){
+			            alert("삭제가 완료되었습니다!")
+			        }
+			    });
+			}
+			
+			
+		}
+		
+		
+		
+		</script>
+		
 
- 		</style>
-
-	<title>Academy Info page</title>	
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -101,10 +100,11 @@
                             <div class="collapse" id="collapseAcademy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                 	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
-                                    <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">기본 정보</a>
-                                    <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
-                                    <a class="nav-link" href="#">학원 후기 보기</a>
-                                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생 관리</a>
+                                    <a class="nav-link" href="#">기본 정보</a>
+                                    <a class="nav-link" href="#">멀티미디어 정보</a>
+                                    <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
+                                    <a class="nav-link" href="#">원생 관리</a>
+                                    <a class="nav-link" href="/user/deleteacademy?email=${user.email}">학원 프로필 삭제</a>
                                 </nav>
                             </div>                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
@@ -144,17 +144,26 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">${academy.academyName}</h1>
-                        <h5 class="mt-4">&nbsp;학원 전화 번호 : ${academy.academyPhone}</h5>
+                        <h1 class="mt-4">여기가 여러분의 jsp가 들어갑니다 (학원메인)</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                             <li class="breadcrumb-item active">Static Navigation</li>
                         </ol>
-                        
-                        <div id="academyInfo" class="card-body">
-                        	
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                    
+                                    <div class="panel panel-primary">
+									<div class="panel-heading">
+											<i class="glyphicon glyphicon-briefcase"></i> 학원 프로필
+				         			</div>
+				         			<br/>
+				         			
+						<ul class="academyList"></ul>
+						
+						        	</div>
+						        
+                            </div>
                         </div>
-                            
                         <div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
                     </div>
@@ -166,72 +175,46 @@
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         
         <script>
-		var academyCode = '${academy.academyCode}';
-		
-		 alert("학원 코드 = "+academyCode);
-			
-		
-		function getAcademyInfo(){
-			$.ajax({
-				 url : '/academy/json/getacademyInfo/'+academyCode,
-			     method : 'GET',
-			     dataType : "json",
-				 success : function(data){
-					 console.log(data);
-					 
-					 var a = ''
-					 	 a += '학원 번호 : ' + data.academyPhone
-				 		 a += '<br/>학원 주소 : ' + data.academyAddr
-				 		 a += '<br/>지역구 : ' + data.academyArea
-				 	 	 a += '<div id="AcademyIntro">'
-				 	 	 a += '학원 소개 : ' + data.academyIntro
-				 	 	 a += '<a class="btn blue" onclick="updateIntro(\''+data.academyCode+'\',\''+data.academyIntro+'\')"> 수 정 </a>'
-				 		 a += '</div>'
-				 		 a += '<div id="AcademyHistory">'
-				 		 a += '학원 실적 : ' + data.academyHistory
-						 a += '<a class="btn blue" onclick="updateHistory(\''+data.academyCode+'\',\''+data.academyHistory+'\')"> 수 정 </a>'
-						 a += '</div>'
-				 					
-					$("#academyInfo").html(a);
-				 }							
-			});		
-		}
-		
-		// 텍스트 박스 변경
-		function updateIntro(academyCode, academyIntro){
-		    var intro ='';
-		    
-		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
-		    
-		    	intro += '<div id="AcademyIntro">';
-		   	 	intro += '<input type="text" class="form-control" name="academy_'+academyCode+'" value="'+academyIntro+'"/>';
-		   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
-		   	 	intro += '</div>';
-		    
-		    $('#AcademyIntro').html(intro);
-		    
-		}
-		 
-		// 수정
-		function saveIntro(academyCode){
-		    var updateIntro = $('[name=academy_'+academyCode+']').val();
-		    
-		    $.ajax({
-		        url : '/academy/json/updateIntro/'+academyCode,
-		        type : 'POST',
-		        data : {'academyCode' : academyCode, 'updateIntro' : updateIntro},
-		        success : function(data){
-		        	alert("수정 완료!");
-		        }
-		    });
-		}
-
-		$(document).ready(function(){
-			getAcademyInfo(); 
-		});
-		
-		
-		</script>
+        
+        var userno = '${user.userNo}';
+       
+        
+        function academyList(){
+        	$.ajax({
+        		url : '/academy/json/academyProfile/${user.userNo}',
+        		type : 'get',
+        		success : function(data){
+        			console.log(data);
+        			$.each(data, function(key,value){
+        				
+        				var a = '';
+        				
+        				if(value.length<=2){
+    						a += '<li class="list-group-item">'
+    						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a>'
+    						a += '</li>'
+    					}
+        				
+        				for(var i=0; i<value.length;i++){
+        					
+        					a += '<li class="list-group-item">'
+        					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a>'
+        					a += '<a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"> 프로필 삭제 </a>'
+        					a += '</li>'
+        				}
+        				
+            			$(".academyList").html(a);
+        				
+        			});
+        		}
+        	});
+        }
+        
+        $(document).ready(function(){
+            academyList();
+        });
+        
+        </script>
         
     </body>
 </html>
