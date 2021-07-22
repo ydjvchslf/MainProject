@@ -41,7 +41,7 @@
 				,#{academyArea})
 	</insert>
 	
-	<!-- SQL : UPDATE -->
+	<!-- SQL : UPDATE 학원 소개글 수정 -->
 	<update	id="updateAcademyIntro"	parameterType="Academy" >
 	   	UPDATE academy
 	   	<set>
@@ -50,6 +50,7 @@
 	   	WHERE academy_code = #{academyCode}
 	 </update>
 	 
+	 <!-- SQL : UPDATE 학원 실적글 수정 -->
 	 <update	id="updateAcademyHistory"	parameterType="String" >
 	   	UPDATE academy
 	   	<set>

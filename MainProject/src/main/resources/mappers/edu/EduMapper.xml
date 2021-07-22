@@ -81,7 +81,7 @@
 	 <select  id="getEduList"  parameterType="Search"	resultMap="eduSelectMap">
 	  	SELECT distinct *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT e.edu_academy_name , e.edu_no, e.edu_name, e.edu_start_date , e.edu_price, e.edu_state, e.edu_rest
+	  					FROM		(	SELECT e.edu_academy_code , e.edu_academy_name , e.edu_no, e.edu_name, e.edu_start_date , e.edu_price, e.edu_state, e.edu_rest
 										FROM edu e
 										WHERE e.edu_academy_code = #{searchAcademyCode}
 										<if test="searchCondition != null">

@@ -51,7 +51,12 @@ public class EduController {
 	}
 	
 	@RequestMapping ( value = "addEdu", method=RequestMethod.GET )
-	public String addEduView() throws Exception {
+	public String addEduView(@RequestParam String academyCode, Model model) throws Exception {
+		
+		System.out.println(academyCode);
+		
+		// 여기 모델 추가
+		model.addAttribute("code",academyCode);
 		
 		System.out.println("/edu/addEdu : GET ");
 		
@@ -142,6 +147,8 @@ public class EduController {
 		
 		// Model 怨� View �곌껐
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("aca", map.get("list"));
+		System.out.println(map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		

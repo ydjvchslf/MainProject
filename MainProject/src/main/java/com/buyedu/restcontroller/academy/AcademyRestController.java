@@ -69,6 +69,7 @@ public class AcademyRestController {
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
+		
 		return academy;
 	}
 
@@ -78,17 +79,38 @@ public class AcademyRestController {
 							@PathVariable String academyCode, 
 							@RequestParam String updateIntro) throws Exception{
 		
-		System.out.println("(수정 실적)json 으로 받은 academyCode"+academyCode);
-		
-		//String intro = httpRequest.getParameter("intro");
+		System.out.println("수정 요청 한 학원 소개 = " + updateIntro);
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		academy.setAcademyIntro(updateIntro);
 					
+		System.out.println("json aca = " + academy);
+		
 		academyService.updateAcademyIntro(academy);
 		
-		System.out.println("수정 된 학원 소개"+academyService.getAcademy(academyCode).getAcademyIntro());
+		System.out.println("수정 된 학원 소개 = "+academyService.getAcademy(academyCode).getAcademyIntro());
+		
+		return academy;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "json/updateHistory/{academyCode}", method = RequestMethod.POST)
+	private Academy updateHistory(HttpServletRequest httpRequest,
+							@PathVariable String academyCode, 
+							@RequestParam String updateHistory) throws Exception{
+		
+		System.out.println("수정 요청한 학원 실적 = " + updateHistory);
+		
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		academy.setAcademyHistory(updateHistory);
+					
+		System.out.println("json aca = " + academy);
+		
+		academyService.updateAcademyHistory(academy);
+		
+		System.out.println("수정 된 학원 실적 = "+academyService.getAcademy(academyCode).getAcademyHistory());
 		
 		return academy;
 	}
