@@ -57,12 +57,12 @@ public class AcademyService {
 		return academyDao.checkAcademyCode(academyCode);
 	};
 	
-	public String updateAcademyIntro(Academy academy) throws Exception{
-		return academyDao.updateAcademyIntro(academy);
+	public void updateAcademyIntro(Academy academy) throws Exception{
+		academyDao.updateAcademyIntro(academy);
 	}
 	
-	public String updateAcademyHistory(Academy academy) throws Exception{
-		return academyDao.updateAcademyHistory(academy);
+	public void updateAcademyHistory(Academy academy) throws Exception{
+		academyDao.updateAcademyHistory(academy);
 	}
 
 	// 지도검색 후 학원 목록
@@ -132,6 +132,21 @@ public class AcademyService {
 	public void deleteConnect(int connectNo) throws Exception{
 		
 		connectDao.deleteConnectfromAca(connectNo);
+	}
+	
+	
+	// 학원 정보 모두삭제 --------------------------------------------------
+	
+	public void deleteAcademyAll(String academyCode) throws Exception{
+		
+		academyDao.deleteReview(academyCode);
+		
+		academyDao.deleteEdu(academyCode);
+		
+		academyDao.deleteConnection(academyCode);
+		
+		academyDao.deleteAcademy(academyCode);
+		
 	}
 
 

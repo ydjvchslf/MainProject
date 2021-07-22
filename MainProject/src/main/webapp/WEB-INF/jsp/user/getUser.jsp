@@ -27,7 +27,7 @@
 				 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
 				 
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( "button[name=updateInfo]" ).on("click" , function() {
+				 $( ".updateInfo" ).on("click" , function() {
 						self.location = "/user/updateUser?email=${user.email}"
 					});
 			});
@@ -262,61 +262,73 @@
                 </nav>
             </div>
             <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
-           <!--  화면구성 div Start /////////////////////////////////////-->
-			<div class="container">
-			
-				<div class="page-header">
-			       <h3 class=" text-info">내정보보기 화면</h3>
-			       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-			    </div>
-			
-				<div class="row">
-			  		<div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
-					<div class="col-xs-8 col-md-4">${user.email}</div>
-				</div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+				       <form class="form-horizontal">
+
+						<!-- 프로필 제목, 사진 -->				       
+				        <div>
+		                    <h3 class="profile">
+		                        <label for="profile">${user.name}님의 Profile</label>
+		                    </h3>
+		                    <span class="image">
+		                    	<input type="hidden" value="${user.userNo}">
+		                    	<img src="/image/user.jpg" width="200px"/>
+		                    	<div>${user.role}</div>
+		                    </span>
+		                </div>
+		                
+						<!-- 회원정보수정버튼 -->
+		                <div>
+		                    <span class="box int_email">
+		                       <img src="/image/edit.png" width="40px" name="updateInfo" class="updateInfo"/>
+		                    </span> 
+		                </div> 
+						
+						<!-- EMAIL -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">이 메 일</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.email}</span>
+		                    </span> 
+		                </div> 
+							        
+						<!-- 이름 -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">이 름</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.name}</span>
+		                    </span> 
+		                </div> 
 				
-				<hr/>
+						<!-- 전화번호 -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">휴대전화번호</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.phone}</span>
+		                    </span> 
+		                </div> 
 				
-				<div class="row">
-			  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
-					<div class="col-xs-8 col-md-4">${user.name}</div>
-				</div>
-				
-				<hr/>
-				
-				<div class="row">
-			  		<div class="col-xs-4 col-md-2 "><strong>역할</strong></div>
-					<div class="col-xs-8 col-md-4">${user.role}</div>
-				</div>
-				
-				<hr/>
-				
-				<div class="row">
-			  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
-					<div class="col-xs-8 col-md-4">${user.phone}</div>
-				</div>
-				
-				<hr/>
-				
-				<div class="row">
-			  		<div class="col-xs-4 col-md-2 "><strong>가입일자</strong></div>
-					<div class="col-xs-8 col-md-4">${user.inDate}</div>
-				</div>
-				
-				 <!--  input type="hidden" id="userNo" name="userNo" value="${user.userNo}"> -->
-				
-				<hr/>
-				
-				<div class="row">
-			  		<div class="col-md-12 text-center ">
-			  			<button type="button" name="updateInfo" class="updateInfo">회원정보수정</button>
-			  			<button type="button" name="allLogout" class="allLogout">로그아웃</button>
-			  		</div>
-				</div>
-				
-				<br/>
-				
-		 	</div>
+						<!-- 가입일자 -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">가입일자</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.inDate}</span>
+		                    </span> 
+		                </div> 
+						
+						<!-- 추후 삭제예정 -->
+						<div class="row">
+					  		<div class="col-md-12 text-center ">
+					  			<button type="button" name="allLogout" class="allLogout">로그아웃</button>
+					  		</div>
+						</div>
+						
+                    </div>
+                </main>
+            </div>
+            
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>

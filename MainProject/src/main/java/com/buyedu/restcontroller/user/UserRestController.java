@@ -3,10 +3,14 @@ package com.buyedu.restcontroller.user;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.buyedu.domain.Academy;
 import com.buyedu.domain.Connect;
+import com.buyedu.domain.Sms;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.user.UserService;
@@ -351,5 +356,70 @@ public class UserRestController {
 		return map1;
 	}
 	
-
+	
+	
+	
+	// SMS 인증번호 발송
+	@GetMapping("json/sendSms/{phone}")
+	public Map sendSms( @PathVariable String phone ) throws Exception{
+	
+		System.out.println("/user/json/sendSms : GET");
+		
+		System.out.println("받아온 phone=> "+phone);
+		
+		int cnt = userService.smsCnt(phone);
+		
+		if ( cnt == 1 ) {
+			userService.deleteSms(phone);
+		}
+		
+		Sms sms = new Sms();
+		sms.setPhone(phone);
+		
+		userService.addSms(sms);
+		
+		Map<String, String> map1= new HashMap<String, String>();
+		map1.put("phone", phone);
+		
+		System.out.println("sms 테이블에 저장 성공");
+		
+		return map1;
+		
+	}
+	
+	
+	// SMS 인증 번호 맞는지 확인
+	@GetMapping("json/checkSms/{phone}/{vaildNumber}")
+	public Map checkSms( @PathVariable String phone ,
+						 @PathVariable int vaildNumber) throws Exception{
+	
+		System.out.println("/user/json/checkSms : GET");
+		
+		System.out.println("받아온 phone=> "+phone+" --- 받아온 인증번호=> "+vaildNumber);
+		
+		Sms sms = userService.getSms(phone);
+		
+		int first = sms.getVaildNumber();
+		
+		Map<String, String> map1= new HashMap<String, String>();
+		
+			if ( first == vaildNumber ) {
+				
+				System.out.println("sms 인증번호 확인 컨트롤러 끝");
+				
+				map1.put("result", "ok");
+				return map1;
+				
+			}else{
+				
+				System.out.println("sms 인증번호 확인 컨트롤러 끝");
+				
+				map1.put("result", "no");
+				return map1;
+			}
+		
+		}
+	
+	
+	
 }

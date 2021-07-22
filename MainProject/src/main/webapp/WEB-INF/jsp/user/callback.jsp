@@ -51,7 +51,7 @@
 					console.log(accessToken);
 					console.log(email);
 					
-					debugger;
+					//debugger;
 					
 					if( email == undefined || email == null) {
 						alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");

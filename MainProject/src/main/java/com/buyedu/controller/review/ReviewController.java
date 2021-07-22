@@ -1,8 +1,10 @@
 package com.buyedu.controller.review;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.Review;
 import com.buyedu.domain.Search;
@@ -69,7 +72,7 @@ public class ReviewController {
 		String academyCode = ( acaService.getAcademyCode(userNo) );
 		academy.setAcademyCode(academyCode);
 		
-		System.out.println("academyCode : "+ academy);
+		System.out.println("academyCode 여기들어가나? : "+ academy);
 		review.setAcademy(academy);
 		
 		System.out.println("리뷰가 들어가야함 review :" +review);
@@ -118,13 +121,17 @@ public class ReviewController {
 		
 	}
 	
-	@RequestMapping (value="listReview")
-	public String listReview( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	@RequestMapping (value="listReview" , method=RequestMethod.GET)
+	public String listReview( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		if(search.getCurrentPage() ==0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		
+		
+		Map<String, Object> map = acaService.academyConnect(academyCode);
+		
 		
 		List<Review> list = reviewService.getReviewList(search);
 		
@@ -134,12 +141,17 @@ public class ReviewController {
 		model.addAttribute("list",list);
 		model.addAttribute("resultPage" , resultPage);
 		model.addAttribute("search",search);
+		model.addAttribute("connect" , map.get("connect"));
 		
 		System.err.println(list);
 		
-		
+	
 		return "/review/listReview";
 	}
+	
+	
+	
+	
 	
 	/*@RequestMapping(value="deleteReview", method = RequestMethod.POST)
 	public int deleteReview(@RequestParam("review") Review r) throws Exception{

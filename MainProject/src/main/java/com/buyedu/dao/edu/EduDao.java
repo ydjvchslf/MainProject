@@ -24,4 +24,6 @@ public interface EduDao {
 	
 	int deleteEdu(int eduNo);
 	
+	int updateEduRest(Edu edu);
+	
 }

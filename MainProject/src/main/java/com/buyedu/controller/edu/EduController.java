@@ -3,7 +3,6 @@ package com.buyedu.controller.edu;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,11 +41,22 @@ public class EduController {
 	@Value("5")
 	int pageUnit;
 	
-	@Value("4")
+	@Value("6")
 	int pageSize;
 	
+	@RequestMapping( value = "cancle", method=RequestMethod.GET)
+	public String cancle() throws Exception {
+		
+		return "/purchase/cancle";
+	}
+	
 	@RequestMapping ( value = "addEdu", method=RequestMethod.GET )
-	public String addEduView() throws Exception {
+	public String addEduView(@RequestParam String academyCode, Model model) throws Exception {
+		
+		System.out.println(academyCode);
+		
+		// 여기 모델 추가
+		model.addAttribute("code",academyCode);
 		
 		System.out.println("/edu/addEdu : GET ");
 		
@@ -68,6 +78,8 @@ public class EduController {
 		
 		System.out.println("/edu/addEdu : POST ");
 		
+		System.err.println(edu);
+		
 		eduService.addEdu(edu);
 		
 		return "forward:/edu/getEdu?eduNo="+edu.getEduNo();
@@ -79,6 +91,8 @@ public class EduController {
 		System.out.println("/edu/getEdu : GET");
 		
 		Edu edu = eduService.getEdu(eduNo);
+		
+		System.err.println("get edu 테스트 :" + edu);
 		
 		model.addAttribute("edu", edu);
 		
@@ -113,14 +127,17 @@ public class EduController {
 	
 	@RequestMapping( value="listEdu" )
 	public String listEdu( @ModelAttribute("search") Search search , 
-							@ModelAttribute("edu") Edu edu , Model model , HttpServletRequest request) throws Exception{
+							@ModelAttribute("edu") Edu edu , Model model ,
+							@RequestParam("acaCode") String acaCode ) throws Exception{
 		
 		System.out.println("/edu/listEdu : GET / POST");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
+		
 		search.setPageSize(pageSize);
+		search.setSearchAcademyCode(acaCode);
 		
 		// Business logic ����
 		Map<String , Object> map= eduService.getEduList(search);
@@ -130,6 +147,8 @@ public class EduController {
 		
 		// Model 怨� View �곌껐
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("aca", map.get("list"));
+		System.out.println(map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		

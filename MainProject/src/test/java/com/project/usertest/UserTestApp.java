@@ -11,6 +11,7 @@ import com.buyedu.MainProjectApplication;
 import com.buyedu.domain.Academy;
 import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
+import com.buyedu.domain.Sms;
 import com.buyedu.domain.User;
 import com.buyedu.service.user.UserService;
 
@@ -450,6 +451,51 @@ public class UserTestApp {
 				System.out.println("connect======" + connect);
 					
 				userService.deleteConnect(connect);
+				
+			}
+			
+			//SMS
+			
+			//@Test  
+			public void testAddSms() throws Exception{
+				
+				Sms sms = new Sms();
+				
+				sms.setPhone("48485");
+				userService.addSms(sms);
+				
+				System.out.println("SMS===> "+sms);
+			}
+			
+			//@Test  
+			public void testGetSms() throws Exception{
+				
+				Sms sms = new Sms();
+				
+				//sms.setPhone("48485");
+				userService.getSms("48485");
+				
+				System.out.println("겟 SMS===> "+sms);
+			}
+			
+			
+			//@Test  
+			public void testSmsCnt() throws Exception{
+				
+				Sms sms = new Sms();
+				
+				int cnt = userService.smsCnt("66666");
+				
+				System.out.println("폰 인증 갯수===> "+cnt);
+			}
+			
+			
+			//@Test  
+			public void deleteSms() throws Exception{
+				
+				Sms sms = new Sms();
+				
+				userService.deleteSms("66666");
 				
 			}
 

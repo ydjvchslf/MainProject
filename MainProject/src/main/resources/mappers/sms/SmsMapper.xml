@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.sms.SmsDao">
+	
+	<resultMap id="smsSelectMap"		type="sms">
+		<result property="smsNo" 			column="sms_no" 		jdbcType="NUMERIC"/>
+		<result property="phone"			column="phone" 			jdbcType="VARCHAR" />
+		<result property="vaildNumber"		column="vaild_number" 	jdbcType="NUMERIC" />
+	</resultMap>
+	
+	
+	<insert 	id="addSms"		parameterType="sms" >
+	 	INSERT
+		INTO sms
+		( sms_no , phone , vaild_number ) 
+		VALUES ( SEQ_SMS_SMS_NO.nextval , #{phone} , CEIL(dbms_random.value(100000,999999)) )
+	 </insert>
+	 
+	 
+	<select 	id="getSms"	parameterType="string"	resultMap="smsSelectMap">
+		SELECT *
+		FROM sms 
+		WHERE phone = #{value}
+	 </select>
+	 
+	 
+	 <select id="smsCnt" parameterType="string" resultType="int">
+	 	SELECT COUNT(*) FROM sms
+		WHERE phone = #{value}
+	 </select>
+	 
+	 
+	 <delete id="deleteSms" parameterType="string">
+	 	DELETE FROM sms
+	 	WHERE phone = #{value}
+	 </delete>
+	 
+
+</mapper>

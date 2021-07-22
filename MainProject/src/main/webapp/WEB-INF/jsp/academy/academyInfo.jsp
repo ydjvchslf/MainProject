@@ -17,64 +17,34 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
-		<script>
-		var academyCode = '${academy.academyCode}';
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 		
-		 alert("학원 코드 = "+academyCode);
-			
-		
-		function getAcademy(){
-			$.ajax({
-				 url : '/academy/json/getacademy/'+academyCode,
-			     method : 'GET',
-			     dataType : "json",
-			     headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-			     },
-				 success : function(data, status){
-					 
-					
-				 }							
-			});		
-		}
-		
-		// 텍스트 박스 
-		function introUpdate(academyCode, academyIntro){
-		    var intro ='';
-		    
-		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
-		    
-		    	intro += '<div class="input-group">';
-		   	 	intro += '<input type="text" class="form-control" name="content_'+academyCode+'" value="'+academyIntro+'"/>';
-		    	intro += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="acaIntroUpdate('+academyCode+');">저장</button> </span>';
-		   		intro += '</div>';
-		    
-		    $('.card-body2').html(intro);
-		    
-		}
-		 
-		// 수정
-		function acaIntroUpdate(academyCode){
-		    var updateIntro = $('[name=academy'+academyCode+']').val();
-		    
-		    $.ajax({
-		        url : '/academy/json/updateIntro',
-		        type : 'post',
-		        data : {'academyCode' : academyCode, 'intro' : academyIntro}
-		    });
-		}
+		<style>
+		    .btn{  <!-- 모든 버튼에대한 css설정 -->
+		      text-decoration: none;
+		      font-size:20px;
+		      font-weight:bolder;
+		      color:white;
+		      padding:5px 10px 5px 10px;
+		      margin:20px;
+		      display:inline-block;
+		      border-radius: 50px;
+		      transition:all 0.1s;
+		      font-family: 'Nanum Pen Script', cursive;
+		    }
+		    .btn:active{
+		      transform: translateY(3px);
+		    }
+		    .btn.blue{
+		      background-color: #1f75d9;
+		      border-bottom:5px solid #165195;
+		    }
+		    .btn.blue:active{
+		      border-bottom:2px solid #165195;
+		    }
 
-		
+ 		</style>
 
-		$(document).ready(function(){
-			getAcademy(); 
-		});
-		
-	
-		
-		</script>
-		
 	<title>Academy Info page</title>	
     </head>
     <body>
@@ -133,8 +103,9 @@
                                 	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
                                     <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">기본 정보</a>
                                     <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
-                                    <a class="nav-link" href="#">학원 후기 보기</a>
+                                    <a class="nav-link" href="/review/listReview?academyCode=${academy.academyCode}">학원 후기 보기</a>
                                     <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생 관리</a>
+                                    <a class="nav-link" href="/user/deleteacademy?email=${user.email}">학원 프로필 삭제</a>
                                 </nav>
                             </div>                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
@@ -144,7 +115,7 @@
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/edu/addEdu">수업 등록</a>
+                                    <a class="nav-link" href="/edu/addEdu?academyCode=${academy.academyCode}">수업 등록</a>
                                     <a class="nav-link" href="#">수업 목록</a>
                                     <a class="nav-link" href="#">결제 목록</a>
                                 </nav>
@@ -174,28 +145,17 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">${academy.academyName }</h1>
+                        <h1 class="mt-4">${academy.academyName}</h1>
+                        <h5 class="mt-4">&nbsp;학원 전화 번호 : ${academy.academyPhone}</h5>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
                             <li class="breadcrumb-item active">Static Navigation</li>
                         </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <p class="mb-0">
-                                    학원 번호	: ${academy.academyPhone}<br/>
-                                    학원 주소 : ${academy.academyAddr}<br/>
-                                    지역 구 : ${academy.academyArea }<br/>
-                                    위도 : ${academy.academyLat }<br/>
-                                    경도 : ${academy.academyLng }<br/>
-                                   
-                                    
-                            </div>
-                            
-                            <div class="card-body2">  </div>
-                            
-                            
-                            
+                        
+                        <div id="academyInfo" class="card-body">
+                        	
                         </div>
+                            
                         <div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
                     </div>
@@ -206,7 +166,104 @@
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         
-        
+        <script>
+		var academyCode = '${academy.academyCode}';
+		
+		 alert("학원 코드 = "+academyCode);
+			
+		
+		function getAcademyInfo(){
+			$.ajax({
+				 url : '/academy/json/getacademyInfo/'+academyCode,
+			     method : 'GET',
+			     dataType : "json",
+				 success : function(data){
+					 console.log(data);
+					 
+					 var a = ''
+					 	 a += '학원 번호 : ' + data.academyPhone
+				 		 a += '<br/>학원 주소 : ' + data.academyAddr
+				 		 a += '<br/>지역구 : ' + data.academyArea
+				 	 	 a += '<div id="AcademyIntro">'
+				 	 	 a += '학원 소개 : ' + data.academyIntro
+				 	 	 a += '<a class="btn blue" onclick="updateIntro(\''+data.academyCode+'\',\''+data.academyIntro+'\')"> 수 정 </a>'
+				 		 a += '</div>'
+				 		 a += '<div id="AcademyHistory">'
+				 		 a += '학원 실적 : ' + data.academyHistory
+						 a += '<a class="btn blue" onclick="updateHistory(\''+data.academyCode+'\',\''+data.academyHistory+'\')"> 수 정 </a>'
+						 a += '</div>'
+				 					
+					$("#academyInfo").html(a);
+				 }							
+			});		
+		}
+		
+		// 소개글 텍스트 박스 변경
+		function updateIntro(academyCode, academyIntro){
+		    var intro ='';
+		    
+		    alert("코드 = " + academyCode + "소개글 = "+academyIntro);
+		    
+		    	intro += '<div id="AcademyIntro">';
+		   	 	intro += '<input type="text" class="form-control" name="academy_'+academyCode+'" value="'+academyIntro+'"/>';
+		   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
+		   	 	intro += '</div>';
+		    
+		    $('#AcademyIntro').html(intro);
+		    
+		}
+		 
+		// 소개글 수정
+		function saveIntro(academyCode){
+		    var updateIntro = $('[name=academy_'+academyCode+']').val();
+		    
+		    $.ajax({
+		        url : '/academy/json/updateIntro/'+academyCode,
+		        type : 'POST',
+		        data : {'academyCode' : academyCode, 'updateIntro' : updateIntro},
+		        success : function(data){
+		        	alert("수정 완료!");
+		        	getAcademyInfo();
+		        }
+		    });
+		}
+		
+		// 실적글 텍스트 박스 변경
+		function updateHistory(academyCode, academyHistory){
+		    var intro ='';
+		    
+		    alert("코드 = " + academyCode + "실적글 = "+academyHistory);
+		    
+		    	intro += '<div id="AcademyHistory">';
+		   	 	intro += '<input type="text" class="form-control" name="academy_'+academyCode+'" value="'+academyHistory+'"/>';
+		   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
+		   	 	intro += '</div>';
+		    
+		    $('#AcademyHistory').html(intro);
+		    
+		}
+		 
+		// 실적글 수정
+		function saveHistory(academyCode){
+		    var updateHistory = $('[name=academy_'+academyCode+']').val();
+		    
+		    $.ajax({
+		        url : '/academy/json/updateHistory/'+academyCode,
+		        type : 'POST',
+		        data : {'academyCode' : academyCode, 'updateHistory' : updateHistory},
+		        success : function(data){
+		        	alert("수정 완료!");
+		        	getAcademyInfo();
+		        }
+		    });
+		}
+
+		$(document).ready(function(){
+			getAcademyInfo(); 
+		});
+		
+		
+		</script>
         
     </body>
 </html>

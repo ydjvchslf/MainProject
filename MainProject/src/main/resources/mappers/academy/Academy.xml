@@ -41,7 +41,7 @@
 				,#{academyArea})
 	</insert>
 	
-	<!-- SQL : UPDATE -->
+	<!-- SQL : UPDATE 학원 소개글 수정 -->
 	<update	id="updateAcademyIntro"	parameterType="Academy" >
 	   	UPDATE academy
 	   	<set>
@@ -50,6 +50,7 @@
 	   	WHERE academy_code = #{academyCode}
 	 </update>
 	 
+	 <!-- SQL : UPDATE 학원 실적글 수정 -->
 	 <update	id="updateAcademyHistory"	parameterType="String" >
 	   	UPDATE academy
 	   	<set>
@@ -77,8 +78,8 @@
 	  <!-- SQL : SELECT ONE 에듀 넘버로 아카데미 코드 찾기 -->
 	 <select 	id="getAcademyCodeforEdu"	parameterType="int"	resultType="String">
 		SELECT
-     	a.academy_code
-     	from academy a, edu e
+     	e.edu_academy_code
+     	from edu e
      	WHERE e.edu_no = '${value}'
 	 </select>
 	 
@@ -170,5 +171,29 @@
 			</if>
 		ORDER BY a.academy_addr
 	</select>
+	
+	
+	
+	<!-- SQL : DELETE All 진짜 위험위험 -->
+	<delete 	id="deleteEdu"	parameterType="String">
+		DELETE 
+		FROM edu
+		WHERE edu_academy_code = #{academyCode}
+	 </delete>
+	<delete 	id="deleteReview"	parameterType="String">
+		DELETE
+		FROM review
+		WHERE academy_code = #{academyCode}
+	 </delete>
+	<delete 	id="deleteConnection"	parameterType="String">
+		DELETE 
+		FROM connection
+		WHERE academy_code = #{academyCode}
+	 </delete>
+	<delete 	id="deleteAcademy"	parameterType="String">
+		DELETE 
+		FROM academy
+		WHERE academy_code = #{academyCode}
+	 </delete>
 
 </mapper>

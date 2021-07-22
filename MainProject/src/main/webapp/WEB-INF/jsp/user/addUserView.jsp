@@ -476,7 +476,6 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		
-		
 		<!-- header -->
         <div id="header">
              <a href="logout"><img src="/image/buyedu.jpg" id="logo"></a>
@@ -539,7 +538,7 @@
 
                 <!-- MOBILE -->
                 <div>
-                    <h3 class="join_title"><label for="phoneNo">휴대전화( - 포함)</label></h3>
+                    <h3 class="join_title"><label for="phoneNo">휴대전화 ( - 포함)</label></h3>
                     <span class="box int_mobile">
                         <input type="text" id="phone" name="phone" placeholder="휴대전화번호" class="int" maxlength="16" placeholder="전화번호 입력">
                     </span>

@@ -49,6 +49,18 @@
 			 
 		});
 		
+		//모든 쿠키 삭제 함수
+		 function deleteAllCookies() {
+			    var cookies = document.cookie.split(";");
+
+			    for (var i = 0; i < cookies.length; i++) {
+			        var cookie = cookies[i];
+			        var eqPos = cookie.indexOf("=");
+			        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+			        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+			    }
+			}
+		
 		
 		
 		$(function() {
@@ -69,6 +81,18 @@
 				if (states.indexOf(item.value) > -1 )
 					item.checked = true;
 			})
+			
+			
+			function deleteAllCookies() {
+			    var cookies = document.cookie.split(";");
+
+			    for (var i = 0; i < cookies.length; i++) {
+			        var cookie = cookies[i];
+			        var eqPos = cookie.indexOf("=");
+			        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+			        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+			    }
+			}
 			
 			
 			//=========로그아웃 테스트 중 =============
@@ -128,19 +152,49 @@
 						 
 						 alert("네이버 로그아웃!")
 						 
-						 /*
-						 localStorage.removeItem('com.naver.nid.access_token');
-						 
-						 function Logout(){
-							 sessionStorage.clear();
-						 }
-						 
-						 //self.location = "/"
-						 
-						 */
-						 //ajax 로
+						 //sessionStorage.clear();
+						 //localStorage.clear();
+						 //deleteAllCookies();
 						 
 						 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+						 
+						 //console.log(accessToken)
+						 
+						 var tokenArray = accessToken.split(".");
+						 
+						 //console.log(tokenArray)
+						 
+						 var finalToken = tokenArray[1]
+						 
+						console.log(finalToken)
+						
+						sessionStorage.clear();
+						 
+						 //네이버 토큰삭제 요청
+						 $.ajax({
+							 
+							 crossOrigin : true,
+			                 
+			            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&access_token="+finalToken+"&service_provider=NAVER",
+			            	  
+			            	  dataType: "json",	  
+			            			  
+			                  headers : {
+			                      "Accept" : "application/json",
+			                      "Content-Type" : "application/json"
+			                    },
+			                    success : function(JSONData, status){
+		                        	console.log("로그아웃좀 되라...");
+		                        	self.location = "/";
+			                        
+			                    }
+			              })
+			              
+			            
+						 
+						
+						 /*
+ 						var accessToken = localStorage.getItem("com.naver.nid.access_token")
 						 
 						 //console.log(accessToken)
 						 
@@ -158,17 +212,45 @@
 								  crossOrigin : true,
 								  
 				            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+finalToken,
-				                  headers : {
+				                  
+				            	  dataType: "json",
+				            			  
+		            			  headers : {
 				                	  
 				                      "Accept" : "application/json",
 				                      "Content-Type" : "application/json"
 				                    },
 				                    success : function(JSONData, status){
-				                        alert("얍")
-				                    	console.log("결과->" +JSONData);
-				                        
-				                    }
-			              })
+				                    	console.log("성공 결과->" +JSONData);
+				                    },
+				                    
+				                    error : function(xhr, status, errorThrown){
+				                    	console.log("실패");
+				                    	console.log(xhr);
+				                    	console.log(status);
+				                    	console.log(errorThrown);
+				                    	
+				                    } 
+				                    
+			              });
+						 
+						 
+						
+				            
+						// debugger
+						 
+						 //self.location = "/"
+						 /*
+						 localStorage.removeItem('com.naver.nid.access_token');
+						 
+						 function Logout(){
+							 sessionStorage.clear();
+						 }
+						 
+						 //self.location = "/"
+						 
+						 */
+						 
 								
 			              
 						 
