@@ -32,6 +32,8 @@ function fncAddBoard(){
 	alert(content)
 	var boardWriter=$('input[name="boardWriter"]').val();
 	alert(boardWriter)
+	var cateCode=$('input[name="cateCode"]').val();
+	alert(cateCode)
 	
 	
 	if(title == null || title.length <1){
@@ -56,6 +58,7 @@ function fncAddBoard(){
 
 
 <body>
+ <%@ include file="toolbar.jsp" %>
 
 	
    	</br></br></br>
@@ -72,6 +75,9 @@ function fncAddBoard(){
 	<form class="form-horizontal">
 	
 	<input type="hidden" name="boardWriter" value="${user.userNo}" />
+	<input type="hidden" name="cateCode" value="${board.cateCode}" />
+	search.cateCode : ${search.cateCode}
+	board.cateCode : ${board.cateCode}
 
 		
 	 	<div id="addbrdview" class="form-group">

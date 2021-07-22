@@ -40,6 +40,34 @@ public class BoardService {
 //		System.out.println("service : "+totalCount);
 		
 	}
+	
+//public List<Board> getMyBoardList(Search search, int userNo) throws Exception {
+//		
+//		List<Board> list2= boardDao.getMyBoardList(search, userNo);
+//		int totalCount = boardDao.getMyTotalCount(search, userNo);
+////		int recommendCnt=boardDao.recommendCnt(boardNo);
+//		if(list2.size()!=0) {
+//		list2.get(0).setTotalCount(totalCount);}
+////		list.get(boardNo).setRecommendCnt(recommendCnt);
+//		System.err.println(list2);
+//		
+//		
+//		return list2;
+////		System.out.println("service : "+totalCount);
+		
+//	}
+	
+public List<Map<String, Object>> getBoardListPin(Board board) throws Exception {
+		
+	List<Map<String, Object>> list1= boardDao.getBoardListPin(board);
+//		int recommendCnt=boardDao.recommendCnt(boardNo);
+		
+//		list.get(boardNo).setRecommendCnt(recommendCnt);
+		System.err.println("getBoardListPin.? :"+list1);
+		
+		return list1;
+//		System.out.println("service : "+totalCount);
+	}
 
 	public void updateBoard (Board board) throws Exception {
 		boardDao.updateBoard(board);

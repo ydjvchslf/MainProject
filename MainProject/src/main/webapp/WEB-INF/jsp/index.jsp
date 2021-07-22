@@ -56,12 +56,38 @@
      z-index: 2;
      text-align: center;
 }
+
+ 	.userMain{
+ 	position: absolute;
+    top:10%;
+    left:83%;
+    font-size: 20px;
+ 	}
+ 	
+ 	.academyMain{
+ 	position: absolute;
+    top:10%;
+    left:90%;
+    font-size: 20px;
+ 	}
+ 	
+ 	.adminMain{
+ 	position: absolute;
+    top:10%;
+    left:95%;
+    font-size: 20px;
+ 	}
     
 
 </style>
 
 
    <body>  
+   
+   	<span class="userMain"><a href="/main/userMain">학생,학부모</a></span>
+   	<span class="academyMain"><a href="/main/academyMain">원장님</a></span>
+    <span class="adminMain"><a href="/main/adminMain">관리자</a></span>
+   
     <div class="img">
         <div class="addUserButton">
         <a href="/user/addUser">

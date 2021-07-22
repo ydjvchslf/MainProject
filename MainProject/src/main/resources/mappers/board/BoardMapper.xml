@@ -16,13 +16,14 @@
 		<result property="boardState" 		column="board_state" 			jdbcType="CHAR" />
 		<result property="cateCode" 		column="category_code" 			jdbcType="CHAR" />
 		<result property="viewCnt" 			column="view_count" 			jdbcType="NUMERIC" />
+		<result property="reCnt" 			column="reCnt" 					jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addBoard"		parameterType="board" useGeneratedKeys="true" keyColumn="board_no" keyProperty="boardNo">
 	 	INSERT
 		INTO board( board_no , board_title , board_content , board_writer , board_date, board_state, category_code, view_count) 
-		VALUES	 ( board_board_no.nextval , #{boardTitle} , #{boardContent} , #{boardWriter}, SYSDATE, '0', '0', #{viewCnt} )
+		VALUES	 ( board_board_no.nextval , #{boardTitle} , #{boardContent} , #{boardWriter}, SYSDATE, '0', #{cateCode}, #{viewCnt} )
 	 </insert>
 
 	 <!-- SQL : SELECT ONE -->
@@ -52,6 +53,17 @@
 	 </delete>
 		 
    <!-- SQL : SELECT LIST -->
+   <select  id="getBoardListPin" parameterType="board" resultType="map"  >
+ 	  select ROWNUM, b.*, nvl(c.cnt,0) reCnt, u.email
+		from board b, users u,(select board_no , count(recommend_no) cnt
+                       			from recommend
+                      			 group by board_no
+                                         order by cnt desc)c
+       	WHERE b.board_no = c.board_no(+) and b.category_Code='2' and u.user_no=b.board_writer
+       		  AND ROWNUM &lt; 4
+   </select>
+
+   
    <select  id="getBoardList"  parameterType="search"   resultMap="boardSelectMap">
  	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt, category_code
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
@@ -91,6 +103,60 @@
 	  	FROM(	SELECT b.*, u.email 
 						FROM board b, users u
 						where b.board_writer=u.user_no and b.board_state='0' and b.category_code = #{cateCode}
+						<if test="searchConditionb != null">
+								<if test="searchConditionb == 0 and searchKeyword !='' ">
+									and b.board_title LIKE '%' || #{searchKeyword} || '%'
+								</if>
+                                <if test="searchConditionb == 1 and searchKeyword !='' ">
+                                    and b.board_content LIKE '%' || #{searchKeyword} || '%'
+                                </if>
+                                <if test="searchConditionb == 2 and searchKeyword !='' ">
+                                    and u.email LIKE '%' || #{searchKeyword} || '%'
+                                </if>
+                         </if>
+						ORDER BY b.board_date desc 
+						) countTable						
+	 </select>
+	 
+	   <select  id="getMyBoardList"  parameterType="search"   resultMap="boardSelectMap">
+ 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt, category_code
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
+	  					FROM		(	SELECT b.*, u.email, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt 
+	  									
+											FROM board b, users u 
+											WHERE b.board_writer=u.user_no and b.board_state='0' and u.user_no=#{userNo}
+											<if test="searchConditionb != null">
+											 	<if test="searchConditionb == 0 and searchKeyword !='' ">
+											 		and b.board_title LIKE '%' || #{searchKeyword} || '%'
+											 	</if>
+                                             	<if test="searchConditionb == 1 and searchKeyword !='' ">
+                                                 	and b.board_content LIKE '%' || #{searchKeyword} || '%'
+                                             	</if>
+                                             	<if test="searchConditionb == 2 and searchKeyword !='' ">
+                                                 	and u.email LIKE '%' || #{searchKeyword} || '%'
+                                            	</if>
+                                            </if>
+											ORDER BY b.board_date desc ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum,jdbcType=NUMERIC} AND #{endRowNum}	
+    </select>
+	 	<!--  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+		-->
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getMyTotalCount"  parameterType="search"	 resultType="int">
+	  		  	SELECT COUNT(*)
+	  	FROM(	SELECT b.*, u.email 
+						FROM board b, users u
+						where b.board_writer=u.user_no and b.board_state='0' and b.board_writer=#{userNo}
 						<if test="searchConditionb != null">
 								<if test="searchConditionb == 0 and searchKeyword !='' ">
 									and b.board_title LIKE '%' || #{searchKeyword} || '%'

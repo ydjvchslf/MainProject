@@ -58,9 +58,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		int pageSize;
 		
 		@RequestMapping( value="addBoard", method=RequestMethod.GET )
-		public String addBoard(Model model) throws Exception {
+		public String addBoard(Model model, HttpServletRequest request) throws Exception {
 			
 			System.out.println("/board/addBoard : GET");
+			String category = request.getParameter("cateCode");
+			System.out.println(category);
+			Board board = new Board();
+			board.setCateCode(category);
+			System.out.println("addview : "+board.getCateCode());
+			model.addAttribute(board);
+			
 			//Map<String , Object> cgmap=categoryService.getCategoryList();
 			//model.addAttribute("cglist", cgmap.get("list"));
 			//System.err.println(cgmap);
@@ -71,7 +78,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@RequestMapping( value="addBoard", method=RequestMethod.POST)
 		public String addBoard( @ModelAttribute("board") Board board, Model model, @ModelAttribute("user") User user, HttpServletRequest httpRequest ) throws Exception {
 
-			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();   
+			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
+			String category = httpRequest.getParameter("cateCode");
+			System.out.println(category);
+			board.setCateCode(category);
+			System.out.println("카테고리 코드 : "+board.getCateCode());
 		//	board.setBoardWriter(userNo);	
 			System.out.println("/board/addBoard : POST");
 			System.err.println(board);
@@ -102,10 +113,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			String category = request.getParameter("cateCode");
+			System.out.println("겟보드 카테고리 : "+category);
+			
 			Board board = boardService.getBoard(boardNo);
 			System.out.println(recommendCnt);
 			board.setRecommendCnt(recommendCnt);
-			board.setCateCode(category);
+			
+			
 		//	board.setBoardWriter(boardWriter);
 			System.out.println("컨트롤러 : "+board);
 			System.err.println(boardNo);
@@ -174,7 +188,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		
 		//@RequestMapping("/listProduct.do")
 		@RequestMapping( value="listBoard" )
-		public String listBoard( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+		public String listBoard( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
 			
 			System.out.println("/board/listBoard : GET / POST");
 			System.err.println("keyword : " +search.getSearchKeyword());
@@ -183,6 +197,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
 			
 			String category = request.getParameter("cateCode"); // 게시판 종류
+			
+			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			
 			
 			if(search.getCurrentPage() ==0 ){
@@ -201,38 +217,72 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			int totalCount = list.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
-			 
+			
+			board.setCateCode(category);
+			List<Map<String, Object>> map= boardService.getBoardListPin(board); 
+			
+//			List<Board> list2 =boardService.getMyBoardList(search, userNo);
+//			Map<String , Object> cgmap=categoryService.getCategoryList();
+//			if(list2.size()!=0) {
+//			int totalCount2 = list2.get(0).getTotalCount();
+//			Page resultPage2 = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
+//			System.out.println(resultPage);
 			// Model 과 View 연결
 			model.addAttribute("list", list);
+			model.addAttribute("map", map);
+//			model.addAttribute("list2", list2);
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
 //			model.addAttribute("category", category);
 			System.err.println(search.getEndRowNum());
-//			model.addAttribute("menu", menu);		
-//			model.addAttribute("cglist", cgmap.get("list"));
-//			model.addAttribute("category", search.getSearchCategory());
-//			System.out.println("menu 어떻게 받아올까 : " +menu);
-//			request.setAttribute("menu", request.getParameter("menu"));
+//
 			System.err.println("2 : "+search.getSearchKeyword());
 			}
+
 			
 			return "/board/listBoard";
 		}
 		
+//		@RequestMapping( value="listBoardpin" )
+//		public String listBoardpin( @ModelAttribute("board") Board board , Model model , HttpServletRequest request) throws Exception{
+//			
+//			System.out.println("/board/listBoardpin : GET / POST");
+//			
+//			// Business logic 수행
+//			board.setCateCode("2");
+//			List<Board> list1 =boardService.getBoardListPin(board);
+//			
+////			Map<String , Object> cgmap=categoryService.getCategoryList();
+//			
+//			// Model 과 View 연결
+//			model.addAttribute("list", list1);
+//			model.addAttribute("board", board);
+//			System.out.println("listBoardPin 컨트롤러 : "+list1);
+//			
+//			return "/board/listBoard";
+//		}
+		
 		@RequestMapping( value="deleteBoard", method = RequestMethod.GET)
-		public String  deleteBoard( @RequestParam(value = "boardNo",  required = true, defaultValue= "") int boardNo) throws Exception {
+		public String  deleteBoard( @RequestParam("boardNo") int boardNo, HttpServletRequest request) throws Exception {
 		
 			System.out.println("/board/deleteBoard : GET");
 			//Business Logic
+//			Board board = new Board();
+			String category = request.getParameter("cateCode");
+			
+//			boardService.getBoardList(cateCode);
 			boardService.deleteBoard(boardNo);
 			System.out.println("삭제성공");
 			System.out.println("살려주세요......................");
+			System.err.println("카테고리 코드 받아오니..? :"+category);
+			Board board = new Board();
+			board.setCateCode(category);
 			// Model 과 View 연결
 			//model.addAttribute("board", board);
 			//System.err.println("겟 프로덕트 : "+board);
 			//BoardService boardService.listBoard(null, null, null);
 
-			return "/board/listBoard";
+			return "redirect:/board/listBoard?cateCode="+board.getCateCode();
 		}
 
 	}
