@@ -1,8 +1,10 @@
 package com.buyedu.controller.review;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -120,12 +122,16 @@ public class ReviewController {
 	}
 	
 	@RequestMapping (value="listReview")
-	public String listReview( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listReview( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		if(search.getCurrentPage() ==0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		
+		
+		Map<String, Object> map = acaService.academyConnect(academyCode);
+		
 		
 		List<Review> list = reviewService.getReviewList(search);
 		
@@ -135,12 +141,17 @@ public class ReviewController {
 		model.addAttribute("list",list);
 		model.addAttribute("resultPage" , resultPage);
 		model.addAttribute("search",search);
+		model.addAttribute("connect" , map.get("connect"));
 		
 		System.err.println(list);
 		
 		
 		return "/review/listReview";
 	}
+	
+	
+	
+	
 	
 	/*@RequestMapping(value="deleteReview", method = RequestMethod.POST)
 	public int deleteReview(@RequestParam("review") Review r) throws Exception{

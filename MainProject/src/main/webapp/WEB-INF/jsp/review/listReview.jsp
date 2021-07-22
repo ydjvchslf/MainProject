@@ -178,6 +178,14 @@
       
       </table>
 	  <!--  table End /////////////////////////////////////-->
+	 
+	 회원번호 ${user.userNo} 
+	 학원코드	${connect.academyCode}
+	 학원코드1 ${academy.academy }
+	 학원코드2 ${academy.academyCode}
+	 
+	  
+	  
 	  <div class="form-group">
 	  	<c:if test="${user.role eq 'student' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">

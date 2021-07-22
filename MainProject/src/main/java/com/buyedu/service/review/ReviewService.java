@@ -6,8 +6,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.buyedu.dao.connect.ConnectDao;
 import com.buyedu.dao.review.ReviewDao;
 import com.buyedu.domain.Search;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Review;
 
 
@@ -16,6 +19,9 @@ public class ReviewService {
 	
 	@Autowired
 	private ReviewDao reviewDao;
+	
+	@Autowired
+	private ConnectDao connectDao;
 			
 	public void addReview(Review review) throws Exception {
 		reviewDao.addReview(review);
@@ -52,6 +58,18 @@ public class ReviewService {
 		
 		return reviewDao.getReviewWriter(userNo);
 	}
+	
+public Map<String, Object> academyConnect(String academyCode) throws Exception{
+		
+		List<Connect> connect = connectDao.academyConnect(academyCode);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("connect", connect);
+		
+		return map;
+}
+
+
 
 
 }
