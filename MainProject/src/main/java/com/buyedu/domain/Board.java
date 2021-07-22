@@ -1,5 +1,7 @@
 package com.buyedu.domain;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -9,13 +11,14 @@ public class Board {
 	private int boardNo;
 	private String boardTitle;
 	private String boardContent;
-	private String boardDate;
+	private Date boardDate;
 	private int boardWriter;
 	private String boardImage;
 	private String boardState;
 	private String cateCode;
 	private int viewCnt;
 	private String email;
+	private String pin;
 
 	private int commentNo;
 	private String commentContent;
@@ -27,6 +30,7 @@ public class Board {
 	private int recommendNo;
 	private String recommender;
 	private int recommendCnt;
+	private int reCnt;
 	
 	private int totalCount;
 
@@ -54,11 +58,11 @@ public class Board {
 		this.boardContent = boardContent;
 	}
 
-	public String getBoardDate() {
+	public Date getBoardDate() {
 		return boardDate;
 	}
 
-	public void setBoardDate(String boardDate) {
+	public void setBoardDate(Date boardDate) {
 		this.boardDate = boardDate;
 	}
 
@@ -108,6 +112,14 @@ public class Board {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String pin() {
+		return pin;
+	}
+
+	public void pin(String pin) {
+		this.pin = pin;
 	}
 
 	public int getCommentNo() {
@@ -181,6 +193,14 @@ public class Board {
 	public void setRecommendCnt(int recommendCnt) {
 		this.recommendCnt = recommendCnt;
 	}
+	
+	public int getReCnt() {
+		return reCnt;
+	}
+
+	public void getReCnt(int reCnt) {
+		this.reCnt = reCnt;
+	}
 
 	public int getTotalCount() {
 		return totalCount;
@@ -189,16 +209,18 @@ public class Board {
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
+	
 
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", boardDate=" + boardDate + ", boardWriter=" + boardWriter + ", boardImage=" + boardImage
 				+ ", boardState=" + boardState + ", cateCode=" + cateCode + ", viewCnt=" + viewCnt + ", email=" + email
-				+ ", commentNo=" + commentNo + ", commentContent=" + commentContent + ", commentWriter=" + commentWriter
-				+ ", commentStateCode=" + commentStateCode + ", commentDate=" + commentDate + ", comment_cnt"
-				+ comment_cnt + ", recommendNo=" + recommendNo + ", recommender=" + recommender + ", recommendCnt="
-				+ recommendCnt + ", totalCount=" + totalCount + "]";
+				+ ", pin=" + pin + ", commentNo=" + commentNo + ", commentContent=" + commentContent
+				+ ", commentWriter=" + commentWriter + ", commentStateCode=" + commentStateCode + ", commentDate="
+				+ commentDate + ", comment_cnt=" + comment_cnt + ", recommendNo=" + recommendNo + ", recommender="
+				+ recommender + ", recommendCnt=" + recommendCnt + ", reCnt=" + reCnt + ", totalCount=" + totalCount
+				+ "]";
 	}
 
 	

@@ -46,6 +46,7 @@ public class EduService {
 	public Map<String , Object> getEduList(Search search) {
 		
 		List<Edu> list= eduDao.getEduList(search);
+		System.err.println(list);
 		int totalCount = eduDao.getEduTotalCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -120,6 +121,51 @@ public class EduService {
 	public int updatePurchaseEdu(PurchaseEdu purchaseEdu) throws Exception {
 		
 		return purchaseDao.updatePurchaseEdu(purchaseEdu);
+	}
+
+	@Transactional (readOnly = true)
+	public Map<String , Object> getPurchaseEduList(Search search) throws Exception {
+		
+		search.setSearchUserNo(134);
+		
+		System.out.println("디버깅 ================="+search);
+		
+		List<PurchaseEdu> list= purchaseDao.getPurchaseEduList(search);
+		System.err.println(list);
+		int totalCount = purchaseDao.getPurchaseEduTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", totalCount);
+		
+		return map;
+	}
+	
+	public Map<String , Object> getPurchaseAcademyList(Search search) throws Exception {
+		
+		search.setSearchUserNo(134);
+		
+		System.out.println("디버깅 ================="+search);
+		
+		List<PurchaseEdu> list= purchaseDao.getPurchaseAcademyList(search);
+		System.err.println(list);
+		int totalCount = purchaseDao.getPurchaseEduTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", totalCount);
+		
+		return map;
+	}
+	
+	public int getPurchaseEduTotalCount(Search search) throws Exception {
+		
+		return purchaseDao.getPurchaseEduTotalCount(search);
+	}
+	
+	public int updateEduRest(Edu edu) throws Exception {
+		
+		return eduDao.updateEduRest(edu);
 	}
 
 }

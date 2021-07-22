@@ -12,6 +12,7 @@ public class PurchaseEdu {
 	private int payState;
 	private Date payDate;
 	private String purchaseUid;
+	
 	public User getBuyer() {
 		return buyer;
 	}

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.buyedu.domain.Edu;
 import com.buyedu.domain.Page;
-import com.buyedu.domain.PickEdu;
 import com.buyedu.domain.PurchaseEdu;
 import com.buyedu.domain.Search;
-import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.edu.EduService;
 import com.buyedu.service.user.UserService;
@@ -62,24 +59,32 @@ public class PurchaseEduController {
 										@RequestParam("userNo") int userNo , 
 										@RequestParam("uid") String uid) throws Exception {
 		
+		System.out.println("/purchase/addPurchaseEduUid : GET");
+		
 		PurchaseEdu purchase = new PurchaseEdu();
+		Edu edu = eduService.getEdu(eduNo);
 		
 		purchase.setBuyer( userService.getUserByUserNo(userNo) );
-		purchase.setPurchaseEdu( eduService.getEdu(eduNo) );
+		purchase.setPurchaseEdu( edu );
+		edu.setEduRest( edu.getEduRest() - 1);
+		if ( edu.getEduRest() == 0 ) {
+			edu.setEduState("2");
+			eduService.updateEduRest(edu);
+		} else {
+			eduService.updateEduRest(edu);
+		}
 		purchase.setPurchaseAcademy( acaService.getAcademy( acaService.getAcademyCodeforEdu(eduNo) ) );
 		purchase.setPurchaseUid(uid);
 		
-		System.err.println("완벽한 디버깅이어야 하는데........");
-		
 		eduService.addPurchaseEdu(purchase);
 		
-		return "edu/listEdu";
+		return "forward:/purchaseedu/listPurchaseEdu";
 	}
 	
 	@RequestMapping ( "listPurchaseEdu" )
-	public String listPickEdu( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listPurchaseEdu( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		System.out.println("/pickedu/listPickEdu : GET / POST");
+		System.out.println("/purchase/listPurchase : GET / POST");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -87,19 +92,43 @@ public class PurchaseEduController {
 		search.setPageSize(pageSize);
 		
 		// Business logic 수행
-		Map<String , Object> map= eduService.getPickEduList(search);
+		Map<String , Object> map= eduService.getPurchaseEduList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
-		
 		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
-		System.out.println("listPickEdu End");
+		System.out.println("listPurchaseEdu End");
 		
-		return "/pickedu/listPickEdu";
+		return "/purchase/listPurchaseEdu";
+	}
+	
+	@RequestMapping ( "listPurchaseAcademy" )
+	public String listPurchaseAcademy( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+		
+		System.out.println("/purchase/listPurchaseAcademy : GET / POST");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		// Business logic 수행
+		Map<String , Object> map= eduService.getPurchaseAcademyList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		System.out.println("listPurchaseAcademy End");
+		
+		return "/purchase/listPurchaseAcademy";
 	}
 
 }
