@@ -10,6 +10,35 @@
 <html>
 <head>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+ 	<style>
+		#content{
+	      width : 1030px;
+	      height : 50px;
+	    }
+	    
+	    #commentInsert{
+	      width : 100px;
+	      height : 50px;
+	    }
+	    
+	    #commentInsert{
+	      width : 100px;
+	      height : 50px;
+	    }
+	    
+	    #buttons{
+	      text-align : right;
+	    }
+	    
+	    #commentwriterpr{
+	      color : #A804CD;
+	    }
+	    
+	    #commentDate{
+	      color : black;
+	    }
+	    
+	   </style>
  </br></br>
  
  	  <div class="container">
@@ -19,7 +48,7 @@
                <input type="hidden" name="boardNo" value="${board.boardNo}"/>
                <input type="text" class="form-control" onkeyup="enterEvent()" id="content" name="content" placeholder="내용을 입력하세요.">
                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+                    <button id="commentInsert" class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
                     
                </span>
               </div>
@@ -62,7 +91,6 @@ function commentList(){
 
             var a =''; 
             var cnt = data[0].commentCount;
-
            
 			var sessionId = "<%=((User)session.getAttribute("user")).getUserNo() %>"
             
@@ -72,15 +100,20 @@ function commentList(){
        		
             $.each(data, function(key, value){ 
             	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                a += '<div class="commentInfo'+value.COMMENT_NO+'">'+'작성일자 : '+value.COMMENT_DATE+' / 작성자 : '+value.EMAIL;
+               
+                a += '<div id="commentwriterpr" class="commentInfo'+value.COMMENT_NO+'">'+value.EMAIL;
+                a += '&nbsp;&nbsp;&nbsp;&nbsp;'
+                
+                a += '<span id="commentDate" class="commentDate'+value.COMMENT_NO+'">'+value.COMMENT_DATE+'</span></div>';
                 <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
+                a += '<div id="buttons">'
                 if (sessionId == value.COMMENT_WRITER){
                 a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
                 a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
-                if (sessionId != value.COMMENT_WRITER){1
+                if (sessionId != value.COMMENT_WRITER){
                 a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
-                a += '</div>';
-                a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> 내용 : '+value.COMMENT_CONTENT+'</p>';
+        		a += '</div>'
+                a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> '+value.COMMENT_CONTENT+'</p>';
                 a += '</div></div>';
             });
             
@@ -120,8 +153,8 @@ function commentUpdate(commentNo, content){
     var a ='';
     
     a += '<div class="input-group">';
-    a += '<input type="text" class="form-control" name="content_'+commentNo+'" value="'+content+'"/>';
-    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+commentNo+');">수정</button> </span>';
+    a += '<input type="text" class="form-control" id="content" name="content_'+commentNo+'" value="'+content+'"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" id="commentInsert" type="button" onclick="commentUpdateProc('+commentNo+');">수정</button> </span>';
     a += '</div>';
     
     $('.commentContent'+commentNo).html(a);

@@ -527,6 +527,25 @@ public class UserController {
 	}
 	
 	
+   @RequestMapping( value="deleteacademy", method=RequestMethod.GET )
+   public String deleteaca( @RequestParam String email, Model model ) throws Exception{
+      
+      System.out.println("/user/deleteacademy : 학원에서 프로필삭제");
+      
+      User dbUser=userService.getUser(email);
+      
+      Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+      
+      model.addAttribute("list", map.get("list"));
+      
+      System.out.println("겟유저 가져온 dbUser=>" + dbUser);
+      
+      System.out.println("학원 프로필 삭제 끝");
+      
+      return "/academy/deleteAcademy";
+   }
+	
+	
 	
 	// Connect 
 	

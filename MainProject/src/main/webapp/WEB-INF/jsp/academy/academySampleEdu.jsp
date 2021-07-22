@@ -156,14 +156,6 @@
 				
 				location.reload();
 			}
-			
-			 $(function() {
-					//==> DOM Object GET 3啊瘤 规过 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-					 $( ".button:contains('昏力')" ).on("click" , function() {
-						 var multimediano = $("div").find('button#delete').val();
-							self.location = "/academy/deleteMultimedia?multimediano="+multimediano
-						});
-				});
 
 		
 		</script>
@@ -289,7 +281,7 @@
 					
 					<c:if test="${academy.multimediarole == 'I'}">
 							<img height="200" src="/image/${academy.multimedia}"/>
-							<a onclick="deleteMultimedia(${academy.multimediano})">昏力</a>
+							<a onclick="deleteMultimedia('${academy.multimediano}')">昏力</a>
 					</c:if>
 		        	</c:forEach>	
 		        	
@@ -306,7 +298,7 @@
 								<source src="/image/KakaoTalk_20210719_213033364.mp4">
 								<source src="/image/${academy.multimedia}">
 							</video>
-							<a onclick="deleteMultimedia(${academy.multimediano})">昏力</a>
+							<a onclick="deleteMultimedia('${academy.multimediano}')"> 昏力</a>
 					</c:if>
 		        	</c:forEach>
 		        	

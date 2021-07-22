@@ -47,7 +47,7 @@
 	 
 	 <delete	id="deleteBoard"	parameterType="int" >
 	   	UPDATE board
-	   	SET board_state = '2'
+	   	SET board_state = '2' 
 	   	WHERE board_no = #{boardNo}
 	 </delete>
 		 

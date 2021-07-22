@@ -24,7 +24,7 @@
 	<style>
        body > div.container{
         	border: 3px solid #D6CDB7;
-            margin-top: 30px;
+            margin-top: 70px;
         }
     </style>
 
@@ -41,7 +41,7 @@
 	   
 	   $( function() {
 	      
-	      $( ".btn:contains('등')").on("click", function() {
+	      $( ".btn:contains('등 록')").on("click", function() {
 	         
 	         fncAddProduct();
 	      });
@@ -73,101 +73,122 @@
    	
    	<div class="container">
 	
-		<h1 class="bg-primary text-center">수 업 등 록</h1>
+		<h1 class="text-center">수 업 등 록</h1>
 	
 	<form class="form-horizontal" enctype="multipart/form-data">
 		
+		
 		  <div class="form-group">
-		    <label for="eduName" class="col-sm-offset-1 col-sm-3 control-label">수 업 명</label>
-		    <div class="col-sm-4">
+		    <label for="eduName" class="col-sm-offset-1 col-sm-1 control-label">수 업 명</label>
+		    <div class="col-lg-3">
 		      <input type="text" class="form-control" id="eduName" name="eduName" placeholder="수업명을 입력해주세요.">
 		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="eduTeacher" class="col-sm-offset-1 col-sm-3 control-label">강 사 명</label>
-		    <div class="col-sm-4">
+		    <label for="eduTeacher" class="col-sm-1 control-label">강 사 명</label>
+		    <div class="col-lg-2">
 		      <input type="text" class="form-control" id="eduTeacher" name="eduTeacher" placeholder="강사명을 입력해주세요.">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduPrice" class="col-sm-offset-1 col-sm-3 control-label">수 강 료</label>
-		    <div class="col-sm-4">
+		    <label for="eduPrice" class="col-sm-offset-1 col-sm-1 control-label">수 강 료</label>
+		    <div class="col-lg-3">
 		      <input type="text" class="form-control" id="eduPrice" name="eduPrice" placeholder="수강료를 입력해주세요.">
+		      <span style = "color:red">숫자만 입력해주세요.</span>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduStartDate" class="col-sm-offset-1 col-sm-3 control-label">수업 시작 날짜</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="eduStartDate" name="eduStartDate" placeholder="수업 시작날짜를 선택해주세요."/>
-		    </div>
+		  	<label for="eduStartDate" class="col-sm-2 control-label">수업 시작 날짜</label>
+			    <div class="col-lg-3">
+			      <input type="text" class="form-control" id="eduStartDate" name="eduStartDate" placeholder="수업 시작날짜를 선택해주세요."/>
+			    </div>
+		    <label for="eduEndDate" class="col-sm-2 control-label">수업 종료 날짜</label>
+			    <div class="col-sm-3">
+			      <input type="text" class="form-control" id="eduEndDate" name="eduEndDate" placeholder="수업 종료날짜를 선택해주세요."/>
+			    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduEndDate" class="col-sm-offset-1 col-sm-3 control-label">수업 종료 날짜</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="eduEndDate" name="eduEndDate" placeholder="수업 종료날짜를 선택해주세요."/>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="eduDay" class="col-sm-offset-1 col-sm-3 control-label">수업 날짜</label>
-		    <div class="col-sm-4">
+		    <label for="eduDay" class="col-sm-2 control-label">수업 날짜</label>
+		    <div class="col-sm-3">
 		      <input type="text" class="form-control" id="eduDay" name="eduDay" placeholder="수업날짜를 입력해주세요."/>
 		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="eduMember" class="col-sm-offset-1 col-sm-3 control-label">수업 총 인원</label>
-		    <div class="col-sm-4">
+		    <label for="eduMember" class="col-sm-2 control-label">수업 총 인원</label>
+		    <div class="col-sm-3">
 		      <input type="text" class="form-control" id="eduMember" name="eduMember" placeholder="수업 총정원을 입력해주세요."/>
+		      <span style = "color:red">숫자만 입력해주세요.</span>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduStartTime" class="col-sm-offset-1 col-sm-3 control-label">수업 시작 시간</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="eduStartTime" name="eduStartTime" placeholder="수업 시작 시간을 입력해주세요."/>
+		    <label for="eduStartTime" class="col-sm-2 control-label">수업 시작 시간</label>
+		    <div class="col-sm-3">
+		      <input type="text" class="form-control" id="eduStartTime" name="eduStartTime" placeholder="EX) 오전 9시 , AM 9:00"/>
+		    </div>
+		    <label for="eduEndTime" class="col-sm-2 control-label">수업 종료 시간</label>
+		    <div class="col-sm-3">
+		      <input type="text" class="form-control" id="eduEndTime" name="eduEndTime" placeholder="EX) 오후 9시 , PM 9:00"/>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduEndTime" class="col-sm-offset-1 col-sm-3 control-label">수업 종료 시간</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="eduEndTime" name="eduEndTime" placeholder="수업 종료 시간을 입력해주세요."/>
+		    <label for="eduIntro" class="col-sm-2 control-label">수업 맛보기</label>
+		    <div class="col-sm-3">
+		      <textarea rows="8" cols="62" name="eduIntro", id="eduIntro">"바깥부분에 값을 넣어준다!</textarea>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduGrade" class="col-sm-offset-1 col-sm-3 control-label">수업 대상학년</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="eduGrade" name="eduGrade" placeholder="수업 대상학년을 입력해주세요."/>
-		    </div>
+		    <label for="eduGrade" class="col-sm-2 control-label">수업 대상학년</label>
+		    <label class="btn btn-default">
+			  <input type="checkbox" name="eduGrade" value="초등">초등
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduGrade" value="중등">중등
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduGrade" value="고1~고2">고1~고2
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduGrade" value="고3">고3
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduGrade" value="N수">N수
+			 </label>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduSubject" class="col-sm-offset-1 col-sm-3 control-label">수업 과목</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="eduSubject" name="eduSubject" placeholder="수업 과목을 입력해주세요."/>
-		    </div>
+		  <label for="eduSubject" class="col-sm-2 control-label">수업 과목</label>
+		     <label class="btn btn-default">
+			  <input type="checkbox" name="eduSubject" value="국어">국어
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduSubject" value="영어">영어
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduSubject" value="수학">수학
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduSubject" value="사회">사회
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduSubject" value="과학">과학
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduSubject" value="제 2외국어">제 2외국어
+			 </label>
+			 <label class="btn btn-default">
+			  <input type="checkbox" name="eduSubject" value="예체능">예체능
+			 </label>
 		  </div>
 		  
-		  <div class="form-group">
-		    <label for="eduIntro" class="col-sm-offset-1 col-sm-3 control-label">수업 맛보기</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="eduIntro" name="eduIntro" placeholder="수업 맛보기를 입력해주세요."/>
-		    </div>
-		  </div>
-	
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" name="add">등 &nbsp;록</button>
+		      <button type="button" class="btn btn-primary" id="add">등 록</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
-	
+		  
 	</form>
 	</div>
 	

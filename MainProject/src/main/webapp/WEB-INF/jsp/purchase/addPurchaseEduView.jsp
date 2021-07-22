@@ -50,9 +50,7 @@
 		    if ( rsp.success ) {
 		        var msg = '결제가 완료되었습니다.';
 		        var eduNo = ${edu.eduNo}
-		        alert(eduNo)
 		        var userNo = ${user.userNo}
-		        alert(userNo)
 		        
 		        self.location = "/purchaseedu/addPurchaseEduUid?eduNo="+eduNo+"&userNo="+userNo+"&uid="+rsp.imp_uid
 		        		

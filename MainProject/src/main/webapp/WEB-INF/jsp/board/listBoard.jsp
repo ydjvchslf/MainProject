@@ -10,7 +10,7 @@
 
 
 <html>
-<title>JENNYSHOP</title>
+<title>사!교육</title>
 <head>
 
 	
@@ -41,7 +41,7 @@
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
-			function fncGetList(currentPage) {
+		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
 			$("form").attr("method" , "POST").attr("action" , "/board/listBoard").submit();
 			//$("form").submit();
@@ -60,11 +60,7 @@
 			});
 		 });
 		
-		function fncGetList2(currentPage, category) {
-			document.getElementById("currentPage").value = currentPage;
-			document.getElementById("searchCategory").value = category;
-			$("form").attr("method" , "POST").attr("action" , "/board/listBoard").submit();
-		}
+	
 		
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -132,7 +128,7 @@
 		    
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" >
-			    <input type="hidden" name="searchCategory" id="searchCategory" value="0" />
+			    <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
 			    
 			    <div class="form-group">
 				    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
@@ -200,6 +196,7 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
+	  
 	  카테고리 :  ${search.cateCode}
 	  userNo : ${user.userNo}
 		    
