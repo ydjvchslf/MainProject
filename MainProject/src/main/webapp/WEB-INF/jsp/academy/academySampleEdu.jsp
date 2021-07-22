@@ -219,7 +219,7 @@
                                 	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
                                     <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">기본 정보</a>
                                     <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
-                                    <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
+                                    <a class="nav-link" href="/review/listReview?academyCode=${academy.academyCode}">학원 후기 보기</a>
                                     <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생 관리</a>
                                     <a class="nav-link" href="/user/deleteacademy?email=${user.email}">학원 프로필 삭제</a>
                                 </nav>
