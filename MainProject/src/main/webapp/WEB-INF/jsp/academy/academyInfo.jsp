@@ -197,11 +197,11 @@
 			});		
 		}
 		
-		// 텍스트 박스 변경
+		// 소개글 텍스트 박스 변경
 		function updateIntro(academyCode, academyIntro){
 		    var intro ='';
 		    
-		    alert("코드 = " + academyCode + "소개 = "+academyIntro);
+		    alert("코드 = " + academyCode + "소개글 = "+academyIntro);
 		    
 		    	intro += '<div id="AcademyIntro">';
 		   	 	intro += '<input type="text" class="form-control" name="academy_'+academyCode+'" value="'+academyIntro+'"/>';
@@ -212,7 +212,7 @@
 		    
 		}
 		 
-		// 수정
+		// 소개글 수정
 		function saveIntro(academyCode){
 		    var updateIntro = $('[name=academy_'+academyCode+']').val();
 		    
@@ -222,6 +222,37 @@
 		        data : {'academyCode' : academyCode, 'updateIntro' : updateIntro},
 		        success : function(data){
 		        	alert("수정 완료!");
+		        	getAcademyInfo();
+		        }
+		    });
+		}
+		
+		// 실적글 텍스트 박스 변경
+		function updateHistory(academyCode, academyHistory){
+		    var intro ='';
+		    
+		    alert("코드 = " + academyCode + "실적글 = "+academyHistory);
+		    
+		    	intro += '<div id="AcademyHistory">';
+		   	 	intro += '<input type="text" class="form-control" name="academy_'+academyCode+'" value="'+academyHistory+'"/>';
+		   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
+		   	 	intro += '</div>';
+		    
+		    $('#AcademyHistory').html(intro);
+		    
+		}
+		 
+		// 실적글 수정
+		function saveHistory(academyCode){
+		    var updateHistory = $('[name=academy_'+academyCode+']').val();
+		    
+		    $.ajax({
+		        url : '/academy/json/updateHistory/'+academyCode,
+		        type : 'POST',
+		        data : {'academyCode' : academyCode, 'updateHistory' : updateHistory},
+		        success : function(data){
+		        	alert("수정 완료!");
+		        	getAcademyInfo();
 		        }
 		    });
 		}

@@ -22,9 +22,9 @@ public interface AcademyDao {
 	
 	String checkAcademyCode(String academyCode) throws Exception;
 	
-	String updateAcademyIntro(Academy academy) throws Exception;
+	void updateAcademyIntro(Academy academy) throws Exception;
 	
-	String updateAcademyHistory(Academy academy) throws Exception;
+	void updateAcademyHistory(Academy academy) throws Exception;
 	
 	// 여기서 메소드 이름이 매퍼에 sql id 랑 동일해야합니다.
 	public List<Academy> getSearchList(Search search);
