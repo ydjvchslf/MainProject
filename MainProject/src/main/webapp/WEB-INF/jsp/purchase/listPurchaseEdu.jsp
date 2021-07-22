@@ -47,7 +47,7 @@
 		function fncGetList(currentPage) {
 			
 			$("#currentPage").val(currentPage)
-		   	$("form").attr("method", "POST").attr("action","/pickedu/listPickEdu").submit();
+		   	$("form").attr("method", "POST").attr("action","/purchaseedu/listPurchaseEdu").submit();
 		};
 		
 		
@@ -73,8 +73,7 @@
 		      $( "td:nth-child(2)" ).on("click" , function() {
 
 		    	 var eduNo = $(this).find('input').val()
-		    	 alert( eduNo )
-		         self.location ="/edu/getEdu?eduNo=134";
+		         self.location ="/edu/getEdu?eduNo="+eduNo;
 		         
 		      });
 		      
@@ -94,7 +93,7 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>관심수업목록</h3>
+	       <h3>구매수업목록</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -132,27 +131,44 @@
             <th align="left">학원명</th>
             <th align="left">수업명</th>
             <th align="left">수업 시작일</th>
-            <th align="left">수업 종료일</th>
-            <th align="left">대상 학년</th>
-            <th align="left">대상 과목</th>
             <th align="left">수강료</th>
+            <th align="left">구매일자</th>
+            <th align="left">결제상태</th>
+            <th align="left">학원코드</th>
           </tr>
         </thead>
        
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <c:forEach var="pickedu" items="${list}">
+		  <c:forEach var="purchase" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left">${pickedu.pickAcademy.academyName} <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/> </td>
-			  <td align="left">${pickedu.eduName}</td>
-			  <td align="left">${pickedu.eduStartDate}</td>
-			  <td align="left">${pickedu.eduEndDate}</td>
-			  <td align="left">${pickedu.eduGrade}</td>
-			  <td align="left">${pickedu.eduSubject}</td>
-			  <td align="left">${pickedu.eduPrice}</td>
+			  <td align="left">${purchase.purchaseAcademy.academyName}</td>
+			  <td align="left">${purchase.purchaseEdu.eduName}</td>
+			  <td align="left">${purchase.purchaseEdu.eduStartDate}</td>
+			  <td align="left">${purchase.purchaseEdu.eduPrice}</td>
+			  <td align="left">${purchase.payDate}</td>
+			  <td align="left">
+			  <c:choose>
+					  <c:when test= "${purchase.payState == '0' }">
+						구매완료
+					  </c:when>
+					  <c:when test= "${purchase.payState == '1' }">
+						취소완료
+					  </c:when>
+			  </c:choose>
+			  </td>
+			  <td align="left">
+			  <c:choose>
+					  <c:when test= "${purchase.payState == '0' }">
+						${purchase.purchaseAcademy.academyCode}
+					  </c:when>
+					  <c:when test= "${purchase.payState == '1' }">
+					  </c:when>
+			  </c:choose>
+			  </td>
 			</tr>
           </c:forEach>
         

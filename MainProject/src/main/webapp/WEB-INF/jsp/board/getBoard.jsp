@@ -37,15 +37,29 @@
 	    
 	    .updateButton{
 	      background-color:white;
-	      top:0px; right:-395px;
-	      position:absolute;
+	      top:-15px; right:-980px;
+	      position:relative;
 	      z-index:3;
 	    }
 	    
 	    .deleteButton{
 	      background-color:white;
-	      top:0px; right:-460px;
-	      position:absolute;
+	      top:-50px; right:-1050px;
+	      position:relative;
+	      z-index:3;
+	    }
+	    
+	    .heart{
+	      background-color:white;
+	      top:0px; right:70px;
+	      position:relative;
+	      z-index:3;
+	    }
+	    
+	    .complainButton{
+	      background-color:white;
+	      top:-80px; left:550px;
+	      position:relative;
 	      z-index:3;
 	    }
 	</style>
@@ -56,6 +70,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( ".btn:contains('삭')" ).on("click" , function() {
 				 var boardNo = $("div").find('button#delete').val();
+				 document.getElementById("cateCode").value = cateCode;
 					self.location = "/board/deleteBoard?boardNo="+boardNo
 				});
 		});
@@ -112,68 +127,27 @@
 	<div class="container">
 	
 <br/><br/><br/><br/>
-<div class="content sub">
-		<div class="viewarea">
 
-			<!-- S : 헤드라인 배너 -->
-			<!-- E : 헤드라인 배너 -->
-	
+
 				<div class="view-wrap">
 				<!-- google_ad_section_start(name=post) -->
 				<!-- 본문 타이틀&정보 -->
-				
-				<div class="post-tit-info">
 	
-					<hr>
-					
 					<h3 id="boardTitle"><b>${board.boardTitle}</h3></b>
 
 					<div class="info">
 						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.email}</span>
 						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> ${board.boardDate}</span>
 						&nbsp;&nbsp;<span id="count"><i class="glyphicon glyphicon-eye-open" ></i> ${board.viewCnt+1}</span>
+						&nbsp;&nbsp;<span id="recommendCnt"><i class="glyphicon glyphicon-heart" ></i> ${board.recommendCnt}</span>
 					</div>
 					<hr>
 					<div id=boardContent>
 					<p>${board.boardContent}</p>
-					</br></br><hr>
+					</br></br>
+					</div>
 					</div>
 <br/>
-	<div class="container">
-      		<div class="row">
-				
-		<div class="col-md-1">
-		</div>
-		
-	<div class="col-md-6" >
-	<table class="table" >
-	<br/><br/>
-		<!-- On rows -->
-		
-		
-	</div>
-	</div>
-	</div>
-	
-
-	<div class="form-group">
-		    <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
-		    <c:if test="${userNo ne board.boardWriter}">
-		    <div class="complainButton">
-		      <button class="btn success" id="complain" value="${board.boardNo}">신 &nbsp;고</button>
-		    </div></c:if>
-		    
-		    <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
-		    <c:if test="${userNo eq board.boardWriter}">
-		    <div class="updateButton">
-		      <button class="btn success" id="update" value="${board.boardNo}">수 &nbsp;정</button>   
-		   	</div>
-		    
-		    <div class="deleteButton">
-		      <button class="btn success" id="delete" value="${board.boardNo}">삭&nbsp;제
-			</div>
-			</c:if>
-	</div>
 	
 	<div style="text-align: center;">
        <a class="btn heart">
@@ -185,8 +159,6 @@
     $(document).ready(function () {
 
         var heartval = ${heart};
-        alert(heartval)
-
 
         if(heartval>0) {
             console.log(heartval);
@@ -219,15 +191,36 @@
                         $('#heart').prop("src","/image/like_before.png");
                     }
 
- 
+
                 }
             });
         });
     });
 </script>
-	
 
-	</br>
+<div class="form-group">
+		    
+		  <form class="getBoardForm">
+		 	 <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
+		    <div class="complainButton">
+		      <a href="/complain/addComlainBoard"><img src="/image/complain.png" class="coplainButton" id="complain" value="${board.boardNo}"></a>
+		    </div>
+		    
+		 
+		  	  <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
+		  	  <c:if test="${userNo eq board.boardWriter}">
+		      <div class="updateButton">
+		      <button class="btn success" id="update" value="${board.boardNo}">수 &nbsp;정</button>   
+		   	  </div>
+		    
+		    <div class="deleteButton">
+		      <button class="btn success" id="delete" value="${board.boardNo}">삭&nbsp;제
+			</div>
+			</c:if>
+		</form>  
+	</div>
+	<hr>
+	
 	<%@ include file="getComment.jsp" %>
 	
 

@@ -145,7 +145,7 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left">${pickedu.pickAcademy.academyName} <input type="hidden" name="pickNo" id="pickNo" value="${pickedu.pickNo}"/> </td>
+			  <td align="left">${pickedu.pickAcademy.academyName} <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/> </td>
 			  <td align="left">${pickedu.eduName}</td>
 			  <td align="left">${pickedu.eduStartDate}</td>
 			  <td align="left">${pickedu.eduEndDate}</td>

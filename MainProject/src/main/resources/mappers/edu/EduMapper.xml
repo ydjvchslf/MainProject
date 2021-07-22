@@ -7,7 +7,7 @@
 <mapper namespace="com.buyedu.dao.edu.EduDao">
 	
 	<resultMap id="eduSelectMap"		type="Edu">
-		<result property="academy.academyCode"	column="academy_code"	jdbcType="VARCHAR"/>
+		<result property="academy.academyCode"	column="edu_academy_code"	jdbcType="VARCHAR"/>
 		<result property="user.userNo" 		column="user_no"		jdbcType="NUMERIC"/>
 		<result property="eduNo"	 		column="edu_no"			jdbcType="NUMERIC"/>
 		<result property="eduPrice"			column="edu_price"		jdbcType="NUMERIC" />
@@ -25,6 +25,7 @@
 		<result property="eduGrade" 		column="edu_grade"	 	jdbcType="VARCHAR" />
 		<result property="eduSubject" 		column="edu_subject" 	jdbcType="VARCHAR" />
 		<result property="eduDate"			column="edu_date"		jdbcType="VARCHAR" />
+		<result property="academy.academyName"	column="edu_academy_name"	jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<!-- buyEdu : INSERT -->
@@ -32,10 +33,10 @@
 		INSERT
 		INTO Edu
 		( edu_no, edu_academy_code, edu_user_no, edu_day, edu_name, edu_price, edu_teacher, edu_member, edu_intro,
-		  edu_start_date, edu_end_date, edu_start_time, edu_end_time, edu_rest, edu_state, edu_grade, edu_subject, edu_date) 
+		  edu_start_date, edu_end_date, edu_start_time, edu_end_time, edu_rest, edu_state, edu_grade, edu_subject, edu_academy_name , edu_date) 
 		VALUES ( SEQ_EDU_EDU_NO.nextval , #{academy.academyCode} , #{user.userNo} , #{eduDay} , #{eduName} , 
 		#{eduPrice} , #{eduTeacher} , #{eduMember} , #{eduIntro}, #{eduStartDate}, #{eduEndDate}, #{eduStartTime}, 
-		#{eduEndTime}, #{eduRest}, #{eduState}, #{eduGrade}, #{eduSubject}, SYSDATE  )
+		#{eduEndTime}, #{eduRest}, #{eduState}, #{eduGrade}, #{eduSubject}, #{academy.academyName} , SYSDATE  )
 	</insert>
 	
 	<!-- SQL : SELECT ONE -->
@@ -68,30 +69,38 @@
 	   	WHERE edu_no = #{eduNo}
 	 </update>
 	 
+	 <update	id="updateEduRest"	parameterType="Edu" useGeneratedKeys="true" keyColumn="edu_no" keyProperty="eduNo">
+	   	UPDATE edu
+	   	<set>
+			edu_rest 	= #{eduRest} ,
+			edu_state	= #{eduState} ,
+	   	</set>
+	   	WHERE edu_no = #{eduNo}
+	 </update>
+	 
 	 <select  id="getEduList"  parameterType="Search"	resultMap="eduSelectMap">
-	  	SELECT *
+	  	SELECT distinct *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT e.edu_no, e.edu_name, e.edu_start_date, e.edu_end_date, e.edu_price, e.edu_state, e.edu_rest
+	  					FROM		(	SELECT e.edu_academy_name , e.edu_no, e.edu_name, e.edu_start_date , e.edu_price, e.edu_state, e.edu_rest
 										FROM edu e
+										WHERE e.edu_academy_code = #{searchAcademyCode}
 										<if test="searchCondition != null">
-											<where>
 												<if test="searchCondition == 0 and searchKeyword !='' and searchEduState != null">
-													edu_state = #{searchEduState} and edu_name LIKE '%${searchKeyword}%'
+													AND edu_state = #{searchEduState} and edu_name LIKE '%${searchKeyword}%'
 												</if>
 												<if test="searchCondition == 0 and searchKeyword !='' and searchEduState == null">
-													edu_name LIKE '%${searchKeyword}%'
+													AND edu_name LIKE '%${searchKeyword}%'
 												</if>
 												<if test="searchCondition == 1 and searchKeyword !='' and searchEduState != null">
-									 				edu_state = #{searchEduState} and edu_price LIKE '%${searchKeyword}%'
+									 				AND edu_state = #{searchEduState} and edu_price LIKE '%${searchKeyword}%'
 												</if>
 												<if test="searchCondition == 1 and searchKeyword !='' and searchEduState == null">
-									 				edu_price LIKE '%${searchKeyword}%'
+									 				AND edu_price LIKE '%${searchKeyword}%'
 												</if>
 												
 												<if test="searchEduState != null">
-													edu_state = #{searchEduState}
+													AND edu_state = #{searchEduState}
 												</if>
-											</where>
 										</if>
 										ORDER BY edu_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
@@ -102,25 +111,24 @@
 	  	SELECT COUNT(*)
 	  	FROM( SELECT edu_name, edu_price 
 	  								FROM edu
+	  								WHERE edu_academy_code = #{searchAcademyCode}
 	  									<if test="searchCondition != null">
-											<where>
 												<if test="searchCondition == 0 and searchKeyword !='' and searchEduState != null">
-													edu_state = #{searchEduState} and edu_name LIKE '%${searchKeyword}%'
+													AND edu_state = #{searchEduState} and edu_name LIKE '%${searchKeyword}%'
 												</if>
 												<if test="searchCondition == 0 and searchKeyword !='' and searchEduState == null">
-													edu_name LIKE '%${searchKeyword}%'
+													AND edu_name LIKE '%${searchKeyword}%'
 												</if>
 												<if test="searchCondition == 1 and searchKeyword !='' and searchEduState != null">
-									 				edu_state = #{searchEduState} and edu_price LIKE '%${searchKeyword}%'
+									 				AND edu_state = #{searchEduState} and edu_price LIKE '%${searchKeyword}%'
 												</if>
 												<if test="searchCondition == 1 and searchKeyword !='' and searchEduState == null">
-									 				edu_price LIKE '%${searchKeyword}%'
+									 				AND edu_price LIKE '%${searchKeyword}%'
 												</if>
 												
 												<if test="searchEduState != null">
-													edu_state = #{searchEduState}
+													AND edu_state = #{searchEduState}
 												</if>
-											</where>
 										</if>
 										)
 	 </select>
