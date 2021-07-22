@@ -11,4 +11,8 @@ public interface SmsDao {
 
 	public Sms getSms(String phone) throws Exception;
 	
+	public int smsCnt(String phone) throws Exception;
+	
+	public void deleteSms(String phone) throws Exception;
+	
 }

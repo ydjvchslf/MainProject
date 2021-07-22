@@ -134,5 +134,12 @@ public class UserService {
 		return smsDao.getSms(phone);
 	}
 	
+	public int smsCnt(String phone) throws Exception{
+		return smsDao.smsCnt(phone);
+	}
+	
+	public void deleteSms(String phone) throws Exception{
+		smsDao.deleteSms(phone);
+	}
 
 }

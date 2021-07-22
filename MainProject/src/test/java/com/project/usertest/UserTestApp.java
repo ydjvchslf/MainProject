@@ -477,5 +477,26 @@ public class UserTestApp {
 				
 				System.out.println("겟 SMS===> "+sms);
 			}
+			
+			
+			//@Test  
+			public void testSmsCnt() throws Exception{
+				
+				Sms sms = new Sms();
+				
+				int cnt = userService.smsCnt("66666");
+				
+				System.out.println("폰 인증 갯수===> "+cnt);
+			}
+			
+			
+			//@Test  
+			public void deleteSms() throws Exception{
+				
+				Sms sms = new Sms();
+				
+				userService.deleteSms("66666");
+				
+			}
 
 }

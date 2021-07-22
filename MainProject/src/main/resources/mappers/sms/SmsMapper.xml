@@ -27,5 +27,17 @@
 		WHERE phone = #{value}
 	 </select>
 	 
+	 
+	 <select id="smsCnt" parameterType="string" resultType="int">
+	 	SELECT COUNT(*) FROM sms
+		WHERE phone = #{value}
+	 </select>
+	 
+	 
+	 <delete id="deleteSms" parameterType="string">
+	 	DELETE FROM sms
+	 	WHERE phone = #{value}
+	 </delete>
+	 
 
 </mapper>

@@ -359,14 +359,20 @@ public class UserRestController {
 	
 	
 	
-	// SMS 인증
-	
+	// SMS 인증번호 발송
 	@GetMapping("json/sendSms/{phone}")
-	public Map sendSms( @PathVariable String phone , Model model ) throws Exception{
+	public Map sendSms( @PathVariable String phone ) throws Exception{
 	
 		System.out.println("/user/json/sendSms : GET");
 		
 		System.out.println("받아온 phone=> "+phone);
+		
+		int cnt = userService.smsCnt(phone);
+		
+		if ( cnt == 1 ) {
+			userService.deleteSms(phone);
+		}
+		
 		Sms sms = new Sms();
 		sms.setPhone(phone);
 		
@@ -380,6 +386,39 @@ public class UserRestController {
 		return map1;
 		
 	}
+	
+	
+	// SMS 인증 번호 맞는지 확인
+	@GetMapping("json/checkSms/{phone}/{vaildNumber}")
+	public Map checkSms( @PathVariable String phone ,
+						 @PathVariable int vaildNumber) throws Exception{
+	
+		System.out.println("/user/json/checkSms : GET");
+		
+		System.out.println("받아온 phone=> "+phone+" --- 받아온 인증번호=> "+vaildNumber);
+		
+		Sms sms = userService.getSms(phone);
+		
+		int first = sms.getVaildNumber();
+		
+		Map<String, String> map1= new HashMap<String, String>();
+		
+			if ( first == vaildNumber ) {
+				
+				System.out.println("sms 인증번호 확인 컨트롤러 끝");
+				
+				map1.put("result", "ok");
+				return map1;
+				
+			}else{
+				
+				System.out.println("sms 인증번호 확인 컨트롤러 끝");
+				
+				map1.put("result", "no");
+				return map1;
+			}
+		
+		}
 	
 	
 	
