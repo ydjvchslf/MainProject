@@ -114,7 +114,7 @@
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/edu/addEdu">수업 등록</a>
+                                    <a class="nav-link" href="/edu/addEdu?academyCode=${academy.academyCode}">수업 등록</a>
                                     <a class="nav-link" href="#">수업 목록</a>
                                     <a class="nav-link" href="#">결제 목록</a>
                                 </nav>
