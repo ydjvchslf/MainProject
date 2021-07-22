@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Connect;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.Review;
 import com.buyedu.domain.Search;
@@ -69,7 +70,7 @@ public class ReviewController {
 		String academyCode = ( acaService.getAcademyCode(userNo) );
 		academy.setAcademyCode(academyCode);
 		
-		System.out.println("academyCode : "+ academy);
+		System.out.println("academyCode 여기들어가나? : "+ academy);
 		review.setAcademy(academy);
 		
 		System.out.println("리뷰가 들어가야함 review :" +review);
