@@ -69,6 +69,7 @@ public class AcademyRestController {
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
+		
 		return academy;
 	}
 
