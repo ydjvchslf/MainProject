@@ -77,8 +77,8 @@
 	  <!-- SQL : SELECT ONE 에듀 넘버로 아카데미 코드 찾기 -->
 	 <select 	id="getAcademyCodeforEdu"	parameterType="int"	resultType="String">
 		SELECT
-     	a.academy_code
-     	from academy a, edu e
+     	e.edu_academy_code
+     	from edu e
      	WHERE e.edu_no = '${value}'
 	 </select>
 	 
