@@ -45,11 +45,9 @@
 	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
 		
 		function fncGetList(currentPage) {
-		
-			var acaCode = ${ list.academyCode }
 			
 			$("#currentPage").val(currentPage)
-		   	$("form").attr("method", "POST").attr("action","/edu/listEdu?acaCode=${edu.academy.academyCode}").submit();
+		   	$("form").attr("method", "POST").attr("action","/edu/listEdu").submit();
 		};
 		
 		
