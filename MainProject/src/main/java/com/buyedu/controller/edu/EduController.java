@@ -142,6 +142,8 @@ public class EduController {
 		
 		// Model 怨� View �곌껐
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("aca", map.get("list"));
+		System.out.println(map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
