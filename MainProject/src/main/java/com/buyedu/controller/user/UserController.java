@@ -395,6 +395,14 @@ public class UserController {
 	    session.setAttribute("user", dbUser);
 	    model.addAttribute("user", dbUser);
 	    
+	    String accountState = dbUser.getAccountState();
+	    
+	    if (accountState.equals("1")) {
+	    	
+	    	model.addAttribute("message", "회원정보가 맞지 않습니다.");
+			return "/user/loginView";
+		}
+	    
 	    // 쿠키에 로그인 타입 값 설정
 		Cookie ck = new Cookie("loginType", "kakao");
 		ck.setPath("/");
@@ -438,6 +446,14 @@ public class UserController {
 			User dbUser = userService.getUser(email);
 		    
 		    System.out.println("로긴한 user=>" + dbUser);
+		    
+		    String accountState = dbUser.getAccountState();
+		    
+		    if (accountState.equals("1")) {
+		    	
+		    	model.addAttribute("message", "회원정보가 맞지 않습니다.");
+				return "/user/loginView";
+			}
 		        
 		    session.setAttribute("user", dbUser);
 		    

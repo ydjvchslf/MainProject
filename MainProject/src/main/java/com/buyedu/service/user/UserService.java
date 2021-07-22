@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.buyedu.dao.academy.AcademyDao;
 import com.buyedu.dao.connect.ConnectDao;
+import com.buyedu.dao.sms.SmsDao;
 import com.buyedu.dao.user.UserDao;
 import com.buyedu.domain.Academy;
 import com.buyedu.domain.Search;
+import com.buyedu.domain.Sms;
 import com.buyedu.domain.User;
 import com.buyedu.domain.Connect;
 
@@ -24,6 +26,10 @@ public class UserService {
 	
 	@Autowired
 	private ConnectDao connectDao;
+	
+	@Autowired
+	private SmsDao smsDao;
+	
 
 	@Transactional
 	public void addUser(User user) throws Exception {
@@ -116,6 +122,17 @@ public class UserService {
 		connectDao.deleteConnect(connect);
 	}
 	
-
+	
+	
+	//SMS
+	@Transactional
+	public void addSms(Sms sms) throws Exception {
+		smsDao.addSms(sms);
+	}
+	
+	public Sms getSms(String phone) throws Exception {
+		return smsDao.getSms(phone);
+	}
+	
 
 }

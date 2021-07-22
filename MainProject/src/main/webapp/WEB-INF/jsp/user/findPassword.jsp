@@ -29,7 +29,51 @@
 		});
 	});
 	
+	//인증번호발송 클릭event
+	$( function() { 
+			
+		var phone = $("#phone").val();
+			
+			$("button[name='send_sms']").click(function(){
+				
+					var phone = $("#phone").val();
+					
+					console.log("phone=> "+phone);
+				
+					$.ajax( 
+							{
+								url : "/user/json/sendSms/"+phone,
+								method : "GET" ,
+								dataType : "json" ,
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData, status) {
+								
+									alert("sms 테이블 저장 성공")
+									alert(JSONData.phone)
+									
+									var phone = JSONData.phone
+									
+									$("#phone").val(phone)
+						    			
+								}
+								
+								
+					});
+					
+					$("#phone").val(phone)
+				});
+				
+			 $("#phone").val(phone)
+			
+			});
 	
+	
+	
+	
+	//폼 입력 완성-> 비밀번호 찾기 눌렀을때
 	$( function() { 
 		
 		$("button[name='findPassword']").click(function(){
@@ -183,10 +227,22 @@
 			  </div>
 			  
 			  <div class="form-group">
-			    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">전화번호</label>
+			    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="phone" name="phone" placeholder="phone">
+			      <input type="text" class="form-control" id="phone" name="phone" placeholder="phone" value="${phone}">
+			      <button name="send_sms" class="btn btn-primary">인증번호발송</button>
 			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="vaild" class="col-sm-offset-1 col-sm-3 control-label"></label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control" id="vaild" name="vaild" placeholder="인증번호">
+			      <button name="check_sms" class="btn btn-primary">확인</button>
+			    </div>
+				  <span id="helpBlock" class="help-block">
+					 <strong class="text_sms"></strong>
+				  </span>
 			  </div>
 			  
 			  <div class="form-group">

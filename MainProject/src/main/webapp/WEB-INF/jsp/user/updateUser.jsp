@@ -18,6 +18,103 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
+		
+		<!-- CSS 시작 -->
+		<style>
+		
+		#content {
+			margin-left: 800px; 
+		    transform: translate(-50%);
+		    width: 460px;
+		    
+		}
+		
+		/* 입력폼 */
+		h3 {
+		    margin: 19px 0 8px;
+		    font-size: 14px;
+		    font-weight: 700;
+		}
+		
+		
+		.box {
+		    display: block;
+		    width: 100%;
+		    height: 51px;
+		    border: solid 1px #dadada;
+		    padding: 10px 14px 10px 14px;
+		    box-sizing: border-box;
+		    background: #fff;
+		    position: relative;
+		}
+		
+		.int {
+		    display: block;
+		    position: relative;
+		    width: 100%;
+		    height: 29px;
+		    border: none;
+		    background: #fff;
+		    font-size: 15px;
+		}
+		
+		input {
+		    font-family: Dotum,'돋움',Helvetica,sans-serif;    
+		}
+		
+		
+		
+		/* 에러메세지 */
+		
+		.error_next_box {
+		    margin-top: 9px;
+		    font-size: 12px;
+		    color: red;    
+		    display: none;
+		}
+		
+		#alertTxt {
+		    position: absolute;
+		    top: 19px;
+		    right: 38px;
+		    font-size: 12px;
+		    color: red;
+		    display: none;
+		}
+		
+		/* 버튼 */
+		
+		.btn_area {
+		    margin: 30px 0 91px;
+		}
+		
+		.signup, .cancel {
+		    width: 100%;
+		    padding: 10px 0 17px;
+		    border: 0;
+		    cursor: pointer;
+		    color: #fff;
+		    background-color: #0D85ED;
+		    font-size: 20px;
+		    font-weight: 400;
+		    font-family: Dotum,'돋움',Helvetica,sans-serif;
+		}
+		
+		.cancel {
+			margin-top: 3px;
+		}
+		
+		
+		
+		</style>
+		
+		
+		
+		
+		
+		
+		
+		
 		<script type="text/javascript">
 		
 		var duplicationCheck = false;
@@ -232,62 +329,65 @@
 
                 </nav>
             </div>
-            <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
+       <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
+            
+        <div id="wrapper">
+            <!-- content-->
+          <div id="content">
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-				        <div class="page-header text-center">
-					       <h3 class=" text-info">회원정보수정</h3>
-					       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+				        <div>
+					       <h2>회원정보수정</h2>
 					    </div>
 					    
 					    <!-- form Start /////////////////////////////////////-->
 						<form class="form-horizontal" id="myform">
 						
-						  <div class="form-group">
-						    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
-						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="중복확인하세요"  readonly>
-						       <span id="helpBlock" class="help-block">
-						      	<strong class="text-danger">아이디는 수정불가</strong>
-						      </span>
-						    </div>
-						  </div>
-						
+							<!-- EMAIL -->
+			                <div>
+			                    <h3 class="join_title"><label for="email">이메일</label></h3>
+			                    <span class="box int_email">
+			                        <input type="text" id="email" name="email" class="int" value="${user.email}" placeholder="중복확인하세요"  readonly>
+			                    </span> 
+			                    <span class="email_check">이메일은 수정불가</span> 
+			                </div>
+							
+							<!-- NAME -->
+			                <div>
+			                    <h3 class="join_title"><label for="name">이름</label></h3>
+			                    <span class="box int_name">
+			                    	<input type="hidden" name="userNo" value="${user.userNo}">
+			                        <input type="text" id="name" name="name" value="${user.name}" class="int" maxlength="20">
+			                    </span>
+			                    <span id="helpBlock" class="help-block">
+								   <strong class="text_name"></strong>
+								</span>
+			                </div>  
 						  
+						  	 <!-- MOBILE -->
+			                <div>
+			                    <h3 class="join_title"><label for="phoneNo">휴대전화 ( - 포함)</label></h3>
+			                    <span class="box int_mobile">
+			                        <input type="text" id="phone" name="phone" value="${user.phone}" class="int" maxlength="16" placeholder="전화번호 입력">
+			                    </span>
+			                    <span class="text_phone"></span>    
+			                </div>
 						  
-						  <div class="form-group">
-						    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
-						    <div class="col-sm-4">
-						      <input type="hidden" name="userNo" value="${user.userNo}">
-						      <input type="text" class="form-control" id="name" name="name" value="${user.name}" placeholder="변경회원이름">
-							    <span id="helpBlock" class="help-block">
-							      <strong class="text_name"></strong>
-							    </span>
-						    </div>
-						  </div>
-						  
-						  <div class="form-group">
-						    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호( - 포함)</label>
-						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="phone" name="phone"  value="${user.phone}" placeholder="변경휴대폰번호">
-						      <span id="helpBlock" class="help-block">
-							     <strong class="text_phone"></strong>
-							  </span>
-						    </div>
-						  </div>
-						  
-						  <div class="form-group">
-						    <div class="col-sm-offset-4  col-sm-4 text-center">
-						      <button type="button" id="update" name="update" class="btn btn-primary">수정하기</button>
-						      <button type="button" id="back" name="back" class="btn btn-primary">뒤로가기</button>
-						    </div>
-						  </div>
+						 	 <!-- 수정하기, 뒤로가기 BTN-->
+			                <div class="btn_area">
+			                    <button type="button" id="update" name="update" class="signup" >수정</button>
+			                    <button type="button" id="back" name="back" class="cancel">뒤로</button>
+			                </div>
+			                
 						</form>
                     </div>
                 </main>
             </div>
+          </div>
         </div>
+        
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
