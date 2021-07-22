@@ -174,25 +174,25 @@
 	
 	
 	<!-- SQL : DELETE All 진짜 위험위험 -->
-	<delete 	id="deleteedu"	parameterType="String">
+	<delete 	id="deleteEdu"	parameterType="String">
 		DELETE 
 		FROM edu
-		WHERE academy_code = #{academyCode}
+		WHERE edu_academy_code = #{academyCode}
 	 </delete>
-	<delete 	id="deletereview"	parameterType="String">
+	<delete 	id="deleteReview"	parameterType="String">
 		DELETE
 		FROM review
-		WHERE a.academy_code = #{academyCode}
+		WHERE academy_code = #{academyCode}
 	 </delete>
-	<delete 	id="deleteconnection"	parameterType="String">
+	<delete 	id="deleteConnection"	parameterType="String">
 		DELETE 
 		FROM connection
-		WHERE a.academy_code = #{academyCode}
+		WHERE academy_code = #{academyCode}
 	 </delete>
 	<delete 	id="deleteAcademy"	parameterType="String">
 		DELETE 
 		FROM academy
-		WHERE a.academy_code = #{academyCode}
+		WHERE academy_code = #{academyCode}
 	 </delete>
 
 </mapper>

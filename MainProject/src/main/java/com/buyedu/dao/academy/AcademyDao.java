@@ -43,11 +43,11 @@ public interface AcademyDao {
 	int deleteMultimedia(int multimediaNo) throws Exception;
 	
 	// 학원 정보 모두 삭제
-	void deleteedu(String academyCode) throws Exception;
+	void deleteEdu(String academyCode) throws Exception;
 	
-	void deletereview(String academyCode) throws Exception;
+	void deleteReview(String academyCode) throws Exception;
 	
-	void deleteconnection(String academyCode) throws Exception;
+	void deleteConnection(String academyCode) throws Exception;
 	
 	void deleteAcademy(String academyCode) throws Exception;
 	

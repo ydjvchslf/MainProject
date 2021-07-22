@@ -13,10 +13,12 @@ import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
+import com.buyedu.service.user.UserService;
 
 @RestController
 @RequestMapping("/academy/*")
@@ -36,8 +40,24 @@ public class AcademyRestController {
 	@Autowired
 	private AcademyService academyService;
 	
+	@Autowired
+	private UserService userService;
+	
 	public AcademyRestController() {
 		System.out.println(this.getClass());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "json/academyProfile/{userNo}", method = RequestMethod.GET)
+	public Map<String, Object> academyProfile(@PathVariable int userNo) throws Exception{
+		
+	      System.out.println("academy/json/academyProfile : 학원 프로필 목록");
+	      
+	      Map<String, Object> map = academyService.getAcademyCodeList(userNo);
+	      
+	      System.out.println("학원 프로필 맵 = " + map);
+	      
+	      return map;
 	}
 	
 	@RequestMapping(value = "json/getacademy/{academyCode}", method = RequestMethod.GET)
@@ -159,6 +179,25 @@ public class AcademyRestController {
 		return academyService.deleteMultimedia(multimediano);
 	}
 	
+	// ------------------------------ 학원 인증 ------------------------------
+	
+	@ResponseBody
+	@RequestMapping(value = "json/academyConnect/{academyCode}", method = RequestMethod.POST)
+	public Map<String, Object> academyConnectList(@PathVariable String academyCode, HttpSession session) throws Exception{
+		
+		System.out.println("json/academyConnects : POST");
+		
+		System.out.println("academyConnect 아카데미 코드 = " + academyCode);
+		
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		Map<String, Object> map = academyService.academyConnect(academyCode);
+		
+		System.out.println("academyConnects map = "+map.get("connect"));
+		
+		return map;
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "json/updateConnect/{connectNo}", method = RequestMethod.POST)
 	private String updateConnect(@PathVariable int connectNo) throws Exception{
@@ -192,7 +231,7 @@ public class AcademyRestController {
 		
 		System.out.println("삭제되는 정보는 1. 학원 정보 2. 인증 정보 3. 후기 정보 4. 수업 정보 5. 게시글 ");
 		
-		
+		academyService.deleteAcademyAll(academyCode);
 	}
 	
 

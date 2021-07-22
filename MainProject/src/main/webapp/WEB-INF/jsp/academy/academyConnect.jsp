@@ -157,63 +157,13 @@
                     <div class="container-fluid px-4">
                     
 				       <form class="form-horizontal">
-						  
-						<table class="table table-hover table-striped" >
-							<br/><br/>
-				     		<h4>인증 신청한 학생 보기</h4>	
-				     		
-				     			<c:choose>
-								  <c:when test= "${empty connect}">
-									<span><h5>
-										<img src="/image/crying.png">
-										인증 신청한 학생이 없습니다.!</h5></span>
-								  </c:when>
-								  <c:otherwise>
-								  	<thead>
-							          <tr>
-							          	<th align="center">No</th>
-							            <th align="center">학생이름</th>
-							            <th align="center">인증상태</th>
-							            <th align="center">인증취소</th>
-							          </tr>
-							        </thead>
-							        
-							        <tbody>
-									  <c:set var="i" value="0" />
-									  <c:forEach var="connect" items="${connect}">
-										<c:set var="i" value="${ i+1 }" />
-										<tr>
-										  <td align="left">${ i }</td>
-										  <td align="left">
-										  	<span class="cntStudentName" name="cntStudentName">${connect.user.name}</span>
-										  	<input type="hidden" name="cntUserNo" value="${connect.user.userNo}">
-										  </td>
-										  <td align="left">
-											  <c:choose>
-												  <c:when test= "${connect.connectState == '0'}">
-													<a onclick="updateConnect(${connect.connectNo})">인증 대기중 입니다.</a>
-												  </c:when>
-												  <c:when test= "${connect.connectState == '1'}">
-													재학생
-												  </c:when>
-											  </c:choose>
-										  </td>
-										  <td align="left">
-										  		<c:choose>
-												  <c:when test= "${connect.connectState == '0'}">
-													<a onclick="deleteConnect(${connect.connectNo})">인증 거부</a>
-												  </c:when>
-												  <c:when test= "${connect.connectState == '1'}">
-													<a onclick="deleteConnect(${connect.connectNo})">원생 삭제</a>
-												  </c:when>
-											  </c:choose>
-										  </td>
-										</tr>
-							          </c:forEach>
-							        </tbody>
-								  </c:otherwise>
-							  	</c:choose>
-				    	  </table>
+				       
+				       <br></br>
+						
+						<table id="table" name="table" class="table table-hover table-striped" >
+						<h4>인증 신청한 학생 보기</h4>
+				    	</table>
+				    	
 						</form>
                     </div>
                 </main>
@@ -223,6 +173,72 @@
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         
+        <script>
+       		
+        function connectList(){
+        	$.ajax({
+        		url : '/academy/json/academyConnect/${academy.academyCode}',
+        		type : 'post',
+        		success : function(data){
+        			console.log(data);
+        			$.each(data, function(key,value){
+        						
+        				var a = ''
+        				
+        				if(value.length == 0){
+    						a += '<span><h5>'
+    						a += '<img src="/image/crying.png">'
+    						a += '인증 신청한 학생이 없습니다.!</h5></span>'
+    					}else{
+        					a += '<thead><tr>'
+        					a += '<th align="center">No</th>'
+        					a += '<th align="center">학생이름</th>'	
+        					a += '<th align="center">인증상태</th>'		
+        					a += '<th align="center">인증취소</th>'
+        					a += '</tr></thead>'
+        					
+        					
+        					a += '<tbody>'
+        					
+        					for(var i=0; i<value.length;i++){
+                				
+                				a += '<tr><td align="left">'+(i+1)+'</td>'
+                				a += '<td align="left"><span class="cntStudentName" name="cntStudentName">'+(value[i].user.name)+'</span>'
+                				a += '<input type="hidden" name="cntUserNo" value="'+(value[i].user.userNo)+'"></td>'
+                				a += '<td align="left">'
+                				
+                					if(value[i].connectState == 0){
+                						a += '<a onclick="updateConnect('+value[i].connectNo+')">인증 대기중 입니다.</a>'	
+                					} else {
+                						a += '재학생 입니다.'	
+                					}
+                				
+                				a += '</td>'	
+                				a += '<td align="left">'	
+                				
+                					if(value[i].connectState == 0){
+                						a += '<a onclick="deleteConnect('+value[i].connectNo+')">인증 거부</a>'	
+                					} else {
+                						a += '<a onclick="deleteConnect('+value[i].connectNo+')">원생 삭제</a>'	
+                					}
+                				a += '</td></tr>'	
+                									
+                			}
+        					a += '</tbody>'	
+    					}	        				
+        					
+            			$("#table").html(a);
+        			});
+        		}
+        	});
+        }
+        
+        $(document).ready(function(){
+            connectList();
+        });
+        
+        
+        </script>
         
         
     </body>

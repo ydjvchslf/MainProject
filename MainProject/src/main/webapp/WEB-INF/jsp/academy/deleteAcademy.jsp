@@ -31,13 +31,13 @@
 			    	
 			        url : '/academy/json/deleteAcademyAll/'+academyCode,
 			        type : 'post',
-			        success : function(){
+			        success : function(data){
 			            alert("삭제가 완료되었습니다!")
 			        }
 			    });
 			}
 			
-			location.reload();
+			
 		}
 		
 		
@@ -151,35 +151,17 @@
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                                <p class="mb-0">
                                     
                                     <div class="panel panel-primary">
 									<div class="panel-heading">
 											<i class="glyphicon glyphicon-briefcase"></i> 학원 프로필
 				         			</div>
-									<ul class="list-group">
-				
-									<c:if test="${list.size()<=2}">
-										<li class="list-group-item">
-										 	<a href="#">학원 등록</a>
-										 </li>
-									</c:if>
-									
-								<c:set var="i" value="0" />
-								 <c:forEach var="academy" items="${list}">
-									 <c:set var="i" value="${ i+1 }" />
-											 
-									  <li class="list-group-item">
-										 	<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>
-										 	<a onclick="deleteAcademyProfile('${academy.academyCode}')"> 삭제 </a>
-										 </li>
-									
-						          </c:forEach>	
-						          	
-									</ul>
-						        </div>
+				         			<br/>
+				         			
+						<ul class="academyList"></ul>
+						
+						        	</div>
 						        
-                                </p>
                             </div>
                         </div>
                         <div style="height: 100vh"></div>
@@ -191,6 +173,49 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        
+        <script>
+        
+        var userno = '${user.userNo}';
+       
+        
+        function academyList(){
+        	$.ajax({
+        		url : '/academy/json/academyProfile/${user.userNo}',
+        		type : 'get',
+        		success : function(data){
+        			console.log(data);
+        			$.each(data, function(key,value){
+        				
+        				var a = '';
+        				
+        				if(value.length<=2){
+    						a += '<li class="list-group-item">'
+    						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a>'
+    						a += '</li>'
+    					}
+        				
+        				for(var i=0; i<value.length;i++){
+        					
+        					a += '<li class="list-group-item">'
+        					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a>'
+        					a += '<a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"> 프로필 삭제 </a>'
+        					a += '</li>'
+        				}
+        				
+            			$(".academyList").html(a);
+        				
+        			});
+        		}
+        	});
+        }
+        
+        $(document).ready(function(){
+            academyList();
+        });
+        
+        </script>
+        
     </body>
 </html>
     
