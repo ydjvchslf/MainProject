@@ -19,6 +19,8 @@ public interface PurchaseEduDao {
 	int updatePurchaseEdu(PurchaseEdu purchaseEdu) throws Exception;
 	
 	List<PurchaseEdu> getPurchaseEduList(Search search);
+	
+	List<PurchaseEdu> getPurchaseAcademyList(Search search);
 
 	int getPurchaseEduTotalCount(Search search);
 	

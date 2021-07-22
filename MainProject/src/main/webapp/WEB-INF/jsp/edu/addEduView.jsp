@@ -141,19 +141,19 @@
 		  <div class="form-group">
 		    <label for="eduGrade" class="col-sm-2 control-label">수업 대상학년</label>
 		    <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="초등">초등
+			  <input type="checkbox" name="eduGrade" value="초등">초등
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="중등">중등
+			  <input type="checkbox" name="eduGrade" value="중등">중등
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="고1~고2">고1~고2
+			  <input type="checkbox" name="eduGrade" value="고1~고2">고1~고2
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="고3">고3
+			  <input type="checkbox" name="eduGrade" value="고3">고3
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="N수">N수
+			  <input type="checkbox" name="eduGrade" value="N수">N수
 			 </label>
 		  </div>
 		  

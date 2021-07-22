@@ -11,6 +11,7 @@ public class Search {
 	private String searchConditionb;
 	private String searchKeyword;
 	private String searchAcademyName;
+	private String searchAcademyCode;
 	private String searchAcademyAddr;
 	private String searchAcademyGrade;
 	private String searchAcademySubject;
@@ -170,6 +171,14 @@ public class Search {
 				+ searchRole + ", searchAccountState=" + searchAccountState + ", searchEduState=" + searchEduState
 				+ ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", searchUserNo=" + searchUserNo
 				+ ", cateCode=" + cateCode + "]";
+	}
+
+	public String getSearchAcademyCode() {
+		return searchAcademyCode;
+	}
+
+	public void setSearchAcademyCode(String searchAcademyCode) {
+		this.searchAcademyCode = searchAcademyCode;
 	}
 
 	

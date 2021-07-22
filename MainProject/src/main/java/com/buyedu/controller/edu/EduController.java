@@ -73,6 +73,8 @@ public class EduController {
 		
 		System.out.println("/edu/addEdu : POST ");
 		
+		System.err.println(edu);
+		
 		eduService.addEdu(edu);
 		
 		return "forward:/edu/getEdu?eduNo="+edu.getEduNo();
@@ -84,6 +86,8 @@ public class EduController {
 		System.out.println("/edu/getEdu : GET");
 		
 		Edu edu = eduService.getEdu(eduNo);
+		
+		System.err.println("get edu 테스트 :" + edu);
 		
 		model.addAttribute("edu", edu);
 		
@@ -118,14 +122,17 @@ public class EduController {
 	
 	@RequestMapping( value="listEdu" )
 	public String listEdu( @ModelAttribute("search") Search search , 
-							@ModelAttribute("edu") Edu edu , Model model , HttpServletRequest request) throws Exception{
+							@ModelAttribute("edu") Edu edu , Model model ,
+							@RequestParam("acaCode") String acaCode ) throws Exception{
 		
 		System.out.println("/edu/listEdu : GET / POST");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
+		
 		search.setPageSize(pageSize);
+		search.setSearchAcademyCode(acaCode);
 		
 		// Business logic ����
 		Map<String , Object> map= eduService.getEduList(search);
