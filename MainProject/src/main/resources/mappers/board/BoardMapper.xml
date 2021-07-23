@@ -17,13 +17,14 @@
 		<result property="cateCode" 		column="category_code" 			jdbcType="CHAR" />
 		<result property="viewCnt" 			column="view_count" 			jdbcType="NUMERIC" />
 		<result property="reCnt" 			column="reCnt" 					jdbcType="NUMERIC" />
+		<result property="acaWriter" 		column="aca_writer" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addBoard"		parameterType="board" useGeneratedKeys="true" keyColumn="board_no" keyProperty="boardNo">
 	 	INSERT
-		INTO board( board_no , board_title , board_content , board_writer , board_date, board_state, category_code, view_count) 
-		VALUES	 ( board_board_no.nextval , #{boardTitle} , #{boardContent} , #{boardWriter}, SYSDATE, '0', #{cateCode}, #{viewCnt} )
+		INTO board( board_no , board_title , board_content , board_writer , board_date, board_state, category_code, view_count, aca_writer) 
+		VALUES	 ( board_board_no.nextval , #{boardTitle} , #{boardContent} , #{boardWriter}, SYSDATE, '0', #{cateCode}, #{viewCnt}, #{acaWriter} )
 	 </insert>
 
 	 <!-- SQL : SELECT ONE -->
@@ -58,7 +59,7 @@
 		from board b, users u,(select board_no , count(recommend_no) cnt
                        			from recommend
                       			 group by board_no
-                                         order by cnt desc)c
+                                         order by cnt desc) c
        	WHERE b.board_no = c.board_no(+) and b.category_Code='2' and u.user_no=b.board_writer
        		  AND ROWNUM &lt; 4
    </select>
