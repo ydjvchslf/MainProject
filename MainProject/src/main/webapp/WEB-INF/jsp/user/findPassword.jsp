@@ -48,6 +48,9 @@
 	
 	$(function() {
 		
+		//인증번호 발송 event
+		$( "button[name='send_sms']" ).on("click" , events.click.phonBtn);
+		
 		//인증번호 확인 event
 		$( "button[name='check_sms']" ).on("click" , events.click.vaildBtn);
 		
@@ -61,9 +64,16 @@
 	var events = {
 			
 			click : {
+				
+				phonBtn : function() {
+					alert("인증번호발송 클릭")
+					fncAuth();
+					
+				},
+				
 				vaildBtn : function() {
-					alert("인증버튼 클릭")
-					checkVaildNumber();
+					alert("인증확인 클릭")
+					fncKey();
 					
 				},
 				
@@ -79,132 +89,67 @@
 			}
 	}
 	
+	//휴대전화번호 자동 대시 입력
+	$(document).on("keyup", "#phone", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+
 	
 	
-	//인증번호 확인 함수
-	function checkVaildNumber(){
+	//인증번호 발송 함수
+	function fncAuth(){					
 		
 		var phone = $("#phone").val()
-		var vaildNumber = $("#vaild").val()
+		alert("입력한 연락처 : "+phone);
 		
 		$.ajax({
-			url : "/user/json/checkSms/"+phone+"/"+vaildNumber,
-			method : "GET" ,
-			dataType : "json" ,
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			success : function(JSONData, status) {
-			
-				if (JSONData.result == "ok") {
-					
-					console.log("인증성공")
-					
-					$("#vaild").val(vaildNumber);
-					$(".text_sms").text("인증번호가 맞습니다.");
-					$(".text_sms").css("color", "blue");
-					
-					checkVaild = true;
-					
-				} else {
-					
-					console.log("인증실패")
-					$(".text_sms").text("인증번호가 맞지 않습니다.");
-					$(".text_sms").css("color", "red");
-					
+				url : "/user/json/sms/"+phone ,
+				method : "GET" ,
+				dataType : "json" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : 
+						function(JSONData , status) {
+
+						//alert("status : "+status);
+						//alert("JSONData : \n"+JSONData);
+						//alert("JSONData : \n"+JSONData.key);
+						key = JSONData.key;
+						
 				}
-	    			
-			}
-		});
+					
+		});	//End ajax
+	};
+	
+	
+	//인증확인 함수
+	//test 용, 나중에 실제에서는 지우기
+	
+	var key ="123456";
+	//var key = "";
+	
+	var vaildNum = $("#vaildNum").val();
+	
+	function fncKey() {	
 		
-	}
-	
-	
-	
-	//인증번호발송 클릭event
-	$( function() { 
+		var vaildNum = $("#vaildNum").val();
+		
+		console.log("key : " +key)
+		
+		if( vaildNum == key ){
 			
-		var phone = $("#phone").val();
+			$(".text_sms").text("인증번호가 맞습니다.");
+			$(".text_sms").css("color", "blue");
 			
-			$("button[name='send_sms']").click(function(){
-				
-					var phone = $("#phone").val();
-					
-					console.log("phone=> "+phone);
-				
-					$.ajax( 
-							{
-								url : "/user/json/sendSms/"+phone,
-								method : "GET" ,
-								dataType : "json" ,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData, status) {
-								
-									alert("sms 테이블 저장 성공")
-									alert(JSONData.phone)
-						    			
-								}
-					});
-					
-				});
-				
+			checkVaild = true;
 			
-			});
-	
-	
-	
-	//인증번호 입력 후 확인 클릭event
-	$( function() { 
+		}else{
 			
-			$("button[name='check_sms']").click(function(){
-					
-					alert("접근성공")
-					var phone = $("#phone").val();
-					var vaildNumber = $("#vaild").val();
-					
-					console.log("phone=> "+phone);
-					console.log("vaildNumber=> "+vaildNumber);
-					
-					$.ajax({
-								url : "/user/json/checkSms/"+phone+"/"+vaildNumber,
-								method : "GET" ,
-								dataType : "json" ,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData, status) {
-								
-									if (JSONData.result == "ok") {
-										
-										console.log("인증성공")
-										
-										$("#vaild").val(vaildNumber);
-										$(".text_sms").text("인증번호가 맞습니다.");
-										$(".text_sms").css("color", "blue");
-										
-										return true;
-										
-									} else {
-										
-										console.log("인증실패")
-										$(".text_sms").text("인증번호가 맞지 않습니다.");
-										$(".text_sms").css("color", "red");
-										
-									}
-						    			
-								}
-					});
-					
-				});
-				
-			
-			});
-	
+			$(".text_sms").text("인증번호가 맞지 않습니다.");
+			$(".text_sms").css("color", "red");
+		
+		}		
+	}		
 	
 	
 	
@@ -254,7 +199,7 @@
 								
 								var displayText = '새로운 비밀번호로 수정해주세요!';
 								$('.explain1').text("")
-								$('.explain1').append(displayText).css("color", "red");
+								$('.explain1').append(displayText).css("color", "blue");
 							}
 						}
 			});
@@ -337,6 +282,13 @@
 					});
 				});
 			});
+
+
+	
+	//cool sms
+	
+	
+	
 	
 	
 	
@@ -372,8 +324,8 @@
 			  <div class="form-group">
 			    <label for="vaild" class="col-sm-offset-1 col-sm-3 control-label"></label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="vaild" name="vaild" placeholder="인증번호">
-			      <button name="check_sms" class="btn btn-primary" onclick="return false">인증</button>
+			      <input type="text" class="form-control" id="vaildNum" name="vaildNum" placeholder="인증번호">
+			      <button name="check_sms" class="btn btn-primary" onclick="return false">인증확인</button>
 			    </div>
 				  <span id="helpBlock" class="help-block">
 					 <strong class="text_sms"></strong>

@@ -261,7 +261,8 @@
 			                    	console.log("결과->" +JSONData.result);
 			                        if(JSONData.result == 0){ //DB에 아이디가 없을 경우 => 회원가입
 			                        	console.log("회원가입화면 이동...");
-			                        	self.location = "/user/snsAddUser?email="+email;
+			                        	//self.location = "/user/snsAddUser?email="+email;
+			                        	self.location = "/user/snsLoginNotaccount?email="+email;
 			                        }else{ //DB에 아이디가 존재할 경우 => 로그인
 			                        	console.log("로그인중...");
 			                        	self.location = "/user/snsLogin/"+email;
@@ -350,6 +351,8 @@
 							<div id="naverIdLogin" align="center">
 							   <img src="https://static.nid.naver.com/oauth/big_g.PNG" width="80%" height="45"/>
 							</div>
+							<!-- 인증하기 test 추가 -->
+							<span><a href="authority">인증하기</a></span>
 						</form>
 						
 							

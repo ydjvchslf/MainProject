@@ -308,6 +308,15 @@ public class UserController {
 	}
 	
 	
+	@RequestMapping( value="snsLoginNotaccount", method=RequestMethod.GET )
+	public String snsLoginNotaccount( @RequestParam String email ) throws Exception{
+		
+		System.out.println("/user/snsLoginNotaccount : 가입안한 SNS 로긴한 유저");
+	
+		return "userMain";
+	}
+	
+	
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	public String login(@ModelAttribute("user") User user , Model model, HttpSession session , HttpServletResponse res) throws Exception{
 		
@@ -320,9 +329,15 @@ public class UserController {
 		
 		System.out.println("겟유저 가져온 dbUser=>" + dbUser);
 		
+		if ( dbUser == null ) {
+			
+			model.addAttribute("message", "회원정보가 맞지 않습니다.");
+			return "/user/loginView";
+		}
+		
 		String accountState = dbUser.getAccountState();
 		
-		if ( dbUser == null || accountState.equals("1") ) {
+		if ( accountState.equals("1") ) {
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
 			return "/user/loginView";
@@ -585,6 +600,16 @@ public class UserController {
 		System.out.println("내가다니는학원 단순 네비게이션");
 		
 		return "/user/listConnect";
+	}
+	
+	
+	//인증용 test jsp 추후 삭제 예정
+	@RequestMapping( value="authority", method=RequestMethod.GET )
+	public String authority() throws Exception{
+	
+		System.out.println("/user/authority : GET");
+		
+		return "/user/authority";
 	}
 	
 

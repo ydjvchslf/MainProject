@@ -168,6 +168,7 @@
         
         <script>
 		var academyCode = '${academy.academyCode}';
+		var role = '${user.role}';
 		
 		 alert("학원 코드 = "+academyCode);
 			
@@ -186,11 +187,17 @@
 				 		 a += '<br/>지역구 : ' + data.academyArea
 				 	 	 a += '<div id="AcademyIntro">'
 				 	 	 a += '학원 소개 : ' + data.academyIntro
+				 	 	 
+				 	 if(role == 'academy'){
 				 	 	 a += '<a class="btn blue" onclick="updateIntro(\''+data.academyCode+'\',\''+data.academyIntro+'\')"> 수 정 </a>'
+				 	 }
 				 		 a += '</div>'
 				 		 a += '<div id="AcademyHistory">'
 				 		 a += '학원 실적 : ' + data.academyHistory
+				 		 
+				 	if(role == 'academy'){
 						 a += '<a class="btn blue" onclick="updateHistory(\''+data.academyCode+'\',\''+data.academyHistory+'\')"> 수 정 </a>'
+				 	}
 						 a += '</div>'
 				 					
 					$("#academyInfo").html(a);
