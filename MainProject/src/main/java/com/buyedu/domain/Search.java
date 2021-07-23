@@ -192,5 +192,13 @@ public class Search {
 		this.academyCode = academyCode;
 	}
 
+	public String getSearchRoleByEdu() {
+		return searchRoleByEdu;
+	}
+
+	public void setSearchRoleByEdu(String searchRoleByEdu) {
+		this.searchRoleByEdu = searchRoleByEdu;
+	}
+
 	
 }
