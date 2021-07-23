@@ -102,6 +102,7 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">${academy.academyName }</h1>
+                        <a href="https://academy-chat.herokuapp.com/chat.html?username=${user.email}&room=${academy.academyName}">Ã¤ÆÃ</a>
 
                         <div class="card mb-4">
                             <div class="card-header">

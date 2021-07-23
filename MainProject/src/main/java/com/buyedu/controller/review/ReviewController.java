@@ -27,15 +27,12 @@ import com.buyedu.service.review.ReviewService;
 import com.buyedu.service.user.UserService;
 
 @Controller
+
 @RequestMapping("/review/*")
 public class ReviewController {
 	
 	@Autowired
 	private ReviewService reviewService;
-	@Autowired
-	private AcademyService acaService;
-	@Autowired
-	private UserService userService;
 	
 	public ReviewController() {
 		System.out.println(this.getClass());
@@ -48,8 +45,16 @@ public class ReviewController {
 	int pageSize;
 	
 	@RequestMapping( value="addReviewView", method=RequestMethod.GET)
-	public String addReview(Model model) throws Exception {
+	public String addReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
 		System.out.println("addReviewView");
+		
+		
+		String academyCode = request.getParameter("academyCode");
+		System.out.println("아카데미코드 : "+academyCode);
+		model.addAttribute("academyCode" , academyCode);
+		
+
+		
 		
 		return "/review/addReviewView";
 	}
@@ -60,38 +65,36 @@ public class ReviewController {
 		
 		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
 		System.out.println(userNo);
-		//String academyCode = ( acaService.getAcademyCode(userNo) );
-		//String academyCode = ( "A02" );
-		//System.out.println(academyCode);
 		
 		System.out.println("review :" + review);
 		user.setUserNo(userNo);
 		review.setReviewWriter(user);
 		
-		Academy academy = new Academy();
-		String academyCode = ( acaService.getAcademyCode(userNo) );
-		academy.setAcademyCode(academyCode);
-		
-		System.out.println("academyCode 여기들어가나? : "+ academy);
-		review.setAcademy(academy);
+		String academyCode = httpRequest.getParameter("academyCode");
+		System.out.println("아카데미코드 : "+academyCode);
 		
 		System.out.println("리뷰가 들어가야함 review :" +review);
+		
 		reviewService.addReview(review);
 		
+		review.setAcademyCode(academyCode);
 		
-		return "redirect:/review/listReview";
+		
+		return "redirect:/review/listReview?academyCode="+review.getAcademyCode();
 	}
 
 	@RequestMapping (value = "getReview" , method=RequestMethod.GET)
-	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model , HttpServletRequest httpRequest) throws Exception {
+	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model , HttpServletRequest request) throws Exception {
 		System.out.println("리뷰넘버 : "+reviewNo);
 		Review review = reviewService.getReview(reviewNo);
 		
-		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();  
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 		//String name = ((User)httpRequest.getSession().getAttribute("user")).getName();
+		String academyCode = request.getParameter("academyCode");
 		
 		model.addAttribute("review" , review);
 		model.addAttribute("userNo", userNo);
+		model.addAttribute("academyCode" , academyCode);
 		System.out.println(userNo);
 		System.out.println(review);
 		
@@ -121,27 +124,31 @@ public class ReviewController {
 		
 	}
 	
-	@RequestMapping (value="listReview" , method=RequestMethod.GET)
-	public String listReview( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	@RequestMapping (value="listReview")
+	public String listReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		if(search.getCurrentPage() ==0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		
+		String academyCode = request.getParameter("academyCode");
+		System.out.println("아카데미코드 : "+academyCode);
 		
-		Map<String, Object> map = acaService.academyConnect(academyCode);
 		
 		
+		//Map<String, Object> map = acaService.academyConnect(academy);
 		List<Review> list = reviewService.getReviewList(search);
 		
 		int totalCount = list.get(0).getTotalCount();
 		Page resultPage = new Page (search.getCurrentPage(),totalCount,pageUnit,pageSize);
 		
+		
 		model.addAttribute("list",list);
 		model.addAttribute("resultPage" , resultPage);
 		model.addAttribute("search",search);
-		model.addAttribute("connect" , map.get("connect"));
+		model.addAttribute("academyCode" , academyCode);
+		//model.addAttribute("connect" , map.get("connect"));
 		
 		System.err.println(list);
 		

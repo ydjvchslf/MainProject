@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class Review {
 	
-	private Academy academy;
 	private User reviewWriter;
 	
 	private int reviewNo;
@@ -16,13 +15,14 @@ public class Review {
 	private String reviewContent;
 	private Date reviewDate;
 	private int totalCount;
+	private String academyCode;
 	
 	
-	public Academy getAcademy() {
-		return academy;
+	public String getAcademyCode() {
+		return academyCode;
 	}
-	public void setAcademy(Academy academy) {
-		this.academy = academy;
+	public void setAcademyCode(String academyCode) {
+		this.academyCode = academyCode;
 	}
 	public User getReviewWriter() {
 		return reviewWriter;
@@ -68,7 +68,7 @@ public class Review {
 	}
 	@Override
 	public String toString() {
-		return "Review [academy=" + academy + ", reviewWriter=" + reviewWriter + ", reviewNo=" + reviewNo
+		return "Review [academyCode=" + academyCode + ", reviewWriter=" + reviewWriter + ", reviewNo=" + reviewNo
 				+ ", reviewState=" + reviewState + ", reviewTitle=" + reviewTitle + ", reviewContent=" + reviewContent
 				+ ", reviewDate=" + reviewDate + ", totalCount=" + totalCount + "]////";
 	}
