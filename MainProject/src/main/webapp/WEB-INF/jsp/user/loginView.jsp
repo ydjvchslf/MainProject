@@ -350,6 +350,8 @@
 							<div id="naverIdLogin" align="center">
 							   <img src="https://static.nid.naver.com/oauth/big_g.PNG" width="80%" height="45"/>
 							</div>
+							<!-- 인증하기 test 추가 -->
+							<span><a href="authority">인증하기</a></span>
 						</form>
 						
 							

@@ -30,7 +30,8 @@
 		   	$("form").attr("method", "POST").attr("action","/user/listUser").submit();	
 		};
 		
-		//너왜 안되는거야
+		
+		//엔터시 에러 해결 너왜 안되는거야
 		function enterEvent(){
 			if(window.event.keyCode == 13){
 				alert("엔터")
@@ -49,17 +50,6 @@
 			 
 		});
 		
-		//모든 쿠키 삭제 함수
-		 function deleteAllCookies() {
-			    var cookies = document.cookie.split(";");
-
-			    for (var i = 0; i < cookies.length; i++) {
-			        var cookie = cookies[i];
-			        var eqPos = cookie.indexOf("=");
-			        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-			        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-			    }
-			}
 		
 		
 		
@@ -83,112 +73,103 @@
 			})
 			
 			
-			function deleteAllCookies() {
-			    var cookies = document.cookie.split(";");
-
-			    for (var i = 0; i < cookies.length; i++) {
-			        var cookie = cookies[i];
-			        var eqPos = cookie.indexOf("=");
-			        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-			        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-			    }
-			}
 			
 			
-			//=========로그아웃 테스트 중 =============
-			$(function() {	
-				
-				 $('input[name=allLogout]').on("click" , function() {
+			
+		//=========로그아웃 테스트 중 =============
+		$(function() {	
+			
+			 $('input[name=allLogout]').on("click" , function() {
+				 
+				 let x = document.cookie;
+				 
+				 const words = x.split("; ");
+				 
+				 var loginType = "";
+				 
+				 for(var i=0; i < words.length; i++ ){
 					 
-					 let x = document.cookie;
+					if( words[i].split("=")[0] === "loginType" ){
+						 console.log( words[i].split("=")[1] )
+						 loginType = words[i].split("=")[1];
+					}
+				 }
+				 
+				 if(loginType == "kakao"){
 					 
-					 const words = x.split("; ");
-					 
-					 var loginType = "";
-					 
-					 for(var i=0; i < words.length; i++ ){
-						 
-						if( words[i].split("=")[0] === "loginType" ){
-							 console.log( words[i].split("=")[1] )
-							 loginType = words[i].split("=")[1];
+					 alert("카카오 로그아웃!")
+					 if (!Kakao.Auth.getAccessToken()) {
+						  console.log('Not logged in.');
+						  return;
 						}
-					 }
 					 
-					 if(loginType == "kakao"){
-						 
-						 alert("카카오 로그아웃!")
-						 if (!Kakao.Auth.getAccessToken()) {
-							  console.log('Not logged in.');
-							  return;
-							}
-						 
-							 Kakao.API.request({
-							  url: '/v1/user/unlink',
-							  success: function(response) {
-							    console.log(response);
-							    
-							    self.location = "/"
-							  },
-							  fail: function(error) {
-							    console.log(error);
-							  },
-							});
-						 
-						 
-							Kakao.Auth.logout(function() {
-							  console.log(Kakao.Auth.getAccessToken());
+						 Kakao.API.request({
+						  url: '/v1/user/unlink',
+						  success: function(response) {
+						    console.log(response);
+						    
+						    self.location = "/"
+						  },
+						  fail: function(error) {
+						    console.log(error);
+						  },
+						});
+					 
+					 
+						Kakao.Auth.logout(function() {
+						  console.log(Kakao.Auth.getAccessToken());
+						  
+						  if(Kakao.Auth.getAccessToken()){
+							  alert('로그아웃실패');
+						  }else{
 							  
-							  if(Kakao.Auth.getAccessToken()){
-								  alert('로그아웃실패');
-							  }else{
-								  
-							  }
-							 
-							});
-							
+						  }
 						 
-						 
-					 }else if(loginType == "naver"){
-						 
-						 alert("네이버 로그아웃!")
-						 
-						 //sessionStorage.clear();
-						 //localStorage.clear();
-						 //deleteAllCookies();
-						 
-						 var accessToken = localStorage.getItem("com.naver.nid.access_token")
-						 
-						 //console.log(accessToken)
-						 
-						 var tokenArray = accessToken.split(".");
-						 
-						 //console.log(tokenArray)
-						 
-						 var finalToken = tokenArray[1]
-						 
-						console.log(finalToken)
+						});
 						
-						sessionStorage.clear();
+					 
+					 
+				 }else if(loginType == "naver"){
+					 
+					 alert("네이버 로그아웃!")
+					 
+					 //sessionStorage.clear();
+					 //localStorage.clear();
+					 //deleteAllCookies();
+					 
+					 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+					 
+					 //console.log(accessToken)
+					 
+					 var tokenArray = accessToken.split(".");
+					 
+					 //console.log(tokenArray)
+					 
+					 var finalToken = tokenArray[1]
+					 
+					console.log(finalToken)
+					
+					sessionStorage.clear();
+					 
+					 //네이버 토큰삭제 요청
+					 $.ajax({
 						 
-						 //네이버 토큰삭제 요청
-						 $.ajax({
-							 
-							 crossOrigin : true,
-			                 
-			            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&access_token="+finalToken+"&service_provider=NAVER",
-			            	  
-			            	  dataType: "json",	  
-			            			  
-			                  headers : {
-			                      "Accept" : "application/json",
-			                      "Content-Type" : "application/json"
-			                    },
-			                    success : function(JSONData, status){
-		                        	console.log("로그아웃좀 되라...");
-		                        	self.location = "/";
-			                        
-			                    }
-			              })
+						 crossOrigin : true,
+		                 
+		            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&access_token="+finalToken+"&service_provider=NAVER",
+		            	  
+		            	  dataType: "json",	  
+		            			  
+		                  headers : {
+		                      "Accept" : "application/json",
+		                      "Content-Type" : "application/json"
+		                    },
+		                    success : function(JSONData, status){
+	                        	console.log("로그아웃좀 되라...");
+	                        	self.location = "/";
+		                        
+		                    }
+		              })
 			              
 			            
 						 

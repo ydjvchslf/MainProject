@@ -13,9 +13,11 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesom e/5.8.2/css/all.min.css"/>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
+
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	
@@ -171,12 +173,14 @@
 	
 		var emailDuplicationCheck = false;
 		
+		var checkVaild = false;
+		
 		//가입버튼 눌렀을때 모든 true 값 체크 메서드
 		function fncCheckAll() {
 			
 			var valid = false;
 			
-			if( checkEmail() && fncCheckPw() && fncCheckName() && fncCheckPhone ){
+			if( checkEmail() && fncCheckPw() && fncCheckName() && fncCheckPhone() && checkVaild ){
 				valid = true;
 			}
 			
@@ -208,6 +212,12 @@
 			//이름 변화 event
 			$("#phone").on("change", events.change.phone);
 			
+			//인증번호 발송 event
+			$( "button[name='send_sms']" ).on("click" , events.click.phoneBtn);
+			
+			//인증번호 확인 event
+			$( "button[name='check_sms']" ).on("click" , events.click.vaildBtn);
+			
 			
 		});	
 		
@@ -217,10 +227,11 @@
 		var events = {
 				
 			click : {
+				
 				signup : function() {
 					//alert("11111")
 					if(fncCheckAll()){
-						//alert("222222")
+						alert("가입성공~~~!!!")
 						fncAddUser();
 					}
 					
@@ -228,7 +239,22 @@
 				
 				cancel : function() {
 					$("form[name='signupForm']").trigger("reset");
+				},
+				
+				
+				phoneBtn : function() {
+					alert("인증번호발송 클릭")
+					fncAuth();
+					
+				},
+				
+				vaildBtn : function() {
+					alert("인증확인 클릭")
+					fncKey();
+					
 				}
+				
+				
 			},
 		
 			change : {
@@ -353,9 +379,6 @@
 	    		var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
 	    		
 	    		if(regExp.test(phone)){
-	    			
-	    			$(".text_phone").text("올바른 휴대폰 형식입니다.");
-					$(".text_phone").css("color", "blue");
 					
 					return true;
 					
@@ -381,10 +404,9 @@
 			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
 		}
 		
+		//휴대전화번호 자동 대시 입력
+		$(document).on("keyup", "#phone", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
 
-		
-
-		
 		
 		
 		 
@@ -464,6 +486,65 @@
 			return false;
 		}
 		
+		
+		
+		//인증번호 발송 함수
+		function fncAuth(){					
+			
+			var phone = $("#phone").val()
+			alert("입력한 연락처 : "+phone);
+			
+			$.ajax({
+					url : "/user/json/sms/"+phone ,
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : 
+							function(JSONData , status) {
+
+							//alert("status : "+status);
+							//alert("JSONData : \n"+JSONData);
+							//alert("JSONData : \n"+JSONData.key);
+							key = JSONData.key;
+							
+					}
+						
+			});	//End ajax
+		};
+		
+		
+		//인증확인 함수
+		//test 용, 나중에 실제에서는 지우기
+		
+		var key ="123456";
+		//var key = "";
+		
+		var vaildNum = $("#vaildNum").val();
+		
+		function fncKey() {	
+			
+			var vaildNum = $("#vaildNum").val();
+			
+			console.log("key : " +key)
+			
+			if( vaildNum == key ){
+				
+				$(".text_sms").text("인증번호가 맞습니다.");
+				$(".text_sms").css("color", "blue");
+				
+				checkVaild = true;
+				
+			}else{
+				
+				$(".text_sms").text("인증번호가 맞지 않습니다.");
+				$(".text_sms").css("color", "red");
+			
+			}		
+		}		
+		
 
 			
 		 </script>	
@@ -538,13 +619,27 @@
 
                 <!-- MOBILE -->
                 <div>
-                    <h3 class="join_title"><label for="phoneNo">휴대전화 ( - 포함)</label></h3>
+                    <h3 class="join_title"><label for="phoneNo">휴대전화번호</label></h3>
                     <span class="box int_mobile">
                         <input type="text" id="phone" name="phone" placeholder="휴대전화번호" class="int" maxlength="16" placeholder="전화번호 입력">
+                    	<br>
+                    	<button name="send_sms" onclick="return false">인증번호발송</button>
                     </span>
                     <span class="text_phone"></span>    
                 </div>
-
+                
+                <br><br>
+                <div>
+	                <h3 class="join_title"><label for="vaild">인증번호 입력</label></h3>
+				    <span class="box int_mobile">
+				    	<input type="text" id="vaildNum" name="vaildNum" class="int" maxlength="16" placeholder="인증번호" >
+				    	<br>
+				    	<button name="check_sms" onclick="return false">인증확인</button>
+				    </span>
+					  <span class="text_sms"></span>
+			    </div>
+				
+				<br>
 
                 <!-- JOIN BTN-->
                 <div class="btn_area">

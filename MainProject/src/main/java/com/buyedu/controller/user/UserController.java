@@ -587,6 +587,16 @@ public class UserController {
 		return "/user/listConnect";
 	}
 	
+	
+	//인증용 test jsp 추후 삭제 예정
+	@RequestMapping( value="authority", method=RequestMethod.GET )
+	public String authority() throws Exception{
+	
+		System.out.println("/user/authority : GET");
+		
+		return "/user/authority";
+	}
+	
 
 	
 }
