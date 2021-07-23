@@ -59,7 +59,8 @@
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( ".btn:contains('뒤')" ).on("click" , function() {
 					 var reviewNo = $("div").find('button#back').val();
-						self.location = "/review/listReview"
+					 var academyCode=$("input[name='academyCode']").val();
+						self.location = "/review/listReview?academyCode="+academyCode
 					});
 			});
 		
@@ -133,7 +134,8 @@
 
 작성자 번호 : ${review.reviewWriter.userNo }
 유저넘버 : ${ userNo }
-
+학원코드 : ${academyCode }
+ <input type="hidden" name="academyCode" value="${academyCode}" /> 
 	 <div class="form-group">
 	
 	   <c:if test="${userNo eq review.reviewWriter.userNo }">
