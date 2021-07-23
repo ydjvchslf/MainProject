@@ -43,9 +43,12 @@
 		
 			function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/review/listReview").submit();
+			var academyCode=$("input[name='academyCode']").val();
+			$("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode="+academyCode).submit();
 			//$("form").submit();
 		}
+		
+		
 		
 		$(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -65,7 +68,7 @@
 		
 		function fncAddReviewView(){
 			
-			$("form").attr("method" , "GET").attr("action" , "/review/addReviewView").submit();
+			$("form").attr("method" , "POST").attr("action" , "/review/addReviewView").submit();
 		}
 	</script>
 
@@ -138,9 +141,8 @@
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" style="width:120px;">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>선택하세요.</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>작성자</option>
-						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>내용</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>작성자</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>내용</option>
 					</select>
 				  </div>
 				  
@@ -164,7 +166,7 @@
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
 		
-		
+	
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover table-striped" >
       
@@ -177,6 +179,8 @@
             
         </thead>
        
+   
+       
 		<tbody>
 		
 		  <c:set var="i" value="${resultPage.totalCount }" />
@@ -185,8 +189,8 @@
 			<tr>
 			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
 		
-	
-		<td id="listtable" align="left"><a href="/review/getReview?reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
+
+		<td id="listtable" align="left"><a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode}">${review.reviewTitle}</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${review.reviewWriter.name}</td>
@@ -202,11 +206,10 @@
 	 
 	 회원번호 ${user.userNo} 
 	 학원코드	${connect.academyCode}
-	 학원코드1 ${academy.academy }
-	 학원코드2 ${academy.academyCode}
+	 학원코드1 ${academyCode }
 	 
 	  
-	  
+	 <input type="hidden" name="academyCode" value="${academyCode}" /> 
 	  <div class="form-group">
 	  	<c:if test="${user.role eq 'student' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
@@ -217,7 +220,7 @@
 		<c:if test="${user.role eq 'parents' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
-		      <a href="/review/addReviewView" >글쓰기</a></button>
+		      <a href="/review/addReviewView?academyCode=${academyCode }" >글쓰기</a></button>
 		</c:if>
 		    </div>
 		</div>

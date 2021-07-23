@@ -223,7 +223,7 @@
 			  <td align="left">ÃßÃµ</td>
 		
 	
-		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.COMMENT_COUNT }</span>)</a></td>
+		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${board.EMAIL}</td>

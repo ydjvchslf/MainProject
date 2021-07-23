@@ -9,7 +9,7 @@
  	
 	<resultMap id="reviewSelectMap" type="review">
 		<result property="reviewNo" 			column="review_no" 			jdbcType="NUMERIC"/>
-		<result property="academy.academyCode"  column="academy_code" 		jdbcType="VARCHAR"/>
+		<result property="academyCode" 		    column="academy_code" 		jdbcType="VARCHAR"/>
 		<result property="reviewWriter.userNo"	column="review_writer" 		jdbcType="NUMERIC" />
 		<result property="reviewWriter.name"	column="name" 				jdbcType="VARCHAR" />
 		<result property="reviewState" 			column="review_state" 		jdbcType="CHAR" />
@@ -23,7 +23,7 @@
 	<insert 	id="addReview"		parameterType="review" >
 	 INSERT
 		INTO review (review_no, academy_code , review_writer, review_title, review_content, review_date)
-		VALUES ( seq_review_review_no.nextval , #{academy.academyCode} , #{reviewWriter.userNo} , #{reviewTitle} , #{reviewContent} ,
+		VALUES ( seq_review_review_no.nextval , #{academyCode} , #{reviewWriter.userNo} , #{reviewTitle} , #{reviewContent} ,
 				SYSDATE )
 	 </insert>
 	 
@@ -31,7 +31,7 @@
 	 <select 	id="getReview"	parameterType="int"	resultMap="reviewSelectMap">
 	SELECT
 		r.review_no ,
-        a.academy_code ,
+        a.academy_code academy_code,
 		u.user_no review_writer ,
 		u.name ,
 		r.review_title ,
@@ -76,16 +76,12 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.name , r.review_date
 											FROM review r, users u , academy a
-											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code 
+											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code AND r.academy_code = '${academyCode}'
 											<if test="searchCondition != null">
-												
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				and r.review_title like '%${searchKeyword}%'
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
 										 				and u.name like '%${searchKeyword}%'
 													</if>
-													<if test="searchCondition == 2 and serachKeyword !='' ">
+													<if test="searchCondition == 1 and serachKeyword !='' ">
 														and r.review_content like '%${searchKeyword}%'
 													</if>
 												
@@ -108,18 +104,15 @@
 <!-- 	SQL : SELECT ROW Count	 --> 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT r.review_title , r.review_content , u.name , r.review_date
-						FROM review r , users u
-						WHERE r.review_writer = u.user_no
+	  	FROM(	SELECT r.review_title , r.review_content , u.name , r.review_date , a.academy_code 
+						FROM review r , users u , academy a
+						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND r.academy_code = '${academyCode}'
 						<if test="searchCondition != null">
 							
 								<if test="searchCondition == 0 and searchKeyword !='' ">
 									and review_title like '%${searchKeyword}%'
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-									and review_content like '%${searchKeyword}%'
-								</if>
-								<if test="searchCondition == 2 and serachKeyword !='' ">
 									and review_content like '%${searchKeyword}%'
 								</if>							
 							

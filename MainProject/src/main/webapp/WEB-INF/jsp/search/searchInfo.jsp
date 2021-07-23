@@ -102,7 +102,7 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">${academy.academyName }</h1>
-                        <a href="http://localhost:3000/chat.html?username=${user.email}&room=${academy.academyName}">채팅</a>
+                        <a href="https://academy-chat.herokuapp.com/chat.html?username=${user.email}&room=${academy.academyName}">채팅</a>
 
                         <div class="card mb-4">
                             <div class="card-header">

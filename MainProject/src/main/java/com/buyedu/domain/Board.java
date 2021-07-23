@@ -19,6 +19,7 @@ public class Board {
 	private int viewCnt;
 	private String email;
 	private String pin;
+	private String acaWriter;
 
 	private int commentNo;
 	private String commentContent;
@@ -72,6 +73,14 @@ public class Board {
 
 	public void setBoardWriter(int boardWriter) {
 		this.boardWriter = boardWriter;
+	}
+	
+	public String getAcaWriter() {
+		return acaWriter;
+	}
+
+	public void setAcaWriter(String acaWriter) {
+		this.acaWriter = acaWriter;
 	}
 
 	public String getBoardImage() {
@@ -216,11 +225,11 @@ public class Board {
 		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", boardDate=" + boardDate + ", boardWriter=" + boardWriter + ", boardImage=" + boardImage
 				+ ", boardState=" + boardState + ", cateCode=" + cateCode + ", viewCnt=" + viewCnt + ", email=" + email
-				+ ", pin=" + pin + ", commentNo=" + commentNo + ", commentContent=" + commentContent
-				+ ", commentWriter=" + commentWriter + ", commentStateCode=" + commentStateCode + ", commentDate="
-				+ commentDate + ", comment_cnt=" + comment_cnt + ", recommendNo=" + recommendNo + ", recommender="
-				+ recommender + ", recommendCnt=" + recommendCnt + ", reCnt=" + reCnt + ", totalCount=" + totalCount
-				+ "]";
+				+ ", pin=" + pin + ", acaWriter=" + acaWriter + ", commentNo=" + commentNo + ", commentContent="
+				+ commentContent + ", commentWriter=" + commentWriter + ", commentStateCode=" + commentStateCode
+				+ ", commentDate=" + commentDate + ", comment_cnt=" + comment_cnt + ", recommendNo=" + recommendNo
+				+ ", recommender=" + recommender + ", recommendCnt=" + recommendCnt + ", reCnt=" + reCnt
+				+ ", totalCount=" + totalCount + "]";
 	}
 
 	

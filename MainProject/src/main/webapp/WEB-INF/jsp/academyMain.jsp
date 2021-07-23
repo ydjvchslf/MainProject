@@ -151,7 +151,7 @@
         <script>
         
         var userno = '${user.userNo}';
-       
+        var role = '${user.role}';
         
         function academyList(){
         	$.ajax({

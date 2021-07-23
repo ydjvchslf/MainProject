@@ -97,15 +97,24 @@ function fncAddReview(){
 		<h3 style="text-align:center;">후기작성</h3> 
 		</div>
 	<br/><br/>
-	
+	학원코드 : ${academy }
+	학원코드 : ${ academyCode}
+
 	<div class="container-fluid">
 	<form class="form-horizontal">
 	<input type="hidden" name="cateName" id="cateName" value="" />
 		
-	 	<div id="addbrdview" class="form-group">
+	 	<div id="reviewTitle" class="form-group">
 		    <label for="boardTitle" class="col-sm-offset-1 col-sm-1 control-label">제목</label>
 		    <div class="col-sm-8">
 		      <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" placeholder="제목">
+		    </div>
+		</div>
+		
+			 	<div id="academyCode" class="form-group">
+		    <label for="academyCode" class="col-sm-offset-1 col-sm-1 control-label">학원코드</label>
+		    <div class="col-sm-8">
+		      <input type="text" class="form-control" id="academyCode" name="academyCode" value="${academyCode}" readonly>
 		    </div>
 		</div>
 

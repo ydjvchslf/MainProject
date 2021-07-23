@@ -136,6 +136,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			map.put("boardNo", boardNo);
 			map.put("userNo", userNo);
 			
+			
 			int boardLike = boardService.getRecommend(map);
 	        System.out.println("쪼아용"+boardLike);
 	        model.addAttribute("heart",boardLike);
@@ -193,7 +194,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println("/board/listBoard : GET / POST");
 			System.err.println("keyword : " +search.getSearchKeyword());
 			System.err.println("condition : " +search.getSearchConditionb());
-			
 			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
 			
 			String category = request.getParameter("cateCode"); // 게시판 종류
@@ -219,6 +219,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println(resultPage);
 			
 			board.setCateCode(category);
+			List<Map<String, Object>> commentMap= boardService.listComment(board.getBoardNo());
+			int commentCount = boardService.commentCount(board.getBoardNo());
+			if(commentMap.size()!=0) {
+				commentMap.get(0).put("commentCount", commentCount);}
+			System.out.println("list컨트롤러 comment_cnt :"+commentMap);
 			List<Map<String, Object>> map= boardService.getBoardListPin(board); 
 			
 //			List<Board> list2 =boardService.getMyBoardList(search, userNo);
@@ -233,6 +238,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //			model.addAttribute("list2", list2);
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
+			model.addAttribute("commentMap", commentCount);
 //			model.addAttribute("category", category);
 			System.err.println(search.getEndRowNum());
 //

@@ -28,6 +28,8 @@ public class Search {
 	private int searchUserNo;
 	private String cateCode;
 	
+	private String academyCode;
+	
 	///Constructor
 	public Search() {
 	}
@@ -179,6 +181,14 @@ public class Search {
 
 	public void setSearchAcademyCode(String searchAcademyCode) {
 		this.searchAcademyCode = searchAcademyCode;
+	}
+
+	public String getAcademyCode() {
+		return academyCode;
+	}
+
+	public void setAcademyCode(String academyCode) {
+		this.academyCode = academyCode;
 	}
 
 	
