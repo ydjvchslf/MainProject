@@ -122,17 +122,19 @@ public class ReviewController {
 	}
 	
 	@RequestMapping (value="listReview" , method=RequestMethod.GET)
-	public String listReview( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		if(search.getCurrentPage() ==0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
 		
+		String academyCode = request.getParameter("academyCode");
+		System.out.println("아카데미코드 : "+academyCode);
 		
-		Map<String, Object> map = acaService.academyConnect(academyCode);
 		
 		
+		//Map<String, Object> map = acaService.academyConnect(academy);
 		List<Review> list = reviewService.getReviewList(search);
 		
 		int totalCount = list.get(0).getTotalCount();
@@ -141,7 +143,7 @@ public class ReviewController {
 		model.addAttribute("list",list);
 		model.addAttribute("resultPage" , resultPage);
 		model.addAttribute("search",search);
-		model.addAttribute("connect" , map.get("connect"));
+		//model.addAttribute("connect" , map.get("connect"));
 		
 		System.err.println(list);
 		

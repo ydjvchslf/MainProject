@@ -2,12 +2,16 @@ package com.buyedu.restcontroller.user;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +30,9 @@ import com.buyedu.domain.Sms;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.user.UserService;
+
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.api.SenderID;
 
 @RestController
 @RequestMapping("/user/*")
@@ -419,6 +426,79 @@ public class UserRestController {
 			}
 		
 		}
+	
+	
+	
+	// Cool SMS API_key 및 API_secret Number
+	String api_key = "NCS3PSWYVLVN1LAA";
+	String api_secret = "S1QJK5JKOTOWKIT2T6QFIDOPXNCRBPY7";
+	
+	Message message = new Message(api_key, api_secret);
+	SenderID senderID;
+	JSONObject result;
+	JSONArray result_array;
+	
+	HashMap<String, String> params = new HashMap<String, String>();
+	
+	
+	@GetMapping("json/sms/{phone}")
+	public HashMap sms( @PathVariable String phone ) throws Exception{
+	
+		System.out.println("/user/json/sms : GET");
+		
+		//인증번호 6자리 생성
+		try {
+	    	String[] array = new String[6];
+			String key = new String();
+			Random rd = new Random(); //랜덤 객체 생성
+			
+			for(int i=0; i<array.length; i++) {
+	            array[i] = Integer.toString(rd.nextInt(10));
+	            key += array[i];
+	        }
+	    
+		// 문자보내기(테스트시 발신, 수신 둘다 내 번호로 하기)
+		params.put("to", phone); // 수신번호
+		params.put("from", "01039239995"); // 발신번호
+		params.put("type", "SMS");
+		params.put("text", "[사!교육 본인확인] 본인인증 확인번호 ["+key+"]를 입력하세요"); // 문자전송
+		params.put("mode", "test");
+		params.put("key", key);
+		System.out.println("인증번호 6자리 : "+key);	// 인증번호 6자리 숫자가 key가 됨
+		result = message.send(params);
+		System.out.println((result.get("group_id")));;
+		
+		 // balance
+	      // result = message.balance();
+	      // System.out.println((result.get("cash")));
+	      
+	      // sent
+	      //params.clear();
+	      try {
+	        result = message.sent(params);
+	        System.out.println(result.get("data"));
+	      } catch (Exception e) {
+	        result = (JSONObject) JSONValue.parse(e.getMessage());
+	        System.out.println(result.get("code"));
+	        System.out.println("NoSuchMessage");
+	      }
+
+	      // status
+	      //result = message.getStatus(params);
+	      System.out.println(result.get("data"));
+
+	      // cancel
+	      params.put("mid", "MIDTEST");
+	      //result = message.cancel(params);
+	      //assertTrue(!result.isEmpty());
+	    } catch (Exception e) {
+	      //fail(e.toString());
+	    }
+	    System.out.println(result);
+	    System.out.println(params);
+	    return params;
+	  }
+		
 	
 	
 	
