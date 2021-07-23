@@ -42,7 +42,7 @@
 	<!-- SQL : SELECT ONE -->
 	 <select 	id="getEdu"	parameterType="String"	resultMap="eduSelectMap">
 		SELECT
-		edu_no, edu_academy_code, edu_user_no, edu_day, edu_name, edu_price, edu_teacher, edu_member, edu_intro,
+		edu_no, edu_academy_code, edu_academy_name, edu_user_no, edu_day, edu_name, edu_price, edu_teacher, edu_member, edu_intro,
 		edu_start_date, edu_end_date, edu_start_time, edu_end_time, edu_rest, edu_state, edu_grade, edu_subject, edu_date
 		FROM edu
 		WHERE edu_no = '${value}'
@@ -81,9 +81,13 @@
 	 <select  id="getEduList"  parameterType="Search"	resultMap="eduSelectMap">
 	  	SELECT distinct *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT e.edu_academy_code , e.edu_academy_name , e.edu_no, e.edu_name, e.edu_start_date , e.edu_price, e.edu_state, e.edu_rest
+	  					FROM		(	SELECT e.edu_academy_code , e.edu_academy_name , e.edu_no, 
+	  									e.edu_name, e.edu_start_date , e.edu_price, e.edu_state, e.edu_rest
 										FROM edu e
 										WHERE e.edu_academy_code = #{searchAcademyCode}
+										<if test="searchRoleByEdu == 'student' or searchRole == 'parents' ">
+											AND edu_state = '1'
+										</if>
 										<if test="searchCondition != null">
 												<if test="searchCondition == 0 and searchKeyword !='' and searchEduState != null">
 													AND edu_state = #{searchEduState} and edu_name LIKE '%${searchKeyword}%'
@@ -112,6 +116,9 @@
 	  	FROM( SELECT edu_name, edu_price 
 	  								FROM edu
 	  								WHERE edu_academy_code = #{searchAcademyCode}
+										<if test="searchRoleByEdu == 'student' or searchRole == 'parents' ">
+											AND edu_state = '1'
+										</if>
 	  									<if test="searchCondition != null">
 												<if test="searchCondition == 0 and searchKeyword !='' and searchEduState != null">
 													AND edu_state = #{searchEduState} and edu_name LIKE '%${searchKeyword}%'

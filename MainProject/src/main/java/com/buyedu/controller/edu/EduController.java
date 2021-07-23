@@ -130,7 +130,7 @@ public class EduController {
 	@RequestMapping( value="listEdu" )
 	public String listEdu( @ModelAttribute("search") Search search , 
 							@ModelAttribute("edu") Edu edu , Model model ,
-							@RequestParam("acaCode") String acaCode ) throws Exception{
+							@RequestParam("acaCode") String acaCode , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/edu/listEdu : GET / POST");
 		
@@ -138,6 +138,11 @@ public class EduController {
 			search.setCurrentPage(1);
 		}
 		
+		String role = ((User)request.getSession().getAttribute("user")).getRole();
+		
+		System.err.println(role);
+		
+		search.setSearchRoleByEdu(role);
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(acaCode);
 		
