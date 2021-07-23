@@ -1,6 +1,6 @@
 <%@page import="com.buyedu.domain.Board"%>
 <%@page import="com.buyedu.domain.User"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -28,23 +28,23 @@
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	<style>
-		.complainButton{
+		#complainButton{
 	      background-color:white;
-	      top:0px; right:-460px;
-	      position:absolute;
-	      z-index:3;
-	    }
-	    
-	    .updateButton{
-	      background-color:white;
-	      top:-15px; right:-980px;
+	      top:-90px; right:-20px;
 	      position:relative;
 	      z-index:3;
 	    }
 	    
-	    .deleteButton{
-	      background-color:white;
-	      top:-50px; right:-1050px;
+	    #updateButton{
+	      background-color:#E0CEFC;
+	      top:-15px; right:-480px;
+	      position:relative;
+	      z-index:3;
+	    }
+	    
+	    #deleteButton{
+	      background-color:#E0CEFC;
+	      top:-50px; right:-550px;
 	      position:relative;
 	      z-index:3;
 	    }
@@ -68,17 +68,23 @@
 		//============= 회원정보수정 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( ".btn:contains('삭')" ).on("click" , function() {
-				 var boardNo = $("div").find('button#delete').val();
-				 document.getElementById("cateCode").value = cateCode;
-					self.location = "/board/deleteBoard?boardNo="+boardNo
+			$( ".btn:contains('삭')" ).on("click" , function() {
+				if(confirm("삭제하시겠습니까?")==true){
+				 var boardNo = $("div").find('button#deleteButton').val();
+				 alert(boardNo)
+				 var cateCode=$("input[name='cateCode']").val();
+					self.location = "/board/deleteBoard?cateCode="+cateCode+"&boardNo="+boardNo
+				}else{
+					return false;
+				}
 				});
-		});
+			 });
+		
 		
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( ".btn:contains('수')" ).on("click" , function() {
-					 var boardNo = $("div").find('button#update').val();
+					 var boardNo = $("div").find('button#updateButton').val();
 						self.location = "/board/updateBoard?boardNo="+boardNo
 					});
 			});
@@ -119,6 +125,7 @@
 </head>
 
 <body>
+ <%@ include file="toolbar.jsp" %>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -137,9 +144,11 @@
 
 					<div class="info">
 						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.email}</span>
-						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> ${board.boardDate}</span>
+						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> 
+						<fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd KK:mm:ss"/></td></td></span>
 						&nbsp;&nbsp;<span id="count"><i class="glyphicon glyphicon-eye-open" ></i> ${board.viewCnt+1}</span>
 						&nbsp;&nbsp;<span id="recommendCnt"><i class="glyphicon glyphicon-heart" ></i> ${board.recommendCnt}</span>
+						
 					</div>
 					<hr>
 					<div id=boardContent>
@@ -199,27 +208,29 @@
 </script>
 
 <div class="form-group">
-		    
-		  <form class="getBoardForm">
-		 	 <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
-		    <div class="complainButton">
-		      <a href="/complain/addComlainBoard"><img src="/image/complain.png" class="coplainButton" id="complain" value="${board.boardNo}"></a>
+		
+		   <input type="hidden" name="cateCode" id="cateCode" value="${board.cateCode}" />
+		   
+		    <div class="complain" style="text-align: center;">
+		      <a href="/complain/addComplainBoard" class="btn success" id="complainButton" value="${board.boardNo}">
+		      <img src="/image/complain.png"/></a>
 		    </div>
+		    <hr></br>
 		    
-		 
-		  	  <c:set var="userNo" value='<%=((User)session.getAttribute("user")).getUserNo() %>' />
-		  	  <c:if test="${userNo eq board.boardWriter}">
-		      <div class="updateButton">
-		      <button class="btn success" id="update" value="${board.boardNo}">수 &nbsp;정</button>   
-		   	  </div>
 		    
-		    <div class="deleteButton">
-		      <button class="btn success" id="delete" value="${board.boardNo}">삭&nbsp;제
+		    
+		    <c:if test="${userNo eq board.boardWriter}">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button class="btn success" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   
+		   	</div>
+		    
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button class="btn success" id="deleteButton" value="${board.boardNo}">삭&nbsp;제
 			</div>
 			</c:if>
-		</form>  
+		</div>
 	</div>
-	<hr>
+	
 	
 	<%@ include file="getComment.jsp" %>
 	

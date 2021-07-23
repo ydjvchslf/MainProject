@@ -17,10 +17,16 @@ public interface BoardDao {
 	public Board getBoard(int boardNo) throws Exception;
 	
 	public List<Board> getBoardList(Search search) throws Exception;
+	
+//	public List<Board> getMyBoardList(Search search, int userNo) throws Exception;
+	
+	public List<Map<String, Object>> getBoardListPin(Board board) throws Exception;
 
 	public void updateBoard(Board board) throws Exception;
 	
 	public int getTotalCount(Search search) throws Exception;
+	
+//	public int getMyTotalCount(Search search, int userNo) throws Exception;
 	
 	public void deleteBoard(int boardNo) throws Exception;
 	
