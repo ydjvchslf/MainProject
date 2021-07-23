@@ -106,7 +106,7 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT r.review_title , r.review_content , u.name , r.review_date , a.academy_code 
 						FROM review r , users u , academy a
-						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code 
+						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND r.academy_code = '${academyCode}'
 						<if test="searchCondition != null">
 							
 								<if test="searchCondition == 0 and searchKeyword !='' ">
