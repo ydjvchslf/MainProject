@@ -29,18 +29,19 @@
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getReview"	parameterType="int"	resultMap="reviewSelectMap">
-		SELECT
+	SELECT
 		r.review_no ,
+        a.academy_code ,
 		u.user_no review_writer ,
 		u.name ,
 		r.review_title ,
 		r.review_content ,
 		r.review_date 
-		FROM review r , 
+		FROM academy a , review r , 
 		(SELECT
 		u.user_no , u.name
 		from users u)u
-		WHERE r.review_writer = u.user_no AND review_no = (#{value})
+		WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND review_no = (#{value})
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -74,8 +75,8 @@
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.name , r.review_date
-											FROM review r, users u
-											WHERE r.review_writer = u.user_no
+											FROM review r, users u , academy a
+											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code 
 											<if test="searchCondition != null">
 												
 													<if test="searchCondition == 0 and searchKeyword !='' ">
