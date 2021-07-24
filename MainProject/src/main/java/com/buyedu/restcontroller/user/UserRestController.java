@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.buyedu.domain.Academy;
 import com.buyedu.domain.Connect;
@@ -48,6 +49,22 @@ public class UserRestController {
 		System.out.println(this.getClass());
 	}
 	
+	
+	
+	@GetMapping("json/naver/logout/{token}") 
+	public String test(@PathVariable String token) {
+		System.out.println(token);
+		
+		String uri = "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+token;
+		//서버간 통신
+		RestTemplate rest= new RestTemplate();
+		
+		Map<String, Object> s = rest.getForObject(uri, Map.class);
+		
+	    System.out.println(s);
+	    
+	    return "gd";
+	}
 	
 	
 	//회원가입창 이메일 중복확인

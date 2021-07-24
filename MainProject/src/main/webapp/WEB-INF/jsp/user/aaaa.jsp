@@ -4,430 +4,322 @@
 
 
 <!DOCTYPE html>
-<html>
-	<head>
-	
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
-    </style>
-    
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script type="text/javascript">
-	
-		var emailDuplicationCheck = false;
-		
-		//가입버튼 눌렀을때 모든 true 값 체크 메서드
-		function fncCheckAll() {
-			
-			var valid = false;
-			
-			if( checkEmail() && fncCheckPw() && fncCheckName() && fncCheckPhone ){
-				valid = true;
-			}
-			
-			return valid;
-		}
-		
-	
-		
-		$(function() {
-			
-			//가입 event 연결
-			$( ".signup" ).on("click" , events.click.signup);
-			
-			//취소 event form 초기화
-			$('button[name="cancel"]').on("click" , events.click.cancel);
-			
-			//이메일칸 변화 event
-			$("input[name='email']").on("change" , events.change.email);
-			
-			//비밀번호1 변화 event
-			$('#password').on("change", events.change.password);
-			
-			//비밀번호2 변화 event
-			$('#password2').on("change", events.change.password2);
-			
-			//이름 변화 event
-			$("#name").on("change", events.change.name);
-			
-			//이름 변화 event
-			$("#phone").on("change", events.change.phone);
-			
-			
-		});	
-		
-		
-		
-		
-		var events = {
-				
-			click : {
-				signup : function() {
-					alert("11111")
-					if(fncCheckAll()){
-						alert("222222")
-						fncAddUser();
-					}
-					
-				},
-				
-				cancel : function() {
-					$("form[name='signupForm']").trigger("reset");
-				}
-			},
-		
-			change : {
-				
-				email : function() {
-					emailChange();
-				},
-				
-				password : function(){
-					fncCheckPw("first");
-				},
-				
-				password2 : function(){
-					fncCheckPw("second");
-				},
-				
-				name : function(){
-					fncCheckName();
-				},
-				
-				phone : function(){
-					fncCheckPhone();
-				}
-			}
-		}
-		
-		
-		
-		
-		
-		
-		function emailChange(){
-			
-			var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-			var email=$("input[name='email']").val();
-			
-			// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
-			if (email) {
-				
-				if(emailRegExp.test(email)){
-					fncCheckEmailDuplication();
-				}else{
-					$(".email_check").text("올바른 이메일 형식이 아닙니다.");
-					$(".email_check").css("color", "red");
-				}
-			
-			}else{
-				$(".email_check").text("이메일을 입력하세요.");
-				$(".email_check").css("color", "red");
-			}
-			
-		}
-		
-		
-	
-		//이메일유효성 함수
-	    function checkEmail() {
-			
-			var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
-			var email=$("input[name='email']").val();
-			
-			// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
-			if (email) {
-				
-				if(emailRegExp.test(email)){
-					
-					if(emailDuplicationCheck){
-						return true;
-					} else {
-						$(".email_check").text("중복된 이메일입니다.");
-						$(".email_check").css("color", "red");
-					}
-				} else {
-					$(".email_check").text("올바른 이메일 형식이 아닙니다.");
-					$(".email_check").css("color", "red");
-				}
-			} else {
-				$(".email_check").text("이메일을 입력하세요.");
-				$(".email_check").css("color", "red");
-			}
-			return false;
-	    }
-		
-		
-		
-		
-		
-		//이름 체크 함수
-	    function fncCheckName() {
-			
-			var name = $("#name").val();
-			
-	        if(name){
-	        	var nameRegExp = /^[가-힣]{2,20}$/;
-	        	
-	        	if(nameRegExp.test(name)){
-	        		$(".text_name").text("올바른 이름 형식입니다.");
-					$(".text_name").css("color", "blue");
-	        		return true;
-	        	}else{
-	        		$(".text_name").text("올바른 이름 형식이 아닙니다");
-					$(".text_name").css("color", "red");
-	        	}
-	        } else{
-	        	$(".text_name").text("이름을 필수로 입력하세요!");
-				$(".text_name").css("color", "red");
-	        }
-	        return false; //확인이 완료되었을 때
-	    }
-		
-		
-		
-	    
+<!-- Content Row -->
+<div class="row">
 
-		//핸드폰 체크 함수 
-	    function fncCheckPhone(){
-	    	
-	    	var phone = $("#phone").val();
-	    	
-	    	if(phone){
-	    		
-	    		var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
-	    		
-	    		if(regExp.test(phone)){
-	    			
-	    			$(".text_phone").text("올바른 휴대폰 형식입니다.");
-					$(".text_phone").css("color", "blue");
-					
-					return true;
-					
-	    		}else{
-	    			
-	    			$(".text_phone").text("올바르지 않은 휴대폰 형식입니다.");
-					$(".text_phone").css("color", "red");
-	    			
-	    		}
-	    	}else{
-	    		
-	    		$(".text_phone").text("휴대폰번호를 필수로 적어주세요!");
-				$(".text_phone").css("color", "red");
-	    		
-	    	}
-	    	return false;
-	    }
- 
-	
-		
-		//회원가입 버튼 함수
-		function fncAddUser() {
-			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
-		}
-		
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Earnings (Monthly)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Earnings (Annual)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		
-		
-		
-		 
-		//이메일 중복확인 함수 ajax
-		function fncCheckEmailDuplication() {
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                            </div>
+                            <div class="col">
+                                <div class="progress progress-sm mr-2">
+                                    <div class="progress-bar bg-info" role="progressbar"
+                                        style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                        aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-			var email = $("#email").val();
-			
-			$.ajax({
-				url : "/user/json/checkEmail/"+email,
-				method : "GET" ,
-				dataType : "json" ,
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},
-				success : function(JSONData, status) {
-					
-					console.log(JSONData)
-					//alert(JSONData);
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Pending Requests</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-					if (JSONData.result == 1) {
-						
-						emailDuplicationCheck = false;
-						$(".email_check").text("사용중인 이메일입니다.");
-						$(".email_check").css("color", "red");
-						
-					} else {
-						
-						emailDuplicationCheck = true;
-						$(".email_check").text("사용가능한 이메일입니다.");
-						$(".email_check").css("color", "blue");
-						
-					}
-				}
-			});
-				
-		}
-		
-		
-		
-		//첫번째,두번째 비밀번호 조건
-		
-		function fncCheckPw(passwordType){
-			var passwordTarget = passwordType == "first" ? "password" : "password2";
-			var passwordCompare = passwordType == "first" ? "password2" : "password";
-			
-			
-			var pw = $("#" + passwordTarget).val();
-			var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-			
-			console.log(pw);
-			
-			if(reg.test(pw)) {
-				
-				var pw2 = $("#" + passwordCompare).val();
-				
-				if( pw == pw2 ){
-					
-					$(".text_password").text("비밀번호가 일치합니다.");
-					$(".text_password").css("color", "blue");
-					
-					return true;
-					
-				}else{
-					
-					$(".text_password").text("비밀번호가 일치하지 않습니다.");
-					$(".text_password").css("color", "red");
-				}
-				
-			}else {
-				
-				var str = '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
-				$('.text_password').text(str).css("color", "red");
-				$("#password").focus();
-			}
-			return false;
-		}
-		
+<!-- Content Row -->
 
-			
-		 </script>	
-		
-    
-</head>
+<div class="row">
 
-<body>
+    <!-- Area Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
+    <!-- Pie Chart -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                </div>
+                <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-primary"></i> Direct
+                    </span>
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-success"></i> Social
+                    </span>
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-info"></i> Referral
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-   	<!-- ToolBar End /////////////////////////////////////-->
+<!-- Content Row -->
+<div class="row">
 
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-	
-		<h1 class="bg-primary text-center">회원가입 화면</h1>
-		
-		<!-- form Start /////////////////////////////////////-->
-		<form name="signupForm" class="form-horizontal">
-		
-		    <div class="form-group">
-			  <label for="role" class="col-sm-offset-1 col-sm-3 control-label">사용자역할</label>
-			    <div class="col-sm-4">
-				  	<label><input name="role" id="academy" name="academy" type="radio" value="academy">학원</label>
-				  	<label><input name="role" id="student" name="student" type="radio" checked value="student">학생</label>
-		            <label><input name="role" id="parents" name="parents" type="radio" value="parents">학부모</label>
-	             </div>
-		 	</div>
-			<!-- 일반회원가입 경로 -->
-		   <c:choose>
-			   <c:when test="${empty snsEmail}">
-			   		<div class="form-group">
-			  	   	  <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
-					  	<div class="col-sm-4">
-					  	   <input type="text" class="form-control" id="email" name="email" placeholder="ex) buyedu@co.kr">
-					       		<span id="helpBlock" class="help-block">
-					      			<strong class="email_check"></strong>
-					      		</span>
-					 	</div>
-					</div>
-			   </c:when>
-			   <c:otherwise> <!-- SNS 회원가입 경로 : ${snsEmail} 값이 있음-->
-			   		<div class="form-group">
-					  	<div class="col-sm-4">
-					  	   <input type="text" class="form-control" id="email" name="email" value="${snsEmail}">
-					 			<span id="helpBlock" class="help-block">
-					      			<strong class="email_check"></strong>
-					      		</span>
-					 	</div>
-					</div>
-			   </c:otherwise>
-		   </c:choose>
-		   
-		   
-			<div class="form-group">
-			   <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
-			    <div class="col-sm-4">
-			      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
-			    </div>
-			 </div>
-		  
-			 <div class="form-group">
-			   <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
-			    <div class="col-sm-4">
-			      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
-			     	<span id="helpBlock" class="help-block">
-			      	  <strong class="text_password"></strong>
-			      	</span>
-			  	</div>
-			  </div>
-		  
-			  <div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="name" name="name" placeholder="회원이름">
-				    <span id="helpBlock" class="help-block">
-				      <strong class="text_name"></strong>
-				    </span>
-			    </div>
-			  </div>
-		  
-			  <div class="form-group">
-			    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호( - 포함)</label>
-			     <div class="col-sm-4">
-			      <input type="text" class="form-control" id="phone" name="phone" placeholder="휴대전화번호">
-				     <span id="helpBlock" class="help-block">
-					      <strong class="text_phone"></strong>
-					  </span>
-			     </div> 
-			  </div>
-			  
-			  <div class="form-group">
-			    <div class="col-sm-offset-4  col-sm-4 text-center">
-			      <button type="button" class="signup">가&nbsp;입</button>
-			      <button type="button" name="cancel" class="cancel">취&nbsp;소</button>
-			    </div>
-			  </div>
-		    
-		  
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-		
- 	</div>
-	<!--  화면구성 div end /////////////////////////////////////-->
-	
-</body>
+    <!-- Content Column -->
+    <div class="col-lg-6 mb-4">
 
-</html>
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+            </div>
+            <div class="card-body">
+                <h4 class="small font-weight-bold">Server Migration <span
+                        class="float-right">20%</span></h4>
+                <div class="progress mb-4">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                        aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h4 class="small font-weight-bold">Sales Tracking <span
+                        class="float-right">40%</span></h4>
+                <div class="progress mb-4">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                        aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h4 class="small font-weight-bold">Customer Database <span
+                        class="float-right">60%</span></h4>
+                <div class="progress mb-4">
+                    <div class="progress-bar" role="progressbar" style="width: 60%"
+                        aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h4 class="small font-weight-bold">Payout Details <span
+                        class="float-right">80%</span></h4>
+                <div class="progress mb-4">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
+                        aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <h4 class="small font-weight-bold">Account Setup <span
+                        class="float-right">Complete!</span></h4>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                        aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Color System -->
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-primary text-white shadow">
+                    <div class="card-body">
+                        Primary
+                        <div class="text-white-50 small">#4e73df</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-success text-white shadow">
+                    <div class="card-body">
+                        Success
+                        <div class="text-white-50 small">#1cc88a</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-info text-white shadow">
+                    <div class="card-body">
+                        Info
+                        <div class="text-white-50 small">#36b9cc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-warning text-white shadow">
+                    <div class="card-body">
+                        Warning
+                        <div class="text-white-50 small">#f6c23e</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-danger text-white shadow">
+                    <div class="card-body">
+                        Danger
+                        <div class="text-white-50 small">#e74a3b</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-secondary text-white shadow">
+                    <div class="card-body">
+                        Secondary
+                        <div class="text-white-50 small">#858796</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-light text-black shadow">
+                    <div class="card-body">
+                        Light
+                        <div class="text-black-50 small">#f8f9fc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card bg-dark text-white shadow">
+                    <div class="card-body">
+                        Dark
+                        <div class="text-white-50 small">#5a5c69</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        <!-- Illustrations -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                        src="img/undraw_posting_photo.svg" alt="...">
+                </div>
+                <p>Add some quality, svg illustrations to your project courtesy of <a
+                        target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
+                    constantly updated collection of beautiful svg images that you can use
+                    completely free and without attribution!</p>
+                <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
+                    unDraw &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Approach -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+            </div>
+            <div class="card-body">
+                <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+                    CSS bloat and poor page performance. Custom CSS classes are used to create
+                    custom components and custom utility classes.</p>
+                <p class="mb-0">Before working with this theme, you should become familiar with the
+                    Bootstrap framework, especially the utility classes.</p>
+            </div>
+        </div>
+        
+        <jsp:include page="../common/pageNavigator_tiles.jsp"/>
+
+    </div>
+</div>

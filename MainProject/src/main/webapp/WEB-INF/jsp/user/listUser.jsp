@@ -34,13 +34,19 @@
 		//엔터시 에러 해결 너왜 안되는거야
 		function enterEvent(){
 			if(window.event.keyCode == 13){
-				alert("엔터")
+				//alert("엔터")
 				fncGetList(1);
 			}
 		}
 		
 		//검색버튼 클릭 event
 		$(function() {
+			
+			$('form[name="detailForm"] input[type="text"]').keydown(function() {
+				  if (event.keyCode === 13) {
+			    event.preventDefault();
+			  };
+			});
 			
 			Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
 			
@@ -407,8 +413,8 @@
 								  
 								  <div class="form-group">
 								    <label class="sr-only" for="searchKeyword">검색어</label>
-								    <input type="text" class="form-control" onkeyup="enterEvent()" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-								    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
+								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+								    			onkeyup="enterEvent()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 								  </div>
 								  
 								  <button type="button" class="btn btn-default">검색</button>
@@ -467,7 +473,7 @@
 				      
 				      </table>
 				      <input type="button" name="allLogout" value="로그아웃"></input>
-				      <jsp:include page="../common/pageNavigator_new.jsp"/>
+				      <jsp:include page="../common/pageNavigator_tiles.jsp"/>
                     </div>
                 </main>
             </div>

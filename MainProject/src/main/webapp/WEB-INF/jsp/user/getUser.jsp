@@ -12,12 +12,13 @@
         <meta name="author" content="" />
         <title>getUser</title>
         <link href="/css/styles.css" rel="stylesheet" />
+       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
-		
+		 <script src="../assets/demo/jquery.ajax-cross-origin.min.js"></script> 
 		
 		<script type="text/javascript">
 			
@@ -87,49 +88,25 @@
 							 
 							 
 						 }else if(loginType == "naver"){
-							 
-							 alert("네이버 로그아웃!")
-							 
-							 /*
-							 localStorage.removeItem('com.naver.nid.access_token');
-							 
-							 function Logout(){
-								 sessionStorage.clear();
-							 }
-							 
-							 //self.location = "/"
-							 
-							 */
-							 //ajax 로
-							 
 							 var accessToken = localStorage.getItem("com.naver.nid.access_token")
-							 
-							 //console.log(accessToken)
-							 
 							 var tokenArray = accessToken.split(".");
-							 
-							 //console.log(tokenArray)
-							 
 							 var finalToken = tokenArray[1]
 							 
-							 console.log(finalToken)
-							 //return
-							 
-								  $.ajax({
-				                 		
-									  crossOrigin : true,
-									  
-					            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+finalToken,
-					                  headers : {
-					                	  
-					                      "Accept" : "application/json",
-					                      "Content-Type" : "application/json"
-					                    },
-					                    success : function(JSONData, status){
-					                        alert("얍")
-					                    	console.log("결과->" +JSONData);
-					                        
-					                    }
+							  $.ajax({
+			                 		
+								  crossOrigin : true,
+								  contentType: "application/json",
+								  dataType : "json",
+								  
+				            	  url : "/user/naver/" + finalToken,
+				                  success : function(JSONData, status){
+				                  	console.log("결과->" +JSONData);
+				                        
+				                  }, error  : function (a,b,c) {
+				                  	console.log(a)
+				                  	alert("로그아웃 실패");
+				                  	
+				                  }
 				              })
 								
 						 }else{
