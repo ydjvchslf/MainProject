@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
@@ -36,8 +37,40 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
+	
+		function fncPurchaseEdu() {
 		
-		//============= 회원정보수정 Event  처리 =============	
+			var IMP = window.IMP; // 생략가능
+			IMP.init('iamport'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+				
+			IMP.request_pay({
+			    pg : 'inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name : '${edu.eduName}',
+			    amount : 100,
+			    buyer_email : '${user.email}',
+			    buyer_name : '${user.name}' ,
+			    buyer_tel : '${user.phone}',
+			    buyer_addr : '${edu.academy.academyAddr}',
+			    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			        var msg = '결제가 완료되었습니다.';
+			        var eduNo = ${edu.eduNo}
+			        var userNo = ${user.userNo}
+			        
+			        self.location = "/purchaseedu/addPurchaseEduUid?eduNo="+eduNo+"&userNo="+userNo+"&uid="+rsp.imp_uid
+			        		
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			    }
+			    alert(msg);
+			});
+		
+	};
+		
 		 $(function() {
 			 
 			$( ".btn:contains('수업정보수정')" ).on("click" , function() {
@@ -59,8 +92,7 @@
 			
 			$( ".btn:contains('수업구매')" ).on("click" , function() {
 				
-				var eduNo = ${edu.eduNo}
-				self.location = "/purchaseedu/addPurchaseEdu?eduNo="+eduNo
+				fncPurchaseEdu()
 			});
 			
 		});
@@ -116,9 +148,18 @@
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info">수업상세보기 화면</h3>
-	       <h5 class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-	       <h5 class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
+		
+			<div class="float-left">
+				 <h3 class=" text-info">수업상세보기 화면</h3>
+	      		 <h5 class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+	      		 <h2 class="text-right"> <strong> ${edu.academy.academyName} </strong> </h2>
+	      		 <h5 class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
+			</div>
+			
+			<div class="float-right">
+				 
+			</div>
+	       
 	    </div>
 	
 		<div class="row">
@@ -179,7 +220,9 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
+	  			<c:if test="${user.role == 'academy' }">
 	  			<button type="button" class="btn btn-primary">수업정보수정</button>
+	  			</c:if>
 	  			<button type="button" class="btn btn-primary">수업목록</button>
 	  			<button type="button" class="btn btn-primary">관심수업등록</button>
 	  			<button type="button" class="btn btn-primary">관심수업삭제</button>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.buyedu.domain.Academy;
 import com.buyedu.domain.Edu;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.Search;
@@ -64,12 +65,13 @@ public class EduController {
 	}
 	
 	@RequestMapping ( value = "addEdu", method=RequestMethod.POST )
-	public String addEdu( @ModelAttribute("edu") Edu edu, Model model, HttpServletRequest httpRequest ) throws Exception {
+	public String addEdu( @ModelAttribute("edu") Edu edu, 
+							@RequestParam("academyCode") String acaCode , Model model, HttpServletRequest httpRequest ) throws Exception {
 		
 		String userEmail = ((User)httpRequest.getSession().getAttribute("user")).getEmail();   
 		
 		edu.setUser( userService.getUser(userEmail));
-		edu.setAcademy( acaService.getAcademy( acaService.getAcademyCode( userService.getUser(userEmail).getUserNo() ) ) );
+		edu.setAcademy( acaService.getAcademy(acaCode) );
 		edu.setEduRest( edu.getEduMember() );
 		
 		if( edu.getEduState() == null ) {
@@ -128,7 +130,7 @@ public class EduController {
 	@RequestMapping( value="listEdu" )
 	public String listEdu( @ModelAttribute("search") Search search , 
 							@ModelAttribute("edu") Edu edu , Model model ,
-							@RequestParam("acaCode") String acaCode ) throws Exception{
+							@RequestParam("acaCode") String acaCode , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/edu/listEdu : GET / POST");
 		
@@ -136,6 +138,11 @@ public class EduController {
 			search.setCurrentPage(1);
 		}
 		
+		String role = ((User)request.getSession().getAttribute("user")).getRole();
+		
+		System.err.println(role);
+		
+		search.setSearchRoleByEdu(role);
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(acaCode);
 		
@@ -147,8 +154,6 @@ public class EduController {
 		
 		// Model 怨� View �곌껐
 		model.addAttribute("list", map.get("list"));
-		model.addAttribute("aca", map.get("list"));
-		System.out.println(map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		

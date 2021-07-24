@@ -73,8 +73,8 @@
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">관심 수업</a>
-                                    <a class="nav-link" href="#">구매 목록</a>
+                                    <a class="nav-link" href="/pickedu/listPickEdu">관심 수업</a>
+                                    <a class="nav-link" href="/purchaseedu/listPurchaseEdu">구매 목록</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">board</div>

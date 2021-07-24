@@ -36,7 +36,7 @@
 	
 	   function fncAddProduct(){
 	   
-	      $('form').attr("method", "POST").attr("action", "/edu/addEdu").submit();
+	      $('form').attr("method", "POST").attr("action", "/edu/addEdu?academyCode=${code}").submit();
 	   }
 	   
 	   $( function() {

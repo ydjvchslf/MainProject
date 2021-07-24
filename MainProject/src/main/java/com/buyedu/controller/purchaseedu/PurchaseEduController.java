@@ -107,7 +107,9 @@ public class PurchaseEduController {
 	}
 	
 	@RequestMapping ( "listPurchaseAcademy" )
-	public String listPurchaseAcademy( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listPurchaseAcademy( @ModelAttribute("search") Search search ,
+										@RequestParam("academyCode") String academyCode ,
+										Model model , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/purchase/listPurchaseAcademy : GET / POST");
 		
@@ -115,6 +117,7 @@ public class PurchaseEduController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		search.setSearchAcademyCode(academyCode);
 		
 		// Business logic 수행
 		Map<String , Object> map= eduService.getPurchaseAcademyList(search);

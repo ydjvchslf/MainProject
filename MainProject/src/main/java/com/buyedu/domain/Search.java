@@ -18,6 +18,7 @@ public class Search {
 	private int pageSize;
 	
 	private List<String> searchRole = new ArrayList<>();
+	private String searchRoleByEdu;
 	private List<String> searchAccountState = new ArrayList<>();
 	
 	private String searchEduState;
@@ -191,7 +192,13 @@ public class Search {
 		this.academyCode = academyCode;
 	}
 
-	
+	public String getSearchRoleByEdu() {
+		return searchRoleByEdu;
+	}
+
+	public void setSearchRoleByEdu(String searchRoleByEdu) {
+		this.searchRoleByEdu = searchRoleByEdu;
+	}
 
 	
 }

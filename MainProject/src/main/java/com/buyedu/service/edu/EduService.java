@@ -149,7 +149,7 @@ public class EduService {
 		
 		List<PurchaseEdu> list= purchaseDao.getPurchaseAcademyList(search);
 		System.err.println(list);
-		int totalCount = purchaseDao.getPurchaseEduTotalCount(search);
+		int totalCount = purchaseDao.getPurchaseAcademyTotalCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list );

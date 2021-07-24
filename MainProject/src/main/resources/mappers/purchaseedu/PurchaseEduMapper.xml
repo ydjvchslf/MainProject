@@ -68,7 +68,8 @@
 		SELECT distinct *
 	  		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  				FROM	( SELECT e.edu_no , e.edu_name , u.name , u.phone , pc.pay_date , e.edu_price , pc.pay_state
-						  		FROM edu e, academy a, users u, purchase_edu pc WHERE pc.purchase_user_no = u.user_no AND
+						  		FROM edu e, academy a, users u, purchase_edu pc 
+						  		WHERE pc.purchase_user_no = u.user_no AND pc.purchase_aca_code = #{searchAcademyCode} AND 
 							  	e.edu_academy_code = a.academy_code AND purchase_edu_no = e.edu_no ORDER BY edu_no ) inner_table
 					WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
@@ -78,8 +79,16 @@
   	SELECT COUNT(*)
   		FROM( SELECT pc.purchase_aca_code, a.academy_name , e.edu_name , e.edu_start_date , e.edu_price , pc.pay_date , e.edu_state
 						  FROM edu e, academy a, users u, purchase_edu pc WHERE pc.purchase_user_no = u.user_no AND
-						  e.edu_academy_code = a.academy_code AND purchase_edu_no = e.edu_no ORDER BY edu_no )
-	</select>	
+						  e.edu_academy_code = a.academy_code AND purchase_edu_no = e.edu_no )
+	</select>
+	
+	<select  id="getPurchaseAcademyTotalCount"  parameterType="search"	 resultType="int">
+  	SELECT COUNT(*)
+  		FROM( SELECT pc.purchase_aca_code, a.academy_name , e.edu_name , e.edu_start_date , e.edu_price , pc.pay_date , e.edu_state
+						  FROM edu e, academy a, users u, purchase_edu pc 
+						  WHERE pc.purchase_user_no = u.user_no AND pc.purchase_aca_code = #{searchAcademyCode} AND
+						  e.edu_academy_code = a.academy_code AND purchase_edu_no = e.edu_no )
+	</select>
 		
 	 
 
