@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
 		
 		var passwordDuplicationCheck = false;
 		
-		//¼öÁ¤ÇÏ±â ´­·¶À»¶§ ¸ğµç true °ª Ã¼Å© ¸Ş¼­µå
+		//ìˆ˜ì •í•˜ê¸° ëˆŒë €ì„ë•Œ ëª¨ë“  true ê°’ ì²´í¬ ë©”ì„œë“œ
 		function fncCheckAll() {
 			
 			var valid = false;
@@ -35,16 +35,16 @@
 		}
 		
 		
-		//event ÇÔ¼ö
+		//event í•¨ìˆ˜
 		$(function() {
 			
-			//¼öÁ¤ÇÏ±â event ¿¬°á
+			//ìˆ˜ì •í•˜ê¸° event ì—°ê²°
 			$( ".updatePw" ).on("click" , events.click.updatePw);
-			//ÇöÀçºñ¹Ğ¹øÈ£ º¯È­ event
+			//í˜„ì¬ë¹„ë°€ë²ˆí˜¸ ë³€í™” event
 			$("#password0").on("change" , events.change.password0);
-			//ºñ¹Ğ¹øÈ£1 º¯È­ event
+			//ë¹„ë°€ë²ˆí˜¸1 ë³€í™” event
 			$('#password').on("change", events.change.password);
-			//ºñ¹Ğ¹øÈ£2 º¯È­ event
+			//ë¹„ë°€ë²ˆí˜¸2 ë³€í™” event
 			$('#password2').on("change", events.change.password2);
 			
 		});
@@ -55,7 +55,7 @@
 			click : {
 				
 				updatePw : function() {
-					//alert("1Á¢±Ù")
+					//alert("1ì ‘ê·¼")
 					if(fncCheckAll()){
 						fncUpdatePassword();
 					}
@@ -65,17 +65,17 @@
 			change : {
 				
 				password0 : function() {
-					//alert("2Á¢±Ù")
+					//alert("2ì ‘ê·¼")
 					passwordChange();
 				},
 				
 				password : function(){
-					//alert("3Á¢±Ù")
+					//alert("3ì ‘ê·¼")
 					fncCheckPw("first");
 				},
 				
 				password2 : function(){
-					//alert("4Á¢±Ù")
+					//alert("4ì ‘ê·¼")
 					fncCheckPw("second");
 				}
 			
@@ -88,13 +88,13 @@
 			
 			var password = $("#password0").val();
 			
-			// null , undefined, "" ºó°ªÀ» false ·Î ÀÎ½Ä, ¸¸¾à °ªÀÌ ÀÖÀ¸¸é true 
+			// null , undefined, "" ë¹ˆê°’ì„ false ë¡œ ì¸ì‹, ë§Œì•½ ê°’ì´ ìˆìœ¼ë©´ true 
 			if (password) {
 				
 				fncCheckCurrentPassword();
 				
 			}else{
-				$(".password_check").text("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
+				$(".password_check").text("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
 				$(".password_check").css("color", "red");
 			}
 			
@@ -102,7 +102,7 @@
 		
 		
 		
-		//ºñ¹Ğ¹øÈ£ ¼öÁ¤ÇÏ±â ÇÔ¼ö
+		//ë¹„ë°€ë²ˆí˜¸ ìˆ˜ì •í•˜ê¸° í•¨ìˆ˜
 		function fncUpdatePassword() {
 					
 			$("form").attr("method" , "POST").attr("action" , "/user/updatePassword").submit();
@@ -111,7 +111,7 @@
 
 		
 		
-		//ÇöÀç ºñ¹Ğ¹øÈ£ ¸Â´ÂÁö È®ÀÎ ajax
+		//í˜„ì¬ ë¹„ë°€ë²ˆí˜¸ ë§ëŠ”ì§€ í™•ì¸ ajax
 		function fncCheckCurrentPassword() {
 			 
 			var email = $("#email").val();
@@ -135,20 +135,20 @@
 						},
 						success : function(JSONData, status) {
 							
-							//alert("¼º°ø!");
+							//alert("ì„±ê³µ!");
 	
 							if (JSONData.result == "no") {
-								console.log("ºñ¹ø NO");
+								console.log("ë¹„ë²ˆ NO");
 								
 								passwordDuplicationCheck = false;
-								$(".password_check").text("ºñ¹Ğ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù");
+								$(".password_check").text("ë¹„ë°€ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤");
 								$(".password_check").css("color", "red");
 								
 							} else if (JSONData.result == "ok") {
-								console.log("ºñ¹ø OK");
+								console.log("ë¹„ë²ˆ OK");
 								
 								passwordDuplicationCheck = true;
-								$(".password_check").text("ºñ¹Ğ¹øÈ£°¡ ¸Â½À´Ï´Ù");
+								$(".password_check").text("ë¹„ë°€ë²ˆí˜¸ê°€ ë§ìŠµë‹ˆë‹¤");
 								$(".password_check").css("color", "blue");
 							}
 						}
@@ -157,7 +157,7 @@
 		}
 		
 		
-		//Ã¹¹øÂ°,µÎ¹øÂ° ºñ¹Ğ¹øÈ£ Á¶°Ç ÇÔ¼ö
+		//ì²«ë²ˆì§¸,ë‘ë²ˆì§¸ ë¹„ë°€ë²ˆí˜¸ ì¡°ê±´ í•¨ìˆ˜
 		function fncCheckPw(passwordType){
 			
 			var passwordTarget = passwordType == "first" ? "password" : "password2";
@@ -175,20 +175,20 @@
 				
 				if( pw == pw2 ){
 					
-					$(".text_password").text("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù.");
+					$(".text_password").text("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.");
 					$(".text_password").css("color", "blue");
 					
 					return true;
 					
 				}else{
 					
-					$(".text_password").text("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+					$(".text_password").text("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					$(".text_password").css("color", "red");
 				}
 				
 			}else {
 				
-				var str = 'ºñ¹Ğ¹øÈ£´Â 8ÀÚ ÀÌ»óÀÌ¾î¾ß ÇÏ¸ç, ¼ıÀÚ/´ë¹®ÀÚ/¼Ò¹®ÀÚ/Æ¯¼ö¹®ÀÚ¸¦ ¸ğµÎ Æ÷ÇÔÇØ¾ß ÇÕ´Ï´Ù.';
+				var str = 'ë¹„ë°€ë²ˆí˜¸ëŠ” 8ì ì´ìƒì´ì–´ì•¼ í•˜ë©°, ìˆ«ì/ëŒ€ë¬¸ì/ì†Œë¬¸ì/íŠ¹ìˆ˜ë¬¸ìë¥¼ ëª¨ë‘ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.';
 				$('.text_password').text(str).css("color", "red");
 				$("#password").focus();
 			}
@@ -230,48 +230,48 @@
                             <div class="sb-sidenav-menu-heading">search</div>
                             <a class="nav-link" href="/academy/listSearch">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                ÇĞ¿ø°Ë»ö
+                                í•™ì›ê²€ìƒ‰
                             </a>
                             <div class="sb-sidenav-menu-heading">information</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                ³» Á¤º¸ °ü¸®
+                                ë‚´ ì •ë³´ ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/user/getUser?email=${user.email}">³» Á¤º¸ º¸±â</a>
-                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">ºñ¹Ğ¹øÈ£ º¯°æ</a>
-                                    <a class="nav-link" href="/user/outUser?email=${user.email}">Å»Åğ ÇÏ±â</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ ÈÄ±â</a>
-                                    <a class="nav-link" href="/user/listConnect">³»°¡ ´Ù´Ï´Â ÇĞ¿ø</a>
+                                    <a class="nav-link" href="/user/getUser?email=${user.email}">ë‚´ ì •ë³´ ë³´ê¸°</a>
+                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">ë¹„ë°€ë²ˆí˜¸ ë³€ê²½</a>
+                                    <a class="nav-link" href="/user/outUser?email=${user.email}">íƒˆí‡´ í•˜ê¸°</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ í›„ê¸°</a>
+                                    <a class="nav-link" href="/user/listConnect">ë‚´ê°€ ë‹¤ë‹ˆëŠ” í•™ì›</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                ³» ¼ö¾÷ °ü¸®
+                                ë‚´ ìˆ˜ì—… ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">°ü½É ¼ö¾÷</a>
-                                    <a class="nav-link" href="#">±¸¸Å ¸ñ·Ï</a>
+                                    <a class="nav-link" href="#">ê´€ì‹¬ ìˆ˜ì—…</a>
+                                    <a class="nav-link" href="#">êµ¬ë§¤ ëª©ë¡</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">board</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBoard" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                °Ô½ÃÆÇ
+                                ê²Œì‹œíŒ
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseBoard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#">°øÁö»çÇ×</a>
-                                	<a class="nav-link" href="#">QnA °Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="/board/listBoard">ÀÚÀ¯°Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="#">ÇĞ¿ø °øÁö»çÇ×</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ °Ô½Ã±Û</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ ´ñ±Û</a>
+                                	<a class="nav-link" href="#">ê³µì§€ì‚¬í•­</a>
+                                	<a class="nav-link" href="#">QnA ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="/board/listBoard">ììœ ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="#">í•™ì› ê³µì§€ì‚¬í•­</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œê¸€</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ëŒ“ê¸€</a>
                                 </nav>
                             </div>
                         </div>
@@ -279,16 +279,16 @@
 
                 </nav>
             </div>
-            <!-- ¿©±â°¡ °¡¿îµ¥ µé¾î°¥ È­¸é (¹Ù²î´Â °÷) -->
+            <!-- ì—¬ê¸°ê°€ ê°€ìš´ë° ë“¤ì–´ê°ˆ í™”ë©´ (ë°”ë€ŒëŠ” ê³³) -->
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
 				       <form class="form-horizontal">
 						  <div class="form-group">
 						  <input type="hidden" id="email" name="email" value="${user.email}">
-						    <label for="current" class="col-sm-offset-1 col-sm-3 control-label">ÇöÀç ºñ¹Ğ¹øÈ£</label>
+						    <label for="current" class="col-sm-offset-1 col-sm-3 control-label">í˜„ì¬ ë¹„ë°€ë²ˆí˜¸</label>
 						    <div class="col-sm-4">
-						      <input type="password" class="form-control" id="password0" name="password0" placeholder="ÇöÀç ºñ¹Ğ¹øÈ£">
+						      <input type="password" class="form-control" id="password0" name="password0" placeholder="í˜„ì¬ ë¹„ë°€ë²ˆí˜¸">
 						       <span id="helpBlock" class="help-block">
 						      	<strong class="password_check"></strong>
 						      </span>
@@ -296,16 +296,16 @@
 						  </div>
 						  
 						  <div class="form-group">
-						    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">»õ ºñ¹Ğ¹øÈ£</label>
+						    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ìƒˆ ë¹„ë°€ë²ˆí˜¸</label>
 						    <div class="col-sm-4">
-						      <input type="password" class="form-control" id="password" name="password" placeholder="»õ ºñ¹Ğ¹øÈ£" >
+						      <input type="password" class="form-control" id="password" name="password" placeholder="ìƒˆ ë¹„ë°€ë²ˆí˜¸" >
 						    </div>
 						  </div>
 						  
 						  <div class="form-group">
-						    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
+						    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
 						    <div class="col-sm-4">
-						      <input type="password" class="form-control" id="password2" name="password2" placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ">
+						      <input type="password" class="form-control" id="password2" name="password2" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸">
 						     	<span id="helpBlock" class="help-block">
 						      	  <strong class="text_password"></strong>
 						      	</span>
@@ -315,7 +315,7 @@
 						  
 						  <div class="form-group">
 						    <div class="col-sm-offset-4  col-sm-4 text-center">
-						      <button type="button" class="updatePw">¼öÁ¤ÇÏ±â</button>
+						      <button type="button" class="updatePw">ìˆ˜ì •í•˜ê¸°</button>
 						    </div>
 						  </div>
 						</form>
