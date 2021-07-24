@@ -49,6 +49,8 @@ public class UserController {
 	@Value("10")
 	int pageSize;
 	
+	
+	//Test용 
 	@RequestMapping( value="tiles", method=RequestMethod.GET )
 	public String test(Search search , Model model , HttpServletRequest request) throws Exception{
 		
@@ -89,7 +91,7 @@ public class UserController {
 		
 		System.out.println("listUser 끝");
 		
-		return "/tiles/user/aaaa";
+		return "/tiles/user/listUserTiles";
 	}
 	
 	
@@ -124,8 +126,10 @@ public class UserController {
 		
 		System.err.println(user);
 		
-		return "/user/getUser";
+		return "/user/getUserTiles";
 	}
+
+	
 	
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
