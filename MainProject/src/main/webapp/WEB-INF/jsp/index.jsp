@@ -4,103 +4,63 @@
 
 
 <!DOCTYPE html>
-
-<html > 
+<html>
     <head>
         <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>사!교육</title>
-        <link href="/css/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <title>Buy! Edu</title>
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;display=swap" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/main.css" rel="stylesheet" />
     </head>
-    <style>
-
-    .img {
-
-        height: 100vh;
-
-        background-image: url("image/mainImage.jpg");
-
-            background-repeat: no-repeat;
-
-            background-position: center;
-
-            background-size: cover;
-
-        background: url("image/mainImage.jpg") no-repeat center/cover;
-
-    }
-    
-    .img .addUserButton{
-     position: absolute;
-     top:50%;
-     left:50%;
-     transform: translate(-107%, 125%);                                                                   
-     font-size:5rem;
-     color: white;
-     z-index: 2;
-     text-align: center;
-}
-
-    .img .loginButton{
-     position: absolute;
-     top:50%;
-     left:50%;
-     transform: translate(7%, 125%);                                                                   
-     font-size:5rem;
-     color: white;
-     z-index: 2;
-     text-align: center;
-}
-
- 	.userMain{
- 	position: absolute;
-    top:10%;
-    left:83%;
-    font-size: 20px;
- 	}
- 	
- 	.academyMain{
- 	position: absolute;
-    top:10%;
-    left:90%;
-    font-size: 20px;
- 	}
- 	
- 	.adminMain{
- 	position: absolute;
-    top:10%;
-    left:95%;
-    font-size: 20px;
- 	}
-    
-
-</style>
-
-
-   <body>  
-   
-   	<span class="userMain"><a href="/main/userMain">학생,학부모</a></span>
-   	<span class="academyMain"><a href="/main/academyMain">원장님</a></span>
-    <span class="adminMain"><a href="/main/adminMain">관리자</a></span>
-   
-    <div class="img">
-        <div class="addUserButton">
-        <a href="/user/addUser">
-            <img src="image/addUserButton.jpg" width="300", height="100"></a>
+    <body >
+        <!-- Background Video-->
+        <video class="bg-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"><source src="assets/mp4/main.mp4" type="video/mp4" /></video>
+        <!-- Masthead-->
+        <div class="masthead">
+            <div class="masthead-content text-white" >
+                <div class="container-fluid px-4 px-lg-0" >
+                    <h1 class="fst-italic lh-1 mb-4"><a href="user/login" style="color:white">Buy! Edu</a></h1>
+                    <p class="mb-5">모든 학생들이 맞는 학원에서 맞는 교육을 듣기를 바랍니다.</p>
+                    <p class="mb-5">우리는 원장님은 강의에 전념하시고 학생들은 수업에 집중하는 것이 맞다고 생각합니다.</p>
+                    
+                </div>
+            </div>
         </div>
-        <div class="loginButton">
-        <a href="/user/login">
-            <img src="image/loginButton.jpg" width="300", height="100"></a>
+        <!-- Social Icons-->
+        <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
+        <div class="social-icons">
+            <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
+            	<div class="fw-bolder" style="color:white">Developer</div>
+            	<a class="btn btn-dark m-3" id="moon"><img class="image" alt="없음" src="/image/moon.jpg"></a>
+            	<a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/kim.png"></a>
+            	<a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/mk.jpg"></a>
+            	<a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/jenny.jpg"></a>
+                <a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/rea.jpg"></a>
+                <a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/jeawoo.jpg"></a>
+            </div>
         </div>
-        <div class="img-cover"></div>
-    </div>
-     
-    
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script type="text/javascript">
+        $(".btn.btn-dark").on("click",function(){
+        	alert("나중에 프로필 띄우기");
+        })
+        
+        </script>
+        
+        
     </body>
 </html>
-    
