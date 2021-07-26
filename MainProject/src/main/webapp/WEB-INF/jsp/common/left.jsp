@@ -18,7 +18,7 @@
 
 			<c:if test="${list.size()<=2}">
 				<li>
-					<a href="#">학원 등록</a>
+					<a href="/academy/addAcademyView">학원 등록</a>
 				</li>
 			</c:if> 
 			
@@ -36,9 +36,11 @@
 	          </li>
 	         </c:if> 
 	          
+	         <c:if test="${user.role != 'admin' }">
 	          <li>
 	              <a href="/user/getUser?email=${user.email}">내 정보</a>
 	          </li>
+	         </c:if> 
 	          
 	         <c:if test="${user.role != 'academy'}"> 
 	          <li>
