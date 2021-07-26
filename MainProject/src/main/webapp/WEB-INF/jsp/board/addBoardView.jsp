@@ -40,7 +40,7 @@ function fncAddBoard(){
 }
 </script>
 
-<style>
+<style> 
 	#addButton{
 	position : absolute;
 	top : 86%;
