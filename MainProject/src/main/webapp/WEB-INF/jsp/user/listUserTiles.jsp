@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 
 	<!-- JS 구간 /////////// 타겟 잘 바꿔주기! (템플릿꺼에서 추가는 가능, 수정은 불가)-->
