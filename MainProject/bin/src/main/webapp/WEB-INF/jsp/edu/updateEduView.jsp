@@ -62,13 +62,6 @@
 			   
 			   $('#eduEndDate').datepicker( { dateFormat : "yy-mm-dd" } );
 			   
-			   var eduState = ${edu.eduState}
-				
-				if(eduState==1) {
-					alert("판매중인 수업은 판매 대기중으로 변경이 불가능합니다.")
-					$("form")[0].reset();
-				}
-			   
 		})
 		
 		function fncUpdateEdu() {

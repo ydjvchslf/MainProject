@@ -28,8 +28,9 @@ public class Search {
 	
 	private int searchUserNo;
 	private String cateCode;
-	
+	private String isAcademy;
 	private String academyCode;
+	private String isMine;
 	
 	///Constructor
 	public Search() {
@@ -164,16 +165,33 @@ public class Search {
 	public void setCateCode(String cateCode) {
 		this.cateCode = cateCode;
 	}
+	
+	public String getIsMine() {
+		return isMine;
+	}
+
+	public void setIsMine(String isMine) {
+		this.isMine = isMine;
+	}
+	
+	public String getIsAcademy() {
+		return isAcademy;
+	}
+
+	public void setIsAcademy(String isAcademy) {
+		this.isAcademy = isAcademy;
+	}
 
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchConditionb="
 				+ searchConditionb + ", searchKeyword=" + searchKeyword + ", searchAcademyName=" + searchAcademyName
-				+ ", searchAcademyAddr=" + searchAcademyAddr + ", searchAcademyGrade=" + searchAcademyGrade
-				+ ", searchAcademySubject=" + searchAcademySubject + ", pageSize=" + pageSize + ", searchRole="
-				+ searchRole + ", searchAccountState=" + searchAccountState + ", searchEduState=" + searchEduState
-				+ ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum + ", searchUserNo=" + searchUserNo
-				+ ", cateCode=" + cateCode + "]";
+				+ ", searchAcademyCode=" + searchAcademyCode + ", searchAcademyAddr=" + searchAcademyAddr
+				+ ", searchAcademyGrade=" + searchAcademyGrade + ", searchAcademySubject=" + searchAcademySubject
+				+ ", pageSize=" + pageSize + ", searchRole=" + searchRole + ", searchAccountState=" + searchAccountState
+				+ ", searchEduState=" + searchEduState + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
+				+ ", searchUserNo=" + searchUserNo + ", cateCode=" + cateCode + ", isAcademy=" + isAcademy
+				+ ", academyCode=" + academyCode + ", isMine=" + isMine + "]";
 	}
 
 	public String getSearchAcademyCode() {

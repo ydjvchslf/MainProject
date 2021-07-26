@@ -18,105 +18,183 @@
 		</script>
 		
 		<script type="text/javascript">	
+		
+		
+		var passwordDuplicationCheck = false;
+		
+		//수정하기 눌렀을때 모든 true 값 체크 메서드
+		function fncCheckAll() {
 			
-			$( function() {
-				$("a[href='#' ]:contains('비밀번호변경')").on("click" , function() {
-					self.location = "/user/updatePassword?email=${user.email}"
-				});
-			});		
+			var valid = false;
 			
-			$( function() {
-				fncCheckPassword();
-			});
+			if( fncCheckPw() ){
+				valid = true;
+			}
 			
+			return valid;
+		}
+		
+		
+		//event 함수
+		$(function() {
 			
-			//현재 비밀번호 맞는지 확인
-			function fncCheckPassword() {
-				 
-				$("#password0").blur(function(){
-					
-					var email = $("#email").val();
-					var password = $("#password0").val();
-					
-					console.log(email);
-					console.log(password);
+			//수정하기 event 연결
+			$( ".updatePw" ).on("click" , events.click.updatePw);
+			//현재비밀번호 변화 event
+			$("#password0").on("change" , events.change.password0);
+			//비밀번호1 변화 event
+			$('#password').on("change", events.change.password);
+			//비밀번호2 변화 event
+			$('#password2').on("change", events.change.password2);
+			
+		});
+		
+		
+		var events = {
 				
-					$.ajax( 
-							{
-								url : "/user/json/checkPassword",
-								method : "POST" ,
-								data : JSON.stringify({
-									email : email,
-									password: password,
-								}),
-								dataType : "json" ,
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-								success : function(JSONData, status) {
-									
-									//alert("성공!");
-	
-									if (JSONData.result == "no") {
-										console.log("비번 NO");
-										$(".password_check").text("비밀번호가 맞지 않습니다");
-										$(".password_check").css("color", "red");
-										
-									} else if (JSONData.result == "ok") {
-										console.log("비번 OK");
-										$(".password_check").text("비밀번호가 맞습니다");
-										$(".password_check").css("color", "blue");
-									}
-									
-								}
-					});
+			click : {
+				
+				updatePw : function() {
+					//alert("1접근")
+					if(fncCheckAll()){
+						fncUpdatePassword();
+					}
+				}
+			},
+			
+			change : {
+				
+				password0 : function() {
+					//alert("2접근")
+					passwordChange();
+				},
+				
+				password : function(){
+					//alert("3접근")
+					fncCheckPw("first");
+				},
+				
+				password2 : function(){
+					//alert("4접근")
+					fncCheckPw("second");
+				}
+			
+			}
+		}
+		
+		
+		
+		function passwordChange() {
+			
+			var password = $("#password0").val();
+			
+			// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
+			if (password) {
+				
+				fncCheckCurrentPassword();
+				
+			}else{
+				$(".password_check").text("비밀번호를 입력하세요.");
+				$(".password_check").css("color", "red");
+			}
+			
+		}
+		
+		
+		
+		//비밀번호 수정하기 함수
+		function fncUpdatePassword() {
 					
-				});
-			}
+			$("form").attr("method" , "POST").attr("action" , "/user/updatePassword").submit();
+		}
+		
+
+		
+		
+		//현재 비밀번호 맞는지 확인 ajax
+		function fncCheckCurrentPassword() {
+			 
+			var email = $("#email").val();
+			var password = $("#password0").val();
 			
-			
-			
-			
-			 //비밀번호 확인
-			 $(function(){
-	
-					 $('#password2').blur(function(){
+			console.log(email);
+			console.log(password);
+		
+			$.ajax( 
+					{
+						url : "/user/json/checkPassword",
+						method : "POST" ,
+						data : JSON.stringify({
+							email : email,
+							password: password,
+						}),
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData, status) {
 							
-						   if($('#password').val() != $('#password2').val()){
-							   
-						    		if ( $('#password2').val() != '' ) {
-						    			
-						    			$('.text_password').text("");
-						    			
-						    			var str = '비밀번호가 맞지 않습니다.';
-						    			
-						    			$('.text_password').append(str).css("color", "red");
-							    	    $('#password2').val('');
-							         	$('#password2').focus();	
-									};
-						    }else{
-				    			$('.text_password').text("비밀번호가 맞습니다.").css("color", "blue");
-						    }
-						   
-						})   
-						
-					});
-			 
-			 
-			//============= "수정"  Event 연결 =============
-			 $(function() {
-				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$( "button" ).on("click" , function() {
-					fncUpdatePassword();
-				});
-			});	
+							//alert("성공!");
+	
+							if (JSONData.result == "no") {
+								console.log("비번 NO");
+								
+								passwordDuplicationCheck = false;
+								$(".password_check").text("비밀번호가 맞지 않습니다");
+								$(".password_check").css("color", "red");
+								
+							} else if (JSONData.result == "ok") {
+								console.log("비번 OK");
+								
+								passwordDuplicationCheck = true;
+								$(".password_check").text("비밀번호가 맞습니다");
+								$(".password_check").css("color", "blue");
+							}
+						}
+			});
+				
+		}
+		
+		
+		//첫번째,두번째 비밀번호 조건 함수
+		function fncCheckPw(passwordType){
+			
+			var passwordTarget = passwordType == "first" ? "password" : "password2";
+			var passwordCompare = passwordType == "first" ? "password2" : "password";
 			
 			
-			function fncUpdatePassword() {
-						
-					$("form").attr("method" , "POST").attr("action" , "/user/updatePassword").submit();
+			var pw = $("#" + passwordTarget).val();
+			var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+			
+			console.log(pw);
+			
+			if(reg.test(pw)) {
+				
+				var pw2 = $("#" + passwordCompare).val();
+				
+				if( pw == pw2 ){
+					
+					$(".text_password").text("비밀번호가 일치합니다.");
+					$(".text_password").css("color", "blue");
+					
+					return true;
+					
+				}else{
+					
+					$(".text_password").text("비밀번호가 일치하지 않습니다.");
+					$(".text_password").css("color", "red");
+				}
+				
+			}else {
+				
+				var str = '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
+				$('.text_password').text(str).css("color", "red");
+				$("#password").focus();
 			}
+			return false;
+		}
+			
 		
 			
 		</script>	
@@ -220,7 +298,7 @@
 						  <div class="form-group">
 						    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">새 비밀번호</label>
 						    <div class="col-sm-4">
-						      <input type="password" class="form-control" id="password" name="password" placeholder="새 비밀번호">
+						      <input type="password" class="form-control" id="password" name="password" placeholder="새 비밀번호" >
 						    </div>
 						  </div>
 						  
@@ -237,7 +315,7 @@
 						  
 						  <div class="form-group">
 						    <div class="col-sm-offset-4  col-sm-4 text-center">
-						      <button type="button" class="btn btn-primary">수정하기</button>
+						      <button type="button" class="updatePw">수정하기</button>
 						    </div>
 						  </div>
 						</form>

@@ -10,7 +10,7 @@
 
 
 <html>
-<title>JENNYSHOP</title>
+<title>listReview.jsp</title>
 <head>
 	<meta charset="UTF-8">
 	
@@ -41,11 +41,14 @@
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
-			function fncGetReviewList(currentPage) {
+			function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/review/listReview").submit();
+			var academyCode=$("input[name='academyCode']").val();
+			$("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode="+academyCode).submit();
 			//$("form").submit();
 		}
+		
+		
 		
 		$(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -61,13 +64,36 @@
 			});
 		});	
 		
+		
+		
 		function fncAddReviewView(){
 			
-			$("form").attr("method" , "GET").attr("action" , "/review/addReviewView").submit();
+			$("form").attr("method" , "POST").attr("action" , "/review/addReviewView").submit();
 		}
 	</script>
 
 	</head>
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="/main/academyMain">Buy! Edu</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
 	
   <body>
 	
@@ -115,9 +141,8 @@
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" style="width:120px;">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>선택하세요.</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
-						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>가격</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>작성자</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>내용</option>
 					</select>
 				  </div>
 				  
@@ -141,7 +166,7 @@
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 
 		
-		
+	
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover table-striped" >
       
@@ -154,6 +179,8 @@
             
         </thead>
        
+   
+       
 		<tbody>
 		
 		  <c:set var="i" value="${resultPage.totalCount }" />
@@ -162,8 +189,8 @@
 			<tr>
 			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
 		
-	
-		<td id="listtable" align="left"><a href="/review/getReview?reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
+
+		<td id="listtable" align="left"><a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode}">${review.reviewTitle}</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${review.reviewWriter.name}</td>
@@ -176,17 +203,28 @@
       
       </table>
 	  <!--  table End /////////////////////////////////////-->
+	 
+	 회원번호 ${user.userNo} 
+	 학원코드	${connect.academyCode}
+	 학원코드1 ${academyCode }
+	 
 	  
-	
-	  <c:if test="${user.role eq 'student' && uesr.role eq 'parents'}">
+	 <input type="hidden" name="academyCode" value="${academyCode}" /> 
 	  <div class="form-group">
+	  	<c:if test="${user.role eq 'student' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
 		      <a href="/review/addReviewView" >글쓰기</a></button>
-			 
+		</c:if>	 
+		
+		<c:if test="${user.role eq 'parents' }">
+		    <div class="col-sm-offset-11  col-sm-1 text-center">
+		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		      <a href="/review/addReviewView?academyCode=${academyCode }" >글쓰기</a></button>
+		</c:if>
 		    </div>
 		</div>
-	  </c:if>
+	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
