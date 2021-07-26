@@ -31,6 +31,12 @@ public class Academy {
 	//추가
 	private String academyArea;
 	
+	public int getCount2() {
+		return count2;
+	}
+	public void setCount2(int count2) {
+		this.count2 = count2;
+	}
 	public User getUser() {
 		return user;
 	}
