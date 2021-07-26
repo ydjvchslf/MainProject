@@ -22,7 +22,7 @@
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/main/academyMain">Buy! Edu</a>
+            <a class="navbar-brand ps-3" href="/user/loginacademy?email=${user.email}">Buy! Edu</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -72,10 +72,12 @@
                             </a>
                             <div class="collapse" id="collapseAcademy" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
+                                	<a class="nav-link" href="/user/loginacademy?email=${user.email}">프로필 선택</a>
                                     <a class="nav-link" href="#">기본 정보</a>
                                     <a class="nav-link" href="#">멀티미디어 정보</a>
                                     <a class="nav-link" href="/review/addReviewView">학원 후기 보기</a>
                                     <a class="nav-link" href="#">원생 관리</a>
+                                    <a class="nav-link" href="/user/deleteacademy?email=${user.email}">학원 프로필 삭제</a>
                                 </nav>
                             </div>                            
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
@@ -123,11 +125,16 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <p class="mb-0">
-                                    여기에다 여러분의 
-                                    <code>jsp를</code>
-                                    넣으십쇼!
-                                    <code>하지만! 제발!!!</code>
-                                    알맞게 넣으셔야 깨지지 않습니다. 깨지는 순간... 그건 여러분의 잘못 입니다 -형래올림-
+                                    
+                                    <div class="panel panel-primary">
+									<div class="panel-heading">
+											<i class="glyphicon glyphicon-briefcase"></i> 학원 프로필
+				         			</div>
+				         			<br/>
+				         			
+							<ul class="academyList"></ul>
+						       		 </div>
+						        
                                 </p>
                             </div>
                         </div>
@@ -140,6 +147,50 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        
+        <script>
+        
+        var userno = '${user.userNo}';
+        var role = '${user.role}';
+        
+        function academyList(){
+        	$.ajax({
+        		url : '/academy/json/academyProfile/${user.userNo}',
+        		type : 'get',
+        		success : function(data){
+        			console.log(data);
+        			$.each(data, function(key,value){
+        				
+        				var a = '';
+        				
+        				if(value.length<=2){
+    						a += '<li class="list-group-item">'
+    						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a>'
+    						a += '</li>'
+    					}
+        				
+        				for(var i=0; i<value.length;i++){
+        					
+        					a += '<li class="list-group-item">'
+        					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a>'
+        					a += '</li>'
+        				}
+        				
+            			$(".academyList").html(a);
+        				
+        			});
+        		}
+        	});
+        }
+        
+        $(document).ready(function(){
+            academyList();
+        });
+        
+        </script>
+        
+        
+        
     </body>
 </html>
     

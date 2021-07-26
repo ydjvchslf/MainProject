@@ -139,15 +139,33 @@
 				<div class="view-wrap">
 				<!-- google_ad_section_start(name=post) -->
 				<!-- 본문 타이틀&정보 -->
-	
+				<div class="page-header text-default" id="boardHeader">
+		
+		<c:choose>
+			<c:when test="${board.cateCode eq '0' }">
+				<h3>사!교육 공지사항</h3>
+			</c:when>
+			<c:when test="${board.cateCode eq '1' }">
+				<h3>사!교육 Q&A</h3>
+			</c:when>
+			<c:when test="${board.cateCode eq '2' }">
+				<h3>자유 게시판</h3>
+			</c:when>
+			<c:when test="${search.isMine eq 'y' }">
+				<h3>내가 쓴 게시글 보기</h3>
+			</c:when>
+		</c:choose>					
+	    </div>
+					
 					<h3 id="boardTitle"><b>${board.boardTitle}</h3></b>
-
 					<div class="info">
 						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.email}</span>
 						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> 
 						<fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd KK:mm:ss"/></td></td></span>
 						&nbsp;&nbsp;<span id="count"><i class="glyphicon glyphicon-eye-open" ></i> ${board.viewCnt+1}</span>
+						<c:if test="${board.cateCode eq '2'}">
 						&nbsp;&nbsp;<span id="recommendCnt"><i class="glyphicon glyphicon-heart" ></i> ${board.recommendCnt}</span>
+						</c:if>
 						
 					</div>
 					<hr>
@@ -157,12 +175,12 @@
 					</div>
 					</div>
 <br/>
-	
+	<c:if test="${board.cateCode eq '2'}">
 	<div style="text-align: center;">
        <a class="btn heart">
            <img id="heart" src="">
        </a>
-   </div>
+   </div></c:if>
 
 <script>
     $(document).ready(function () {
@@ -210,11 +228,13 @@
 <div class="form-group">
 		
 		   <input type="hidden" name="cateCode" id="cateCode" value="${board.cateCode}" />
+		   <input type="hidden" name="acaWriter" value="${academy.academyCode}" />	 
 		   
+		    <c:if test="${board.cateCode eq '2'}">
 		    <div class="complain" style="text-align: center;">
 		      <a href="/complain/addComplainBoard" class="btn success" id="complainButton" value="${board.boardNo}">
 		      <img src="/image/complain.png"/></a>
-		    </div>
+		    </div></c:if>
 		    <hr></br>
 		    
 		    

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.buyedu.dao.academy.AcademyDao;
 import com.buyedu.dao.connect.ConnectDao;
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Board;
 import com.buyedu.domain.Connect;
 import com.buyedu.domain.Search;
 
@@ -148,6 +149,7 @@ public class AcademyService {
 		academyDao.deleteAcademy(academyCode);
 		
 	}
+	
 
 
 }

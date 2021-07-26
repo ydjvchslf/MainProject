@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Board;
 import com.buyedu.domain.Search;
 
 @Mapper
@@ -50,5 +51,9 @@ public interface AcademyDao {
 	void deleteConnection(String academyCode) throws Exception;
 	
 	void deleteAcademy(String academyCode) throws Exception;
+	
+	
+	
+	
 	
 }

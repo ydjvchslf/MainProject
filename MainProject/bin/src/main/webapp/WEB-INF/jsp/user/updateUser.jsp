@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html >
     <head>
-        <meta charset="utf-8" />
+        <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -18,45 +18,233 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
+		
+		<!-- CSS ì‹œì‘ -->
+		<style>
+		
+		#content {
+			margin-left: 800px; 
+		    transform: translate(-50%);
+		    width: 460px;
+		    
+		}
+		
+		/* ì…ë ¥í¼ */
+		h3 {
+		    margin: 19px 0 8px;
+		    font-size: 14px;
+		    font-weight: 700;
+		}
+		
+		
+		.box {
+		    display: block;
+		    width: 100%;
+		    height: 51px;
+		    border: solid 1px #dadada;
+		    padding: 10px 14px 10px 14px;
+		    box-sizing: border-box;
+		    background: #fff;
+		    position: relative;
+		}
+		
+		.int {
+		    display: block;
+		    position: relative;
+		    width: 100%;
+		    height: 29px;
+		    border: none;
+		    background: #fff;
+		    font-size: 15px;
+		}
+		
+		input {
+		    font-family: Dotum,'ë‹ì›€',Helvetica,sans-serif;    
+		}
+		
+		
+		
+		/* ì—ëŸ¬ë©”ì„¸ì§€ */
+		
+		.error_next_box {
+		    margin-top: 9px;
+		    font-size: 12px;
+		    color: red;    
+		    display: none;
+		}
+		
+		#alertTxt {
+		    position: absolute;
+		    top: 19px;
+		    right: 38px;
+		    font-size: 12px;
+		    color: red;
+		    display: none;
+		}
+		
+		/* ë²„íŠ¼ */
+		
+		.btn_area {
+		    margin: 30px 0 91px;
+		}
+		
+		.signup, .cancel {
+		    width: 100%;
+		    padding: 10px 0 17px;
+		    border: 0;
+		    cursor: pointer;
+		    color: #fff;
+		    background-color: #0D85ED;
+		    font-size: 20px;
+		    font-weight: 400;
+		    font-family: Dotum,'ë‹ì›€',Helvetica,sans-serif;
+		}
+		
+		.cancel {
+			margin-top: 3px;
+		}
+		
+		
+		
+		</style>
+		
+		
+		
+		
+		
+		
+		
+		
 		<script type="text/javascript">
 		
-			//============= "¼öÁ¤"  Event ¿¬°á =============
-			 $(function() {
-				//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$( "button.btn.btn-primary" ).on("click" , function() {
-					fncUpdateUser();
-				});
-			});	
-			
-			
-			//============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
-			$(function() {
-				//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		var duplicationCheck = false;
 				
-				$("a[href='#' ]").on("click" , function() {
-					$("#myform")[0].reset();
-				});
-			});	
+		//ê°€ì…ë²„íŠ¼ ëˆŒë €ì„ë•Œ ëª¨ë“  true ê°’ ì²´í¬ ë©”ì„œë“œ
+		function fncCheckAll() {
 			
+			var valid = false;
 			
-			///////////////////////////////////////////////////////////////////////
-			function fncUpdateUser() {
-				var name=$("input[name='name']").val();
-				
-				if(name == null || name.length <1){
-					alert("ÀÌ¸§Àº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-					return;
-				}
-				
-				var phone=$("input[name='phone']").val();
-				
-				if(phone == null || phone.length <1){
-					alert("ÇÚµåÆù¹øÈ£´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-					return;
-				}
-					
-				$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+			if( fncCheckName() && fncCheckPhone ){
+				valid = true;
 			}
+			
+			return valid;
+		}
+		
+		
+		$(function() {
+			
+			//ìˆ˜ì •í•˜ê¸° event
+			$("#update").on("click" , events.click.update);
+			
+			//ë’¤ë¡œê°€ê¸° event 
+			$("#back").on("click" , events.click.back);
+			
+			//ì´ë¦„ ë³€í™” event
+			$("#name").on("change", events.change.name);
+			
+			//í•¸ë“œí° ë³€í™” event
+			$("#phone").on("change", events.change.phone);
+			
+		});	
+		
+		
+	
+		var events = {
+				
+				click : {
+					
+					update : function() {
+						if(fncCheckAll()){
+							
+							fncUpdateUser();
+						}
+					},
+					
+					back : function() {
+						window.history.back();
+					}
+				},
+			
+				change : {
+	
+					name : function(){
+						fncCheckName();
+					},
+					
+					phone : function(){
+						fncCheckPhone();
+					}
+				}
+			}
+		
+		
+		
+		//ì´ë¦„ ì²´í¬ í•¨ìˆ˜
+	    function fncCheckName() {
+			
+			var name = $("#name").val();
+			
+	        if(name){
+	        	var nameRegExp = /^[ê°€-í£]{2,20}$/;
+	        	
+	        	if(nameRegExp.test(name)){
+	        		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì…ë‹ˆë‹¤.");
+					$(".text_name").css("color", "blue");
+	        		return true;
+	        	}else{
+	        		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤");
+					$(".text_name").css("color", "red");
+	        	}
+	        } else{
+	        	$(".text_name").text("ì´ë¦„ì„ í•„ìˆ˜ë¡œ ì…ë ¥í•˜ì„¸ìš”!");
+				$(".text_name").css("color", "red");
+	        }
+	        return false; 
+	    }
+		
+		
+
+		//í•¸ë“œí° ì²´í¬ í•¨ìˆ˜ 
+	    function fncCheckPhone(){
+	    	
+	    	var phone = $("#phone").val();
+	    	
+	    	if(phone){
+	    		
+	    		var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+	    		
+	    		if(regExp.test(phone)){
+	    			
+	    			$(".text_phone").text("ì˜¬ë°”ë¥¸ íœ´ëŒ€í° í˜•ì‹ì…ë‹ˆë‹¤.");
+					$(".text_phone").css("color", "blue");
+					
+					return true;
+					
+	    		}else{
+	    			
+	    			$(".text_phone").text("ì˜¬ë°”ë¥´ì§€ ì•Šì€ íœ´ëŒ€í° í˜•ì‹ì…ë‹ˆë‹¤.");
+					$(".text_phone").css("color", "red");
+	    			
+	    		}
+	    	}else{
+	    		
+	    		$(".text_phone").text("íœ´ëŒ€í°ë²ˆí˜¸ë¥¼ í•„ìˆ˜ë¡œ ì ì–´ì£¼ì„¸ìš”!");
+				$(".text_phone").css("color", "red");
+	    		
+	    	}
+	    	return false;
+	    }
+		
+		
+		
+		//ìˆ˜ì •í•˜ê¸° í•¨ìˆ˜
+		function fncUpdateUser() {
+			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+		}
+	
+		
+		
 		
 		</script>
 		
@@ -92,48 +280,48 @@
                             <div class="sb-sidenav-menu-heading">search</div>
                             <a class="nav-link" href="/academy/listSearch">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                ÇĞ¿ø°Ë»ö
+                                í•™ì›ê²€ìƒ‰
                             </a>
                             <div class="sb-sidenav-menu-heading">information</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                ³» Á¤º¸ °ü¸®
+                                ë‚´ ì •ë³´ ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/user/getUser?email=${user.email}">³» Á¤º¸ º¸±â</a>
-                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">ºñ¹Ğ¹øÈ£ º¯°æ</a>
-                                    <a class="nav-link" href="/user/outUser?email=${user.email}">Å»Åğ ÇÏ±â</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ ÈÄ±â</a>
-                                    <a class="nav-link" href="/user/listConnect">³»°¡ ´Ù´Ï´Â ÇĞ¿ø</a>
+                                    <a class="nav-link" href="/user/getUser?email=${user.email}">ë‚´ ì •ë³´ ë³´ê¸°</a>
+                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">ë¹„ë°€ë²ˆí˜¸ ë³€ê²½</a>
+                                    <a class="nav-link" href="/user/outUser?email=${user.email}">íƒˆí‡´ í•˜ê¸°</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ í›„ê¸°</a>
+                                    <a class="nav-link" href="/user/listConnect">ë‚´ê°€ ë‹¤ë‹ˆëŠ” í•™ì›</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                ³» ¼ö¾÷ °ü¸®
+                                ë‚´ ìˆ˜ì—… ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">°ü½É ¼ö¾÷</a>
-                                    <a class="nav-link" href="#">±¸¸Å ¸ñ·Ï</a>
+                                    <a class="nav-link" href="#">ê´€ì‹¬ ìˆ˜ì—…</a>
+                                    <a class="nav-link" href="#">êµ¬ë§¤ ëª©ë¡</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">board</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBoard" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                °Ô½ÃÆÇ
+                                ê²Œì‹œíŒ
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseBoard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#">°øÁö»çÇ×</a>
-                                	<a class="nav-link" href="#">QnA °Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="/board/listBoard">ÀÚÀ¯°Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="#">ÇĞ¿ø °øÁö»çÇ×</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ °Ô½Ã±Û</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ ´ñ±Û</a>
+                                	<a class="nav-link" href="#">ê³µì§€ì‚¬í•­</a>
+                                	<a class="nav-link" href="#">QnA ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="/board/listBoard">ììœ ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="#">í•™ì› ê³µì§€ì‚¬í•­</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œê¸€</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ëŒ“ê¸€</a>
                                 </nav>
                             </div>
                         </div>
@@ -141,60 +329,65 @@
 
                 </nav>
             </div>
-            <!-- ¿©±â°¡ °¡¿îµ¥ µé¾î°¥ È­¸é (¹Ù²î´Â °÷) -->
+       <!-- ì—¬ê¸°ê°€ ê°€ìš´ë° ë“¤ì–´ê°ˆ í™”ë©´ (ë°”ë€ŒëŠ” ê³³) -->
+            
+        <div id="wrapper">
+            <!-- content-->
+          <div id="content">
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-				        <div class="page-header text-center">
-					       <h3 class=" text-info">È¸¿øÁ¤º¸¼öÁ¤</h3>
-					       <h5 class="text-muted">³» Á¤º¸¸¦ <strong class="text-danger">ÃÖ½ÅÁ¤º¸·Î °ü¸®</strong>ÇØ ÁÖ¼¼¿ä.</h5>
+				        <div>
+					       <h2>íšŒì›ì •ë³´ìˆ˜ì •</h2>
 					    </div>
 					    
 					    <!-- form Start /////////////////////////////////////-->
 						<form class="form-horizontal" id="myform">
 						
-						  <div class="form-group">
-						    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">¾Æ ÀÌ µğ</label>
-						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="Áßº¹È®ÀÎÇÏ¼¼¿ä"  readonly>
-						       <span id="helpBlock" class="help-block">
-						      	<strong class="text-danger">¾ÆÀÌµğ´Â ¼öÁ¤ºÒ°¡</strong>
-						      </span>
-						    </div>
-						  </div>
-						
+							<!-- EMAIL -->
+			                <div>
+			                    <h3 class="join_title"><label for="email">ì´ë©”ì¼</label></h3>
+			                    <span class="box int_email">
+			                        <input type="text" id="email" name="email" class="int" value="${user.email}" placeholder="ì¤‘ë³µí™•ì¸í•˜ì„¸ìš”"  readonly>
+			                    </span> 
+			                    <span class="email_check">ì´ë©”ì¼ì€ ìˆ˜ì •ë¶ˆê°€</span> 
+			                </div>
+							
+							<!-- NAME -->
+			                <div>
+			                    <h3 class="join_title"><label for="name">ì´ë¦„</label></h3>
+			                    <span class="box int_name">
+			                    	<input type="hidden" name="userNo" value="${user.userNo}">
+			                        <input type="text" id="name" name="name" value="${user.name}" class="int" maxlength="20">
+			                    </span>
+			                    <span id="helpBlock" class="help-block">
+								   <strong class="text_name"></strong>
+								</span>
+			                </div>  
 						  
+						  	 <!-- MOBILE -->
+			                <div>
+			                    <h3 class="join_title"><label for="phoneNo">íœ´ëŒ€ì „í™” ( - í¬í•¨)</label></h3>
+			                    <span class="box int_mobile">
+			                        <input type="text" id="phone" name="phone" value="${user.phone}" class="int" maxlength="16" placeholder="ì „í™”ë²ˆí˜¸ ì…ë ¥">
+			                    </span>
+			                    <span class="text_phone"></span>    
+			                </div>
 						  
-						  <div class="form-group">
-						    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
-						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="name" name="name" value="${user.name}" placeholder="º¯°æÈ¸¿øÀÌ¸§">
-						    </div>
-						  </div>
-						  
-						  <div class="form-group">
-						    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ÇÚµåÆù</label>
-						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="phone" name="phone"  value="${user.phone}" placeholder="º¯°æÈŞ´ëÆù¹øÈ£">
-						    </div>
-						  </div>
-						  
-						  <input type="hidden" id="password" name="password" value="${user.password}">
-						  <input type="hidden" id="role" name="role" value="${user.role}">
-						  <input type="hidden" id="userNo" name="userNo" value="${user.userNo}">
-						  <input type="hidden" id="accountState" name="accountState" value="${user.accountState}">
-						  
-						  <div class="form-group">
-						    <div class="col-sm-offset-4  col-sm-4 text-center">
-						      <button type="button" class="btn btn-primary"  >¼ö &nbsp;Á¤</button>
-							  <a class="btn btn-primary btn" href="#" role="button">Ãë &nbsp;¼Ò</a>
-						    </div>
-						  </div>
+						 	 <!-- ìˆ˜ì •í•˜ê¸°, ë’¤ë¡œê°€ê¸° BTN-->
+			                <div class="btn_area">
+			                    <button type="button" id="update" name="update" class="signup" >ìˆ˜ì •</button>
+			                    <button type="button" id="back" name="back" class="cancel">ë’¤ë¡œ</button>
+			                </div>
+			                
 						</form>
                     </div>
                 </main>
             </div>
+          </div>
         </div>
+        
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

@@ -16,6 +16,8 @@ public interface BoardDao {
 	
 	public Board getBoard(int boardNo) throws Exception;
 	
+	public Board getBoardAcademy(int boardNo) throws Exception;
+	
 	public List<Board> getBoardList(Search search) throws Exception;
 	
 //	public List<Board> getMyBoardList(Search search, int userNo) throws Exception;
@@ -50,6 +52,10 @@ public interface BoardDao {
 	public int updateComment(Map<String,Object> map) throws Exception;
 
 	public int deleteComment(int commentNo) throws Exception;
+	
+	//학원 공지사항
+	public List<Board> getBoardListAcademy(Search search) throws Exception;
+	public int getTotalCountAcademy(Search search) throws Exception;
 
 
 }
