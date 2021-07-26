@@ -7,5 +7,3 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.buyedu.service.board.BoardService;
 
-
-

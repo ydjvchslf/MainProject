@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.complain.ComplainDao">
+ 	
+ 	
+	<resultMap id="complainSelectMap" type="complain">
+		<result property="complainNo" 			column="review_no" 			jdbcType="NUMERIC"/>
+		<result property="boardNo" 		    column="academy_code" 		jdbcType="VARCHAR"/>
+		<result property="commentNo"	column="review_writer" 		jdbcType="NUMERIC" />
+		<result property="reviewNo"				column="name" 				jdbcType="VARCHAR" />
+		<result property="complainUserNo" 			column="review_state" 		jdbcType="CHAR" />
+		<result property="complainReasonCode" 			column="review_title" 		jdbcType="VARCHAR" />
+		<result property="complainSort" 		column="review_content" 	jdbcType="VARCHAR" />
+		<result property="complainDate" 		column="review_content" 	jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addReview"		parameterType="review" >
+	 INSERT
+		INTO review (review_no, academy_code , review_writer, review_title, review_content, review_date)
+		VALUES ( seq_review_review_no.nextval , #{academyCode} , #{reviewWriter.userNo} , #{reviewTitle} , #{reviewContent} ,
+				SYSDATE )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getReview"	parameterType="int"	resultMap="reviewSelectMap">
+	SELECT
+		r.review_no ,
+        a.academy_code academy_code,
+		u.user_no review_writer ,
+		u.name ,
+		r.review_title ,
+		r.review_content ,
+		r.review_date 
+		FROM academy a , review r , 
+		(SELECT
+		u.user_no , u.name
+		from users u)u
+		WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND review_no = (#{value})
+	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <!-- <select 	id="getReviewWriter"	parameterType="String"	resultMap="reviewSelectMap">
+		SELECT u.name
+		FROM review r , users u
+		WHERE r.review_writer = '${value}'
+	 </select>-->
+	 
+	 <!-- SQL : UPDATE -->
+	 	<update id="updateReview" parameterType="review">
+		UPDATE review
+		<set>
+		    review_title = #{reviewTitle} ,
+			review_content = #{reviewContent}
+		</set>
+		WHERE review_no = '${reviewNo}'
+	</update>
+	
+	<delete id="deleteReview" parameterType="review">
+		update review
+		<set>
+			review_state = '2'
+		</set>
+		WHERE review_no = '${reviewNo}'
+	</delete>
+		 
+
+	
+	<select  id="getReviewList"  parameterType="search"	resultMap="reviewSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.name , r.review_date
+											FROM review r, users u , academy a
+											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code AND r.academy_code = '${academyCode}'
+											<if test="searchCondition != null">
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				and u.name like '%${searchKeyword}%'
+													</if>
+													<if test="searchCondition == 1 and serachKeyword !='' ">
+														and r.review_content like '%${searchKeyword}%'
+													</if>
+												
+											</if>
+											ORDER BY review_date desc ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+<!-- 	 	 위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} ) -->
+		
+	
+<!-- 	SQL : SELECT ROW Count	 --> 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT r.review_title , r.review_content , u.name , r.review_date , a.academy_code 
+						FROM review r , users u , academy a
+						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND r.academy_code = '${academyCode}'
+						<if test="searchCondition != null">
+							
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+									and review_title like '%${searchKeyword}%'
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+									and review_content like '%${searchKeyword}%'
+								</if>							
+							
+						</if> ) countTable						
+	 </select>
+	 
+	  <select id="getConnect" parameterType="map" resultType="int" >
+          select count(*)
+			from connection
+			WHERE academy_code= #{academyCode} AND user_no= ${userNo} AND connect_state = '1'
+     </select>
+	 
+</mapper>

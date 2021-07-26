@@ -28,7 +28,8 @@
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-	
+	 <script src="https://code.jquery.com/jquery-latest.js"></script> 
+	 
 	<script type="text/javascript">
 		
 		//============= 회원정보수정 Event  처리 =============	
@@ -71,8 +72,109 @@
 <head>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
+<style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */                          
+        }
+ 
+</style>
 
 <title>getReivew.jsp</title>
+<style type="text/css">
+ 
+html,body {height:100%,margin:0}
+.mw {position:fixed;_position:absolute;top:0;left:0;width:100%;height:100%;display:none;}
+.mw .bg {position:absolute;top:0;left:0;width:100%;height:100%;background:#000;opacity:.5;filter:alpha(opacity=50)}
+.mw .fg {position:absolute;top:50%;left:50%;width:360px;height:160px;margin:-100px 0 0 -200px;padding:20px;border:3px solid #ccc;background:#fff;}
+ 
+ $color1: #f4f4f4;
+$color2: #3197EE;
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.radio {
+  margin: 0.5rem;
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    + .radio-label {
+      &:before {
+        content: '';
+        background: $color1;
+        border-radius: 100%;
+        border: 1px solid darken($color1, 25%);
+        display: inline-block;
+        width: 1.4em;
+        height: 1.4em;
+        position: relative;
+        top: -0.2em;
+        margin-right: 1em; 
+        vertical-align: top;
+        cursor: pointer;
+        text-align: center;
+        transition: all 250ms ease;
+      }
+    }
+    &:checked {
+      + .radio-label {
+        &:before {
+          background-color: $color2;
+          box-shadow: inset 0 0 0 4px $color1;
+        }
+      }
+    }
+    &:focus {
+      + .radio-label {
+        &:before {
+          outline: none;
+          border-color: $color2;
+        }
+      }
+    }
+    &:disabled {
+      + .radio-label {
+        &:before {
+          box-shadow: inset 0 0 0 4px $color1;
+          border-color: darken($color1, 25%);
+          background: darken($color1, 25%);
+        }
+      }
+    }
+    + .radio-label {
+      &:empty {
+        &:before {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+ 
+</style>
 </head>
 
 <body>
@@ -159,6 +261,34 @@
 		
 		<butten class="btn btn-primary" id="complain" value="${review.reviewNo}">신&nbsp;고</butten>
 	</div>
+	<p><button type="button" onClick="document.getElementById('mw_temp').style.display='block'">Open</button></p>
+ 
+ 
+<div id="mw_temp" class="mw">
+    <div class="bg"><!--이란에는 내용을 넣지 마십시오.--></div>
+    <div class="fg">
+        <p>
+		<div class="container">
+  <div class="radio">
+    <input id="radio-1" name="radio" type="radio" checked>
+    <label for="radio-1" class="radio-label">욕설</label>
+  </div>
+
+  <div class="radio">
+    <input id="radio-2" name="radio" type="radio">
+    <label  for="radio-2" class="radio-label">도배,홍보</label>
+  </div>
+
+  <div class="radio">
+    <input id="radio-3" name="radio" type="radio">
+    <label for="radio-3" class="radio-label">음란</label>
+  </div>
+</div>
+		<button onclick="document.getElementById('mw_temp').style.display='none'" type="button">창닫기</button></p>
+   		
+    </div>
+</div>
+	
 	</c:if>
 
 	</div>
