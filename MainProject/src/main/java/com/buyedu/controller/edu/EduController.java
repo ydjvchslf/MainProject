@@ -159,6 +159,6 @@ public class EduController {
 		
 		System.out.println("listEdu End");
 		
-		return "/edu/listEdu";
+		return "/tiles/edu/listEdu";
 	}
 }

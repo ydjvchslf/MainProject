@@ -120,9 +120,10 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<div class="page-header text-info">
-	       <h3>수업목록</h3>
-	    </div>
+		<div class="card shadow mb-4">
+          <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">수업목록</h6>
+        </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
