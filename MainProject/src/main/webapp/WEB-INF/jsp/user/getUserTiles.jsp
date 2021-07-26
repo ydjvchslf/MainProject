@@ -399,6 +399,17 @@
 						
 				$('form[name="outForm"]').attr("method" , "POST").attr("action" , "/user/outUser").submit();
 			}
+			 
+			 
+			
+			 
+		//sns 간편로그인 연동하기 클릭 event
+		$(function() {
+
+			$('span[name="unify"]').on("click", function() {
+				//self.location = "/user/updateUser?email=${user.email}"
+			});
+		});	 
 	
 	
 	
@@ -432,7 +443,7 @@
 							<h6 class="m-0 font-weight-bold text-primary" align="right">
 								<a href="/user/updateUser?email=${user.email}"
 									class="btn btn-info btn-circle btn-sm" data-toggle="modal"
-										data-target="#updateModal"align="right">
+										data-target="#updateModal" align="right">
 										<i class="fas fa-info-circle"></i>
 								</a>
 							</h6>
@@ -448,8 +459,13 @@
 									PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.phone} <br>
 		                		</c:when>
 		                		<c:otherwise>
-		                			E-MAIL : ${email} <br>
-		                			*SNS 연동하기<br>
+		                			E-MAIL : ${email} <br><br>
+		                			회원님은 SNS 연동해제 상태입니다.<br>
+		                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
+		                			<span name="unify" data-toggle="modal"
+										data-target="#unifyModal" >
+										계정연동하기
+									</span>
 		                		</c:otherwise>
 			                </c:choose>
 						</div>
@@ -719,9 +735,11 @@
 			                                        </div>
 			                                    </div>
 			                                    <div class="col-4"><!-- 발송버튼 -->
-													<div class="form-group">		
+													<div class="form-group">
 														<div class="text-center">
-					                                        <a class="small" href="forgot-password.html">인증번호발송</a>
+					                                       <a href="#" class="btn btn-primary btn-user btn-block">
+					                                            인증번호발송
+					                                        </a>
 					                                    </div>
 													    <span><strong class="text_phone"></strong>
 													   </span>	
@@ -741,7 +759,9 @@
 			                                    <div class="col-4"><!-- 인증번호 확인버튼 -->
 													<div class="form-group">		
 														<div class="text-center">
-					                                        <a class="small" href="forgot-password.html">확인</a>
+					                                        <a href="#" class="btn btn-primary btn-user btn-block">
+					                                            확인
+					                                        </a>
 					                                    </div>
 			                                        	<span id="helpBlock" class="help-block">
 														   <strong class="text_phone"></strong>
@@ -764,6 +784,61 @@
 							</div>
 						</div><!-- 내정보수정 모달 끝-->
 						
+						<!-- 계정연동 모달 시작-->
+						<div class="modal fade" id="unifyModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">계정연동하기</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- 모달내용 태그 -->
+										<form class="user">
+											<div class="form-group">
+												<input type="hidden" id="email" name="email"
+													value="${user.email}"> <input type="password"
+													class="form-control form-control-user" name="password0"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													placeholder="현재비밀번호"> <span id="helpBlock"
+													class="help-block"> <strong class="password_check"></strong>
+												</span>
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password" placeholder="새비밀번호">
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password2" placeholder="비밀번호확인"> <span
+													id="helpBlock" class="help-block"> <strong
+													class="text_password"></strong>
+												</span>
+											</div>
+											<a href="#" name="updatePw"
+												class="btn btn-primary btn-user btn-block"> 비밀번호수정 </a>
+										</form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 계정연동 모달 끝-->
+						
+						
+						
+						
 					</div>
 				</c:if>
 			</div>
@@ -771,18 +846,33 @@
 			
 		<c:if test="${user.role eq 'academy'}">
 			<div class="row"><!-- 학원프로필 카드 시작 -->
-
                         <div class="col-lg-4">
-
-                            <!-- Basic Card Example -->
+                           <!-- 프로필1 -->
                             <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Basic Card Example</h6>
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
                                 </div>
+                                <!-- Card Body -->
                                 <div class="card-body">
-                                    The styling for this basic card example is created by using default Bootstrap
-                                    utility classes. By using utility classes, the style of the card component can be
-                                    easily modified with no need for any custom CSS!
+                                    Dropdown menus can be placed in the card header in order to extend the functionality
+                                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
+                                    icon in the card header can be clicked on in order to toggle a dropdown menu.
                                 </div>
                             </div>
 
@@ -790,7 +880,7 @@
 
                         <div class="col-lg-4">
 
-                            <!-- Dropdown Card Example -->
+                            <!-- 프로필 2 -->
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
@@ -823,7 +913,7 @@
                         
                         <div class="col-lg-4">
 
-                            <!-- Dropdown Card Example -->
+                            <!-- 프로필 3 -->
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div

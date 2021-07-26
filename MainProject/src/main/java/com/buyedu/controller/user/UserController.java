@@ -100,7 +100,7 @@ public class UserController {
 		
 		System.out.println("/user/addUser : GET");
 		
-		return "/user/addUserView";
+		return "/user/addUserViewTiles";
 	}
 	
 	
