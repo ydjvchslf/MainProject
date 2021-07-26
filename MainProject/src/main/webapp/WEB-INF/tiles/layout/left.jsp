@@ -37,7 +37,7 @@
 			<li class="nav-item active">
 			    <a class="nav-link" href="/academy/addAcademyView">
 			        <i class="fas fa-fw fa-tachometer-alt"></i>
-			        <span>학원등록</span></a>
+			        <span >학원등록</span></a>
 			</li>
 		  </c:when>
 		  <c:otherwise>
@@ -114,12 +114,10 @@
 			    <div id="aa" class="collapse" aria-labelledby="headingTwo"
 			        data-parent="#accordionSidebar">
 			        <div class="bg-white py-2 collapse-inner rounded">
-			            <a class="collapse-item" href="#">공지사항</a>
-			            <a class="collapse-item" href="#">QnA</a>
-			            <a class="collapse-item" href="#">학원공지사항</a>
-			            <a class="collapse-item" href="/board/listBoard">자유게시판</a>
-			            <a class="collapse-item" href="#">내가 작성한 게시글</a>
-			            <a class="collapse-item" href="#">내가 작성한 댓글</a>
+			            <a class="collapse-item" href="/board/listBoard?cateCode=0">공지사항</a>
+			            <a class="collapse-item" href="/board/listBoard?cateCode=1">QnA</a>
+			            <a class="collapse-item" href="/board/listBoard?cateCode=2">자유게시판</a>
+			            <a class="collapse-item" href="/board/listBoard?isMine=y">내가 작성한 게시글</a>
 			        </div>
 			    </div>
 			</li>
