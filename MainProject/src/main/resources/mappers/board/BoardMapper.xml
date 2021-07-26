@@ -16,8 +16,9 @@
 		<result property="boardState" 		column="board_state" 			jdbcType="CHAR" />
 		<result property="cateCode" 		column="category_code" 			jdbcType="CHAR" />
 		<result property="viewCnt" 			column="view_count" 			jdbcType="NUMERIC" />
-		<result property="reCnt" 			column="reCnt" 					jdbcType="NUMERIC" />
+		<result property="recommendCnt" 	column="cnt" 					jdbcType="NUMERIC" />
 		<result property="acaWriter" 		column="aca_writer" 			jdbcType="VARCHAR" />
+		<result property="academyName" 		column="academy_name" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -27,12 +28,19 @@
 		VALUES	 ( board_board_no.nextval , #{boardTitle} , #{boardContent} , #{boardWriter}, SYSDATE, '0', #{cateCode}, #{viewCnt}, #{acaWriter} )
 	 </insert>
 
-	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getBoard"	parameterType="int"	resultMap="boardSelectMap">
+	<select 	id="getBoard"	parameterType="int"	resultMap="boardSelectMap">
 		SELECT
 		b.board_no , b.board_title , b.board_content , b.board_writer , b.board_date, b.category_code, b.view_count, email
 		FROM board b, users u
 		WHERE b.board_writer=u.user_no and board_no = #{value} 
+	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getBoardAcademy"	parameterType="int"	resultMap="boardSelectMap">
+		SELECT
+		b.board_no , b.board_title , b.board_content , b.board_writer , b.board_date, b.category_code, b.view_count, email, aca_writer, academy_name
+		FROM board b, users u, academy a
+		WHERE a.academy_code=b.aca_writer and b.board_writer=u.user_no and board_no = #{value} 
 	 </select>
 	 
 	 <!-- SQL : UPDATE -->
@@ -55,23 +63,29 @@
 		 
    <!-- SQL : SELECT LIST -->
    <select  id="getBoardListPin" parameterType="board" resultType="map"  >
- 	  select ROWNUM, b.*, nvl(c.cnt,0) reCnt, u.email
+ 	  select ROWNUM, b.*, nvl(c.cnt,0) reCnt, u.email, (select count(*) from comments where board_no = b.board_no) as comment_cnt
 		from board b, users u,(select board_no , count(recommend_no) cnt
                        			from recommend
                       			 group by board_no
-                                         order by cnt desc) c
+                                         order by cnt desc)c
        	WHERE b.board_no = c.board_no(+) and b.category_Code='2' and u.user_no=b.board_writer
        		  AND ROWNUM &lt; 4
    </select>
 
    
    <select  id="getBoardList"  parameterType="search"   resultMap="boardSelectMap">
- 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt, category_code
+  	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt, category_code, cnt
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
-	  					FROM		(	SELECT b.*, u.email, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt 
-	  									
-											FROM board b, users u 
-											WHERE b.board_writer=u.user_no and b.board_state='0' and b.category_code = #{cateCode}
+	  					FROM		(	SELECT b.*, u.email, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt,
+	  									(select count(recommend_no) from recommend r, board bb where r.board_no = bb.board_no and r.board_no = b.board_no) as cnt
+	  										FROM board b, users u
+	  										WHERE b.board_writer=u.user_no and b.board_state='0' 
+	  										<if test='isMine=="y"'>
+												and b.board_writer = #{searchUserNo}
+											</if>
+											<if test='isMine=="n"'>
+												and b.category_code = #{cateCode}
+											</if>
 											<if test="searchConditionb != null">
 											 	<if test="searchConditionb == 0 and searchKeyword !='' ">
 											 		and b.board_title LIKE '%' || #{searchKeyword} || '%'
@@ -100,10 +114,16 @@
 	
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  		  	SELECT COUNT(*)
-	  	FROM(	SELECT b.*, u.email 
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT b.*, u.email
 						FROM board b, users u
-						where b.board_writer=u.user_no and b.board_state='0' and b.category_code = #{cateCode}
+						WHERE b.board_writer=u.user_no and b.board_state='0'
+						<if test='isMine=="y"'>
+							 and b.board_writer = #{searchUserNo}
+						</if>
+						<if test='isMine=="n"'>
+							 and b.category_code = #{cateCode}
+						</if>
 						<if test="searchConditionb != null">
 								<if test="searchConditionb == 0 and searchKeyword !='' ">
 									and b.board_title LIKE '%' || #{searchKeyword} || '%'
@@ -118,29 +138,7 @@
 						ORDER BY b.board_date desc 
 						) countTable						
 	 </select>
-	 
-	   <select  id="getMyBoardList"  parameterType="search"   resultMap="boardSelectMap">
- 	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt, category_code
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
-	  					FROM		(	SELECT b.*, u.email, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt 
-	  									
-											FROM board b, users u 
-											WHERE b.board_writer=u.user_no and b.board_state='0' and u.user_no=#{userNo}
-											<if test="searchConditionb != null">
-											 	<if test="searchConditionb == 0 and searchKeyword !='' ">
-											 		and b.board_title LIKE '%' || #{searchKeyword} || '%'
-											 	</if>
-                                             	<if test="searchConditionb == 1 and searchKeyword !='' ">
-                                                 	and b.board_content LIKE '%' || #{searchKeyword} || '%'
-                                             	</if>
-                                             	<if test="searchConditionb == 2 and searchKeyword !='' ">
-                                                 	and u.email LIKE '%' || #{searchKeyword} || '%'
-                                            	</if>
-                                            </if>
-											ORDER BY b.board_date desc ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum,jdbcType=NUMERIC} AND #{endRowNum}	
-    </select>
+
 	 	<!--  위 두번째 subQuery 의  
 	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
 	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
@@ -153,25 +151,6 @@
 		-->
 	
 	<!-- SQL : SELECT ROW Count -->	 
-	 <select  id="getMyTotalCount"  parameterType="search"	 resultType="int">
-	  		  	SELECT COUNT(*)
-	  	FROM(	SELECT b.*, u.email 
-						FROM board b, users u
-						where b.board_writer=u.user_no and b.board_state='0' and b.board_writer=#{userNo}
-						<if test="searchConditionb != null">
-								<if test="searchConditionb == 0 and searchKeyword !='' ">
-									and b.board_title LIKE '%' || #{searchKeyword} || '%'
-								</if>
-                                <if test="searchConditionb == 1 and searchKeyword !='' ">
-                                    and b.board_content LIKE '%' || #{searchKeyword} || '%'
-                                </if>
-                                <if test="searchConditionb == 2 and searchKeyword !='' ">
-                                    and u.email LIKE '%' || #{searchKeyword} || '%'
-                                </if>
-                         </if>
-						ORDER BY b.board_date desc 
-						) countTable						
-	 </select>
 	 
 	 <update id="updateViewcnt" parameterType="int">
 		UPDATE board SET view_count = view_count + 1 
@@ -234,6 +213,50 @@
 	   	SET comment_state = '2'
 	   	WHERE comment_no = #{commentNo}
     </update>
+    
+    <!--   학원 공지사항 -->
+    
+    	 <select  id="getBoardListAcademy"  parameterType="search"   resultMap="boardSelectMap">
+  	  	SELECT board_no , board_title, board_writer, board_date, view_count, email, comment_cnt, category_code, aca_writer, academy_name
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq 
+	  					FROM		(	SELECT b.*, u.email, a.academy_name, (SELECT COUNT(*) FROM COMMENTS WHERE board_no = b.board_no) AS comment_cnt
+	  										FROM board b, users u, academy a
+											WHERE b.aca_writer=a.academy_code and b.board_writer=u.user_no and b.board_state='0' and b.category_code = '3' and b.aca_writer=#{academyCode}
+											<if test="searchConditionb != null">
+											 	<if test="searchConditionb == 0 and searchKeyword !='' ">
+											 		and b.board_title LIKE '%' || #{searchKeyword} || '%'
+											 	</if>
+                                             	<if test="searchConditionb == 1 and searchKeyword !='' ">
+                                                 	and b.board_content LIKE '%' || #{searchKeyword} || '%'
+                                             	</if>
+                                             	<if test="searchConditionb == 2 and searchKeyword !='' ">
+                                                 	and u.email LIKE '%' || #{searchKeyword} || '%'
+                                            	</if>
+                                            </if>
+											ORDER BY b.board_date desc ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum,jdbcType=NUMERIC} AND #{endRowNum}	
+    </select>
 	 
+	 	 <select  id="getTotalCountAcademy"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT b.*, u.email, a.academy_name
+						FROM board b, users u, academy a
+						WHERE b.aca_writer=a.academy_code and b.board_writer=u.user_no and b.board_state='0'
+							  and b.category_code = '3' and b.aca_writer=#{academyCode}
+						<if test="searchConditionb != null">
+								<if test="searchConditionb == 0 and searchKeyword !='' ">
+									and b.board_title LIKE '%' || #{searchKeyword} || '%'
+								</if>
+                                <if test="searchConditionb == 1 and searchKeyword !='' ">
+                                    and b.board_content LIKE '%' || #{searchKeyword} || '%'
+                                </if>
+                                <if test="searchConditionb == 2 and searchKeyword !='' ">
+                                    and u.email LIKE '%' || #{searchKeyword} || '%'
+                                </if>
+                         </if>
+						ORDER BY b.board_date desc 
+						) countTable						
+	 </select>
 	 
 </mapper>

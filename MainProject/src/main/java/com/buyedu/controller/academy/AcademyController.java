@@ -10,10 +10,12 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.filechooser.FileSystemView;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +30,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Board;
 import com.buyedu.domain.Connect;
+import com.buyedu.domain.Page;
 import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
+import com.buyedu.service.board.BoardService;
 import com.buyedu.service.user.UserService;
 
 
@@ -41,6 +46,9 @@ public class AcademyController {
 	
 	@Autowired
 	public AcademyService academyService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@Autowired
 	public UserService userService;
@@ -71,6 +79,11 @@ public class AcademyController {
 		return random;
 	}
 	
+	@Value("5")
+	int pageUnit;
+	
+	@Value("5")
+	int pageSize;
 	
 	@RequestMapping("addAcademyView")
 	public String addAcademyView() throws Exception {
@@ -117,7 +130,7 @@ public class AcademyController {
 	
 	
 	@RequestMapping(value = "academyInfo", method = RequestMethod.GET)
-	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, Model model, HttpSession session ) throws Exception{
+	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search, Model model, HttpSession session, HttpServletRequest request ) throws Exception{
 		
 		System.out.println("/academy/academyInfo : GET");
 		
@@ -128,6 +141,28 @@ public class AcademyController {
 		model.addAttribute("academy", academy);
 		
 		System.out.println(academy);
+		
+		//학원 공지사항
+		System.out.println("학원 공지사항 돌아간다");
+//		String academyCodeb = request.getParameter("academyCode");
+		String category = request.getParameter("cateCode"); // 게시판 종류
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		search.setCateCode(category);
+		
+		List<Board> list =boardService.getBoardListAcademy(search);
+		
+		if(list.size()!=0) {
+			int totalCount = list.get(0).getTotalCount();
+			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
+			System.out.println(resultPage);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		}
 		
 		return "academy/academyInfo";
 	}

@@ -27,13 +27,11 @@ function fncAddBoard(){
 	//Form 유효성 검증
  	//var name = document.detailForm.prodName.value;
 	var title= $('input[name="boardTitle"]').val();
-	alert(title)
 	var content=$('textarea[name="boardContent"]').val();
-	alert(content)
 	var boardWriter=$('input[name="boardWriter"]').val();
-	alert(boardWriter)
 	var cateCode=$('input[name="cateCode"]').val();
-	alert(cateCode)
+	var acaWriter=$('input[name="acaWriter"]').val();
+	alert(acaWriter)
 	
 	
 	if(title == null || title.length <1){
@@ -76,8 +74,10 @@ function fncAddBoard(){
 	
 	<input type="hidden" name="boardWriter" value="${user.userNo}" />
 	<input type="hidden" name="cateCode" value="${board.cateCode}" />
+	<input type="hidden" name="acaWriter" value="${board.acaWriter}" />
 	search.cateCode : ${search.cateCode}
 	board.cateCode : ${board.cateCode}
+	board.acaWriter : ${board.acaWriter}
 
 		
 	 	<div id="addbrdview" class="form-group">

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -13,6 +13,7 @@
         <title>getUser</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
@@ -20,14 +21,164 @@
 		
 		<script type="text/javascript">
 			
-			//============= È¸¿øÁ¤º¸¼öÁ¤ Event  Ã³¸® =============	
+			//============= íšŒì›ì •ë³´ìˆ˜ì • Event  ì²˜ë¦¬ =============	
 			 $(function() {
-				//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( "button" ).on("click" , function() {
+				 
+				 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
+				 
+				//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( ".updateInfo" ).on("click" , function() {
 						self.location = "/user/updateUser?email=${user.email}"
 					});
 			});
+			
+			
+			//=========ë¡œê·¸ì•„ì›ƒ í…ŒìŠ¤íŠ¸ ì¤‘ =============
+				$(function() {	
+					
+					 $('button[name=allLogout]').on("click" , function() {
+						 
+						 let x = document.cookie;
+						 
+						 const words = x.split("; ");
+						 
+						 var loginType = "";
+						 
+						 for(var i=0; i < words.length; i++ ){
+							 
+							if( words[i].split("=")[0] === "loginType" ){
+								 console.log( words[i].split("=")[1] )
+								 loginType = words[i].split("=")[1];
+							}
+						 }
+						 
+						 if(loginType == "kakao"){
+							 
+							 alert("ì¹´ì¹´ì˜¤ ë¡œê·¸ì•„ì›ƒ!")
+							 if (!Kakao.Auth.getAccessToken()) {
+								  console.log('Not logged in.');
+								  return;
+								}
+							 
+								 Kakao.API.request({
+								  url: '/v1/user/unlink',
+								  success: function(response) {
+								    console.log(response);
+								    
+								    self.location = "/"
+								  },
+								  fail: function(error) {
+								    console.log(error);
+								  },
+								});
+							 
+							 
+								Kakao.Auth.logout(function() {
+								  console.log(Kakao.Auth.getAccessToken());
+								  
+								  if(Kakao.Auth.getAccessToken()){
+									  alert('ë¡œê·¸ì•„ì›ƒì‹¤íŒ¨');
+								  }else{
+									  
+								  }
+								 
+								});
+								
+							 
+							 
+						 }else if(loginType == "naver"){
+							 
+							 alert("ë„¤ì´ë²„ ë¡œê·¸ì•„ì›ƒ!")
+							 
+							 /*
+							 localStorage.removeItem('com.naver.nid.access_token');
+							 
+							 function Logout(){
+								 sessionStorage.clear();
+							 }
+							 
+							 //self.location = "/"
+							 
+							 */
+							 //ajax ë¡œ
+							 
+							 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+							 
+							 //console.log(accessToken)
+							 
+							 var tokenArray = accessToken.split(".");
+							 
+							 //console.log(tokenArray)
+							 
+							 var finalToken = tokenArray[1]
+							 
+							 console.log(finalToken)
+							 //return
+							 
+								  $.ajax({
+				                 		
+									  crossOrigin : true,
+									  
+					            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+finalToken,
+					                  headers : {
+					                	  
+					                      "Accept" : "application/json",
+					                      "Content-Type" : "application/json"
+					                    },
+					                    success : function(JSONData, status){
+					                        alert("ì–")
+					                    	console.log("ê²°ê³¼->" +JSONData);
+					                        
+					                    }
+				              })
+								
+						 }else{
+							 alert("ì¼ë°˜ ë¡œê·¸ì•„ì›ƒ");
+							 self.location = "logout"
+						 }
+						 
+						 /*
+						 
+						 if (!Kakao.Auth.getAccessToken()) {
+							  console.log('Not logged in.');
+							  return;
+							}
+						 
+							 Kakao.API.request({
+							  url: '/v1/user/unlink',
+							  success: function(response) {
+							    console.log(response);
+							    
+							    self.location = "/"
+							  },
+							  fail: function(error) {
+							    console.log(error);
+							  },
+							});
+						 
+						 
+						 
+							Kakao.Auth.logout(function() {
+							  console.log(Kakao.Auth.getAccessToken());
+							  
+							  if(Kakao.Auth.getAccessToken()){
+								  alert('ë¡œê·¸ì•„ì›ƒì‹¤íŒ¨');
+							  }else{
+								  
+							  }
+							 
+							});
+							
+							*/
+					 });
+				});
+				 
+			
+				 
+			
+			
 		
+			
 		</script>
 
     </head>
@@ -61,48 +212,48 @@
                             <div class="sb-sidenav-menu-heading">search</div>
                             <a class="nav-link" href="/academy/listSearch">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                ÇĞ¿ø°Ë»ö
+                                í•™ì›ê²€ìƒ‰
                             </a>
                             <div class="sb-sidenav-menu-heading">information</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                ³» Á¤º¸ °ü¸®
+                                ë‚´ ì •ë³´ ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/user/getUser?email=${user.email}">³» Á¤º¸ º¸±â</a>
-                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">ºñ¹Ğ¹øÈ£ º¯°æ</a>
-                                    <a class="nav-link" href="/user/outUser?email=${user.email}">Å»Åğ ÇÏ±â</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ ÈÄ±â</a>
-                                    <a class="nav-link" href="/user/listConnect">³»°¡ ´Ù´Ï´Â ÇĞ¿ø</a>
+                                    <a class="nav-link" href="/user/getUser?email=${user.email}">ë‚´ ì •ë³´ ë³´ê¸°</a>
+                                    <a class="nav-link" href="/user/updatePassword?email=${user.email}">ë¹„ë°€ë²ˆí˜¸ ë³€ê²½</a>
+                                    <a class="nav-link" href="/user/outUser?email=${user.email}">íƒˆí‡´ í•˜ê¸°</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ í›„ê¸°</a>
+                                    <a class="nav-link" href="/user/listConnect">ë‚´ê°€ ë‹¤ë‹ˆëŠ” í•™ì›</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                ³» ¼ö¾÷ °ü¸®
+                                ë‚´ ìˆ˜ì—… ê´€ë¦¬
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">°ü½É ¼ö¾÷</a>
-                                    <a class="nav-link" href="#">±¸¸Å ¸ñ·Ï</a>
+                                    <a class="nav-link" href="#">ê´€ì‹¬ ìˆ˜ì—…</a>
+                                    <a class="nav-link" href="#">êµ¬ë§¤ ëª©ë¡</a>
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">board</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBoard" aria-expanded="false" aria-controls="collapsePages">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                °Ô½ÃÆÇ
+                                ê²Œì‹œíŒ
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseBoard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#">°øÁö»çÇ×</a>
-                                	<a class="nav-link" href="#">QnA °Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="/board/listBoard">ÀÚÀ¯°Ô½ÃÆÇ</a>
-                                    <a class="nav-link" href="#">ÇĞ¿ø °øÁö»çÇ×</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ °Ô½Ã±Û</a>
-                                    <a class="nav-link" href="#">³»°¡ ÀÛ¼ºÇÑ ´ñ±Û</a>
+                                	<a class="nav-link" href="#">ê³µì§€ì‚¬í•­</a>
+                                	<a class="nav-link" href="#">QnA ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="/board/listBoard">ììœ ê²Œì‹œíŒ</a>
+                                    <a class="nav-link" href="#">í•™ì› ê³µì§€ì‚¬í•­</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ê²Œì‹œê¸€</a>
+                                    <a class="nav-link" href="#">ë‚´ê°€ ì‘ì„±í•œ ëŒ“ê¸€</a>
                                 </nav>
                             </div>
                         </div>
@@ -110,63 +261,75 @@
 
                 </nav>
             </div>
-            <!-- ¿©±â°¡ °¡¿îµ¥ µé¾î°¥ È­¸é (¹Ù²î´Â °÷) -->
+            <!-- ì—¬ê¸°ê°€ ê°€ìš´ë° ë“¤ì–´ê°ˆ í™”ë©´ (ë°”ë€ŒëŠ” ê³³) -->
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-				         <div class="page-header">
-					       <h3 class=" text-info">³»Á¤º¸º¸±â È­¸é</h3>
-					       <h5 class="text-muted">³» Á¤º¸¸¦ <strong class="text-danger">ÃÖ½ÅÁ¤º¸·Î °ü¸®</strong>ÇØ ÁÖ¼¼¿ä.</h5>
-					    </div>
-					
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2"><strong>ÀÌ ¸Ş ÀÏ</strong></div>
-							<div class="col-xs-8 col-md-4">${user.email}</div>
-						</div>
+				       <form class="form-horizontal">
+
+						<!-- í”„ë¡œí•„ ì œëª©, ì‚¬ì§„ -->				       
+				        <div>
+		                    <h3 class="profile">
+		                        <label for="profile">${user.name}ë‹˜ì˜ Profile</label>
+		                    </h3>
+		                    <span class="image">
+		                    	<input type="hidden" value="${user.userNo}">
+		                    	<img src="/image/user.jpg" width="200px"/>
+		                    	<div>${user.role}</div>
+		                    </span>
+		                </div>
+		                
+						<!-- íšŒì›ì •ë³´ìˆ˜ì •ë²„íŠ¼ -->
+		                <div>
+		                    <span class="box int_email">
+		                       <img src="/image/edit.png" width="40px" name="updateInfo" class="updateInfo"/>
+		                    </span> 
+		                </div> 
 						
-						<hr/>
+						<!-- EMAIL -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">ì´ ë©” ì¼</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.email}</span>
+		                    </span> 
+		                </div> 
+							        
+						<!-- ì´ë¦„ -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">ì´ ë¦„</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.name}</span>
+		                    </span> 
+		                </div> 
+				
+						<!-- ì „í™”ë²ˆí˜¸ -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">íœ´ëŒ€ì „í™”ë²ˆí˜¸</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.phone}</span>
+		                    </span> 
+		                </div> 
+				
+						<!-- ê°€ì…ì¼ì -->
+		                <div>
+		                    <h3 class="join_title"><label for="email">ê°€ì…ì¼ì</label></h3>
+		                    <span class="box int_email">
+		                        <span>${user.inDate}</span>
+		                    </span> 
+		                </div> 
 						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>ÀÌ ¸§</strong></div>
-							<div class="col-xs-8 col-md-4">${user.name}</div>
-						</div>
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>¿ªÇÒ</strong></div>
-							<div class="col-xs-8 col-md-4">${user.role}</div>
-						</div>
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>ÈŞ´ëÀüÈ­¹øÈ£</strong></div>
-							<div class="col-xs-8 col-md-4">${user.phone}</div>
-						</div>
-						
-						<hr/>
-						
-						<div class="row">
-					  		<div class="col-xs-4 col-md-2 "><strong>°¡ÀÔÀÏÀÚ</strong></div>
-							<div class="col-xs-8 col-md-4">${user.inDate}</div>
-						</div>
-						
-						 <!--  input type="hidden" id="userNo" name="userNo" value="${user.userNo}"> -->
-						
-						<hr/>
-						
+						<!-- ì¶”í›„ ì‚­ì œì˜ˆì • -->
 						<div class="row">
 					  		<div class="col-md-12 text-center ">
-					  			<button type="button" class="btn btn-primary">È¸¿øÁ¤º¸¼öÁ¤</button>
+					  			<button type="button" name="allLogout" class="allLogout">ë¡œê·¸ì•„ì›ƒ</button>
 					  		</div>
 						</div>
 						
-						<br/>
                     </div>
                 </main>
             </div>
-        </div>
+            
+        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

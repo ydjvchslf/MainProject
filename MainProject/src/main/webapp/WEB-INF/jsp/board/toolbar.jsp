@@ -175,7 +175,7 @@ font-family: paybooc-Bold;
     <a href="/user/outUser?email=${user.email}">탈퇴 하기</a>
     <a href="/review/addReviewView">후기 작성하기</a>
     <a href="/user/listConnect">내가 다니는 학원</a>
-    <a href="#">내가 쓴 게시글 보기</a>
+    <a href="/board/listBoard?isMine=y">내가 쓴 게시글 보기</a>
     <a href="#">내가 쓴 댓글 보기</a>
   </div>
   <br>
