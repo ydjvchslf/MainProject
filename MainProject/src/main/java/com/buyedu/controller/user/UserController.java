@@ -128,7 +128,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		
 		System.err.println(user);
-		
+		System.out.println(list);
 //		return "/user/getUserTiles";
 		return "main";
 	}
@@ -420,7 +420,7 @@ public class UserController {
 	          //아카데미 화면
 				String getUserView = this.getUser(session, user.getEmail(), model);
 				
-				return getUserView;
+				return "/main";
 				
 			}
 			
