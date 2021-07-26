@@ -13,15 +13,23 @@
 	          <li>
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">내 학원</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="#">학원 1</a>
-                </li>
-                <li>
-                    <a href="#">학원 2</a>
-                </li>
-                <li>
-                    <a href="#">학원 3</a>
-                </li>
+
+			<c:if test="${list.size()<=2}">
+				<li>
+					<a href="#">학원 등록</a>
+				</li>
+			</c:if> 
+			
+			<c:forEach var="academy" items="${list}">
+				
+				<li>
+					<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
+				</li>	
+			</c:forEach>			
+
+
+
+
 	            </ul>
 	          </li>
 	         </c:if> 
@@ -87,10 +95,10 @@
               <a href="#eduSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">수업</a>
               <ul class="collapse list-unstyled" id="eduSubmenu">
                 <li>
-                    <a href="/pickedu/listPickEdu">관심수업</a>
+                    <a href="/pickedu/listPickEdu?userNo=${user.userNo}">관심수업</a>
                 </li>
                 <li>
-                    <a href="/purchaseedu/listPurchaseEdu">구매수업</a>
+                    <a href="/purchaseedu/listPurchaseEdu?userNo=${user.userNo}">구매수업</a>
                 </li>
               </ul>
 	          </li>
