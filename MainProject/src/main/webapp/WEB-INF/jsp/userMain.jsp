@@ -88,9 +88,9 @@
                                 	<a class="nav-link" href="/board/listBoard?cateCode=0">공지사항</a>
                                 	<a class="nav-link" href="/board/listBoard?cateCode=1">QnA 게시판</a>
                                     <a class="nav-link" href="/board/listBoard?cateCode=2">자유게시판</a>
-                                    <a class="nav-link" href="/board/listBoard?cateCode=3">학원 공지사항</a>
-                                    <a class="nav-link" href="#">내가 작성한 게시글</a>
-                                    <a class="nav-link" href="#">내가 작성한 댓글</a>
+                                  
+                                    <a class="nav-link" href="/board/listBoard?isMine=y">내가 작성한 게시글</a>
+                                   
                                 </nav>
                             </div>
                         </div>

@@ -64,15 +64,18 @@
 									var str = '없는 회원정보입니다.';
 									
 									console.log("없는 정보");
+									$('.text_email').text("");
 									$('.text_email').append(str).css("color", "red");
 									
 								} else if (JSONData.message == "ok") {
 									
-									var dbEmail = JSONData.dbEmail;
-									var displayText = '회원님의 email 계정은 "'+dbEmail+'" 입니다!';
 									
-									alert(dbEmail)
-									$('.text_email').append(displayText).css("color", "red");
+									var dbEmail = JSONData.dbEmail;
+									var str = '회원님의 email은 "'+dbEmail+'" 입니다!';
+									
+									//alert(dbEmail)
+									$('.text_email').text("");
+									$('.text_email').append(str).css("color", "red");
 								}
 								
 							}

@@ -195,5 +195,7 @@
 		FROM academy
 		WHERE academy_code = #{academyCode}
 	 </delete>
+	 
+
 
 </mapper>

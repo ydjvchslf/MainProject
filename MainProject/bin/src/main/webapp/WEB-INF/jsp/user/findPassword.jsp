@@ -23,6 +23,8 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script>
 	
+	var checkVaild = false;
+	
 	$( function() {
 		$("a[href='#' ]").on("click" , function() {
 			self.location = "/user/login"
@@ -30,59 +32,181 @@
 	});
 	
 	
-	$( function() { 
+	//비밀번호 찾기 눌렀을때 true 값 체크 메서드
+	function fncCheckAll() {
 		
-		$("button[name='findPassword']").click(function(){
+		var valid = false;
+		
+		if( checkVaildNumber() ){
+			valid = true;
+		}
+		
+		return valid;
+	}
+	
+	
+	
+	$(function() {
+		
+		//인증번호 발송 event
+		$( "button[name='send_sms']" ).on("click" , events.click.phonBtn);
+		
+		//인증번호 확인 event
+		$( "button[name='check_sms']" ).on("click" , events.click.vaildBtn);
+		
+		//비밀번호찾기 event
+		$( "button[name='findPassword']" ).on("click" , events.click.findBtn);
+		
+	});
+	
+	
+	
+	var events = {
 			
-				console.log('잘접근!');
+			click : {
 				
-				var name = $("#name").val();
-				var phone = $("#phone").val();
-				var email = $("#email").val();
+				phonBtn : function() {
+					alert("인증번호발송 클릭")
+					fncAuth();
+					
+				},
 				
-				console.log(name);
-				console.log(phone);
-				console.log(email);
+				vaildBtn : function() {
+					alert("인증확인 클릭")
+					fncKey();
+					
+				},
+				
+				findBtn : function() {
+					alert("비밀번호찾기버튼 클릭")
+					
+					if( checkVaild ){
+						alert("2222")
+						findPassword();
+					}
+					
+				}
+			}
+	}
+	
+	//휴대전화번호 자동 대시 입력
+	$(document).on("keyup", "#phone", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+
+	
+	
+	//인증번호 발송 함수
+	function fncAuth(){					
+		
+		var phone = $("#phone").val()
+		alert("입력한 연락처 : "+phone);
+		
+		$.ajax({
+				url : "/user/json/sms/"+phone ,
+				method : "GET" ,
+				dataType : "json" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : 
+						function(JSONData , status) {
+
+						//alert("status : "+status);
+						//alert("JSONData : \n"+JSONData);
+						//alert("JSONData : \n"+JSONData.key);
+						key = JSONData.key;
+						
+				}
+					
+		});	//End ajax
+	};
+	
+	
+	//인증확인 함수
+	//test 용, 나중에 실제에서는 지우기
+	
+	var key ="123456";
+	//var key = "";
+	
+	var vaildNum = $("#vaildNum").val();
+	
+	function fncKey() {	
+		
+		var vaildNum = $("#vaildNum").val();
+		
+		console.log("key : " +key)
+		
+		if( vaildNum == key ){
 			
-				$.ajax( 
-						{
-							url : "/user/json/findPassword",
-							method : "POST" ,
-							data : JSON.stringify({
-								name : name,
-								phone : phone,
-								email : email,
-							}),
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-							success : function(JSONData, status) {
+			$(".text_sms").text("인증번호가 맞습니다.");
+			$(".text_sms").css("color", "blue");
+			
+			checkVaild = true;
+			
+		}else{
+			
+			$(".text_sms").text("인증번호가 맞지 않습니다.");
+			$(".text_sms").css("color", "red");
+		
+		}		
+	}		
+	
+	
+	
+	//폼 입력 완성-> 비밀번호 찾기 눌렀을때
+	function findPassword() {
+			
+			console.log(checkVaild);
+			console.log('잘접근!');
+			
+			var name = $("#name").val();
+			var phone = $("#phone").val();
+			var email = $("#email").val();
+			
+			console.log(name);
+			console.log(phone);
+			console.log(email);
+		
+			$.ajax({
+						url : "/user/json/findPassword",
+						method : "POST" ,
+						data : JSON.stringify({
+							name : name,
+							phone : phone,
+							email : email,
+						}),
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData, status) {
+							
+							alert("성공!");
+				    			
+							if (JSONData.message == "no") {
 								
-								alert("성공!");
-					    			
-								if (JSONData.message == "no") {
-									
-									var str = '없는 회원정보입니다.';
-									
-									console.log("없는 정보");
-									$('.explain1').text("")
-									$('.explain1').append(str).css("color", "red");
-									
-								} else if (JSONData.message == "ok") {
-									
-									$('button[name="changeButton"]').prop('disabled', false);
-									$("input").removeAttr('disabled');
-									
-									var displayText = '새로운 비밀번호로 수정해주세요!';
-									$('.explain1').text("")
-									$('.explain1').append(displayText).css("color", "red");
-								}
+								var str = '없는 회원정보입니다.';
+								
+								console.log("없는 정보");
+								$('.explain1').text("")
+								$('.explain1').append(str).css("color", "red");
+								
+							} else if (JSONData.message == "ok") {
+								
+								$('button[name="changeButton"]').prop('disabled', false);
+								$("input[type='password']").removeAttr('disabled');
+								
+								var displayText = '새로운 비밀번호로 수정해주세요!';
+								$('.explain1').text("")
+								$('.explain1').append(displayText).css("color", "blue");
 							}
-				});
+						}
 			});
-		});
+	}
+			
+			
+	
 	
 	// 비밀번호, 새 비밀번호 확인
 	 $(function(){
@@ -158,6 +282,13 @@
 					});
 				});
 			});
+
+
+	
+	//cool sms
+	
+	
+	
 	
 	
 	
@@ -183,10 +314,22 @@
 			  </div>
 			  
 			  <div class="form-group">
-			    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">전화번호</label>
+			    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">휴대전화번호</label>
 			    <div class="col-sm-4">
 			      <input type="text" class="form-control" id="phone" name="phone" placeholder="phone">
+			      <button name="send_sms" class="btn btn-primary" onclick="return false">인증번호발송</button>
 			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+			    <label for="vaild" class="col-sm-offset-1 col-sm-3 control-label"></label>
+			    <div class="col-sm-4">
+			      <input type="text" class="form-control" id="vaildNum" name="vaildNum" placeholder="인증번호">
+			      <button name="check_sms" class="btn btn-primary" onclick="return false">인증확인</button>
+			    </div>
+				  <span id="helpBlock" class="help-block">
+					 <strong class="text_sms"></strong>
+				  </span>
 			  </div>
 			  
 			  <div class="form-group">
