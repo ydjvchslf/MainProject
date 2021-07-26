@@ -75,7 +75,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			//model.addAttribute("cglist", cgmap.get("list"));
 			//System.err.println(cgmap);
 			
-			return "/board/addBoardView";
+			return "/tiles/board/addBoardView";
 		}
 		
 		@RequestMapping( value="addBoard", method=RequestMethod.POST)
@@ -104,7 +104,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println("들어갔나 정보 : "+board1);
 			System.out.println("추천수가 안나오지? "+boardLike);
 			
-			return "/board/getBoard";
+			return "/tiles/board/getBoard";
 		}
 		
 		//@RequestMapping("/getProduct.do")
@@ -152,7 +152,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //	        int complainBoard = complainService.addComplainBoard(map);
 //	        System.out.println("컴플레인"+complainBoard);
 //	        model.addAttribute("complainBoard",complainBoard);
-			return "/board/getBoard";
+			return "/tiles/board/getBoard";
 		}
 		
 		@RequestMapping( value="getBoardAca", method = RequestMethod.GET)
@@ -173,7 +173,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 				System.out.println("컨트롤러 겟보드아카 "+board);
 				// Model 과 View 연결
 				model.addAttribute("board", board);
-				return "/board/getBoardAca"; 
+				return "/tiles/board/getBoardAca"; 
 		}
 		
 		//@RequestMapping("/updateProductView.do")
@@ -190,7 +190,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //			model.addAttribute("list", cgmap.get("list"));
 			model.addAttribute("board", board);
 			
-			return "/board/updateBoardView";
+			return "/tiles/board/updateBoardView";
 		}
 		
 		//@RequestMapping("/updateProduct.do")
@@ -212,7 +212,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //				session.setAttribute("user", user);
 //			}
 			
-			return "redirect:/board/getBoard?boardNo="+board.getBoardNo();
+			return "redirect:/tiles/board/getBoard?boardNo="+board.getBoardNo();
 		}
 		
 		//@RequestMapping("/listProduct.do")
@@ -278,7 +278,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.err.println("2 : "+search.getSearchKeyword());
 			}
 
-			return "/board/listBoard";
+			return "/tiles/board/listBoard";
 		}
 		
 //		@RequestMapping( value="listBoardpin" )
@@ -320,7 +320,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			//System.err.println("겟 프로덕트 : "+board);
 			//BoardService boardService.listBoard(null, null, null);
 
-			return "redirect:/board/listBoard?cateCode="+board.getCateCode();
+			return "redirect:/tiles/board/listBoard?cateCode="+board.getCateCode();
 		}
 
 	}
