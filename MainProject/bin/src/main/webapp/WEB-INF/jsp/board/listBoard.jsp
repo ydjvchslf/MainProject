@@ -9,8 +9,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
+
 <html>
-<title>JENNYSHOP</title>
+<title>사!교육</title>
 <head>
 
 	
@@ -41,10 +42,17 @@
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
-			function fncGetList(currentPage) {
+		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/board/listBoard").submit();
+			var cateCode=$("input[name='cateCode']").val();
+			$("form").attr("method" , "POST").attr("action" , "/board/listBoard?cateCode="+cateCode).submit();
 			//$("form").submit();
+		}
+		
+		function enterEvent(){
+			if(window.event.keyCode == 13){
+				fncGetList(1);
+			}
 		}
 		
 		$(function() {
@@ -54,28 +62,60 @@
 			});
 		 });
 		
-		function fncGetList2(currentPage, category) {
-			document.getElementById("currentPage").value = currentPage;
-			document.getElementById("searchCategory").value = category;
-			$("form").attr("method" , "POST").attr("action" , "/board/listBoard").submit();
-		}
-		
-		$(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( ".btn:contains('글쓰기')" ).on("click" , function() {
-				fncAddBoardView();
-			});
-		});	
-		
-		function fncAddBoardView(){
-			
-			$("form").attr("method" , "GET").attr("action" , "/board/addBoardView").submit();
-		}
+	
 	</script>
+	<style>
+	#boardHeader{
+	vertical-align : top;
+	font-size : 0px;
+	color : #1F4E79;
+	font-family : TmonMonsori;
+	}
+	
+	
+	
+	@font-face {
+    font-family: 'TmonMonsori';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
+	#recommendPosition{
+	background-color : #D4EAFB;
+	font-weight : bold;
+	
+	}
+	
+	#tableHead{
+	background-color : #2E75B6;
+	color : white;
+	text-align : center;
+	font-size : 18px;
+	}
+	
+	@font-face {
+     @font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+}
+	
+	#totalPosition{
+	font-family :NanumBarunGothic;
+	}
+	
+	
+	</style>
 	</head>
 	
+	
+	
   <body>
+  <%@ include file="toolbar.jsp" %>
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 
@@ -88,18 +128,27 @@
 	<!-- <form>
 	<input type="hidden" name="menu" value="${menu}" />
 	-->
-	<div class="container">
+	<div id="totalPosition">
+	<div class="container" id="totalPosition">
 	
-		<div class="page-header text-default">
+		<div class="page-header text-default" id="boardHeader">
 		<br/><br/><br/>
 		
 		
-							<h3>자유 게시판</h3> 
-						
-					
-
-
-					
+		<c:choose>
+			<c:when test="${search.cateCode eq '0' }">
+				<h3>사!교육 공지사항</h3>
+			</c:when>
+			<c:when test="${search.cateCode eq '1' }">
+				<h3>사!교육 Q&A</h3>
+			</c:when>
+			<c:when test="${board.cateCode eq '2' }">
+				<h3>자유 게시판</h3>
+			</c:when>
+			<c:when test="${search.cateCode eq '3' }">
+				<h3>학원 공지사항</h3>
+			</c:when>
+		</c:choose>					
 	    </div>
 	    
 
@@ -110,20 +159,27 @@
 	    
 		    <div class="col-md-6 text-left">
 		    			 
-		    	<p class="text-primary">
+		    	<p class="text-primary" id="boardCountInfo">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    		
 		    	</p>
 		    </div>
 		    
-		    <div class="col-md-6 text-right">
+		    <div class="col-md-6 text-right" id="searchPosition">
 			    <form class="form-inline" >
-			    <input type="hidden" name="searchCategory" id="searchCategory" value="0" />
+			    <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
 			    
+			    <div class="form-group">
+				    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
+						<option value="0"  ${ ! empty search.searchConditionb && search.searchConditionb==0 ? "selected" : "" }>제목</option>
+						<option value="1"  ${ ! empty search.searchConditionb && search.searchConditionb==1 ? "selected" : "" }>내용</option>
+						<option value="2"  ${ ! empty search.searchConditionb && search.searchConditionb==2 ? "selected" : "" }>작성자</option>
+					</select>
+				 </div>
 				  
-				  <div class="form-group">
+				 <div class="form-group">
 				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    <input type="text" class="form-control" onkeyup="enterEvent()" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : null }"  >
 				  </div>
 				  
@@ -143,18 +199,45 @@
 		
 		
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
+      <table class="table table-hover" id="boardTable">
       
-        <thead>
+        <thead id="tableHead">
           <tr>
             <th width="100" align="center">No</th>
             <th width="400" align="center" >게시글제목</th>
-            <th width="300" align="left">작성자</th>
+            <th width="300" align="center">작성자</th>
             <th width="200" align="left">작성일자</th>
-            <th width="200" align="left">조회수</th>
+            <th width="200" align="center">조회수</th>
+            <c:if test="${board.cateCode eq '2'}">
+            <th width="200" align="center">추천수</th>
+            </c:if>
             
         </thead>
        
+			<tbody id="recommendPosition">
+			<c:if test="${board.cateCode eq '2' }">
+		  <c:set var="i" value="${resultPage.totalCount }" />
+		  <c:forEach var="board" items="${map}">
+		  
+			<tr>
+			  <td align="left">추천</td>
+		
+	
+		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+					  
+			  
+			  <td id="listtable" align="left">${board.EMAIL}</td>
+			  <td id="listtable" align="left">
+			  <fmt:formatDate value="${board.BOARD_DATE}" pattern="yyyy-MM-dd"/></td>
+			  <td id="listtable" align="left">${board.VIEW_COUNT}</td>
+			  <td id="listtable" align="left"><span id="recommendCnt">${board.RECNT}</span></td>
+			  
+			  
+			</tr>
+          </c:forEach></c:if>
+        
+        </tbody>
+		
 		<tbody>
 		
 		  <c:set var="i" value="${resultPage.totalCount }" />
@@ -164,12 +247,16 @@
 			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
 		
 	
-		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}">${board.boardTitle} (${commentCount})</a></td>
+		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt }</span>)</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${board.email}</td>
-			  <td id="listtable" align="left">${board.boardDate}</td>
+			  <td id="listtable" align="left">
+			  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
 			  <td id="listtable" align="left">${board.viewCnt}</td>
+			  <c:if test="${board.cateCode eq '2'}">
+			  <td id="listtable" align="left"><span id="recommendCnt">${board.recommendCnt}</span></td>
+			  </c:if>
 			  
 			</tr>
           </c:forEach>
@@ -179,12 +266,39 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
-		    <div class="col-sm-offset-11  col-sm-1 text-center">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
-		      <a href="/board/addBoard" >글쓰기</a></button>
-			 
-		    </div>
+	  
+	  카테고리 :  ${search.cateCode}
+	  userNo : ${user.userNo}
+		<input type="hidden" name="cateCode" value="${search.cateCode}" />	    
+		   
+		 <c:choose>
+			<c:when test="${search.cateCode eq '0' && user.userNo eq 140 }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard?cateCode=0" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '1' }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default" value="${search.cateCode}" >
+		     	 <a href="/board/addBoard?cateCode=1" >글쓰기</button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '2' }">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard?cateCode=2" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+			<c:when test="${search.cateCode eq '3' && user.role eq 'academy'}">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 <a href="/board/addBoard?cateCode=3" >글쓰기</a></button>
+		    	</div>
+			</c:when>
+		  </c:choose>	
 		</div>
+		
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
@@ -193,6 +307,7 @@
  	<!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
+	</div>
 	
 <!--  </form> -->
   

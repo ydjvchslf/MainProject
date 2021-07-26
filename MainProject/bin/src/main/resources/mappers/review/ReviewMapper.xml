@@ -9,7 +9,7 @@
  	
 	<resultMap id="reviewSelectMap" type="review">
 		<result property="reviewNo" 			column="review_no" 			jdbcType="NUMERIC"/>
-		<result property="academy.academyCode"  column="academy_code" 		jdbcType="VARCHAR"/>
+		<result property="academyCode" 		    column="academy_code" 		jdbcType="VARCHAR"/>
 		<result property="reviewWriter.userNo"	column="review_writer" 		jdbcType="NUMERIC" />
 		<result property="reviewWriter.name"	column="name" 				jdbcType="VARCHAR" />
 		<result property="reviewState" 			column="review_state" 		jdbcType="CHAR" />
@@ -23,41 +23,51 @@
 	<insert 	id="addReview"		parameterType="review" >
 	 INSERT
 		INTO review (review_no, academy_code , review_writer, review_title, review_content, review_date)
-		VALUES ( seq_review_review_no.nextval ,
-				#{academy.academyCode} , 
-				#{reviewWriter.userNo} ,
-				#{reviewTitle} ,
-				#{reviewContent} ,
+		VALUES ( seq_review_review_no.nextval , #{academyCode} , #{reviewWriter.userNo} , #{reviewTitle} , #{reviewContent} ,
 				SYSDATE )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getReview"	parameterType="int"	resultMap="reviewSelectMap">
-		SELECT
+	SELECT
 		r.review_no ,
-		r.review_writer ,
+        a.academy_code academy_code,
+		u.user_no review_writer ,
+		u.name ,
 		r.review_title ,
 		r.review_content ,
 		r.review_date 
-		FROM review r , users u
-		WHERE review_no = (#{value}) AND r.review_writer = u.user_no
+		FROM academy a , review r , 
+		(SELECT
+		u.user_no , u.name
+		from users u)u
+		WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND review_no = (#{value})
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getReviewWriter"	parameterType="String"	resultMap="reviewSelectMap">
+	 <!-- <select 	id="getReviewWriter"	parameterType="String"	resultMap="reviewSelectMap">
 		SELECT u.name
 		FROM review r , users u
 		WHERE r.review_writer = '${value}'
-	 </select>
+	 </select>-->
 	 
 	 <!-- SQL : UPDATE -->
 	 	<update id="updateReview" parameterType="review">
-		UPDATE
-		review
-		SET review_title = #{reviewTitle:VARCHAR} ,
-			review_content = #{reviewContent:VARCHAR} 
-		WHERE review_no in (#{reviewNo})
+		UPDATE review
+		<set>
+		    review_title = #{reviewTitle} ,
+			review_content = #{reviewContent}
+		</set>
+		WHERE review_no = '${reviewNo}'
 	</update>
+	
+	<delete id="deleteReview" parameterType="review">
+		update review
+		<set>
+			review_state = '2'
+		</set>
+		WHERE review_no = '${reviewNo}'
+	</delete>
 		 
 
 	
@@ -65,21 +75,18 @@
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.name , r.review_date
-											FROM review r, users u
+											FROM review r, users u , academy a
+											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code AND r.academy_code = '${academyCode}'
 											<if test="searchCondition != null">
-												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				review_title like '%${searchKeyword}%'
+										 				and u.name like '%${searchKeyword}%'
 													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				review_content like '%${searchKeyword}%'
+													<if test="searchCondition == 1 and serachKeyword !='' ">
+														and r.review_content like '%${searchKeyword}%'
 													</if>
-													<if test="searchCondition == 2 and serachKeyword !='' ">
-														review_writer like '%${searchKeyword}%'
-													</if>
-												</where>
+												
 											</if>
-											ORDER BY review_no ) inner_table
+											ORDER BY review_date desc ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
@@ -97,20 +104,18 @@
 <!-- 	SQL : SELECT ROW Count	 --> 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT review_title , review_content , review_writer , review_date
-						FROM review
+	  	FROM(	SELECT r.review_title , r.review_content , u.name , r.review_date , a.academy_code 
+						FROM review r , users u , academy a
+						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND r.academy_code = '${academyCode}'
 						<if test="searchCondition != null">
-							<where>
+							
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-									review_title like '%${searchKeyword}%'
+									and review_title like '%${searchKeyword}%'
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-									review_content like '%${searchKeyword}%'
-								</if>
-								<if test="searchCondition == 2 and serachKeyword !='' ">
-									review_writer like '%${searchKeyword}%'
+									and review_content like '%${searchKeyword}%'
 								</if>							
-							</where>
+							
 						</if> ) countTable						
 	 </select>
 	 

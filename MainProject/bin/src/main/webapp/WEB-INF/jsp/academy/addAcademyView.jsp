@@ -36,21 +36,14 @@
 						return;
 					}
 					
-					var value = "";	
-					if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
-						var value = $("option:selected").val() + "-" 
-											+ $("input[name='phone2']").val() + "-" 
-											+ $("input[name='phone3']").val();
-					}
-
-					$("input:hidden[name='phone']").val( value );
-					
 					$("form").attr("method" , "POST").attr("action" , "/academy/addAcademy?userNo=${user.userNo}").submit();
 
 				});
 			});
 			
 		</script>
+		
+	<title>Add Academy page</title>
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
