@@ -50,9 +50,54 @@ public class UserController {
 	int pageSize;
 	
 	
+	//Test용 
+	@RequestMapping( value="tiles", method=RequestMethod.GET )
+	public String test(Search search , Model model , HttpServletRequest request) throws Exception{
+		
+		System.out.println("/user/listUser : GET / POST");
+		
+		System.out.println("계정상태=> " + search.getSearchAccountState());
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		System.err.println("Search => " + search);
+		
+		System.out.println("searchRole 잘받았나==>" + search.getSearchRole() );
+		
+		List<String> roles = search.getSearchRole();
+		List<String> states = search.getSearchAccountState();
+		
+		System.err.println(roles);
+		System.err.println(states);
+		
+		model.addAttribute("roles", roles);
+		model.addAttribute("states", states);
+			
+		// Business logic 수행
+		Map<String , Object> map=userService.getUserList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		// Model 과 View 연결
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		System.out.println( "써치 키워드->" + search.getSearchKeyword() );
+		
+		System.out.println("listUser 끝");
+		
+		return "/tiles/user/listUserTiles";
+	}
+	
+	
 	@RequestMapping( value="addUser", method=RequestMethod.GET )
 	public String addUser() throws Exception{
-	
+		
 		System.out.println("/user/addUser : GET");
 		
 		return "/user/addUserView";
@@ -71,18 +116,23 @@ public class UserController {
 	
 	
 	@RequestMapping( value="getUser", method=RequestMethod.GET )
-	public String getUser( @RequestParam("email") String email , Model model ) throws Exception {
+	public String getUser( HttpSession session, @RequestParam("email") String email , Model model ) throws Exception {
 		
 		System.out.println("/user/getUser : GET");
 		//Business Logic
 		User user = userService.getUser(email);
+		
+		List<Connect> list = userService.getConnectList(user.getUserNo());
+		model.addAttribute("list", list);
 		// Model 과 View 연결
 		model.addAttribute("user", user);
 		
 		System.err.println(user);
 		
-		return "/user/getUser";
+		return "/tiles/user/getUserTiles";
 	}
+
+	
 	
 	
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
@@ -98,7 +148,7 @@ public class UserController {
 		
 		System.err.println(user);
 		
-		return "/user/updateUser";
+		return "/tiles/user/updateUserTiles";
 	}
 	
 	
@@ -144,7 +194,7 @@ public class UserController {
 		
 		System.out.println("비번변경화면으로 단순 네비게이션");
 		
-		return "/user/updatePassword";
+		return "/tiles/user/updatePasswordTiles";
 	}
 	
 	@RequestMapping( value="updatePassword", method=RequestMethod.POST )
@@ -170,7 +220,7 @@ public class UserController {
 		
 		System.out.println("비번 변경완료->정보조회 화면으로 네비게이션");
 		
-		return "/user/getUser";
+		return "/tiles/user/getUserTiles";
 	}
 	
 	@RequestMapping( value="outUser", method=RequestMethod.GET )
@@ -188,7 +238,7 @@ public class UserController {
 		
 		System.out.println("회원탈퇴 단순 네비게이션");
 		
-		return "/user/outUser";
+		return "/tiles/user/outUserTiles";
 	}
 	
 	
@@ -353,6 +403,13 @@ public class UserController {
 			ck.setPath("/");
 			res.addCookie(ck);
 			
+			List<Connect> list = userService.getConnectList(user.getUserNo());
+			model.addAttribute("list", list);
+			
+			Cookie cookie = new Cookie("loginAccountType", "normal");
+			cookie.setPath("/");
+			res.addCookie(cookie);
+			
 			if ( dbUser.getRole().equals("academy") ) {
 				
 				Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
@@ -361,13 +418,13 @@ public class UserController {
 				
 				return "academyMain";
 				
-			}else if( dbUser.getRole().equals("admin") ) {
-				
-				return "adminMain";
-				
 			}
 			
-			return "userMain";
+			//일반유저, 관리자 화면
+			String getUserView = this.getUser(session, user.getEmail(), model);
+			
+			return getUserView;
+			
 			
 		}else{
 			
@@ -399,45 +456,66 @@ public class UserController {
 	@RequestMapping( value="/snsLogin/{email}" )
 	public String snsLogin( @PathVariable String email, Model model, HttpSession session , HttpServletResponse res) throws Exception{
 	    
+		session.invalidate();
+		
 		System.out.println("/user/snsLogin");
 		
 		System.err.println("패쓰받아온 email => "+email);
 	        
 	    User dbUser = userService.getUser(email);
 	    
-	    System.out.println("로긴한 user=>" + dbUser);
-	        
-	    session.setAttribute("user", dbUser);
-	    model.addAttribute("user", dbUser);
+	 // 쿠키에 로그인 타입 값 설정
+ 		Cookie ck = new Cookie("loginType", "kakao");
+ 		ck.setPath("/");
+ 		res.addCookie(ck);
 	    
-	    String accountState = dbUser.getAccountState();
-	    
-	    if (accountState.equals("1")) {
+	    //카카오 간편로그인
+	    if( dbUser == null ){
 	    	
-	    	model.addAttribute("message", "회원정보가 맞지 않습니다.");
-			return "/user/loginView";
-		}
-	    
-	    // 쿠키에 로그인 타입 값 설정
-		Cookie ck = new Cookie("loginType", "kakao");
-		ck.setPath("/");
-		res.addCookie(ck);
+	    	Cookie cookie = new Cookie("loginAccountType", "sns");
+	    	cookie.setPath("/");
+	    	res.addCookie(cookie);
+	    	
+	    	model.addAttribute("email", email);
+	    	
+	    	return "/tiles/user/getUserTiles";
+	    	
+	    }else { //카카오 통합로그인
+	    	
+	    	Cookie cookie = new Cookie("loginAccountType", "total");
+	    	cookie.setPath("/");
+	    	res.addCookie(cookie);
+	    	
+	    	 System.out.println("로긴한 user=>" + dbUser);
+		        
+	 	    session.setAttribute("user", dbUser);
+	 	    model.addAttribute("user", dbUser);
+	 	    
+	 	    String accountState = dbUser.getAccountState();
+	 	    
+	 	    if (accountState.equals("1")) {
+	 	    	
+	 	    	model.addAttribute("message", "회원정보가 맞지 않습니다.");
+	 			return "/user/loginView";
+	 		}
+	 	    
+	 		if ( dbUser.getRole().equals("academy") ) {
+	 			
+	 			Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
+	             
+	             model.addAttribute("list",map.get("list"));
+	 			
+	 			return "academyMain";
+	 			
+	 		}
+	 		
+	 		String getUserView = this.getUser(session, email, model);
+			
+			return getUserView;
 		
-		if ( dbUser.getRole().equals("academy") ) {
-			
-			Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
-            
-            model.addAttribute("list",map.get("list"));
-			
-			return "academyMain";
-			
-		}else if( dbUser.getRole().equals("admin") ) {
-			
-			return "adminMain";
-			
-		}
-	        
-	    return "userMain";
+	    }
+	    
+	   
 	}
 	
 	
@@ -450,13 +528,27 @@ public class UserController {
 		System.out.println("네이버 로긴으로 받아온 email=> "+email);
 		
 		int result = userService.checkEmail(email);
-		//아이디 중복 없음 -> sns 회원가입 창으로 이동
+		
+		Cookie ck = new Cookie("loginType", "naver");
+		ck.setPath("/");
+		res.addCookie(ck);
+		
+		//아이디 중복 없음 / 네이버 간편로그인
 		if (result == 0) {
 			
-			model.addAttribute("snsEmail", email);
-			return "/user/snsAddUserView";
+			Cookie cookie = new Cookie("loginAccountType", "sns");
+			cookie.setPath("/");
+			res.addCookie(cookie);
+			
+			model.addAttribute("email", email);
+	    	
+	    	return "/tiles/user/getUserTiles";
 			
 		}else{//네이버 로그인 기존회원
+			
+			Cookie cookie = new Cookie("loginAccountType", "total");
+			cookie.setPath("/");
+			res.addCookie(cookie);
 			
 			User dbUser = userService.getUser(email);
 		    
@@ -475,9 +567,7 @@ public class UserController {
 		    model.addAttribute("user", dbUser);
 		    
 		    // 쿠키에 로그인 타입 값 설정
-			Cookie ck = new Cookie("loginType", "naver");
-			ck.setPath("/");
-			res.addCookie(ck);
+			
 				
 				if ( dbUser.getRole().equals("academy") ) {
 					
@@ -487,13 +577,11 @@ public class UserController {
 					
 					return "academyMain";
 					
-				}else if( dbUser.getRole().equals("admin") ) {
-					
-					return "adminMain";
-					
 				}
-			        
-			    return "userMain";
+				
+				String getUserView = this.getUser(session, email, model);
+				
+				return getUserView;
 			
 		}
 		
@@ -553,7 +641,7 @@ public class UserController {
 		
 		System.out.println("listUser 끝");
 		
-		return "/user/listUser";
+		return "/tiles/user/listUserTiles";
 		
 	}
 	
@@ -599,7 +687,7 @@ public class UserController {
 		
 		System.out.println("내가다니는학원 단순 네비게이션");
 		
-		return "/user/listConnect";
+		return "/tiles/user/getUserTiles";
 	}
 	
 	

@@ -100,11 +100,11 @@
                             </a>
                             <div class="collapse" id="collapseBoard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#">공지사항</a>
-                                	<a class="nav-link" href="#">QnA 게시판</a>
-                                    <a class="nav-link" href="/board/listBoard">자유게시판</a>
+                                	<a class="nav-link" href="/board/listBoard?cateCode=0">공지사항</a>
+                                	<a class="nav-link" href="/board/listBoard?cateCode=1">QnA 게시판</a>
+                                    <a class="nav-link" href="/board/listBoard?cateCode=2">자유게시판</a>
                                     <a class="nav-link" href="#">학원 공지사항</a>
-                                    <a class="nav-link" href="#">내가 작성한 게시글</a>
+                                    <a class="nav-link" href="/board/listBoard?isMine=y">내가 작성한 게시글</a>
                                     <a class="nav-link" href="#">내가 작성한 댓글</a>
                                 </nav>
                             </div>

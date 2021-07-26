@@ -36,6 +36,7 @@ public class ReviewService {
 		List<Review> list= reviewDao.getReviewList(search);
 		int totalCount = reviewDao.getTotalCount(search);
 		
+		
 	
 		list.get(0).setTotalCount(totalCount);
 		System.err.println(list);
@@ -67,6 +68,10 @@ public Map<String, Object> academyConnect(String academyCode) throws Exception{
 		map.put("connect", connect);
 		
 		return map;
+}
+
+public int getConnect(Map<String,Object> map) throws Exception {	
+	return reviewDao.getConnect(map);
 }
 
 

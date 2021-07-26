@@ -97,8 +97,9 @@ function fncAddReview(){
 		<h3 style="text-align:center;">후기작성</h3> 
 		</div>
 	<br/><br/>
-	학원코드 : ${academy }
+	학원코드 : ${academyName }
 	학원코드 : ${ academyCode}
+	커넥트상태 : ${connectState }
 
 	<div class="container-fluid">
 	<form class="form-horizontal">

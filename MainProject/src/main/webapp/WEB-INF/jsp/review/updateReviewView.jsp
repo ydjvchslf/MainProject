@@ -118,7 +118,7 @@ function fncupdateReview(){
 			
 	 	<div class="form-group">
 		    <label for="reviewContent" height=100px class="col-sm-offset-1 col-sm-1 control-label">내용</label>
-		    <div class="col-sm-12" height=100px>
+		    <div class="col-sm-8" height=100px>
 		      <textarea class="form-control col-sm-5" rows="5" name="reviewContent"
 						placeholder="내용" style="resize: none;">${review.reviewContent}</textarea>
 		    </div>
