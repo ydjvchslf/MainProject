@@ -129,7 +129,8 @@ public class UserController {
 		
 		System.err.println(user);
 		
-		return "/tiles/user/getUserTiles";
+//		return "/user/getUserTiles";
+		return "main";
 	}
 
 	
@@ -599,7 +600,7 @@ public class UserController {
 		
 		session.invalidate();
 		
-		return "index";
+		return "redirect:/";
 	}
 	
 	

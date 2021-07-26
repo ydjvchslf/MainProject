@@ -9,6 +9,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+</head>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
  	<style>
 		#content{
@@ -40,7 +41,7 @@
 	    
 	   </style>
  </br></br>
- 
+ <body>
  	  <div class="container">
         ´ñ±Û <span class="commentCount"></span>
         <form name="commentInsertForm" onsubmit="return false">

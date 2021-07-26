@@ -13,6 +13,7 @@
         <title>Buy! Edu</title>
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -28,8 +29,8 @@
         <!-- Masthead-->
         <div class="masthead">
             <div class="masthead-content text-white" >
-                <div class="container-fluid px-4 px-lg-0" >
-                    <h1 class="fst-italic lh-1 mb-4"><a href="user/login" style="color:white">Buy! Edu</a></h1>
+                <div class="container-fluid px-4 px-lg-0" style="color:#EB8F05;">
+                    <h1 class="fst-italic lh-1 mb-4"><a href="/user/login" style="color:#EB8F05;" >Buy! Edu</a></h1>
                     <p class="mb-5">모든 학생들이 맞는 학원에서 맞는 교육을 듣기를 바랍니다.</p>
                     <p class="mb-5">우리는 원장님은 강의에 전념하시고 학생들은 수업에 집중하는 것이 맞다고 생각합니다.</p>
                     

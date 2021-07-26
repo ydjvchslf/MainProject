@@ -54,6 +54,4 @@ public interface AcademyDao {
 	
 	
 	
-	
-	
 }
