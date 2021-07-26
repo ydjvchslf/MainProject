@@ -16,7 +16,8 @@
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
-		
+		<script src="/js/sockjs.min.js"></script>
+		<script src="/js/stomp.min.js"></script>
 
     </head>
     <body>
@@ -147,8 +148,30 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script type="text/javascript">
+        //문제가 발생하면 오류가 빡 떠야되는데 var는 캐치가 어려워서 어느부분에서 누수가 발생한건지 추적하기가 어려워서 그렇지 아하
         
+       // let test;
+       // const test;
+       // var test;
+        </script>
         <script>
+        // 츄라이츄라이 업대자나요 업대자나요 다운받아서 저기다가 넣어쥬세욤
+        let socket = new SockJS("/socket");
+        let stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+        	console.log("연결 성공", frame);
+        	alert("연결성공");
+        	stompClient.subscribe("/topic/message", (res) => {
+        		console.log("메시지를 받았습니다.");
+            	console.log("res", res);
+            });
+            
+            stompClient.send("/chat", {}, '{"test", "test"}');
+        });
+        
+        
+        
         
         var userno = '${user.userNo}';
         var role = '${user.role}';
