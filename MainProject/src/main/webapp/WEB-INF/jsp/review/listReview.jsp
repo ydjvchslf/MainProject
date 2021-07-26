@@ -205,19 +205,21 @@
 	  <!--  table End /////////////////////////////////////-->
 	 
 	 회원번호 ${user.userNo} 
-	 학원코드	${connect.academyCode}
+	 학원코드	${review.academyCode}
 	 학원코드1 ${academyCode }
+	 커넥트 ${connect }
+	 
 	 
 	  
 	 <input type="hidden" name="academyCode" value="${academyCode}" /> 
 	  <div class="form-group">
-	  	<c:if test="${user.role eq 'student' }">
+	  	<c:if test="${user.role eq 'student' && connect == '1' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
-		      <a href="/review/addReviewView" >글쓰기</a></button>
+		      <a href="/review/addReviewView?academyCode=${academyCode }" >글쓰기</a></button>
 		</c:if>	 
 		
-		<c:if test="${user.role eq 'parents' }">
+		<c:if test="${user.role eq 'parents' && connect == '1' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
 		      <a href="/review/addReviewView?academyCode=${academyCode }" >글쓰기</a></button>

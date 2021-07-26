@@ -17,6 +17,17 @@ public class Review {
 	private int totalCount;
 	private String academyCode;
 	
+	private int connectState;
+	
+	
+	public int getConnectState() {
+		return connectState;
+	}
+	
+	public void setConnectState(int connectState) {
+		this.connectState = connectState;
+	}
+	
 	
 	public String getAcademyCode() {
 		return academyCode;
@@ -68,7 +79,7 @@ public class Review {
 	}
 	@Override
 	public String toString() {
-		return "Review [academyCode=" + academyCode + ", reviewWriter=" + reviewWriter + ", reviewNo=" + reviewNo
+		return "Review [connectState=" + connectState + "academyCode=" + academyCode + ", reviewWriter=" + reviewWriter + ", reviewNo=" + reviewNo
 				+ ", reviewState=" + reviewState + ", reviewTitle=" + reviewTitle + ", reviewContent=" + reviewContent
 				+ ", reviewDate=" + reviewDate + ", totalCount=" + totalCount + "]////";
 	}

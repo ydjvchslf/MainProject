@@ -16,7 +16,7 @@
 		<result property="reviewTitle" 			column="review_title" 		jdbcType="VARCHAR" />
 		<result property="reviewContent" 		column="review_content" 	jdbcType="VARCHAR" />
 		<result property="reviewDate" 			column="review_date" 		jdbcType="DATE" />
-		
+		<result property="connectState"			column="connect_state"		jdbcType="CHAR"/>
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -118,5 +118,11 @@
 							
 						</if> ) countTable						
 	 </select>
+	 
+	  <select id="getConnect" parameterType="map" resultType="int" >
+          select count(*)
+			from connection
+			WHERE academy_code= #{academyCode} AND user_no= ${userNo} AND connect_state = '1'
+     </select>
 	 
 </mapper>

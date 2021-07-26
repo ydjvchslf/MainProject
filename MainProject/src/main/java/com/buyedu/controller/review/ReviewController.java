@@ -1,5 +1,6 @@
 package com.buyedu.controller.review;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Board;
 import com.buyedu.domain.Connect;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.Review;
@@ -50,6 +52,7 @@ public class ReviewController {
 		
 		
 		String academyCode = request.getParameter("academyCode");
+
 		System.out.println("아카데미코드 : "+academyCode);
 		model.addAttribute("academyCode" , academyCode);
 		
@@ -134,20 +137,32 @@ public class ReviewController {
 		
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo(); 
+		System.out.println("여기서 터지냐..?11111");
 		
-		
-		
-		//Map<String, Object> map = acaService.academyConnect(academy);
+		System.out.println("여기서 터지냐..?22222");
+	
 		List<Review> list = reviewService.getReviewList(search);
-		
+		System.out.println("여기서터지나 3333333");
 		int totalCount = list.get(0).getTotalCount();
 		Page resultPage = new Page (search.getCurrentPage(),totalCount,pageUnit,pageSize);
+		System.out.println("여기서터지나 44444444");
+		Map<String , Object> map = new HashMap<String , Object>();
+		String connectState = "1";
+		map.put("userNo", userNo);
+		map.put("academyCode", academyCode);
+		map.put("connectState", connectState);
 		
+		int connect = reviewService.getConnect(map);
+		System.out.println("맵 : "+map);
 		
+		System.err.println("커낵트 : "+connect);
+		
+		model.addAttribute("academyCode" , academyCode);
+		model.addAttribute("connect",connect);
 		model.addAttribute("list",list);
 		model.addAttribute("resultPage" , resultPage);
 		model.addAttribute("search",search);
-		model.addAttribute("academyCode" , academyCode);
 		//model.addAttribute("connect" , map.get("connect"));
 		
 		System.err.println(list);

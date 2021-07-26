@@ -1,6 +1,7 @@
 package com.buyedu.dao.review;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,17 +12,19 @@ import com.buyedu.domain.Search;
 @Mapper
 public interface ReviewDao {
 	
-	public void addReview(Review review);
+	void addReview(Review review);
 	
-	public Review getReview(int reviewNo);
+	Review getReview(int reviewNo);
 	
-	public int updateReview(Review review);
+	int updateReview(Review review);
 	
-	public List<Review> getReviewList(Search search);
+	List<Review> getReviewList(Search search);
 	
-	public int getTotalCount(Search search);
+	int getTotalCount(Search search);
 	
-	public int deleteReview(Review review);
+	int deleteReview(Review review);
+	
+	int getConnect(Map<String,Object> map) throws Exception ;
 	
 	String getReviewWriter(int userNo);
 
