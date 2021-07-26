@@ -141,6 +141,7 @@ public class ReviewController {
 		System.out.println("여기서 터지냐..?11111");
 		
 		System.out.println("여기서 터지냐..?22222");
+		
 	
 		List<Review> list = reviewService.getReviewList(search);
 		System.out.println("여기서터지나 3333333");

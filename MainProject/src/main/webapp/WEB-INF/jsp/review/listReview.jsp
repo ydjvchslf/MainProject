@@ -208,7 +208,7 @@
 	 학원코드	${review.academyCode}
 	 학원코드1 ${academyCode }
 	 커넥트 ${connect }
-	 
+	 리뷰넘버 ${review.reviewNo}
 	 
 	  
 	 <input type="hidden" name="academyCode" value="${academyCode}" /> 
