@@ -90,7 +90,7 @@
               </ul>
 	          </li>
 	          
-	         <c:if test="${user.role == 'user'}">  
+	         <c:if test="${user.role == 'student' || user.role =='parents'}">  
 	          <li>
               <a href="#eduSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">¼ö¾÷</a>
               <ul class="collapse list-unstyled" id="eduSubmenu">

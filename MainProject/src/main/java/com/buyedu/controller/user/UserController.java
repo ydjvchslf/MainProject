@@ -418,7 +418,7 @@ public class UserController {
 	            model.addAttribute("list",map.get("list"));
 				
 	          //아카데미 화면
-				String getUserView = this.getUser(session, user.getEmail(), model);
+			//	String getUserView = this.getUser(session, user.getEmail(), model);
 				
 				return "/main";
 				
