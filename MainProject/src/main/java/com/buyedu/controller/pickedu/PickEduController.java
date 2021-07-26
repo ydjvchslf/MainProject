@@ -43,7 +43,8 @@ public class PickEduController {
 	int pageSize;
 	
 	@RequestMapping ( "listPickEdu" )
-	public String listPickEdu( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listPickEdu( @ModelAttribute("search") Search search , 
+								@RequestParam("userNo") int userNo , Model model , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/pickedu/listPickEdu : GET / POST");
 		
@@ -51,6 +52,7 @@ public class PickEduController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		search.setSearchUserNo(userNo);		
 		
 		// Business logic 수행
 		Map<String , Object> map= eduService.getPickEduList(search);
