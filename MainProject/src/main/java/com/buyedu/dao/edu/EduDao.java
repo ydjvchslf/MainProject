@@ -26,4 +26,7 @@ public interface EduDao {
 	
 	int updateEduRest(Edu edu);
 	
+	// 학원에서 쓰는 카운트
+	int getEduTotalCountforAca(String academyCode);
+	
 }

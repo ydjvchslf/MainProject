@@ -90,7 +90,7 @@ public class AcademyController {
 		
 		System.out.println("addAcademyView 단순 네비게이터");
 		
-		return "academy/addAcademyView";
+		return "/tiles/academy/addAcademyView";
 	}
 
 	@RequestMapping("addAcademy")
@@ -125,7 +125,7 @@ public class AcademyController {
 		
 		academyService.addAcademy(academy);
 		
-		return "academyMain";
+		return "/tiles/academyMain";
 	}
 	
 	
