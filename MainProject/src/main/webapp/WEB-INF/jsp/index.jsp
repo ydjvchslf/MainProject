@@ -13,7 +13,6 @@
         <title>Buy! Edu</title>
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
