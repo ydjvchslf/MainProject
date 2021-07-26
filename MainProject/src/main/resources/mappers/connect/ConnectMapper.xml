@@ -104,6 +104,13 @@
 		AND c.user_no = u.user_no
 	 </select>
 	 
+	 <select 	id="getStudentCount"		parameterType="String" resultType="int">
+		SELECT
+		count(*)
+		FROM connection
+		WHERE academy_code = #{value}
+	 </select>
+	 
 	 <update	id="updateConnectAcceptaca"	parameterType="int" >
 	   	UPDATE connection
 	   	<set>
