@@ -61,7 +61,7 @@
 		
 		$( function() {
 			$("a[href='#']").on("click" , function() {
-				self.location = "/user/loginView"
+				self.location = "/user/login"
 			});
 		});
 		
@@ -96,22 +96,42 @@
 								
 								//alert("성공!");
 
-								if (JSONData.result == "no") {
-									console.log("비번 NO");
-									$(".password_check").text("비밀번호가 맞지 않습니다");
-									$(".password_check").css("color", "red");
+								if (JSONData.message == "no") {
+									console.log("없는 회원 정보");
+									$(".explain").val("");
+									$(".explain").text("없는 회원 정보입니다.");
+									$(".explain").css("color", "red");
 									
-								} else if (JSONData.result == "ok") {
-									console.log("비번 OK");
-									$(".password_check").text("비밀번호가 맞습니다");
-									$(".password_check").css("color", "blue");
+									$('form').each(function() {
+						                this.reset();
+						            });
+									
+								} else if (JSONData.message == "ok") {
+									console.log("복구 성공");
+									$(".explain").val("");
+									$(".explain").text("계정을 복구하였습니다.");
+									$(".explain").css("color", "blue");
+									
+									$('form').each(function() {
+						                this.reset();
+						            });
+									
+								}else if (JSONData.message == "disable") {
+									console.log("복구가능기간 초과");
+									$(".explain").val("");
+									$(".explain").text("복구가능 기간을 초과하였습니다.");
+									$(".explain").css("color", "red");
+									
+									$('form').each(function() {
+						                this.reset();
+						            });
 								}
 								
 							}
 				});
 				
 			});
-		}
+		});
 		
 		
 		
@@ -151,6 +171,7 @@
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
    	
+	<!--  화면구성 div Start /////////////////////////////////////-->
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		
@@ -207,7 +228,7 @@
 			  		<p>계정 복구 화면</p>
 			  	</div>
 		<!-- form Start /////////////////////////////////////-->	  	
-		<form class="form-horizontal">
+		<form class="form-horizontal" name="returnForm">
 		  
 		  <div class="form-group">
 		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
@@ -220,9 +241,6 @@
 		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
-		     	<span id="helpBlock" class="help-block">
-		      	  <strong class="explain"></strong>
-		      	</span>
 		  	</div>
 		  </div>
 		  
@@ -230,12 +248,15 @@
 		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
 		    <div class="col-sm-4">
 		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+		  	  <span id="helpBlock" class="help-block">
+		      	  <strong class="explain"></strong>
+		      	</span>	
 		  	</div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" name="returnUser" class="btn btn-primary">수정하기</button>
+		      <button type="button" name="returnUser" class="btn btn-primary">계정복구신청</button>
 		      <a class="btn btn-primary btn" href="#" role="button">로그인하러가기</a>
 		    </div>
 		  </div>
@@ -247,6 +268,7 @@
 		
 	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
+
 
 </body>
 

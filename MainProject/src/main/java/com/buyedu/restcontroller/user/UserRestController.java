@@ -63,7 +63,7 @@ public class UserRestController {
 		
 	    System.out.println(s);
 	    
-	    return "gd";
+	    return "success";
 	}
 	
 	

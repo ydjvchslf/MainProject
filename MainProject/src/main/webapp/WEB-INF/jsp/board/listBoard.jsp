@@ -45,8 +45,12 @@
 		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
 			var cateCode=$("input[name='cateCode']").val();
-			$("form").attr("method" , "POST").attr("action" , "/board/listBoard?cateCode="+cateCode).submit();
-			//$("form").submit();
+			var isMine=$("input[name='isMine']").val();
+			if(isMine=='n'){
+				$("form").attr("method" , "POST").attr("action" , "/board/listBoard?cateCode="+cateCode).submit();
+			}else{
+				$("form").attr("method" , "POST").attr("action" , "/board/listBoard?isMine="+isMine).submit();
+			}
 		}
 		
 		function enterEvent(){
@@ -148,6 +152,9 @@
 			<c:when test="${search.cateCode eq '3' }">
 				<h3>학원 공지사항</h3>
 			</c:when>
+			<c:when test="${search.isMine eq 'y' }">
+				<h3>내가 쓴 게시글 보기</h3>
+			</c:when>
 		</c:choose>					
 	    </div>
 	    
@@ -156,24 +163,17 @@
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 
-	    
-		    <div class="col-md-6 text-left">
-		    			 
-		    	<p class="text-primary" id="boardCountInfo">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    		
-		    	</p>
-		    </div>
-		    
 		    <div class="col-md-6 text-right" id="searchPosition">
 			    <form class="form-inline" >
 			    <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
 			    
-			    <div class="form-group">
+			    <div class="form-group" >
 				    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
 						<option value="0"  ${ ! empty search.searchConditionb && search.searchConditionb==0 ? "selected" : "" }>제목</option>
 						<option value="1"  ${ ! empty search.searchConditionb && search.searchConditionb==1 ? "selected" : "" }>내용</option>
+						<c:if test="${board.cateCode eq '2' || board.cateCode eq '1' }">
 						<option value="2"  ${ ! empty search.searchConditionb && search.searchConditionb==2 ? "selected" : "" }>작성자</option>
+						</c:if>
 					</select>
 				 </div>
 				  
@@ -223,7 +223,7 @@
 			  <td align="left">추천</td>
 		
 	
-		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.COMMENT_CNT}</span>)</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${board.EMAIL}</td>
@@ -247,14 +247,14 @@
 			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
 		
 	
-		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt }</span>)</a></td>
+		<td id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 					  
 			  
 			  <td id="listtable" align="left">${board.email}</td>
 			  <td id="listtable" align="left">
 			  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
 			  <td id="listtable" align="left">${board.viewCnt}</td>
-			  <c:if test="${board.cateCode eq '2'}">
+			  <c:if test="${search.isMine eq 'n' && board.cateCode eq '2'}">
 			  <td id="listtable" align="left"><span id="recommendCnt">${board.recommendCnt}</span></td>
 			  </c:if>
 			  
@@ -270,6 +270,7 @@
 	  카테고리 :  ${search.cateCode}
 	  userNo : ${user.userNo}
 		<input type="hidden" name="cateCode" value="${search.cateCode}" />	    
+		<input type="hidden" name="isMine" value="${search.isMine}" />	  
 		   
 		 <c:choose>
 			<c:when test="${search.cateCode eq '0' && user.userNo eq 140 }">

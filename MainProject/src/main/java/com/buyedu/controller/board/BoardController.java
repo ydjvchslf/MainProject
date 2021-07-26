@@ -58,13 +58,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		int pageSize;
 		
 		@RequestMapping( value="addBoard", method=RequestMethod.GET )
-		public String addBoard(Model model, HttpServletRequest request) throws Exception {
+		public String addBoard( Model model, HttpServletRequest request) throws Exception {
 			
 			System.out.println("/board/addBoard : GET");
 			String category = request.getParameter("cateCode");
-			System.out.println(category);
+			String academyCode = request.getParameter("academyCode");
+			System.out.println("글쓰기 카테고리 : " +category);
+			System.out.println("글쓰기 학원코드 : " +academyCode);
 			Board board = new Board();
 			board.setCateCode(category);
+			board.setAcaWriter(academyCode);
 			System.out.println("addview : "+board.getCateCode());
 			model.addAttribute(board);
 			
@@ -110,19 +113,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			
 			System.out.println("/board/getBoard : GET");
 			//Business Logic
+			
 			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			String category = request.getParameter("cateCode");
-			System.out.println("겟보드 카테고리 : "+category);
+			String academyCode = request.getParameter("academyCode");
 			
 			Board board = boardService.getBoard(boardNo);
-			System.out.println(recommendCnt);
-			board.setRecommendCnt(recommendCnt);
 			
+			System.out.println("컨트롤러 겟보드 "+board);
+			
+			board.setRecommendCnt(recommendCnt);
+			System.err.println(board.getRecommendCnt());
 			
 		//	board.setBoardWriter(boardWriter);
 			System.out.println("컨트롤러 : "+board);
-			System.err.println(boardNo);
+			System.out.println(boardNo);
 		//	System.out.println("컨트롤러 boardWriter : "+boardWriter);
 //			int board1 = boardService.updateViewcnt(brdNo);
 			// *조회수 증가시키기
@@ -131,6 +137,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			model.addAttribute("board", board);
 			System.out.println("겟 프로덕트 : "+board);
 			System.err.println(board.getEmail());
+			
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("boardNo", boardNo);
@@ -146,6 +153,27 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //	        System.out.println("컴플레인"+complainBoard);
 //	        model.addAttribute("complainBoard",complainBoard);
 			return "/board/getBoard";
+		}
+		
+		@RequestMapping( value="getBoardAca", method = RequestMethod.GET)
+		public String  getBoardAca( @RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request ) throws Exception {
+			
+			System.out.println("/board/getBoardAca : GET");
+			//Business Logic
+			
+			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
+			int recommendCnt = boardService.recommendCnt(boardNo);
+			String category = request.getParameter("cateCode");
+			String academyCode = request.getParameter("academyCode");
+			
+			
+				Board board = boardService.getBoardAcademy(boardNo);
+				board.setRecommendCnt(recommendCnt);
+				boardService.updateViewcnt(boardNo);
+				System.out.println("컨트롤러 겟보드아카 "+board);
+				// Model 과 View 연결
+				model.addAttribute("board", board);
+				return "/board/getBoardAca"; 
 		}
 		
 		//@RequestMapping("/updateProductView.do")
@@ -197,6 +225,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
 			
 			String category = request.getParameter("cateCode"); // 게시판 종류
+			String isMine = request.getParameter("isMine");
+//			String academyCode = request.getParameter("academyCode");
+			
+			if(isMine==null){
+				isMine="n";
+			}
 			
 			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			
@@ -209,9 +243,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println("현재 :: " + search.getCurrentPage());
 			search.setCateCode(category);
 			System.out.println("list 컨트롤러 카테고리: " +category);
-			
+			search.setIsMine(isMine);
+			search.setSearchUserNo(userNo);
+	//		search.setAcademyCode(academyCode);
 			// Business logic 수행
 			List<Board> list =boardService.getBoardList(search);
+			
 //			Map<String , Object> cgmap=categoryService.getCategoryList();
 			if(list.size()!=0) {
 			int totalCount = list.get(0).getTotalCount();
@@ -219,11 +256,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println(resultPage);
 			
 			board.setCateCode(category);
-			List<Map<String, Object>> commentMap= boardService.listComment(board.getBoardNo());
-			int commentCount = boardService.commentCount(board.getBoardNo());
-			if(commentMap.size()!=0) {
-				commentMap.get(0).put("commentCount", commentCount);}
-			System.out.println("list컨트롤러 comment_cnt :"+commentMap);
+//			List<Map<String, Object>> commentMap= boardService.listComment(board.getBoardNo());
+			
 			List<Map<String, Object>> map= boardService.getBoardListPin(board); 
 			
 //			List<Board> list2 =boardService.getMyBoardList(search, userNo);
@@ -238,14 +272,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //			model.addAttribute("list2", list2);
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
-			model.addAttribute("commentMap", commentCount);
 //			model.addAttribute("category", category);
-			System.err.println(search.getEndRowNum());
+			System.err.println("로우넘 이상해 : " +search.getEndRowNum());
 //
 			System.err.println("2 : "+search.getSearchKeyword());
 			}
 
-			
 			return "/board/listBoard";
 		}
 		

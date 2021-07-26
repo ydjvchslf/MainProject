@@ -22,7 +22,13 @@ public class BoardService {
 	}
 
 	public Board getBoard(int boardNo) throws Exception {
+		System.out.println("왜 여기가 문제죠...? 겟보드..?");
 		return boardDao.getBoard(boardNo);
+	}
+	
+	public Board getBoardAcademy(int boardNo) throws Exception {
+		System.out.println("여긴 겟보드아카데미");
+		return boardDao.getBoardAcademy(boardNo);
 	}
 
 	public List<Board> getBoardList(Search search) throws Exception {
@@ -40,22 +46,7 @@ public class BoardService {
 //		System.out.println("service : "+totalCount);
 		
 	}
-	
-//public List<Board> getMyBoardList(Search search, int userNo) throws Exception {
-//		
-//		List<Board> list2= boardDao.getMyBoardList(search, userNo);
-//		int totalCount = boardDao.getMyTotalCount(search, userNo);
-////		int recommendCnt=boardDao.recommendCnt(boardNo);
-//		if(list2.size()!=0) {
-//		list2.get(0).setTotalCount(totalCount);}
-////		list.get(boardNo).setRecommendCnt(recommendCnt);
-//		System.err.println(list2);
-//		
-//		
-//		return list2;
-////		System.out.println("service : "+totalCount);
-		
-//	}
+
 	
 public List<Map<String, Object>> getBoardListPin(Board board) throws Exception {
 		
@@ -132,8 +123,25 @@ public List<Map<String, Object>> getBoardListPin(Board board) throws Exception {
 		return boardDao.commentCount(boardNo);
 			
 		}
+
+		//학원 공지사항
 	
-
-
-
+	public List<Board> getBoardListAcademy(Search search) throws Exception {
+		
+		System.out.println("여기는 보드서비스 학원공지사항");
+		int totalCount = boardDao.getTotalCountAcademy(search);
+		System.out.println("토탈카운트는 나오나? : "+totalCount);
+		List<Board> list= boardDao.getBoardListAcademy(search);
+		
+//		int recommendCnt=boardDao.recommendCnt(boardNo);
+		if(list.size()!=0) {
+		list.get(0).setTotalCount(totalCount);}
+//		list.get(boardNo).setRecommendCnt(recommendCnt);
+		System.err.println(list);
+		
+		
+		return list;
+//		System.out.println("service : "+totalCount);
+		
+	}
 }

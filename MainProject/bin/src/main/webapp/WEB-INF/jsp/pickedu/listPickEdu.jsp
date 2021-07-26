@@ -73,8 +73,7 @@
 		      $( "td:nth-child(2)" ).on("click" , function() {
 
 		    	 var eduNo = $(this).find('input').val()
-		    	 alert( eduNo )
-		         self.location ="/edu/getEdu?eduNo=134";
+		         self.location ="/edu/getEdu?eduNo="+eduNo;
 		         
 		      });
 		      
