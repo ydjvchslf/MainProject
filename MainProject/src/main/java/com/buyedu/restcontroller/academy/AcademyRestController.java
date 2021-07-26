@@ -1,6 +1,5 @@
 package com.buyedu.restcontroller.academy;
 
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -69,6 +68,13 @@ public class AcademyRestController {
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
+		academy.setCount(academyService.getStudentCount(academyCode));
+		
+		System.out.println("학생수" + academyService.getStudentCount(academyCode));
+		
+		academy.setCount2(academyService.getEduTotalCountforAca(academyCode));
+		
+		System.out.println("수업수" + academyService.getEduTotalCountforAca(academyCode));
 		
 		return academy;
 	}
@@ -132,7 +138,7 @@ public class AcademyRestController {
 			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
 				
 				for(MultipartFile file:multipartFile) {
-					fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\image\\";
+					fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImage\\";
 					
 					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
 					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
@@ -147,7 +153,7 @@ public class AcademyRestController {
 					academy.setMultimedia(savedFileName);					
 					
 					try (InputStream fileStream = file.getInputStream()){
-						if (extension.equals(".mp4")) {
+						if (extension.equals(".mp4") || extension.equals(".avi")) {
 //							fileStream = new FileInputStream(videoEncoder.encode(savedFileName));
 							academy.setMultimediarole("V");
 						}else {

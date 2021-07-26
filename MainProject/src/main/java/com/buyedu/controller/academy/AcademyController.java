@@ -90,7 +90,7 @@ public class AcademyController {
 		
 		System.out.println("addAcademyView 단순 네비게이터");
 		
-		return "academy/addAcademyView";
+		return "/tiles/academy/addAcademyView";
 	}
 
 	@RequestMapping("addAcademy")
@@ -125,7 +125,7 @@ public class AcademyController {
 		
 		academyService.addAcademy(academy);
 		
-		return "academyMain";
+		return "/tiles/academyMain";
 	}
 	
 	
@@ -164,7 +164,7 @@ public class AcademyController {
 		model.addAttribute("search", search);
 		}
 		
-		return "academy/academyInfo";
+		return "/tiles/academy/academyInfo";
 	}
 	
 	@RequestMapping(value = "academySampleEdu", method = RequestMethod.GET)
@@ -188,7 +188,7 @@ public class AcademyController {
 		
 		System.out.println("academySampleEdu map = "+map.get("list"));
 		
-		return "academy/academySampleEdu";
+		return "/tiles/academy/academySampleEdu";
 	}
 	
 //	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
@@ -225,7 +225,7 @@ public class AcademyController {
 		
 		System.out.println("academyConnects map = "+map.get("connect"));
 		
-		return "academy/academyConnect";
+		return "/tiles/academy/academyConnect";
 	}
 	
 

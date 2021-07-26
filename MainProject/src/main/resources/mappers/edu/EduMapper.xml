@@ -144,5 +144,14 @@
 	   	DELETE from edu
 	   	WHERE edu_no = '${value}'
 	 </delete>
+	 
+	 
+	 <!-- 학원에서 쓰는 토탈카운트 -->
+	 <select  id="getEduTotalCountforAca"  parameterType="String"	 resultType="int">
+	  	SELECT 
+	  	COUNT(*)
+	  	FROM EDU
+	  	WHERE edu_academy_code = #{value}
+	 </select>
 
 </mapper>

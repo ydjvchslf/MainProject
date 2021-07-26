@@ -399,6 +399,17 @@
 						
 				$('form[name="outForm"]').attr("method" , "POST").attr("action" , "/user/outUser").submit();
 			}
+			 
+			 
+			
+			 
+		//sns 간편로그인 연동하기 클릭 event
+		$(function() {
+
+			$('span[name="unify"]').on("click", function() {
+				//self.location = "/user/updateUser?email=${user.email}"
+			});
+		});	 
 	
 	
 	
@@ -432,7 +443,7 @@
 							<h6 class="m-0 font-weight-bold text-primary" align="right">
 								<a href="/user/updateUser?email=${user.email}"
 									class="btn btn-info btn-circle btn-sm" data-toggle="modal"
-										data-target="#updateModal"align="right">
+										data-target="#updateModal" align="right">
 										<i class="fas fa-info-circle"></i>
 								</a>
 							</h6>
@@ -448,8 +459,13 @@
 									PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.phone} <br>
 		                		</c:when>
 		                		<c:otherwise>
-		                			E-MAIL : ${email} <br>
-		                			*SNS 연동하기<br>
+		                			E-MAIL : ${email} <br><br>
+		                			회원님은 SNS 연동해제 상태입니다.<br>
+		                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
+		                			<span name="unify" data-toggle="modal"
+										data-target="#unifyModal" >
+										계정연동하기
+									</span>
 		                		</c:otherwise>
 			                </c:choose>
 						</div>
@@ -719,9 +735,11 @@
 			                                        </div>
 			                                    </div>
 			                                    <div class="col-4"><!-- 발송버튼 -->
-													<div class="form-group">		
+													<div class="form-group">
 														<div class="text-center">
-					                                        <a class="small" href="forgot-password.html">인증번호발송</a>
+					                                       <a href="#" class="btn btn-primary btn-user btn-block">
+					                                            인증번호발송
+					                                        </a>
 					                                    </div>
 													    <span><strong class="text_phone"></strong>
 													   </span>	
@@ -741,7 +759,9 @@
 			                                    <div class="col-4"><!-- 인증번호 확인버튼 -->
 													<div class="form-group">		
 														<div class="text-center">
-					                                        <a class="small" href="forgot-password.html">확인</a>
+					                                        <a href="#" class="btn btn-primary btn-user btn-block">
+					                                            확인
+					                                        </a>
 					                                    </div>
 			                                        	<span id="helpBlock" class="help-block">
 														   <strong class="text_phone"></strong>
@@ -764,103 +784,71 @@
 							</div>
 						</div><!-- 내정보수정 모달 끝-->
 						
+						<!-- 계정연동 모달 시작-->
+						<div class="modal fade" id="unifyModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">계정연동하기</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- 모달내용 태그 -->
+										<form class="user">
+											<div class="form-group">
+												<input type="hidden" id="email" name="email"
+													value="${user.email}"> <input type="password"
+													class="form-control form-control-user" name="password0"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													placeholder="현재비밀번호"> <span id="helpBlock"
+													class="help-block"> <strong class="password_check"></strong>
+												</span>
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password" placeholder="새비밀번호">
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password2" placeholder="비밀번호확인"> <span
+													id="helpBlock" class="help-block"> <strong
+													class="text_password"></strong>
+												</span>
+											</div>
+											<a href="#" name="updatePw"
+												class="btn btn-primary btn-user btn-block"> 비밀번호수정 </a>
+										</form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 계정연동 모달 끝-->
+						
+						
+						
+						
 					</div>
 				</c:if>
 			</div>
 			<!-- low -->
 			
 		<c:if test="${user.role eq 'academy'}">
-			<div class="row"><!-- 학원프로필 카드 시작 -->
-
-                        <div class="col-lg-4">
-
-                            <!-- Basic Card Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Basic Card Example</h6>
-                                </div>
-                                <div class="card-body">
-                                    The styling for this basic card example is created by using default Bootstrap
-                                    utility classes. By using utility classes, the style of the card component can be
-                                    easily modified with no need for any custom CSS!
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-lg-4">
-
-                            <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    Dropdown menus can be placed in the card header in order to extend the functionality
-                                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
-                                    icon in the card header can be clicked on in order to toggle a dropdown menu.
-                                </div>
-                            </div>
-
-                        </div>
-                        
-                        <div class="col-lg-4">
-
-                            <!-- Dropdown Card Example -->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    Dropdown menus can be placed in the card header in order to extend the functionality
-                                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
-                                    icon in the card header can be clicked on in order to toggle a dropdown menu.
-                                </div>
-                            </div>
-
-
-                        </div>
+			<div id="academyList" class="row"><!-- 학원프로필 카드 시작 -->
                 </div>
            </c:if>
 			
-			
-
-
-
 
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -868,5 +856,123 @@
 <script src="/js/scripts.js"></script>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/sockjs.min.js"></script>
+<script src="/js/stomp.min.js"></script>
+	
+<script>
+        let socket = new SockJS("/socket");
+        let stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+        	console.log("연결 성공", frame);
+        	alert("연결성공");
+        	stompClient.subscribe("/topic/message", (res) => {
+        		console.log("메시지를 받았습니다.");
+            	console.log("res", res);
+            });
+            
+            stompClient.send("/chat", {}, '{"test", "test"}');
+        });
+        
+        var userno = '${user.userNo}';
+        var role = '${user.role}';
+        
+        function academyList(){
+        	$.ajax({
+        		url : '/academy/json/academyProfile/${user.userNo}',
+        		type : 'get',
+        		success : function(data){
+        			console.log(data);
+        			$.each(data, function(key,value){
+        				
+        				var a = '';
+        				
+        				if(value.length<=2){
+        					a += '<div class="col-lg-4"><div class="card shadow mb-4">'
+    						a += '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'
+    						a += '<h6 class="m-0 font-weight-bold text-primary"> 학원 등록 하기 </h6></div>'
+    						
+    						a += '<div class="card-body">'
+    						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a></div></div></div>'
+                         
+    					}
+        				
+        				for(var i=0; i<value.length;i++){
+        					
+        					a += '<div class="col-lg-4"><div class="card shadow mb-4">'
+        					a += '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'
+        					a += '<h6 class="m-0 font-weight-bold text-primary">'
+        					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h6>'
+        					a += '<div class="dropdown no-arrow">'
+        					a += '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+        					a += '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i></a>'
+        					a += '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'
+        					a += '<div class="dropdown-header">Dropdown Header:</div>'
+        					a += '<a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')" class="dropdown-item"> 학원 프로필 삭제 </a>'
+        					a += '</div></div></div>'
+        					
+        					a += '<div id="academyInfo_' + i +'" class="card-body">'
+        					a += ' 학원 정보 '+getAcademyInfo(i, value[i].academyCode) 
+        					a += '</div></div></div>'
+        													
+        				}
+        				
+            			$("#academyList").html(a);
+        				
+        			});
+        		}
+        	});
+        }
+        
+        function getAcademyInfo(index, academyCode){
+			$.ajax({
+				 url : '/academy/json/getacademyInfo/'+academyCode,
+			     method : 'GET',
+			     dataType : "json",
+				 success : function(data){
+					 console.log(data);
+					 
+					 var a = ''
+					 	 a += 'PHONE : ' + data.academyPhone
+				 		 a += '<br/><br/>지역구 : ' + data.academyArea
+				 		 a += '<br/><br/>학생수 : ' + data.count + '명'
+				 		 a += '<br/><br/>수업수 : ' + data.count2 + '개'
+			
+				 		 // 두번째 세번째 정보 못받아옴
+				 		 // 인증 학생 수
+				 		 // 등록 수업 수
+				 					
+					$("#academyInfo_" + index).html(a);
+				 }							
+			});		
+		}
+        
+		
+		// 학원 프로필 삭제하기
+		function deleteAcademyProfile(academyCode){
+			alert(academyCode)
+			
+			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
+				
+			    $.ajax({
+			    	
+			        url : '/academy/json/deleteAcademyAll/'+academyCode,
+			        type : 'post',
+			        success : function(data){
+			            alert("삭제가 완료되었습니다!")
+			        }
+			    });
+			}
+		}
+        
+        
+        $(document).ready(function(){
+            academyList();
+        });
+        
+        </script>
+	
+	
+	
+	
 </body>
 </html>

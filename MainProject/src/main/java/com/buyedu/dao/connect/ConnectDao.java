@@ -35,5 +35,7 @@ public interface ConnectDao {
 	void deleteConnectfromAca(int connectNo) throws Exception;
 	
 	public String updateConnectAcceptaca(int connectNo) throws Exception;
+	
+	int getStudentCount(String academyCode) throws Exception;
 
 }

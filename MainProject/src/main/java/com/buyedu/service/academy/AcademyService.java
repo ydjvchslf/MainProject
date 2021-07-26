@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.buyedu.dao.academy.AcademyDao;
 import com.buyedu.dao.connect.ConnectDao;
+import com.buyedu.dao.edu.EduDao;
 import com.buyedu.domain.Academy;
 import com.buyedu.domain.Board;
 import com.buyedu.domain.Connect;
@@ -22,6 +23,9 @@ public class AcademyService {
 	
 	@Autowired
 	private ConnectDao connectDao;
+	
+	@Autowired
+	private EduDao eduDao;
 	
 	
 	// 학원 등록
@@ -134,6 +138,16 @@ public class AcademyService {
 		
 		connectDao.deleteConnectfromAca(connectNo);
 	}
+	
+	public int getStudentCount(String academyCode) throws Exception{
+		
+		return connectDao.getStudentCount(academyCode);
+	};
+	
+	// 수업 갯수
+	public int getEduTotalCountforAca(String academyCode) {
+		return eduDao.getEduTotalCountforAca(academyCode);
+	};
 	
 	
 	// 학원 정보 모두삭제 --------------------------------------------------

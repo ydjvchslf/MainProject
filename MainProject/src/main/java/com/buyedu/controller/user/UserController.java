@@ -100,7 +100,7 @@ public class UserController {
 		
 		System.out.println("/user/addUser : GET");
 		
-		return "/user/addUserView";
+		return "/user/addUserViewTiles";
 	}
 	
 	
@@ -111,7 +111,7 @@ public class UserController {
 		//Business Logic
 		userService.addUser(user);
 		
-		return "/user/loginView";
+		return "/user/loginViewTiles";
 	}
 	
 	
@@ -129,7 +129,8 @@ public class UserController {
 		
 		System.err.println(user);
 		
-		return "/tiles/user/getUserTiles";
+//		return "/user/getUserTiles";
+		return "main";
 	}
 
 	
@@ -337,7 +338,7 @@ public class UserController {
 		System.out.println("/user/logon : GET");
 		System.out.println("로그인 화면으로 단순 네비게이션");
 
-		return "/user/loginView";
+		return "/user/loginViewTiles";
 	}
 	
 	@RequestMapping( value="loginacademy", method=RequestMethod.GET )
@@ -599,7 +600,7 @@ public class UserController {
 		
 		session.invalidate();
 		
-		return "index";
+		return "redirect:/";
 	}
 	
 	
