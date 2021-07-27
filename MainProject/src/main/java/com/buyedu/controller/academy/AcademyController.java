@@ -129,7 +129,7 @@ public class AcademyController {
 	}
 	
 	
-	@RequestMapping(value = "academyInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "academyInfo", method = {RequestMethod.GET, RequestMethod.POST})
 	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search, Model model, HttpSession session, HttpServletRequest request ) throws Exception{
 		
 		System.out.println("/academy/academyInfo : GET");

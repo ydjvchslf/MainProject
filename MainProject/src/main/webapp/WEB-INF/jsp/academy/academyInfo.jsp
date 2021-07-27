@@ -150,7 +150,7 @@
 		  <c:forEach var="board" items="${list}">
 			<c:set var="i" value="${i-1}" />
 			<tr>
-			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
+			  <td align="left">${i+1-(resultPage.currentPage-1)*5}</td>
 			  
 			  
 		
@@ -210,7 +210,7 @@
 		var role = '${user.role}';
 		var academyInfo = {};
 		
-		 alert("학원 코드 = "+academyCode);
+		alert("academyCode : "+academyCode)
 			
 		
 		function getAcademyInfo(){
@@ -346,6 +346,7 @@
 			});
 		 });
 		
+	
 		</script>
         
     </body>

@@ -20,6 +20,8 @@ public class Board {
 	private String email;
 	private String academyName;
 	private String acaWriter;
+	private String academyCode;
+	
 
 	private int commentNo;
 	private String commentContent;
@@ -129,6 +131,14 @@ public class Board {
 
 	public void getAcademyName(String academyName) {
 		this.academyName = academyName;
+	}
+	
+	public String setAcademyCode() {
+		return academyCode;
+	}
+
+	public void getAcademyCode(String academyCode) {
+		this.academyCode = academyCode;
 	}
 
 	public int getCommentNo() {
