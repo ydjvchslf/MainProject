@@ -419,21 +419,21 @@ public class UserController {
 	            
 				System.out.println("2 if문 dbuser"+dbUser);
 	            model.addAttribute("list",map.get("list"));
-//				model.addAttribute("user", dbUser);
+				//model.addAttribute("user", dbUser);
 	            System.out.println(map.get("list"));
 	          //아카데미 화면
-			//	String getUserView = this.getUser(session, user.getEmail(), model);
+				String getUserView = this.getUser(session, user.getEmail(), model);
 				
-	            
-				return "/main";
+	         return getUserView;   
+			//	return "/main";
 				
 			}
 			
 			//일반유저, 관리자 화면
 			String getUserView = this.getUser(session, user.getEmail(), model);
 			
-			//return getUserView;
-			return "/main";
+			return getUserView;
+			//return "/main";
 			
 		}else{
 			
