@@ -145,7 +145,7 @@ public class AcademyController {
 		
 		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
 		
-		//model.addAttribute("list", map.get("list"));
+		model.addAttribute("list", map.get("list"));
 		
 		System.out.println(academy);
 		
@@ -159,14 +159,14 @@ public class AcademyController {
 		search.setPageSize(pageSize);
 		search.setCateCode(category);
 		
-		List<Board> list =boardService.getBoardListAcademy(search);
+		List<Board> listb =boardService.getBoardListAcademy(search);
 		
-		if(list.size()!=0) {
-			int totalCount = list.get(0).getTotalCount();
+		if(listb.size()!=0) {
+			int totalCount = listb.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
 			
-		model.addAttribute("list", list);
+		model.addAttribute("listb", listb);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		}

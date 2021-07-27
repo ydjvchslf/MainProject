@@ -139,7 +139,7 @@
 </head>
 
 <body>
- <div class="d-flex p-2">
+ <div class="wrapper d-flex align-items-stretch">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
