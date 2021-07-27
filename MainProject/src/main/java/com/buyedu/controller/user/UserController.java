@@ -129,8 +129,8 @@ public class UserController {
 		
 		System.err.println(user);
 		System.out.println(list);
-//		return "/user/getUserTiles";
-		return "main";
+		return "/user/getUser";
+//		return "main";
 	}
 
 	
@@ -195,7 +195,7 @@ public class UserController {
 		
 		System.out.println("비번변경화면으로 단순 네비게이션");
 		
-		return "/tiles/user/updatePasswordTiles";
+		return "/user/updatePasswordTiles";
 	}
 	
 	@RequestMapping( value="updatePassword", method=RequestMethod.POST )
@@ -221,7 +221,7 @@ public class UserController {
 		
 		System.out.println("비번 변경완료->정보조회 화면으로 네비게이션");
 		
-		return "/tiles/user/getUserTiles";
+		return "/user/getUser?email="+user2.getEmail();
 	}
 	
 	@RequestMapping( value="outUser", method=RequestMethod.GET )
@@ -419,13 +419,13 @@ public class UserController {
 	            
 				System.out.println("2 if문 dbuser"+dbUser);
 	            model.addAttribute("list",map.get("list"));
-//				model.addAttribute("user", dbUser);
+				//model.addAttribute("user", dbUser);
 	            System.out.println(map.get("list"));
 	          //아카데미 화면
-			//	String getUserView = this.getUser(session, user.getEmail(), model);
+				String getUserView = this.getUser(session, user.getEmail(), model);
 				
-	            
-				return "/main";
+	         return getUserView;   
+			//	return "/main";
 				
 			}
 			
@@ -433,7 +433,7 @@ public class UserController {
 			String getUserView = this.getUser(session, user.getEmail(), model);
 			
 			return getUserView;
-			
+			//return "/main";
 			
 		}else{
 			
