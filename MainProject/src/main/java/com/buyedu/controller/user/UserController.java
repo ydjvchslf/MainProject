@@ -123,7 +123,7 @@ public class UserController {
 		User user = userService.getUser(email);
 		
 		List<Connect> list = userService.getConnectList(user.getUserNo());
-		model.addAttribute("list", list);
+		model.addAttribute("listAcademy", list);
 		// Model 과 View 연결
 		model.addAttribute("user", user);
 		
