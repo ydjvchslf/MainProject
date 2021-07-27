@@ -127,10 +127,15 @@ public class UserController {
 		// Model 과 View 연결
 		model.addAttribute("user", user);
 		
+		//재현이꺼추가
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		model.addAttribute("list",map.get("list"));
+		
 		System.err.println(user);
 		System.out.println(list);
+
+		
 		return "/user/getUser";
-//		return "main";
 	}
 
 	
@@ -419,6 +424,7 @@ public class UserController {
 	            
 				System.out.println("2 if문 dbuser"+dbUser);
 	            model.addAttribute("list",map.get("list"));
+	            
 				//model.addAttribute("user", dbUser);
 	            System.out.println(map.get("list"));
 	          //아카데미 화면
@@ -650,7 +656,7 @@ public class UserController {
 		
 		System.out.println("listUser 끝");
 		
-		return "/tiles/user/listUserTiles";
+		return "/user/listUser";
 		
 	}
 	

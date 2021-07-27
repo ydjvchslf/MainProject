@@ -2,374 +2,38 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html >
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>userMain</title>
-        <link href="/css/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script type="text/javascript" src="/assets/demo/jquery.ajax-cross-origin.min.js"></script>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
-        </script>
-        <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-        <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
-        
+<html lang="UTF-8">
+  <head>
+  	<title>Buy Edu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 		
-		<script type="text/javascript">
-		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
-			
-		function fncGetList(currentPage) {
-			//alert(currentPage)
-			$("#currentPage").val(currentPage)
-		   	$("form").attr("method", "POST").attr("action","/user/listUser").submit();	
-		};
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+  	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+
+  </head>
+  <body>
 		
+		<div class="wrapper d-flex align-items-stretch">
 		
-		//엔터시 에러 해결 너왜 안되는거야
-		function enterEvent(){
-			if(window.event.keyCode == 13){
-				//alert("엔터")
-				fncGetList(1);
-			}
-		}
+		<!-- left -->
+		<jsp:include page="../common/left.jsp"></jsp:include>
 		
-		//검색버튼 클릭 event
-		$(function() {
-			
-			$('form[name="detailForm"] input[type="text"]').keydown(function() {
-				  if (event.keyCode === 13) {
-			    event.preventDefault();
-			  };
-			});
-			
-			Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
-			
-			$( "button.btn.btn-default" ).on("click" , function() {
-				fncGetList(1);
-			});
-			 
-		});
-		
-		
-		
-		
-		$(function() {
-			
-			$("input[name=searchRole]").each(function(index, item){
-				var $check = $(this)
-				var roles = '${roles}';
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5">
 				
-				console.log(item)
-				if (roles.indexOf(item.value) > -1) {
-				//	item.checked = true;
-					$check.attr("checked", "checked");
-				}
-			})
-			
-			$("input[name=searchAccountState]").each(function(index, item){
-				var states = '${states}';
-				if (states.indexOf(item.value) > -1 )
-					item.checked = true;
-			})
-			
-			
-			
-			
-			
-		//=========로그아웃 테스트 중 =============
-		$(function() {	
-			
-			 $('input[name=allLogout]').on("click" , function() {
-				 
-				 let x = document.cookie;
-				 
-				 const words = x.split("; ");
-				 
-				 var loginType = "";
-				 
-				 for(var i=0; i < words.length; i++ ){
-					 
-					if( words[i].split("=")[0] === "loginType" ){
-						 console.log( words[i].split("=")[1] )
-						 loginType = words[i].split("=")[1];
-					}
-				 }
-				 
-				 if(loginType == "kakao"){
-					 
-					 alert("카카오 로그아웃!")
-					 if (!Kakao.Auth.getAccessToken()) {
-						  console.log('Not logged in.');
-						  return;
-						}
-					 
-						 Kakao.API.request({
-						  url: '/v1/user/unlink',
-						  success: function(response) {
-						    console.log(response);
-						    
-						    self.location = "/"
-						  },
-						  fail: function(error) {
-						    console.log(error);
-						  },
-						});
-					 
-					 
-						Kakao.Auth.logout(function() {
-						  console.log(Kakao.Auth.getAccessToken());
-						  
-						  if(Kakao.Auth.getAccessToken()){
-							  alert('로그아웃실패');
-						  }else{
-							  
-						  }
-						 
-						});
-						
-					 
-					 
-				 }else if(loginType == "naver"){
-					 
-					 alert("네이버 로그아웃!")
-					 
-					 //sessionStorage.clear();
-					 //localStorage.clear();
-					 //deleteAllCookies();
-					 
-					 var accessToken = localStorage.getItem("com.naver.nid.access_token")
-					 
-					 //console.log(accessToken)
-					 
-					 var tokenArray = accessToken.split(".");
-					 
-					 //console.log(tokenArray)
-					 
-					 var finalToken = tokenArray[1]
-					 
-					console.log(finalToken)
-					
-					sessionStorage.clear();
-					 
-					 //네이버 토큰삭제 요청
-					 $.ajax({
-						 
-						 crossOrigin : true,
-		                 
-		            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&access_token="+finalToken+"&service_provider=NAVER",
-		            	  
-		            	  dataType: "json",	  
-		            			  
-		                  headers : {
-		                      "Accept" : "application/json",
-		                      "Content-Type" : "application/json"
-		                    },
-		                    success : function(JSONData, status){
-	                        	console.log("로그아웃좀 되라...");
-	                        	self.location = "/";
-		                        
-		                    }
-		              })
-			              
-			            
-						 
-						
-						 /*
- 						var accessToken = localStorage.getItem("com.naver.nid.access_token")
-						 
-						 //console.log(accessToken)
-						 
-						 var tokenArray = accessToken.split(".");
-						 
-						 //console.log(tokenArray)
-						 
-						 var finalToken = tokenArray[1]
-						 
-						 console.log(finalToken)
-						 //return
-						 
-							  $.ajax({
-			                 		
-								  crossOrigin : true,
-								  
-				            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+finalToken,
-				                  
-				            	  dataType: "json",
-				            			  
-		            			  headers : {
-				                	  
-				                      "Accept" : "application/json",
-				                      "Content-Type" : "application/json"
-				                    },
-				                    success : function(JSONData, status){
-				                    	console.log("성공 결과->" +JSONData);
-				                    },
-				                    
-				                    error : function(xhr, status, errorThrown){
-				                    	console.log("실패");
-				                    	console.log(xhr);
-				                    	console.log(status);
-				                    	console.log(errorThrown);
-				                    	
-				                    } 
-				                    
-			              });
-						 
-						 
-						
-				            
-						// debugger
-						 
-						 //self.location = "/"
-						 /*
-						 localStorage.removeItem('com.naver.nid.access_token');
-						 
-						 function Logout(){
-							 sessionStorage.clear();
-						 }
-						 
-						 //self.location = "/"
-						 
-						 */
-						 
-								
-			              
-						 
-					 }else{
-						 alert("일반 로그아웃");
-						 self.location = "logout"
-					 }
-					 
-					 /*
-					 
-					 if (!Kakao.Auth.getAccessToken()) {
-						  console.log('Not logged in.');
-						  return;
-						}
-					 
-						 Kakao.API.request({
-						  url: '/v1/user/unlink',
-						  success: function(response) {
-						    console.log(response);
-						    
-						    self.location = "/"
-						  },
-						  fail: function(error) {
-						    console.log(error);
-						  },
-						});
-					 
-					 
-					 
-						Kakao.Auth.logout(function() {
-						  console.log(Kakao.Auth.getAccessToken());
-						  
-						  if(Kakao.Auth.getAccessToken()){
-							  alert('로그아웃실패');
-						  }else{
-							  
-						  }
-						 
-						});
-						
-						*/
-				 });
-			});
-			 
-		});
-		
-			
-		</script>
-		
-
-    </head>
-    <body>
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/main/adminMain">Buy! Edu</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-
-                </div>
-            </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <div class="sb-sidenav-menu-heading">search</div>
-                            <a class="nav-link" href="/academy/listSearch">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                학원검색
-                            </a>
-                            <div class="sb-sidenav-menu-heading">information</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                사이트 관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseUser" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/user/listUser">전체 사용자 보기</a>
-                                    <a class="nav-link" href="/chart/getChart">사이트 현황 보기</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEdu" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                신고 관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseEdu" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">신고 게시글 보기</a>
-                                    <a class="nav-link" href="#">신고 댓글 보기</a>
-                                    <a class="nav-link" href="#">신고 후기 보기</a>
-                                </nav>
-                            </div>
-                            <div class="sb-sidenav-menu-heading">board</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseBoard" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                게시판
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseBoard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                	<a class="nav-link" href="#">공지사항</a>
-                                	<a class="nav-link" href="#">QnA 게시판</a>
-                                    <a class="nav-link" href="/board/listBoard">자유게시판</a>
-                                    <a class="nav-link" href="#">학원 공지사항</a>
-                                    <a class="nav-link" href="#">내가 작성한 게시글</a>
-                                    <a class="nav-link" href="#">내가 작성한 댓글</a>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-
-                </nav>
-            </div>
-            <!-- 여기가 가운데 들어갈 화면 (바뀌는 곳) -->
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
+				<div class="container-fluid"><!-- container시작 -->
                         	
 						<div class="page-header text-info">
 					       <h3>회원목록조회</h3>
@@ -473,14 +137,293 @@
 				      
 				      </table>
 				      <input type="button" name="allLogout" value="로그아웃"></input>
-				      <jsp:include page="../common/pageNavigator_tiles.jsp"/>
-                    </div>
-                </main>
-            </div>
-        </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="/js/scripts.js"></script>
-        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    </body>
-</html>
+				      <jsp:include page="../common/pageNavigator_new.jsp"/>
+                    
+				
+				     
+				
+				
+				</div>
+				
+	      	</div><!-- container 끝 -->
+      	
+       </div>
+      
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
     
+    
+    <!-- JS 메인 시작 -->
+    <script type="text/javascript">
+    
+ // 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
+	
+	function fncGetList(currentPage) {
+		//alert(currentPage)
+		$("#currentPage").val(currentPage)
+	   	$("form").attr("method", "POST").attr("action","/user/listUser").submit();	
+	};
+	
+	
+	//엔터시 에러 해결 너왜 안되는거야
+	function enterEvent(){
+		if(window.event.keyCode == 13){
+			//alert("엔터")
+			fncGetList(1);
+		}
+	}
+	
+	//검색버튼 클릭 event
+	$(function() {
+		
+		$('form[name="detailForm"] input[type="text"]').keydown(function() {
+			  if (event.keyCode === 13) {
+		    event.preventDefault();
+		  };
+		});
+		
+		
+		$( "button.btn.btn-default" ).on("click" , function() {
+			fncGetList(1);
+		});
+		 
+	});
+	
+	
+	
+	
+	$(function() {
+		
+		$("input[name=searchRole]").each(function(index, item){
+			var $check = $(this)
+			var roles = '${roles}';
+			
+			console.log(item)
+			if (roles.indexOf(item.value) > -1) {
+			//	item.checked = true;
+				$check.attr("checked", "checked");
+			}
+		})
+		
+		$("input[name=searchAccountState]").each(function(index, item){
+			var states = '${states}';
+			if (states.indexOf(item.value) > -1 )
+				item.checked = true;
+		})
+		
+		
+		
+		
+		
+	//=========로그아웃 테스트 중 =============
+	$(function() {	
+		
+		 $('input[name=allLogout]').on("click" , function() {
+			 
+			 let x = document.cookie;
+			 
+			 const words = x.split("; ");
+			 
+			 var loginType = "";
+			 
+			 for(var i=0; i < words.length; i++ ){
+				 
+				if( words[i].split("=")[0] === "loginType" ){
+					 console.log( words[i].split("=")[1] )
+					 loginType = words[i].split("=")[1];
+				}
+			 }
+			 
+			 if(loginType == "kakao"){
+				 
+				 alert("카카오 로그아웃!")
+				 if (!Kakao.Auth.getAccessToken()) {
+					  console.log('Not logged in.');
+					  return;
+					}
+				 
+					 Kakao.API.request({
+					  url: '/v1/user/unlink',
+					  success: function(response) {
+					    console.log(response);
+					    
+					    self.location = "/"
+					  },
+					  fail: function(error) {
+					    console.log(error);
+					  },
+					});
+				 
+				 
+					Kakao.Auth.logout(function() {
+					  console.log(Kakao.Auth.getAccessToken());
+					  
+					  if(Kakao.Auth.getAccessToken()){
+						  alert('로그아웃실패');
+					  }else{
+						  
+					  }
+					 
+					});
+					
+				 
+				 
+			 }else if(loginType == "naver"){
+				 
+				 alert("네이버 로그아웃!")
+				 
+				 //sessionStorage.clear();
+				 //localStorage.clear();
+				 //deleteAllCookies();
+				 
+				 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+				 
+				 //console.log(accessToken)
+				 
+				 var tokenArray = accessToken.split(".");
+				 
+				 //console.log(tokenArray)
+				 
+				 var finalToken = tokenArray[1]
+				 
+				console.log(finalToken)
+				
+				sessionStorage.clear();
+				 
+				 //네이버 토큰삭제 요청
+				 $.ajax({
+					 
+					 crossOrigin : true,
+	                 
+	            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&access_token="+finalToken+"&service_provider=NAVER",
+	            	  
+	            	  dataType: "json",	  
+	            			  
+	                  headers : {
+	                      "Accept" : "application/json",
+	                      "Content-Type" : "application/json"
+	                    },
+	                    success : function(JSONData, status){
+                        	console.log("로그아웃좀 되라...");
+                        	self.location = "/";
+	                        
+	                    }
+	              })
+		              
+		            
+					 
+					
+					 /*
+						var accessToken = localStorage.getItem("com.naver.nid.access_token")
+					 
+					 //console.log(accessToken)
+					 
+					 var tokenArray = accessToken.split(".");
+					 
+					 //console.log(tokenArray)
+					 
+					 var finalToken = tokenArray[1]
+					 
+					 console.log(finalToken)
+					 //return
+					 
+						  $.ajax({
+		                 		
+							  crossOrigin : true,
+							  
+			            	  url : "https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=vqx5V5ejE6mgkpcPu2vP&client_secret=YjzvVMUZRW&service_provider=NAVER&access_token="+finalToken,
+			                  
+			            	  dataType: "json",
+			            			  
+	            			  headers : {
+			                	  
+			                      "Accept" : "application/json",
+			                      "Content-Type" : "application/json"
+			                    },
+			                    success : function(JSONData, status){
+			                    	console.log("성공 결과->" +JSONData);
+			                    },
+			                    
+			                    error : function(xhr, status, errorThrown){
+			                    	console.log("실패");
+			                    	console.log(xhr);
+			                    	console.log(status);
+			                    	console.log(errorThrown);
+			                    	
+			                    } 
+			                    
+		              });
+					 
+					 
+					
+			            
+					// debugger
+					 
+					 //self.location = "/"
+					 /*
+					 localStorage.removeItem('com.naver.nid.access_token');
+					 
+					 function Logout(){
+						 sessionStorage.clear();
+					 }
+					 
+					 //self.location = "/"
+					 
+					 */
+					 
+							
+		              
+					 
+				 }else{
+					 alert("일반 로그아웃");
+					 self.location = "logout"
+				 }
+				 
+				 /*
+				 
+				 if (!Kakao.Auth.getAccessToken()) {
+					  console.log('Not logged in.');
+					  return;
+					}
+				 
+					 Kakao.API.request({
+					  url: '/v1/user/unlink',
+					  success: function(response) {
+					    console.log(response);
+					    
+					    self.location = "/"
+					  },
+					  fail: function(error) {
+					    console.log(error);
+					  },
+					});
+				 
+				 
+				 
+					Kakao.Auth.logout(function() {
+					  console.log(Kakao.Auth.getAccessToken());
+					  
+					  if(Kakao.Auth.getAccessToken()){
+						  alert('로그아웃실패');
+					  }else{
+						  
+					  }
+					 
+					});
+					
+					*/
+			 });
+		});
+		 
+	});
+		
+    
+    
+    
+    </script>
+    
+  </body>
+</html>
