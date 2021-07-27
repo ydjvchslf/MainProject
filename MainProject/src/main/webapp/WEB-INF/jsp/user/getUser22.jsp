@@ -33,195 +33,201 @@
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
 				
-				<div class="container"><!-- container시작 -->
+		<div class="container-fluid"><!-- container시작 -->
 				
 				        <h1>내정보보기</h1>
 				        <hr>
 				        
-					      <div class="row"><!-- 첫번째 row 시작 -->
-					        <div class="col-sm-6">
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
-					              <h3 class="panel-title">
-					              	<c:choose>
-				                		<c:when test="${!empty user.role}">
-				                			${user.name}님의 Profile
-				                		</c:when>
-				                		<c:otherwise>
-				                			${email}님의 Profile
-				                		</c:otherwise>
-			                		</c:choose>
-					              </h3>
-					              <h3 class="m-0 font-weight-bold text-primary" align="right">
-									<a href="/user/updateUser?email=${user.email}"
-										class="btn btn-default btn-circle btn-sm" data-toggle="modal"
-											data-target="#updateModal" align="right">
-											수정하기~~
-									</a>
-								  </h3>
-					            </div>
-					            <div class="panel-body">
-					              <input type="hidden" value="${user.userNo}">
-					              <c:choose>
+					    <!-- 찐 본문시작 /// 여러분의 jsp 들어갈 자리 -->
+			<div class="row"><!-- low 시작 -->
+				<!-- 화면 두개 분할시 여기 필요 -->
+				<div class="
+							<c:choose>
+								<c:when test="${!empty user.role}">col-lg-6</c:when>
+								<c:otherwise>col-lg-12</c:otherwise>
+							</c:choose>
+				">
+					<!-- 내정보보기 -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">
+							   <c:choose>
 			                		<c:when test="${!empty user.role}">
-							            E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.email} <br>
-				                		NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.name} <br>
-										PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.phone} <br>
-										REG_DATE&nbsp;: ${user.inDate} <br>
+			                			${user.name}님의 Profile
 			                		</c:when>
 			                		<c:otherwise>
-			                			E-MAIL : ${email} <br><br>
-			                			회원님은 SNS 연동해제 상태입니다.<br>
-			                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
-			                			<span name="unify" data-toggle="modal"
-											data-target="#unifyModal" >
-											계정연동하기
-										</span>
+			                			${email}님의 Profile
 			                		</c:otherwise>
-				                </c:choose>
-					            </div>
-					          </div>
-					          
-					       <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">  
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
-					              <h3 class="panel-title">My Academy</h3>
-					            </div>
-					            <div class="panel-body">
-					              <input type="hidden" value="${user.userNo}">
-					              <!-- 우리 학원 보기 테이블 시작 -->
-					            	<table class="table table-hover table-striped">
-										<c:choose>
-											<c:when test="${empty list}">
-												<span>
-													<h6><img src="/image/crying.png">
-														인증된 학원이 없습니다. 학원을 인증해주세요!
-													</h6>
-												</span>
-											</c:when>
-											<c:otherwise>
-												<thead>
+			                	</c:choose>
+							   
+							</h6>
+							<h6 class="m-0 font-weight-bold text-primary" align="right">
+								<a href="/user/updateUser?email=${user.email}"
+									class="btn btn-info btn-circle btn-sm" data-toggle="modal"
+										data-target="#updateModal" align="right">
+										<i class="fas fa-info-circle"></i>
+								</a>
+							</h6>
+						</div>
+						<div class="card-body">
+							<input type="hidden" value="${user.userNo}">
+							 <c:choose>
+		                		<c:when test="${!empty user.role}">
+		                			E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.email} <br>
+		                			NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.name} <br>
+									PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.phone} <br>
+									REG_DATE&nbsp;: ${user.inDate} <br>
+		                		</c:when>
+		                		<c:otherwise>
+		                			E-MAIL : ${email} <br><br>
+		                			회원님은 SNS 연동해제 상태입니다.<br>
+		                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
+		                			<span name="unify" data-toggle="modal"
+										data-target="#unifyModal" >
+										계정연동하기
+									</span>
+		                		</c:otherwise>
+			                </c:choose>
+						</div>
+					</div>
+
+					<c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
+						<!-- 내가 다니는 학원 보기-->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">My Academy</h6>
+							</div>
+							<div class="card-body">
+								<input type="hidden" value="${user.userNo}">
+								<!-- 우리 학원 보기 테이블 시작 -->
+								<table class="table table-hover table-striped">
+									<c:choose>
+										<c:when test="${empty list}">
+											<span><h6>
+													<img src="/image/crying.png">
+													인증된 학원이 없습니다. 학원을 인증해주세요!
+												</h6>
+											</span>
+										</c:when>
+										<c:otherwise>
+											<thead>
+												<tr>
+													<th align="center">No</th>
+													<th align="center">학원이름</th>
+													<th align="center">인증상태</th>
+													<th align="center">인증취소</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<c:set var="i" value="0" />
+												<c:forEach var="connect" items="${list}">
+													<c:set var="i" value="${ i+1 }" />
 													<tr>
-														<th align="center">No</th>
-														<th align="center">학원이름</th>
-														<th align="center">인증상태</th>
-														<th align="center">인증취소</th>
+														<td align="left">${ i }</td>
+														<td align="left"><span class="cntAcademyName"
+															name="cntAcademyName"><u>${connect.academy.academyName}</u></span>
+															<input type="hidden" name="cntAcademyCode"
+															value="${connect.academy.academyCode}"></td>
+														<td align="left"><c:choose>
+																<c:when test="${connect.connectState eq '0'}">
+																		인증신청
+																	  </c:when>
+																<c:when test="${connect.connectState eq '1'}">
+																		인증됨
+																	  </c:when>
+															</c:choose></td>
+														<td align="left">
+															<span name="delete">
+												                &nbsp; &nbsp; &nbsp;
+												                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+																  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+																</svg>
+															</span>
+														</td>
 													</tr>
-												</thead>
-	
-												<tbody>
-													<c:set var="i" value="0" />
-													<c:forEach var="connect" items="${list}">
-														<c:set var="i" value="${ i+1 }" />
-														<tr>
-															<td align="left">${ i }</td>
-															<td align="left"><span class="cntAcademyName"
-																name="cntAcademyName"><u>${connect.academy.academyName}</u></span>
-																<input type="hidden" name="cntAcademyCode"
-																value="${connect.academy.academyCode}"></td>
-															<td align="left"><c:choose>
-																	<c:when test="${connect.connectState eq '0'}">
-																			인증신청
-																		  </c:when>
-																	<c:when test="${connect.connectState eq '1'}">
-																			인증됨
-																		  </c:when>
-																</c:choose></td>
-															<td align="left">
-																<span name="delete">
-													                &nbsp; &nbsp; &nbsp;
-													                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-																	  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-																	</svg>
-																</span>
-															</td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</c:otherwise>
-										</c:choose>
-									</table><!-- 우리 학원 보기 테이블 끝 -->
-					            
-					            </div>
-					          </div>
-					         </c:if>
-					        </div><!-- /.col-sm-6 -->
-					      
-					    	  
-					        <div class="col-sm-6">
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
-					              <h3 class="panel-title">비밀번호 변경</h3>
-					              <h3 class="panel-title">
-					              	<a href="/user/updatePassword?email=${user.email}"
+												</c:forEach>
+											</tbody>
+										</c:otherwise>
+									</c:choose>
+								</table>
+								<!-- 우리 학원 보기 테이블 끝 -->
+							</div>
+						</div>
+					</c:if>
+
+				</div>
+
+
+				<c:if test="${!empty user.role}">
+					<!-- 비밀번호변경 -->
+					<div class="col-lg-6">
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">비밀번호 변경</h6>
+								<h6 class="m-0 font-weight-bold text-primary" align="right">
+									<a href="/user/updatePassword?email=${user.email}"
 										class="btn btn-info btn-circle btn-sm" data-toggle="modal"
-										data-target="#updatePwModal" align="right">
+										data-target="#myModal" align="right">
 										<i class="fas fa-info-circle"></i>
 									</a>
-					              </h3>
-					            </div>
-					            <div class="panel-body"> 
-						            비밀번호를 변경할 수 있습니다.
-						         </div>
-					          </div>
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
-					              <h3 class="panel-title">계정 휴면</h3>
-					              <h3 class="panel-title">
-					              	<a href="/user/outUser?email=${user.email}" 
+								</h6>
+							</div>
+						</div>
+						<!-- 탈퇴하기-->
+						<div class="card shadow mb-4">
+							<div class="card-header py-3">
+								<h6 class="m-0 font-weight-bold text-primary">계정휴면</h6>
+								<h6 class="m-0 font-weight-bold text-primary" align="right">
+									 <a href="/user/outUser?email=${user.email}" 
 									 	class="btn btn-danger btn-circle btn-sm" data-toggle="modal"
 										data-target="#outModal" align="right">
                                         <i class="fas fa-trash"></i>
                                     </a>
-					              </h3>
-					            </div>
-					            <div class="panel-body"> 
-						            계정을 휴면할 수 있습니다.
-						         </div>
-					          </div>
-					          
-					          <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
-					            <!-- 우리학원 인증하기 등록하기 -->
-						          <div class="panel panel-default">
-						            <div class="panel-heading">
-						              <h3 class="panel-title">학원 인증하기</h3>
-						              <h3 class="panel-title">
-						                <!-- 인증하기 버튼 -->
-											<span name="addConnect" class="btn btn-success btn-circle btn-sm">
-			                                   <i class="fas fa-check">인증버튼</i>
-			                                </span>
-						              </h3>
-						            </div>
-						            <div class="panel-body"> 
-						               	<input type="hidden" value="${user.userNo}">
-										<input type="text" class="form-control" id="academyCode"
+								</h6>
+							</div>
+						</div>
+
+						<!-- role : 간편로그인, 학원일 경우 인증 안보이게 -->
+						<c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
+							<!-- 우리학원 인증하기 등록하기 -->
+							<br>
+							<br>
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">학원 인증하기</h6>
+									<h6 class="m-0 font-weight-bold text-primary" align="right">
+										<!-- 인증하기 버튼 -->
+										<span name="addConnect" class="btn btn-success btn-circle btn-sm">
+		                                   <i class="fas fa-check"></i>
+		                                </span>
+		                            </h6>
+								</div>
+								<div class="card-body">
+									<div class="form-group">
+										<div class="card-body">
+											<input type="hidden" value="${user.userNo}">
+											<input type="text" class="form-control" id="academyCode"
 												name="academyCode" placeholder="*학원코드 입력(인증 최대 3개)">
-										<span id="helpBlock" class="help-block">
-											<strong class="connect_text"></strong>
-									   </span>
-						            </div>
-						          </div>
-						         </c:if>
-						       </div><!-- /.col-sm-6 -->
-					     </div><!-- 첫번째 row 끝 -->  
-					       
-					      <c:if test="${user.role eq 'academy'}">
-						      <div id="academyList" class="row"><!-- 두번째 row -->
-						      </div>
-					      </c:if> 
-				
-	
-<!-- //////////////////////////////모달 영역/////////////////////////////////////////// -->
-					    
-					    
-					  <!-- 내정보수정 모달 시작-->
-						<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+										</div>
+											<span id="helpBlock" class="help-block">
+												<strong class="connect_text"></strong>
+										   </span>
+									</div>
+								</div>
+							</div>
+						</c:if>
+						
+						
+						
+
+						<!-- 비밀번호변경 모달 -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">
-											Update Your Info</h4>
+										<h4 class="modal-title" id="myModalLabel">Update Your Password</h4>
 										<button type="button" class="close" data-dismiss="modal"
 											aria-label="Close">
 											<span aria-hidden="true">&times;</span>
@@ -229,68 +235,35 @@
 									</div>
 									<div class="modal-body">
 										<!-- 모달내용 태그 -->
-	                                    <form class="user" name="updateInfoForm">
-	                                        <div class="form-group">
-	                                        	<input type="hidden" name="userNo" value="${user.userNo}">
-	                                        	<input type="text" id="exampleInputEmail" name="email" value="${user.email}" 
-	                                        		class="form-control form-control-user" aria-describedby="emailHelp" readonly>
-	                                        </div>
-	                                        <div class="form-group">
-	                                        	<input type="text" class="form-control form-control-user"
-	                                               name="name" value="${user.name}" id="exampleInputEmail" aria-describedby="emailHelp">
-		                                        	<span id="helpBlock" class="help-block">
-													   <strong class="text_name"></strong>
-													</span>
+										<form class="user">
+											<div class="form-group">
+												<input type="hidden" id="email" name="email"
+													value="${user.email}"> <input type="password"
+													class="form-control form-control-user" name="password0"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													placeholder="현재비밀번호"> <span id="helpBlock"
+													class="help-block"> <strong class="password_check"></strong>
+												</span>
 											</div>
-											<div class="row"><!-- 휴대전화번호 입력 -->
-												<div class="col-8">
-													<div class="form-group">		
-														<input type="text" class="form-control form-control-user"
-			                                               name="phone" placeholder="휴대전화번호" id="phone" aria-describedby="emailHelp">
-				                                        	<span id="helpBlock" class="help-block">
-															   <strong class="text_phone"></strong>
-															</span>	
-			                                        </div>
-			                                    </div>
-			                                    <div class="col-4"><!-- 발송버튼 -->
-													<div class="form-group">
-														<div class="text-center">
-					                                       <a href="#" name="send_sms" class="btn btn-primary btn-user btn-block">
-					                                            인증번호발송
-					                                        </a>
-					                                    </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="row"><!-- 인증번호 입력 -->
-												<div class="col-8">
-													<div class="form-group">		
-														<input type="text" class="form-control form-control-user"
-			                                                placeholder="인증번호입력" id="vaildNum" aria-describedby="emailHelp">
-				                                        	<span id="helpBlock" class="help-block">
-															   <strong class="text_phone"></strong>
-															</span>	
-			                                        </div>
-			                                    </div>
-			                                    <div class="col-4"><!-- 인증번호 확인버튼 -->
-													<div class="form-group">		
-														<div class="text-center">
-					                                        <a href="#" name="check_sms" class="btn btn-primary btn-user btn-block">
-					                                            확인
-					                                        </a>
-					                                    </div>
-			                                        	<span id="helpBlock" class="help-block">
-														   <strong class="text_sms"></strong>
-														</span>	
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                    
-		                                        <button type="button" id="update" name="update" class="btn btn-primary btn-user btn-block">
-		                                            수정하기
-		                                        </button>
-		                                </form>
-										<!-- 내정보수정 모달 폼 끝 -->
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password" placeholder="새비밀번호">
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password2" placeholder="비밀번호확인"> <span
+													id="helpBlock" class="help-block"> <strong
+													class="text_password"></strong>
+												</span>
+											</div>
+											<a href="#" name="updatePw"
+												class="btn btn-primary btn-user btn-block"> 비밀번호수정 </a>
+										</form>
+										<!-- 모달 내용 끝 -->
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-default"
@@ -298,14 +271,9 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- 내정보수정 모달 끝-->   
-					    
-					    
-					    
-					    
-					    
-					    
-					    <!-- 계정휴면 모달 -->
+						</div><!-- 비밀번호변경 모달 끝-->
+						
+						<!-- 계정탈퇴 모달 -->
 						<div class="modal fade" id="outModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
@@ -327,14 +295,14 @@
 	                                               name="password00" id="exampleInputEmail" aria-describedby="emailHelp"
 	                                                placeholder="현재비밀번호">
 	                                            <span id="helpBlock" class="help-block">
-											      	<strong class="out_password_check"></strong>
+											      	<strong class="password_check"></strong>
 											     </span>
 											     <br>
 				                                    <p>정말 탈퇴하시겠습니까? <br>
 				                                       계정복구는 신청한 날짜로부터 <strong style="color:red">30일</strong> 이내만 가능합니다.
 								 					</p>
 	                                        </div>
-		                                        <button type="button" id="out" name="out" class="btn btn-primary btn-user btn-block">
+		                                        <button type="button" id="out" name="out" disabled="disabled" class="btn btn-primary btn-user btn-block">
 		                                            탈퇴하기
 		                                        </button>
 		                                </form>
@@ -346,9 +314,259 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- 계정휴면 모달 끝-->			
-					
+						</div><!-- 계정탈퇴 모달 끝-->
 						
+						<!-- 내정보수정 모달 -->
+						<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">
+											Update Your Account</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- 모달내용 태그 -->
+	                                    <form class="user" name="outForm">
+	                                        <div class="form-group">
+	                                        	<input type="hidden" name="userNo" value="${user.userNo}">
+	                                        	<input type="text" id="exampleInputEmail" name="email" value="${user.email}" 
+	                                        		class="form-control form-control-user" aria-describedby="emailHelp" readonly>
+	                                        </div>
+	                                        <div class="form-group">
+	                                        	<input type="text" class="form-control form-control-user"
+	                                               name="name" value="${user.name}" id="exampleInputEmail" aria-describedby="emailHelp">
+		                                        	<span id="helpBlock" class="help-block">
+													   <strong class="text_name"></strong>
+													</span>
+											</div>
+											<div class="row"><!-- 휴대전화번호 입력 -->
+												<div class="col-8">
+													<div class="form-group">		
+														<input type="text" class="form-control form-control-user"
+			                                               name="phone" placeholder="휴대전화번호" id="exampleInputEmail" aria-describedby="emailHelp">
+				                                        	<span id="helpBlock" class="help-block">
+															   <strong class="text_phone"></strong>
+															</span>	
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-4"><!-- 발송버튼 -->
+													<div class="form-group">
+														<div class="text-center">
+					                                       <a href="#" class="btn btn-primary btn-user btn-block">
+					                                            인증번호발송
+					                                        </a>
+					                                    </div>
+													    <span><strong class="text_phone"></strong>
+													   </span>	
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                <div class="row"><!-- 인증번호 입력 -->
+												<div class="col-8">
+													<div class="form-group">		
+														<input type="text" class="form-control form-control-user"
+			                                               name="phone" placeholder="인증번호입력" id="exampleInputEmail" aria-describedby="emailHelp">
+				                                        	<span id="helpBlock" class="help-block">
+															   <strong class="text_phone"></strong>
+															</span>	
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-4"><!-- 인증번호 확인버튼 -->
+													<div class="form-group">		
+														<div class="text-center">
+					                                        <a href="#" class="btn btn-primary btn-user btn-block">
+					                                            확인
+					                                        </a>
+					                                    </div>
+			                                        	<span id="helpBlock" class="help-block">
+														   <strong class="text_phone"></strong>
+														</span>	
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                    
+		                                        <button type="button" id="update" name="update" class="btn btn-primary btn-user btn-block">
+		                                            수정하기
+		                                        </button>
+		                                </form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 내정보수정 모달 끝-->
+						
+						<!-- 계정연동 모달 시작-->
+						<div class="modal fade" id="unifyModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">계정연동하기</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- 모달내용 태그 -->
+										<form class="user">
+											<div class="form-group">
+												<input type="hidden" id="email" name="email"
+													value="${user.email}"> <input type="password"
+													class="form-control form-control-user" name="password0"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													placeholder="현재비밀번호"> <span id="helpBlock"
+													class="help-block"> <strong class="password_check"></strong>
+												</span>
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password" placeholder="새비밀번호">
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password2" placeholder="비밀번호확인"> <span
+													id="helpBlock" class="help-block"> <strong
+													class="text_password"></strong>
+												</span>
+											</div>
+											<a href="#" name="updatePw"
+												class="btn btn-primary btn-user btn-block"> 비밀번호수정 </a>
+										</form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 계정연동 모달 끝-->
+						
+						
+						
+						
+					</div>
+				</c:if>
+			</div>
+			<!-- low -->
+			
+		<c:if test="${user.role eq 'academy'}">
+			<div class="row"><!-- 학원프로필 카드 시작 -->
+                        <div class="col-lg-4">
+                           <!-- 프로필1 -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    Dropdown menus can be placed in the card header in order to extend the functionality
+                                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
+                                    icon in the card header can be clicked on in order to toggle a dropdown menu.
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-4">
+
+                            <!-- 프로필 2 -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    Dropdown menus can be placed in the card header in order to extend the functionality
+                                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
+                                    icon in the card header can be clicked on in order to toggle a dropdown menu.
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="col-lg-4">
+
+                            <!-- 프로필 3 -->
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Dropdown Card Example</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    Dropdown menus can be placed in the card header in order to extend the functionality
+                                    of a basic card. In this dropdown card example, the Font Awesome vertical ellipsis
+                                    icon in the card header can be clicked on in order to toggle a dropdown menu.
+                                </div>
+                            </div>
+
+
+                        </div>
+                </div>
+           </c:if>
+			
 				
 				
 				
@@ -986,109 +1204,11 @@
 				//self.location = "/user/updateUser?email=${user.email}"
 			});
 		});	 
-		
-		
-		
-		
-		<!--                학원 용 입니다               -->
-		
-		var userno = '${user.userNo}';
-        var role = '${user.role}';
-        
-        function academyList(){
-        	$.ajax({
-        		url : '/academy/json/academyProfile/${user.userNo}',
-        		type : 'get',
-        		success : function(data){
-        			console.log(data);
-        			$.each(data, function(key,value){
-        				
-        				var a = '';
-        				
-        				if(value.length<=2){
-        					a += '<div class="col-lg-4"><div class="card shadow mb-4">'
-    						a += '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'
-    						a += '<h6 class="m-0 font-weight-bold text-primary"> 학원 등록 하기 </h6></div>'
-    						
-    						a += '<div class="card-body">'
-    						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a></div></div></div>'
-    					}
-        				
-        				for(var i=0; i<value.length;i++){
-        					
-        					a += '<div class="col-lg-4"><div class="card shadow mb-4">'
-        					a += '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'
-        					a += '<h6 class="m-0 font-weight-bold text-primary">'
-        					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h6>'
-        					a += '<div class="dropdown no-arrow">'
-        					a += '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-        					a += '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i></a>'
-        					a += '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'
-        					a += '<div class="dropdown-header">Dropdown Header:</div>'
-        					a += '<a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')" class="dropdown-item"> 학원 프로필 삭제 </a>'
-        					a += '</div></div></div>'
-        					
-        					a += '<div id="academyInfo_' + i +'" class="card-body">'
-        					a += ' 학원 정보 '+getAcademyInfo(i, value[i].academyCode) 
-        					a += '</div></div></div>'
-        													
-        				}
-        				
-            			$("#academyList").html(a);
-        				
-        			});
-        		}
-        	});
-        }
-        
-        function getAcademyInfo(index, academyCode){
-			$.ajax({
-				 url : '/academy/json/getacademyInfo/'+academyCode,
-			     method : 'GET',
-			     dataType : "json",
-				 success : function(data){
-					 console.log(data);
-					 
-					 var a = ''
-					 	 a += 'PHONE : ' + data.academyPhone
-				 		 a += '<br/><br/>지역구 : ' + data.academyArea
-				 		 a += '<br/><br/>학생수 : ' + data.count + '명'
-				 		 a += '<br/><br/>수업수 : ' + data.count2 + '개'
-			
-				 		 // 두번째 세번째 정보 못받아옴
-				 		 // 인증 학생 수
-				 		 // 등록 수업 수
-				 					
-					$("#academyInfo_" + index).html(a);
-				 }							
-			});		
-		}
-        
-		
-		// 학원 프로필 삭제하기
-		function deleteAcademyProfile(academyCode){
-			alert(academyCode)
-			
-			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
-				
-			    $.ajax({
-			    	
-			        url : '/academy/json/deleteAcademyAll/'+academyCode,
-			        type : 'post',
-			        success : function(data){
-			            alert("삭제가 완료되었습니다!")
-			        }
-			    });
-			}
-		}
 	
 		
 		
     
-		 $(document).ready(function(){
-	            academyList();
-	        });
-	        
+    
     
     </script>
     
