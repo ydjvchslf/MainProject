@@ -128,7 +128,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		
 		System.err.println(user);
-		
+		System.out.println(list);
 //		return "/user/getUserTiles";
 		return "main";
 	}
@@ -397,7 +397,9 @@ public class UserController {
 		if( user.getPassword().equals(dbUser.getPassword()) ){
 			
 			session.setAttribute("user", dbUser);
-			model.addAttribute("user", user);
+			model.addAttribute("user", dbUser);
+			
+			System.out.println("if문 dbuser >"+dbUser);
 			
 			// 쿠키에 로그인 타입 값 설정
 			Cookie ck = new Cookie("loginType", "normal");
@@ -415,12 +417,15 @@ public class UserController {
 				
 				Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
 	            
+				System.out.println("2 if문 dbuser"+dbUser);
 	            model.addAttribute("list",map.get("list"));
-				
+//				model.addAttribute("user", dbUser);
+	            System.out.println(map.get("list"));
 	          //아카데미 화면
-				String getUserView = this.getUser(session, user.getEmail(), model);
+			//	String getUserView = this.getUser(session, user.getEmail(), model);
 				
-				return getUserView;
+	            
+				return "/main";
 				
 			}
 			

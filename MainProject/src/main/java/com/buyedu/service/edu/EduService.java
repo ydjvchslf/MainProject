@@ -81,10 +81,6 @@ public class EduService {
 	@Transactional (readOnly = true)
 	public Map<String , Object> getPickEduList(Search search) throws Exception {
 		
-		search.setSearchUserNo(101); 	
-		
-		System.out.println("디버깅 ================="+search);
-		
 		List<PickEdu> list= pickDao.getPickEduList(search);
 		System.err.println(list);
 		int totalCount = pickDao.getPickEduTotalCount(search);
@@ -126,8 +122,6 @@ public class EduService {
 	@Transactional (readOnly = true)
 	public Map<String , Object> getPurchaseEduList(Search search) throws Exception {
 		
-		search.setSearchUserNo(134);
-		
 		System.out.println("디버깅 ================="+search);
 		
 		List<PurchaseEdu> list= purchaseDao.getPurchaseEduList(search);
@@ -142,10 +136,6 @@ public class EduService {
 	}
 	
 	public Map<String , Object> getPurchaseAcademyList(Search search) throws Exception {
-		
-		search.setSearchUserNo(134);
-		
-		System.out.println("디버깅 ================="+search);
 		
 		List<PurchaseEdu> list= purchaseDao.getPurchaseAcademyList(search);
 		System.err.println(list);
