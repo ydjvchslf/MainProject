@@ -38,6 +38,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 
 @Controller
@@ -140,6 +141,12 @@ public class AcademyController {
 		
 		model.addAttribute("academy", academy);
 		
+		User user = UserUtil.user();
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		
+		//model.addAttribute("list", map.get("list"));
+		
 		System.out.println(academy);
 		
 		//학원 공지사항
@@ -158,7 +165,7 @@ public class AcademyController {
 			int totalCount = list.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
-		
+			
 		model.addAttribute("list", list);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);

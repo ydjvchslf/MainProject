@@ -17,11 +17,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-
+	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
   	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	
+  	
 
+  
   </head>
   <body>
 		
@@ -31,16 +32,15 @@
 		<jsp:include page="../common/left.jsp"></jsp:include>
 		
         <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5">
-				
-				<div class="container"><!-- container시작 -->
-				
+        	<div id="content" class="p-4 p-md-5">
+	        
+	        	<div class="container"><!-- container시작 -->
+	        	
 				        <h1>내정보보기</h1>
 				        <hr>
-				        
-					      <div class="row"><!-- 첫번째 row 시작 -->
+					      <div class="row">
 					        <div class="col-sm-6">
-					          <div class="panel panel-default">
+					          <div class="panel panel-default"><!-- 내정보보기 -->
 					            <div class="panel-heading">
 					              <h3 class="panel-title">
 					              	<c:choose>
@@ -62,25 +62,25 @@
 					            </div>
 					            <div class="panel-body">
 					              <input type="hidden" value="${user.userNo}">
-					              <c:choose>
-			                		<c:when test="${!empty user.role}">
-							            E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.email} <br>
-				                		NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.name} <br>
-										PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.phone} <br>
-										REG_DATE&nbsp;: ${user.inDate} <br>
-			                		</c:when>
-			                		<c:otherwise>
-			                			E-MAIL : ${email} <br><br>
-			                			회원님은 SNS 연동해제 상태입니다.<br>
-			                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
-			                			<span name="unify" data-toggle="modal"
-											data-target="#unifyModal" >
-											계정연동하기
-										</span>
-			                		</c:otherwise>
-				                </c:choose>
+						              <c:choose>
+				                		<c:when test="${!empty user.role}">
+								            E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.email} <br>
+					                		NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.name} <br>
+											PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.phone} <br>
+											REG_DATE&nbsp;: ${user.inDate} <br>
+				                		</c:when>
+				                		<c:otherwise>
+				                			E-MAIL : ${email} <br><br>
+				                			회원님은 SNS 연동해제 상태입니다.<br>
+				                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
+				                			<span name="unify" data-toggle="modal"
+												data-target="#unifyModal" >
+												계정연동하기
+											</span>
+				                		</c:otherwise>
+					                </c:choose>
 					            </div>
-					          </div>
+					          </div><!-- 내정보보기 -->
 					          
 					       <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">  
 					          <div class="panel panel-default">
@@ -93,8 +93,8 @@
 					            	<table class="table table-hover table-striped">
 										<c:choose>
 											<c:when test="${empty list}">
-												<span>
-													<h6><img src="/image/crying.png">
+												<span><h6>
+														<img src="/image/crying.png">
 														인증된 학원이 없습니다. 학원을 인증해주세요!
 													</h6>
 												</span>
@@ -144,9 +144,8 @@
 					            
 					            </div>
 					          </div>
-					         </c:if>
 					        </div><!-- /.col-sm-6 -->
-					      
+					    </c:if>  
 					    	  
 					        <div class="col-sm-6">
 					          <div class="panel panel-default">
@@ -155,7 +154,7 @@
 					              <h3 class="panel-title">
 					              	<a href="/user/updatePassword?email=${user.email}"
 										class="btn btn-info btn-circle btn-sm" data-toggle="modal"
-										data-target="#updatePwModal" align="right">
+										data-target="#updatePw" align="right">
 										<i class="fas fa-info-circle"></i>
 									</a>
 					              </h3>
@@ -180,7 +179,7 @@
 						         </div>
 					          </div>
 					          
-					          <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
+					         <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
 					            <!-- 우리학원 인증하기 등록하기 -->
 						          <div class="panel panel-default">
 						            <div class="panel-heading">
@@ -201,12 +200,12 @@
 									   </span>
 						            </div>
 						          </div>
-						         </c:if>
-						       </div><!-- /.col-sm-6 -->
-					     </div><!-- 첫번째 row 끝 -->  
+						        </div><!-- /.col-sm-6 -->
+					       </div><!-- row 끝 -->  
+					       </c:if>
 					       
 					      <c:if test="${user.role eq 'academy'}">
-						      <div class="row"><!-- 두번째 row -->
+						      <div class="row">
 						      	 <div class="col-sm-4">
 						      	 	<div class="panel panel-default">
 							            <div class="panel-heading">
@@ -239,12 +238,13 @@
 						      	 </div>
 						      </div>
 					      </c:if> 
-				
-	
+					      
+					      
+					      
 <!-- //////////////////////////////모달 영역/////////////////////////////////////////// -->
 					    
 					    
-					  <!-- 내정보수정 모달 시작-->
+					    <!-- 내정보수정 모달 시작-->
 						<div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
@@ -328,14 +328,54 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- 내정보수정 모달 끝-->   
-					    
-					    
-					    
-					    
-					    
-					    
-					    <!-- 계정휴면 모달 -->
+						</div><!-- 내정보수정 모달 끝-->
+					      
+					
+						
+						
+						<!-- 비번변경모달 다시 !!!! -->
+						<div class="modal fade" id="updatePw" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">
+											fsdfsdfsd</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- 모달내용 태그 -->
+	                                    <form class="user" name="outForm">
+	                                        <div class="form-group">
+	                                        	<input type="hidden" id="email" name="email" value="${user.email}">
+	                                            <input type="password" class="form-control form-control-user"
+	                                               name="password0" id="exampleInputEmail" aria-describedby="emailHelp"
+	                                                placeholder="현재비밀번호">
+	                                            <span id="helpBlock" class="help-block">
+											      	<strong class="password_check"></strong>
+											     </span>
+											     <br>
+				                                    <p>sdfsadfsdfsdfsd</p>
+	                                        </div>
+		                                        <button type="button" id="out" name="out" class="btn btn-primary btn-user btn-block">
+		                                            sdfsdf
+		                                        </button>
+		                                </form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 비번변경모달 모달 끝-->
+						
+						
+						<!-- 계정탈퇴 모달 -->
 						<div class="modal fade" id="outModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
@@ -354,10 +394,10 @@
 	                                        <div class="form-group">
 	                                        	<input type="hidden" id="email" name="email" value="${user.email}">
 	                                            <input type="password" class="form-control form-control-user"
-	                                               name="password00" id="exampleInputEmail" aria-describedby="emailHelp"
+	                                               name="password0" id="exampleInputEmail" aria-describedby="emailHelp"
 	                                                placeholder="현재비밀번호">
 	                                            <span id="helpBlock" class="help-block">
-											      	<strong class="out_password_check"></strong>
+											      	<strong class="password_check"></strong>
 											     </span>
 											     <br>
 				                                    <p>정말 탈퇴하시겠습니까? <br>
@@ -376,27 +416,80 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- 계정휴면 모달 끝-->			
-					
+						</div><!-- 계정탈퇴 모달 끝-->
 						
-				
-				
-				
-				
-				
-	      	</div><!-- container 끝 -->
-      	
-       </div>
-      
-	</div>
+						
+						
+						
+						
+						
+						<!-- 계정연동 모달 시작-->
+						<div class="modal fade" id="unifyModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">계정연동하기</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- 모달내용 태그 -->
+										<form class="user">
+											<div class="form-group">
+												<input type="hidden" id="email" name="email"
+													value="${user.email}"> <input type="password"
+													class="form-control form-control-user" name="password0"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													placeholder="현재비밀번호"> <span id="helpBlock"
+													class="help-block"> <strong class="password_check"></strong>
+												</span>
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password" placeholder="새비밀번호">
+											</div>
+											<div class="form-group">
+												<input type="password"
+													class="form-control form-control-user"
+													id="exampleInputEmail" aria-describedby="emailHelp"
+													name="password2" placeholder="비밀번호확인"> <span
+													id="helpBlock" class="help-block"> <strong
+													class="text_password"></strong>
+												</span>
+											</div>
+											<a href="#" name="updatePw"
+												class="btn btn-primary btn-user btn-block"> ㄴㄴㄴㄴㄴ </a>
+										</form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 계정연동 모달 끝-->
+					      
+					      
+					
+		      	</div><!-- container 끝 -->
+	       </div>
+		</div>
 	
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- script src="/js/jquery.min.js"></script> -->
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
     
     
-   <!-- JS 메인 시작 -->
+    
+    <!-- JS 메인 시작 -->
     <script type="text/javascript">
     
   	//휴대전화번호 자동 대시(-)삽입
@@ -467,8 +560,7 @@
 		$('a[name="updatePw"]').on("click", events.click.updatePw);
 		
 		//계정휴면
-		//현재비밀번호 변화 event
-		$('input[name="password00"]').on("change", events.change.password00);
+		
 		
 	});
 
@@ -521,11 +613,6 @@
 			password2 : function() {
 				//alert("4접근")
 				fncCheckPw("second");
-			},
-
-			password00 : function() {
-				alert("현재비밀번호 change 이벤트")
-				passwordChange00();
 			}
 
 		}
@@ -732,7 +819,7 @@
 	})
 
 	
-	// 비밀번호변경 -> 비밀번호 체인지 & 본래 비밀번호 맞는지
+	// 모달 비밀번호 수정
 	function passwordChange() {
 
 		var password = $('input[name="password0"]').val();
@@ -748,26 +835,6 @@
 		}
 
 	}
-	
-	// 계정휴면 -> 비밀번호 체인지 & 본래 비밀번호 맞는지
-	function passwordChange00() {
-
-		var password = $('input[name="password00"]').val();
-
-		// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
-		if (password) {
-
-			fncCheckCurrentPassword00();
-			return true;
-
-		} else {
-			$(".password_check").text("비밀번호를 입력하세요.");
-			$(".password_check").css("color", "red");
-		}
-
-	}
-	
-	
 	
 	//내정보 수정하기 함수
 	function fncUpdateInfo() {
@@ -789,7 +856,7 @@
 	}
 
 	
-	//비밀번호 변경=> 현재 비밀번호 맞는지 확인 ajax
+	//현재 비밀번호 맞는지 확인 ajax
 	function fncCheckCurrentPassword() {
 
 		var email = $('input[name="email"]').val();
@@ -832,53 +899,6 @@
 		});
 
 	}
-	
-	
-	
-	//계정휴면=> 현재 비밀번호 맞는지 확인 ajax
-	function fncCheckCurrentPassword00() {
-
-		var email = $('input[name="email"]').val();
-		var password = $('input[name="password00"]').val();
-
-		console.log(email);
-		console.log(password);
-
-		$.ajax({
-			url : "/user/json/checkPassword",
-			method : "POST",
-			data : JSON.stringify({
-				email : email,
-				password : password,
-			}),
-			dataType : "json",
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			success : function(JSONData, status) {
-
-				//alert("성공!");
-
-				if (JSONData.result == "no") {
-					console.log("비번 NO");
-
-					passwordDuplicationCheck = false;
-					$(".out_password_check").text("비밀번호가 맞지 않습니다");
-					$(".out_password_check").css("color", "red");
-
-				} else if (JSONData.result == "ok") {
-					console.log("비번 OK");
-
-					passwordDuplicationCheck = true;
-					$(".out_password_check").text("비밀번호가 맞습니다");
-					$(".out_password_check").css("color", "blue");
-				}
-			}
-		});
-
-	}
-	
 
 	//첫번째,두번째 비밀번호 조건 함수
 	function fncCheckPw(passwordType) {
