@@ -38,6 +38,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 
 @Controller
@@ -129,7 +130,7 @@ public class AcademyController {
 	}
 	
 	
-	@RequestMapping(value = "academyInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "academyInfo", method = {RequestMethod.GET, RequestMethod.POST})
 	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search, Model model, HttpSession session, HttpServletRequest request ) throws Exception{
 		
 		System.out.println("/academy/academyInfo : GET");
@@ -139,6 +140,12 @@ public class AcademyController {
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		model.addAttribute("academy", academy);
+		
+		User user = UserUtil.user();
+		
+		System.out.println("user no = " + user.getUserNo());
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
 		
 		System.out.println(academy);
 		
@@ -164,7 +171,7 @@ public class AcademyController {
 		model.addAttribute("search", search);
 		}
 		
-		return "/tiles/academy/academyInfo";
+		return "/academy/academyInfo";
 	}
 	
 	@RequestMapping(value = "academySampleEdu", method = RequestMethod.GET)
@@ -188,7 +195,7 @@ public class AcademyController {
 		
 		System.out.println("academySampleEdu map = "+map.get("list"));
 		
-		return "/tiles/academy/academySampleEdu";
+		return "academy/academySampleEdu";
 	}
 	
 //	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
@@ -225,7 +232,7 @@ public class AcademyController {
 		
 		System.out.println("academyConnects map = "+map.get("connect"));
 		
-		return "/tiles/academy/academyConnect";
+		return "academy/academyConnect";
 	}
 	
 

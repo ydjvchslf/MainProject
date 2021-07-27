@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +29,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.buyedu.domain.Academy;
+import com.buyedu.domain.Board;
+import com.buyedu.domain.Page;
+import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
+import com.buyedu.service.board.BoardService;
 import com.buyedu.service.user.UserService;
 
 @RestController
@@ -40,11 +45,20 @@ public class AcademyRestController {
 	private AcademyService academyService;
 	
 	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
 	private UserService userService;
 	
 	public AcademyRestController() {
 		System.out.println(this.getClass());
 	}
+	
+	@Value("5")
+	int pageUnit;
+	
+	@Value("5")
+	int pageSize;
 	
 	@ResponseBody
 	@RequestMapping(value = "json/academyProfile/{userNo}", method = RequestMethod.GET)
@@ -264,6 +278,28 @@ public class AcademyRestController {
 		System.out.println("삭제되는 정보는 1. 학원 정보 2. 인증 정보 3. 후기 정보 4. 수업 정보 5. 게시글 ");
 		
 		academyService.deleteAcademyAll(academyCode);
+	}
+	
+	// 학원 공지사항
+	@RequestMapping(value = "json/getBoardListAcademy/{search}", method = RequestMethod.GET)
+	public List<Board> getBoardListAcademy(@PathVariable String academyCode, Search search) throws Exception{
+		
+		System.out.println("json/getBoardListAcademy : GET");
+		System.out.println("academyInfo 아카데미 코드 = " + academyCode);
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		List<Board> list =boardService.getBoardListAcademy(search);
+		
+		if(list.size()!=0) {
+			int totalCount = list.get(0).getTotalCount();
+			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
+			System.out.println(resultPage);
+		}
+		
+		return list;
 	}
 	
 

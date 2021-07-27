@@ -4,11 +4,10 @@
 <!DOCTYPE html>
 
 <head>
-
   <title>게시글 쓰기</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+ 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ 
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
@@ -33,86 +32,66 @@ function fncAddBoard(){
 	var acaWriter=$('input[name="acaWriter"]').val();
 	alert(acaWriter)
 	
-	
 	if(title == null || title.length <1){
 		alert("글 제목을 입력해주세요.");
 		return;
 	}
-	
-	/* var detail = document.detailForm.prodDetail.value;
-	var manuDate = document.detailForm.manuDate.value;
-	var price = document.detailForm.price.value; */
-	//var target = document.getElementById("cate");
-	//var cateName = target.options[target.selectedIndex].text;
-	//var cateName = $("#cate option:checked").text();
-	//console.log('name : ' + cateName)
-	//document.getElementById("cateName").value = cateName;
-	
-
-	
 	$("form").attr("method" , "POST").attr("action" , "/board/addBoard").submit();
 }
 </script>
 
+<style> 
+	#addButton{
+	position : absolute;
+	top : 86%;
+	right : 42.3%;
+	}
+</style>
 
 <body>
- <%@ include file="toolbar.jsp" %>
-
 	
-   	</br></br></br>
-   	
-   	<div class="container">
-	
-		<div class="page-header text-default"> 
-		
-		<h3 style="text-align:center;">게시글 쓰기</h3> 
+	<div class="card shadow mb-4">
+		<!-- 게시글 작성 title -->
+		<div class="card-header py-3">
+		    <h3 class="m-0 font-weight-bold text-primary">게시글 작성</h3>
 		</div>
-	<br/><br/>
-	
-	<div class="container-fluid">
-	<form class="form-horizontal">
-	
-	<input type="hidden" name="boardWriter" value="${user.userNo}" />
-	<input type="hidden" name="cateCode" value="${board.cateCode}" />
-	<input type="hidden" name="acaWriter" value="${board.acaWriter}" />
-	search.cateCode : ${search.cateCode}
-	board.cateCode : ${board.cateCode}
-	board.acaWriter : ${board.acaWriter}
-
 		
-	 	<div id="addbrdview" class="form-group">
-		    <label for="boardTitle" class="col-sm-offset-1 col-sm-1 control-label"></label>
+	<!-- 게시글 작성 form -->
+	<div>
+	<form>
+		<input type="hidden" name="boardWriter" value="${user.userNo}" />
+		<input type="hidden" name="cateCode" value="${board.cateCode}" />
+		<input type="hidden" name="acaWriter" value="${board.acaWriter}" />
+			search.cateCode : ${search.cateCode}
+			board.cateCode : ${board.cateCode}
+			board.acaWriter : ${board.acaWriter}
+		<div id="addbrdview" class="form-group">
+		    <label for="boardTitle" class="col-md-12 text-right"></label>
 		    <div class="col-sm-12">
 		      <input type="text" class="form-control" id="boardTitle" name="boardTitle" placeholder="제목을 입력해주세요.">
 		    </div>
 		</div>
 		
 	 	<div class="form-group">
-		    <label for="boardContent" height=100px class="col-sm-offset-1 col-sm-1 control-label"></label>
+		    <label for="boardContent" height=100px class="col-md-12 text-right"></label>
 		    <div class="col-sm-12" height=100px>
 		      <textarea id="summernote" class="form-control col-sm-5" rows="5" name="boardContent"
 						placeholder="내용" style="resize: none"></textarea>
 		    </div>
 		</div>
-		
-</form>
-		
-		</div>	
-				
-		</div>
-		
-	 	
+		<div id="summernote"></div>
+	</form>
+	</div>	
+	</div>
 		
 		<div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		    <div class="col-md-12 text-right" id="addButton">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >등 &nbsp;록</button>
 			  &nbsp;<a class="btn btn-default" href="/board/listBoard" role="button">취&nbsp;소</a>
 		 	</div>
 		</div>
-		
-	</div>
 
-  <div id="summernote"></div>
+  
   <script>
     $(document).ready(function() {
     	 $('#summernote').summernote({

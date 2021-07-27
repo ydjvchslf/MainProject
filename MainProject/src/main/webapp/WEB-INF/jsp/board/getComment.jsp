@@ -12,19 +12,14 @@
 </head>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
  	<style>
-		#content{
-	      width : 1030px;
-	      height : 50px;
+		#cmtcontent{
+	      width : 100%;
+	      heigt : 200px;
 	    }
 	    
 	    #commentInsert{
 	      width : 100px;
-	      height : 50px;
-	    }
-	    
-	    #commentInsert{
-	      width : 100px;
-	      height : 50px;
+	      height : 34px;
 	    }
 	    
 	    #buttons{
@@ -42,22 +37,21 @@
 	   </style>
  </br></br>
  <body>
- 	  <div class="container">
+ 	  <div class="container-fluid">
         댓글 <span class="commentCount"></span>
         <form name="commentInsertForm" onsubmit="return false">
             <div class="input-group">
                <input type="hidden" name="boardNo" value="${board.boardNo}"/>
-               <input type="text" class="form-control" onkeyup="enterEvent()" id="content" name="content" placeholder="내용을 입력하세요.">
+               <input type="text" class="form-control" onkeyup="enterEvent()" id="cmtcontent" name="content" placeholder="내용을 입력하세요." >
                <span class="input-group-btn">
                     <button id="commentInsert" class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
-                    
                </span>
               </div>
               </br></br>
         </form>
     </div>
     
-    <div class="container">
+    <div class="container-fluid">
     	
     
         <div class="commentList"></div>
@@ -74,8 +68,6 @@ $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭시
     var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
     commentInsert(insertData); //Insert 함수호출(아래)
 });
- 
- 
  
 //댓글 목록 
 

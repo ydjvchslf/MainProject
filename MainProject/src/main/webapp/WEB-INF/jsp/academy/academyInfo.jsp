@@ -1,32 +1,354 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
-<html>
-
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content="" />
-<meta name="author" content="" />
-<title>Academy Info page</title>
-
-		   <c:if test="${user.role eq 'academy'}">
-			<div id="academyList" class="row"><!-- í•™ì›í”„ë¡œí•„ ì¹´ë“œ ì‹œìž‘ -->
-                </div>
-           </c:if>
+<html >
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>academyInfo</title>
+        
+        
+        <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/css/style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+		
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
+		</script>
+		
+		
+		<style>
+		    .btn{  <!-- ¸ðµç ¹öÆ°¿¡´ëÇÑ css¼³Á¤ -->
+		      text-decoration: none;
+		      font-size:20px;
+		      font-weight:bolder;
+		      color:white;
+		      padding:5px 10px 5px 10px;
+		      margin:20px;
+		      display:inline-block;
+		      border-radius: 50px;
+		      transition:all 0.1s;
+		      font-family: 'Nanum Pen Script', cursive;
+		    }
+		    .btn:active{
+		      transform: translateY(3px);
+		    }
+		    .btn.blue{
+		      background-color: #1f75d9;
+		      border-bottom:5px solid #165195;
+		    }
+		    .btn.blue:active{
+		      border-bottom:2px solid #165195;
+		    }
+		    
+		    #header{
+				vertical-align : top;
+				font-size : 0px;
+				color : #1F4E79;
+				font-family : TmonMonsori;
+			}
 			
+			@font-face {
+			    font-family: 'TmonMonsori';
+			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+			    font-weight: normal;
+			    font-style: normal;
+			}
 
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-	crossorigin="anonymous"></script>
-<script src="/js/scripts.js"></script>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+ 		</style>
+
+	<title>Academy Info page</title>	
+    </head>
+    <body>
+
+        <div id="layoutSidenav" class="wrapper d-flex align-items-stretch">
+        
+        <jsp:include page="../common/left.jsp"></jsp:include>
+        
+            <!-- ¿©±â°¡ °¡¿îµ¥ µé¾î°¥ È­¸é (¹Ù²î´Â °÷) -->
+            <div id="layoutSidenav_content" class="p-4 p-md-5">
+            
+            <div id="academytitle"></div>
+            
+            <jsp:include page="../common/toolbar.jsp"></jsp:include>  
+            
+                <main>
+                    <div class="container-fluid px-4">
+                        <div id="academyInfo" class="card-body"></div>
+        
+            <div class="row">
+
+		    <div class="col-md-6 text-left" id="header">
+		    	<h3>ÇÐ¿ø °øÁö»çÇ×</h3>
+		    </div>
+		    
+		    <div class="col-md-6 text-right" id="searchPosition">
+			    <form class="form-inline" >
+			    <input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
+			    
+			    <div class="form-group">
+				    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
+						<option value="0"  ${ ! empty search.searchConditionb && search.searchConditionb==0 ? "selected" : "" }>Á¦¸ñ</option>
+						<option value="1"  ${ ! empty search.searchConditionb && search.searchConditionb==1 ? "selected" : "" }>³»¿ë</option>
+					</select>
+				 </div>
+				  
+				 <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
+				    <input type="text" class="form-control" onkeyup="enterEvent()" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : null }"  >
+				  </div>
+				  
+				  <button type="button" class="btn btn-default">°Ë»ö</button>
+				  
+<br/><br/>
+				  
+				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºÐ -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+		
+				</form>
+	    	</div>
+	    	
+		</div>
+		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+
+		
+		
+      <!--  table Start /////////////////////////////////////-->
+      <table class="table table-hover" id="boardTable">
+      
+        <thead id="tableHead">
+          <tr>
+            <th width="100" align="center">No</th>
+            <th width="400" align="center" >°Ô½Ã±ÛÁ¦¸ñ</th>
+            <th width="200" align="left">ÀÛ¼ºÀÏÀÚ</th>
+            <th width="200" align="center">Á¶È¸¼ö</th>
+            
+        </thead>
+		
+		<tbody>
+		
+		  <c:set var="i" value="${resultPage.totalCount }" />
+		  <c:forEach var="board" items="${list}">
+			<c:set var="i" value="${i-1}" />
+			<tr>
+			  <td align="left">${i+1-(resultPage.currentPage-1)*5}</td>
+			  
+			  
+		
 	
+		<td id="listtable" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3&academyCode=${academy.academyCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+					  
+			  
+			
+			  <td id="listtable" align="left">
+			  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
+			  <td id="listtable" align="left">${board.viewCnt}</td>
+			  
+			</tr>
+          </c:forEach>
+        
+        </tbody>
+      
+      </table>
+	  <!--  table End /////////////////////////////////////-->
+	  <div class="form-group">
+	  
+	  userNo : ${user.userNo}    
+	  ¾ÆÄ«µ¥¹Ì ÄÚµå : ${academy.academyCode}
+		<input type="hidden" name="isMine" value="${search.isMine}" />		
+		<input type="hidden" name="acaWriter" value="${academy.academyCode}" />	  
+		  
+			<c:if test="${user.role eq 'academy'}">
+				<div class="col-sm-offset-11  col-sm-1 text-center">
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 
+		     	 <a href="/board/addBoard?cateCode=3&academyCode=${academy.academyCode}">±Û¾²±â</a></button>
+		    	</div> 
+			</c:if>
+		</div>
+ 	</div>
+ 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	
+ 	 
+ 	<!-- PageNavigation Start... -->
+	<jsp:include page="../common/pageNavigator_new.jsp"/>
+	<!-- PageNavigation End... -->
 	
+	<div style="height: 100vh"></div>
+                        <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+                    </div>
+                </main>
+                </div>
+	</div>
+        </div>
 	
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="/js/scripts.js"></script>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        
+        <script>
+		var academyCode = '${academy.academyCode}';
+		var role = '${user.role}';
+		var academyInfo = {};
+		
+		alert("academyCode : "+academyCode)
+			
+		
+		function getAcademyInfo(){
+			$.ajax({
+				 url : '/academy/json/getacademyInfo/'+academyCode,
+			     method : 'GET',
+			     dataType : "json",
+				 success : function(data){
+					 console.log(data);
+					 academyInfo = data;
+					 
+					 var a = ''
+						 a += '<ul style="list-style: none;"><li style="float: left;">'
+						 a += '<img alt="ÇÐ»ý¼ö" src="/image/studentcount.png" height="20">'
+						 a += '<span>'+ data.count+'¸í &nbsp;&nbsp;&nbsp;</span></li>'
+						 a += '<li style="float: left;">'
+						 a += '<img alt="°­ÁÂ¼ö" src="/image/educount.png" height="20">'
+						 a += '<span>'+ data.count2+'°³ </span></li></ul>'
+						 
+					 	 a += '<br/>ÇÐ¿ø ¹øÈ£ : ' + data.academyPhone
+				 		 a += '<br/>ÇÐ¿ø ÁÖ¼Ò : ' + data.academyAddr
+				 		 a += '<br/>Áö¿ª±¸ : ' + data.academyArea
+				 	 	 a += '<div id="AcademyIntro" style="white-space: pre;">'
+				 	 	 a += 'ÇÐ¿ø ¼Ò°³ : <br/>' + data.academyIntro
+				 	 	 
+				 	 if(role == 'academy'){
+				 	 	 a += '<a class="btn blue" onclick="updateIntro(\''+data.academyCode+'\')"> ¼ö Á¤ </a>'
+				 	 }
+				 		 a += '</div>'
+				 		 a += '<div id="AcademyHistory" style="white-space: pre;">'
+				 		 a += 'ÇÐ¿ø ½ÇÀû : <br/>' + data.academyHistory
+				 		 
+				 	if(role == 'academy'){
+						 a += '<a class="btn blue" onclick="updateHistory(\''+data.academyCode+'\')"> ¼ö Á¤ </a>'
+				 	}
+						 a += '</div>'
+						 
+				 					
+					var b = '';
+						b += '<div id="header"><h1 class="mt-4">'+data.academyName+'</h1></div>'
+						
+				            	
+						 
+					$("#academyInfo").html(a);
+					$("#academytitle").html(b);
+						 
+				 }							
+			});		
+		}
+		
+		// ¼Ò°³±Û ÅØ½ºÆ® area º¯°æ
+		function updateIntro(academyCode){
+		    var intro ='';
+		    
+		    alert("ÄÚµå = " + academyCode + "¼Ò°³±Û = "+academyInfo.academyIntro);
+		    
+		    	intro += '<div id="AcademyIntro">';
+		    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="100">'+academyInfo.academyIntro+'</textarea>'
+		   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">ÀúÀå</button> </span>';
+		   	 	intro += '</div>';
+		    
+		    $('#AcademyIntro').html(intro);
+		    
+		}
+		 
+		// ¼Ò°³±Û ¼öÁ¤
+		function saveIntro(academyCode){
+		    var updateIntro = $('[name=academy_'+academyCode+']').val();
+		    
+		    $.ajax({
+		        url : '/academy/json/updateIntro/'+academyCode,
+		        type : 'POST',
+		        data : {'academyCode' : academyCode, 'updateIntro' : updateIntro},
+		        success : function(data){
+		        	alert("¼öÁ¤ ¿Ï·á!");
+		        	getAcademyInfo();
+		        }
+		    });
+		}
+		
+		// ½ÇÀû±Û ÅØ½ºÆ® area º¯°æ
+		function updateHistory(academyCode){
+		    var intro ='';
+		    
+		    alert("ÄÚµå = " + academyCode + "½ÇÀû±Û = "+academyInfo.academyHistory);
+		    
+		    	intro += '<div id="AcademyHistory">';
+		    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="100">'+academyInfo.academyHistory+'</textarea>'
+		   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">ÀúÀå</button> </span>';
+		   	 	intro += '</div>';
+		    
+		    $('#AcademyHistory').html(intro);
+		    
+		}
+		 
+		// ½ÇÀû±Û ¼öÁ¤
+		function saveHistory(academyCode){
+		    var updateHistory = $('[name=academy_'+academyCode+']').val();
+		    
+		    $.ajax({
+		        url : '/academy/json/updateHistory/'+academyCode,
+		        type : 'POST',
+		        data : {'academyCode' : academyCode, 'updateHistory' : updateHistory},
+		        success : function(data){
+		        	alert("¼öÁ¤ ¿Ï·á!");
+		        	getAcademyInfo();
+		        }
+		    });
+		}
+
+		$(document).ready(function(){
+			getAcademyInfo(); 
+		});
+		
+		// ÇÐ¿ø °øÁö»çÇ×
+		
+		function fncGetList(currentPage) {
+			$("#currentPage").val(currentPage)
+			var acaWriter=$('input[name="acaWriter"]').val();
+				$("form").attr("method" , "POST").attr("action" , "/academy/academyInfo?academyCode="+acaWriter).submit();
+		}
+		
+		function enterEvent(){
+			if(window.event.keyCode == 13){
+				fncGetList(1);
+			}
+		}
+		
+		$(function() {
+			 //==> DOM Object GET 3°¡Áö ¹æ¹ý ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 $( "button.btn.btn-default" ).on("click" , function() {
+				fncGetList(1);
+			});
+		 });
+		
+	
+		</script>
+        
+    </body>
 </html>
+    
