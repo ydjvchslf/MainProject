@@ -225,10 +225,10 @@
 					 var a = ''
 						 a += '<ul style="list-style: none;"><li style="float: left;">'
 						 a += '<img alt="학생수" src="/image/studentcount.png" height="20">'
-						 a += '<span>학생 수 = '+ data.count+'&nbsp;&nbsp;&nbsp;</span></li>'
+						 a += '<span>'+ data.count+'명 &nbsp;&nbsp;&nbsp;</span></li>'
 						 a += '<li style="float: left;">'
 						 a += '<img alt="강좌수" src="/image/educount.png" height="20">'
-						 a += '<span>강좌 수 = '+ data.count2+'</span></li></ul>'
+						 a += '<span>'+ data.count2+'개 </span></li></ul>'
 						 
 					 	 a += '<br/>학원 번호 : ' + data.academyPhone
 				 		 a += '<br/>학원 주소 : ' + data.academyAddr
