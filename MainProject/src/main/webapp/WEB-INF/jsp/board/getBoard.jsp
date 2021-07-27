@@ -10,6 +10,20 @@
 <html lang="ko">
 <title>사!교육</title>
 <head>
+		<title>Buy Edu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
@@ -37,14 +51,14 @@
 	    
 	    #updateButton{
 	      background-color:#E0CEFC;
-	      top:-15px; right:-480px;
+	      top:-15px; right:-350px;
 	      position:relative;
 	      z-index:3;
 	    }
 	    
 	    #deleteButton{
 	      background-color:#E0CEFC;
-	      top:-50px; right:-550px;
+	      top:-50px; right:-420px;
 	      position:relative;
 	      z-index:3;
 	    }
@@ -125,37 +139,45 @@
 </head>
 
 <body>
+ <div class="d-flex p-2">
+		
+		<!-- left -->
+		<jsp:include page="../common/left.jsp"></jsp:include>
+		
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5">
 
-
-	<!-- ToolBar Start /////////////////////////////////////-->
-   	<!-- ToolBar End /////////////////////////////////////-->
+	        <div class="container-fluid">
+	<!-- 게시판 title -->
+	<div class="card shadow mb-4">
+	  <div class="card-header py-3" id="boardHeader">
+			
+					<h3><c:choose>
+				<c:when test="${board.cateCode eq '0' }">
+					<h3>사!교육 공지사항</h3>
+				</c:when>
+				<c:when test="${board.cateCode eq '1' }">
+					<h3>사!교육 Q&A</h3>
+				</c:when>
+				<c:when test="${board.cateCode eq '2' }">
+					<h3>자유 게시판</h3>
+				</c:when>
+				<c:when test="${board.cateCode eq '3' }">
+					<h3>학원 공지사항</h3>
+				</c:when>
+				
+			</c:choose>	</h3>
+				
+	  </div>
+   	
+  
 	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-	
-<br/><br/><br/><br/>
-
+	<div class="container-fluid">
 
 				<div class="view-wrap">
 				<!-- google_ad_section_start(name=post) -->
 				<!-- 본문 타이틀&정보 -->
-				<div class="page-header text-default" id="boardHeader">
-		
-		<c:choose>
-			<c:when test="${board.cateCode eq '0' }">
-				<h3>사!교육 공지사항</h3>
-			</c:when>
-			<c:when test="${board.cateCode eq '1' }">
-				<h3>사!교육 Q&A</h3>
-			</c:when>
-			<c:when test="${board.cateCode eq '2' }">
-				<h3>자유 게시판</h3>
-			</c:when>
-			<c:when test="${search.isMine eq 'y' }">
-				<h3>내가 쓴 게시글 보기</h3>
-			</c:when>
-		</c:choose>					
-	    </div>
+	
 					
 					<h3 id="boardTitle"><b>${board.boardTitle}</h3></b>
 					<div class="info">
