@@ -151,7 +151,7 @@ public class AcademyController {
 		
 		//학원 공지사항
 		System.out.println("학원 공지사항 돌아간다");
-		String academyCodeb = request.getParameter("academyCode");
+//		String academyCodeb = request.getParameter("academyCode");
 		String category = request.getParameter("cateCode"); // 게시판 종류
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
