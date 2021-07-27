@@ -147,12 +147,12 @@
 		<tbody>
 		
 		  <c:set var="i" value="${resultPage.totalCount }" />
-		  <c:forEach var="board" items="${list}">
+		  <c:forEach var="board" items="${listb}">
 			<c:set var="i" value="${i-1}" />
 			<tr>
 			  <td align="left">${i+1-(resultPage.currentPage-1)*5}</td>
 			  
-			  
+			   
 		
 	
 		<td id="listtable" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3&academyCode=${academy.academyCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
