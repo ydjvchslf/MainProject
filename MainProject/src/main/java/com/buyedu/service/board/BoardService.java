@@ -131,16 +131,16 @@ public List<Map<String, Object>> getBoardListPin(Board board) throws Exception {
 		System.out.println("여기는 보드서비스 학원공지사항");
 		int totalCount = boardDao.getTotalCountAcademy(search);
 		System.out.println("토탈카운트는 나오나? : "+totalCount);
-		List<Board> list= boardDao.getBoardListAcademy(search);
+		List<Board> listb= boardDao.getBoardListAcademy(search);
 		
 //		int recommendCnt=boardDao.recommendCnt(boardNo);
-		if(list.size()!=0) {
-		list.get(0).setTotalCount(totalCount);}
+		if(listb.size()!=0) {
+		listb.get(0).setTotalCount(totalCount);}
 //		list.get(boardNo).setRecommendCnt(recommendCnt);
-		System.err.println(list);
+		System.err.println(listb);
 		
 		
-		return list;
+		return listb;
 //		System.out.println("service : "+totalCount);
 		
 	}

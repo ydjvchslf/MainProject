@@ -41,7 +41,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM	( SELECT pe.pick_edu_no , a.academy_name , e.edu_name , e.edu_start_date ,
 	  									 e.edu_end_date , e.edu_grade , e.edu_subject , e.edu_price
-							  FROM edu e, academy a, users u, pick_edu pe WHERE pe.pick_user_no = u.user_no AND
+							  FROM edu e, academy a, users u, pick_edu pe WHERE pe.pick_user_no = u.user_no AND pe.pick_user_no = #{searchUserNo} AND
 							  e.edu_academy_code = a.academy_code AND pe.pick_edu_no = e.edu_no ORDER BY edu_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
@@ -51,7 +51,7 @@
 	<select  id="getPickEduTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM( SELECT a.academy_name , e.edu_name , e.edu_end_date , e.edu_start_date , e.edu_grade , e.edu_subject , e.edu_price
-				FROM edu e, academy a, users u, pick_edu pe WHERE pe.pick_user_no = u.user_no AND
+				FROM edu e, academy a, users u, pick_edu pe WHERE pe.pick_user_no = u.user_no AND pe.pick_user_no = #{searchUserNo} AND
 					 e.edu_academy_code = a.academy_code AND pe.pick_edu_no = e.edu_no ORDER BY edu_no)
 	</select>
 	
