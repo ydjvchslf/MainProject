@@ -198,7 +198,7 @@
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="deleteButton" value="${board.boardNo}">»è&nbsp;Á¦
 			</div>
-			</c:if>
+			</c:if> 
 		</div>
 	
 	
