@@ -125,7 +125,6 @@
         let stompClient = Stomp.over(socket);
         stompClient.connect({}, function(frame) {
         	console.log("연결 성공", frame);
-        	alert("연결성공");
         	stompClient.subscribe("/topic/message", (res) => {
         		console.log("메시지를 받았습니다.");
             	console.log("res", res);

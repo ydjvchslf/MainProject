@@ -143,9 +143,9 @@ public class AcademyController {
 		
 		User user = UserUtil.user();
 		
-		System.out.println("user no = " + user.getUserNo());
-		
 		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		
+		//model.addAttribute("list", map.get("list"));
 		
 		System.out.println(academy);
 		
@@ -165,7 +165,7 @@ public class AcademyController {
 			int totalCount = list.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
-		
+			
 		model.addAttribute("list", list);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
