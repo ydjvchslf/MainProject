@@ -38,6 +38,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 
 @Controller
@@ -139,6 +140,12 @@ public class AcademyController {
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		model.addAttribute("academy", academy);
+		
+		User user = UserUtil.user();
+		
+		System.out.println("user no = " + user.getUserNo());
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
 		
 		System.out.println(academy);
 		
