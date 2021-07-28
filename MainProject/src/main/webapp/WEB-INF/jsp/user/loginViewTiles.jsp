@@ -278,19 +278,8 @@
                                         
                                         <a href="#" name="loginBtn" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
-                                        <hr>
-                                        <a href="#" name="kakaoLogin" class="btn btn-google btn-user btn-block">
-                                            Login with Kakao
-                                        </a>
-                                        
-                                        <br>
-                                        
+                                        </a><hr>
                                         <span name="kakaoLogin"><img src="/image/kakao.png"></span><span id="naverIdLogin"></span>
-                                        
-                                        
-                                        	
-                                        
                                         
 										
                                     </form>
