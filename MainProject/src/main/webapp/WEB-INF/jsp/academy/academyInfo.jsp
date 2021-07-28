@@ -24,6 +24,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>	
 	
 	<style>
+
 		    
 		    #academytitle{
 				vertical-align : top;
@@ -62,12 +63,10 @@
 					
 					
 					<!-- 학원 이름, 전화번호 -->
-					<div id="academytitle" class="row" ></div>		
-						    
+					<div id="academytitle" class="row" ></div>
+					
 					<!-- 학원 정보 -->
 					<div id="academyInfo" class="row" style="margin-top: 30px;"></div>	 
-					
-					 
 					
 					<div class="row" style="margin-top: 30px;">
 						<div class="col-md-12" >
@@ -114,8 +113,6 @@
 	var academyCode = '${academy.academyCode}';
 	var role = '${user.role}';
 	var academyInfo = {};
-
-	alert("1");
 	
 	function getAcademyInfo(){
 		$.ajax({
@@ -127,14 +124,8 @@
 				 academyInfo = data;
 				 
 				 var a = ''
-					 a += '<div class="col-md-2">'
-					 a += '<img alt="학생수" src="/image/studentcount.png" height="50">'
-					 a += '<span>'+ data.count+'명 &nbsp;&nbsp;&nbsp;</span></div>'
-					 a += '<div class="col-md-2">'
-					 a += '<img alt="강좌수" src="/image/educount.png" height="50">'
-					 a += '<span>'+ data.count2+'개 </span></div>'
 					 
-				 	 a += '<div class="col-md-4" id="AcademyIntro" style="white-space: pre;">'
+				 	 a += '<div class="col-md-6" id="AcademyIntro" style="white-space: pre;">'
 			 	 	 a += '학원 소개 : <br/>' + data.academyIntro
 			 	 	 
 			 	 if(role == 'academy'){
@@ -142,18 +133,20 @@
 			 	 }
 			 		 a += '</div>'
 			 		 
-			 		 a += '<div class="col-md-4" id="AcademyHistory" style="white-space: pre;">'
+			 		 a += '<div class="col-md-6" id="AcademyHistory" style="white-space: pre;">'
 			 		 a += '학원 실적 : <br/>' + data.academyHistory
 			 		 
 			 	if(role == 'academy'){
 					 a += '<br/><a class="btn btn-primary" style="margin-top: 7px;" onclick="updateHistory(\''+data.academyCode+'\')"> 수 정 </a>'
 			 	}
 					 a += '</div>'
-			 					
+						
+					 
 				var b = '';
-					b += '<div id="header"><h1 class="mt-4">'+data.academyName+'</h1> <h3>'+data.academyPhone+'</h3></div>'
-					
-			            	
+					b += '<div id="title" class="row">'
+					b += '<div><h1 class="mt-4" style="display: inline;">'+data.academyName+'</h1></div>'
+					b += '<div style="float:center"><h4 style="display: inline;">수업 수 : '+data.count+'개</h4> <h4 style="display: inline;">학생 수 : '+data.count2+'명</h4></div>'
+			        b += '<div style="float:right"><h4 style="display: inline;"><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</h4></div></div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
