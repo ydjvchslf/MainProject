@@ -110,9 +110,6 @@
 	
 	<script >
 	
-			$(function(){
-				alert("검색결과가 없습니다!")
-			})
 		
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = { 
