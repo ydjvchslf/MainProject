@@ -987,9 +987,6 @@
 			});
 		});	 
 		
-		
-		
-		
 		<!--                학원 용 입니다               -->
 		
 		var userno = '${user.userNo}';
@@ -1081,8 +1078,6 @@
 			    });
 			}
 		}
-	
-		
 		
     
 		 $(document).ready(function(){
