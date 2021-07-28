@@ -19,7 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="/sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
-
+	
 </head>
 
 <body class="bg-gradient-primary">
@@ -46,13 +46,16 @@
                                             <input type="email" name="name" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="이름">
+                                            <span id="helpBlock" class="help-block">
+										      	<strong class="text_name"></strong>
+										     </span>        
                                         </div>
                                         <div class="form-group">
                                             <input type="email" name="phone" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="휴대전화번호">
                                             <span id="helpBlock" class="help-block">
-										      	<strong class="text_findEmail"></strong>
+										      	<strong class="text_email"></strong>
 										     </span>    
                                         </div>
                                         <a href="#" name="findEmail" class="btn btn-primary btn-user btn-block">
@@ -87,16 +90,52 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
 
 <script type="text/javascript">
 
+
+	//휴대전화번호 자동 대시(-)삽입
+	$(document).on("keyup", "input[name=phone]", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+
+
 	$( function() {
+		//로그인 이동 event
 		$('a[name=login]').on("click" , function() {
 			self.location = "/user/login"
 		});
+		
+		//이름 change 이벤트
+		$('input[name=name]').on("change" , function() {
+			fncCheckName()
+		});
+		
 	});
+	
+	
+	//이름 체크 함수
+    function fncCheckName() {
+		
+		var name = $('input[name=name]').val();
+		
+        if(name){
+        	var nameRegExp = /^[가-힣]{2,20}$/;
+        	
+        	if(nameRegExp.test(name)){
+        		$(".text_name").text("올바른 이름 형식입니다.").css("color", "blue");
+        		return true;
+        	}else{
+        		$(".text_name").text("올바른 이름 형식이 아닙니다").css("color", "red");
+        	}
+        } else{
+        	$(".text_name").text("이름을 필수로 입력하세요!");
+			$(".text_name").css("color", "red");
+        }
+        return false; //확인이 완료되었을 때
+    }
+	
 	
 	
 	$( function() { 
@@ -130,21 +169,12 @@
 					    			
 								if (JSONData.message == "no") {
 									
-									var str = '없는 회원정보입니다.';
-									
-									console.log("없는 정보");
-									$('.text_email').text("");
-									$('.text_email').append(str).css("color", "red");
+									swal('없는 회원정보입니다.');
 									
 								} else if (JSONData.message == "ok") {
 									
-									
 									var dbEmail = JSONData.dbEmail;
-									var str = '회원님의 email은 "'+dbEmail+'" 입니다!';
-									
-									//alert(dbEmail)
-									$('.text_email').text("");
-									$('.text_email').append(str).css("color", "red");
+									swal('회원님의 email은 "'+dbEmail+'" 입니다!');
 								}
 								
 							}
