@@ -288,7 +288,7 @@ input:focus, input:not(:placeholder-shown) {
 			loginButton : {
 				color : "green",
 				type : 3,
-				height : 67,
+				height : 0,
 				width:'100%'
 			}
 		});
@@ -349,7 +349,7 @@ input:focus, input:not(:placeholder-shown) {
 						<a href="http://developers.kakao.com/logout"></a>
 						<!-- 네이버 로그인 추가 -->
 						<div id="naverIdLogin" align="center">
-							<img src="https://static.nid.naver.com/oauth/big_g.PNG" style="" />
+							<img src="" style="display: none;" />
 						</div>
 					</form>
 

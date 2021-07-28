@@ -1,3 +1,4 @@
+<%@page import="com.buyedu.domain.Academy"%>
 <%@page import="com.buyedu.domain.Board"%>
 <%@page import="com.buyedu.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -115,8 +116,8 @@
 			 	//var name = document.detailForm.prodName.value;
 				var title=$("input[name='boardTitle']").val();
 				var content=$("textarea[name='boardContent']").val();
-				var writer=$("input[name='boardWriter']").val();
-
+				var academyCode=$("input[name='acaWriter']").val();
+				
 				
 				/* var detail = document.detailForm.prodDetail.value;
 				var manuDate = document.detailForm.manuDate.value;
@@ -126,8 +127,8 @@
 				
 				$("form").attr("method" , "POST").attr("action" , "/board/updateBoard").submit();
 			}
-		
-		
+	
+	
 	</script>
 
 <html>
@@ -171,7 +172,6 @@
 						<fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd KK:mm:ss"/></td></td></span>
 						&nbsp;&nbsp;<span id="count"><i class="glyphicon glyphicon-eye-open" ></i> ${board.viewCnt+1}</span>
 						
-						
 					</div>
 					<hr>
 					<div id=boardContent>
@@ -180,24 +180,17 @@
 					</div>
 					</div>
 					</div>
-					
-					
 <br/>
-	
-
 
 <div class="form-group">
 		
 		   <input type="hidden" name="cateCode" id="cateCode" value="${board.cateCode}" />
-		   <input type="hidden" name="acaWriter" value="${academy.academyCode}" />	 
-		   
-		  
-		    <hr></br>
+		   <input type="hidden" name="acaWriter" value="${board.acaWriter}" />	 
+		   <hr></br>
+		    acaWriter : ${board.acaWriter}
+		    academy : ${academy}
 		    
-		    아카코드 ${academyCode}
-		    아카라이터 ${board.acaWriter}
-		    
-		    <c:if test="${academy.academyCode eq board.acaWriter}">
+		    <c:if test="${academy eq board.acaWriter}">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   
 		   	</div>
@@ -205,13 +198,10 @@
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="deleteButton" value="${board.boardNo}">삭&nbsp;제
 			</div>
-			</c:if>
+			</c:if> 
 		</div>
-
-
 	
 	
-	<%@ include file="getComment.jsp" %>
 		</div>
 </div>
 

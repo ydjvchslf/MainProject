@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="UTF-8">
 
 <head>
 
@@ -37,6 +37,42 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/sbadmin/js/sb-admin-2.min.js"></script>
+    
+    
+    <style>
+    
+    .btn-google {
+    
+    color: #fff;
+    background-color: #FFEE50;
+    border-color: #fff;
+	}
+	
+	.btn-google:hover {
+    color: #fff;
+    background-color: #FAE200;
+    border-color: #e6e6e6;
+	}
+	
+	
+	.btn-facebook {
+    
+    color: #fff;
+    background-color: #FFFFFF;
+    border-color: #fff;
+	}
+	
+	.btn-facebook:hover {
+    color: #fff;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+	}
+	
+	
+	
+	
+    
+    </style>
 
 	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -106,7 +142,7 @@
 	
 			Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
 	
-			$('a[name="kakaoLogin"]').on("click", function() {
+			$('span[name="kakaoLogin"]').on("click", function() {
 				//1. 로그인 시도
 				Kakao.Auth.login({
 					success : function(authObj) {
@@ -173,23 +209,30 @@
 		})//e.o.kakao
 	
 		//네이버 로그인
+		
+		
+		
+		
+		//본래네이버
 		$(function() {
-			var naverLogin = new naver.LoginWithNaverId({
-				clientId : "vqx5V5ejE6mgkpcPu2vP",
-				callbackUrl : "http://localhost:8081/user/callback",
-				isPopup : true,
 				
-				loginButton : {
-					color : "green",
-					type : 3,
-					height : 20,
-					width:'100%'
-				}
-				
-			});
-			naverLogin.init();
-	
-		})
+				var naverLogin = new naver.LoginWithNaverId({
+					clientId : "vqx5V5ejE6mgkpcPu2vP",
+					callbackUrl : "http://localhost:8081/user/callback",
+					isPopup : false,
+					
+					loginButton : {
+						color : "green",
+						height : 37,
+						width: '100%'
+					}
+					
+				});
+				naverLogin.init();
+		
+			})
+		
+		
 	</script>
 
 
@@ -240,10 +283,14 @@
                                         <a href="#" name="kakaoLogin" class="btn btn-google btn-user btn-block">
                                             Login with Kakao
                                         </a>
-                                        <a href="#" id="naverIdLogin" name="naverLogin" class="btn btn-facebook btn-user btn-block">
-                                            Login with Naver
-                                            <img src="https://static.nid.naver.com/oauth/big_g.PNG" style="" />
-                                        </a>
+                                        
+                                        <br>
+                                        
+                                        <span name="kakaoLogin"><img src="/image/kakao.png"></span><span id="naverIdLogin"></span>
+                                        
+                                        
+                                        	
+                                        
                                         
 										
                                     </form>

@@ -92,7 +92,7 @@
 					              <!-- 우리 학원 보기 테이블 시작 -->
 					            	<table class="table table-hover table-striped">
 										<c:choose>
-											<c:when test="${empty list}">
+											<c:when test="${empty listAcademy}">
 												<span>
 													<h6><img src="/image/crying.png">
 														인증된 학원이 없습니다. 학원을 인증해주세요!
@@ -111,7 +111,7 @@
 	
 												<tbody>
 													<c:set var="i" value="0" />
-													<c:forEach var="connect" items="${list}">
+													<c:forEach var="connect" items="${listAcademy}">
 														<c:set var="i" value="${ i+1 }" />
 														<tr>
 															<td align="left">${ i }</td>
@@ -166,7 +166,7 @@
 					          </div>
 					          <div class="panel panel-default">
 					            <div class="panel-heading">
-					              <h3 class="panel-title">계정 휴면</h3>
+					              <h3 class="panel-title">계정 탈퇴</h3>
 					              <h3 class="panel-title">
 					              	<a href="/user/outUser?email=${user.email}" 
 									 	class="btn btn-danger btn-circle btn-sm" data-toggle="modal"
@@ -176,7 +176,7 @@
 					              </h3>
 					            </div>
 					            <div class="panel-body"> 
-						            계정을 휴면할 수 있습니다.
+						            계정을 삭제할 수 있습니다.
 						         </div>
 					          </div>
 					          
