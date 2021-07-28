@@ -28,17 +28,21 @@
 			<jsp:forward page="../common/noResult.jsp"/>
 		</c:if>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:solid gold;">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
 		
         <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5">
+        <div id="content" class="p-4 p-md-5"> 
 	        
-	        <div class="container-fluid" >
+	        <div class="container-fluid"  >
+	        
+	        	 <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
+	        
 				<!-- 내용 때려 박으삼 이쁘게 -->
-                          <form>
+				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+						     <form>
 								<div class="row" style=" position:absolute; right:100px;  top:80px; z-index:2;" >
 								  <div class="col-md-3">
 								  	<input type="text" name="searchAcademyName" class="form-control" placeholder="학원명 입력" >
@@ -104,9 +108,8 @@
 								</div>	
 							</form>
 								
-								<div id="map" style="width:100%;height:600px; border:7px solid gold; position:relative; z-index:1; "></div>	
-							
-
+								<div id="map" style="width:auto;height:600px; border:3px solid white; position:relative; z-index:1; "></div>
+				</div>
 	      	</div>
       	
        </div>

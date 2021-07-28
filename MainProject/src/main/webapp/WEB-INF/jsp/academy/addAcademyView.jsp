@@ -24,38 +24,66 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
 		
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-
-			<!-- 여기는 학원정보, 멀티정보등 이동 툴바 -->
-		<jsp:include page="../common/toolbar.jsp"></jsp:include>    
 	        
-	        <div class="container">
-				         <div class="card mb-4">
-                            <div class="card-body">
-                                <p class="mb-0">
-                                    <form>
-										<input type="text" name="academyName" placeholder="학원명 입력"> <br/><br/>
-										<input type="text" name="academyPhone" placeholder="학원전화번호 입력"> <br/><br/>
-										<input type="text" onclick="sample5_execDaumPostcode()" id="sample5_address" name="academyAddr"  placeholder="주소" readonly/> <br/><br/>								
-										<input type="text" id="sample5_address_extra" name="academyArea" placeholder="구이름" readonly/>
-										<input type="hidden"  id="lat" name="academyLat"  placeholder="위도" readonly/>
-										<input type="hidden" id="lng" name="academyLng"  placeholder="경도" readonly/>
-										<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-										
-										<button type="button" id="ok" class="btn btn-primary"  >등록</button>
-										<button type="button" id="cancle" class="btn btn-primary"  >취소</button>
+	        <div class="container-fluid"  >
+	        
+	        	 <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
+	        
+				<!-- 내용 때려 박으삼 이쁘게 -->
+				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+						        <form>
+						            
+						            <div class="row">
+									  
+									  <div class="col-xs-12 col-md-8">
+									  	<input type="text" name="academyName" placeholder="학원명 입력" class="form-control"> <br/><br/>
+									  </div>
+									  
+									  <div class="col-xs-6 col-md-4">
+									  	<input type="text" name="academyPhone" placeholder="학원전화번호 입력" class="form-control"> <br/><br/>
+									  </div>
 								
-									</form>	
-                                </p>
-                            </div>
-                        </div>
-				
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<input class="form-control" type="text" onclick="sample5_execDaumPostcode()" id="sample5_address" name="academyAddr"  placeholder="주소" readonly/> <br/><br/>
+									  </div>
+
+								
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<div id="map" style="width:auto;height:300px;margin-top:10px;margin-bottom:30px; "></div>
+									  </div>
+
+								
+									</div>
+						            
+									<div class="row">
+									  <div class="col-md-8"></div>
+									  <div class="col-md-1"></div>
+									  <div class="col-md-1"></div>
+									  <div class="col-md-1"><button type="button" id="ok" class="btn btn-primary"  >등록</button></div>
+									  <div class="col-md-1"><button type="button" id="cancle" class="btn btn-primary"  >취소</button></div>
+									</div>
+						
+										<input type="hidden" class="form-control" type="text" id="sample5_address_extra" name="academyArea" placeholder="구이름" readonly/>
+										<input  type="hidden"  id="lat" name="academyLat"  placeholder="위도" readonly/>
+										<input type="hidden" id="lng" name="academyLng"  placeholder="경도" readonly/>
+
+								</form>	
+				</div>
 	      	</div>
       	
        </div>
