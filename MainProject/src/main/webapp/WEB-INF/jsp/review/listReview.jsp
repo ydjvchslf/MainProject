@@ -163,29 +163,27 @@
 	
 			  
 			  
-			 				 <div class="card shadow mb-4">
-			 			
-			 				 
+			  <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h3 class="m-0 font-weight-bold text-primary">${review.reviewTitle }</h3>
-                                    <h5 class="m-0 font-weight-bold text-primary"> 작성자 ${review.reviewWriter.email }       ${review.reviewDate }</h5>
+                                    <h5> 작성자 ${review.reviewWriter.email }       ${review.reviewDate }</h5>
                                    
                                 </div>
                                 <div class="card-body">
                                     ${review.reviewContent }
                                 </div>
-                                
+                            </div>
+                            
+                            
+		
 
-                                
-                                </div>
-                              
-                          
+			  
 		</tr>
           </c:forEach>
         
         </tbody>
       
- 
+      </table>
 	  <!--  table End /////////////////////////////////////-->
 	 
 	 회원번호 ${user.userNo} 
@@ -212,7 +210,7 @@
 		    </div>
 		</div>
 	  
- 
+ 	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	
