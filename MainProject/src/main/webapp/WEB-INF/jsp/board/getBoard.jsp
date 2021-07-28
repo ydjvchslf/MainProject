@@ -105,14 +105,11 @@
 		 
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				$( ".btn:contains('신')" ).on("click" , function() {
-					fncaddComplainBoard();
+				$("a[href='#' ]").on("click" , function() {
+					$("form")[0].reset();
 				});
 			});	
 		 
-		 
-		
-		
 	</script>
 
 <html>
@@ -256,7 +253,8 @@
 			</div></c:if>
 			
 			<div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="resetButton" value="${board.cateCode}">목록으로
+			   <a href="#" onClick="history.back()">이전페이지로</a>  
+		      <button class="btn success" href="#" value="${board.cateCode}">목록으로
 			</div>
 			
 		</div>

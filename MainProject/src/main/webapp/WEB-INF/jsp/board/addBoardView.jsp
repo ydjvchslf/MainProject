@@ -46,7 +46,6 @@ function fncAddBoard(){
 	var acaWriter=$('input[name="acaWriter"]').val();
 	alert(acaWriter)
 	
-	
 	if(title == null || title.length <1){
 		alert("글 제목을 입력해주세요.");
 		return;
@@ -68,38 +67,38 @@ function fncAddBoard(){
 </script>
 
 
-<body>
- <div class="wrapper d-flex align-items-stretch">
-		
-		<!-- left -->
-		<jsp:include page="../common/left.jsp"></jsp:include>
-		
-        <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5">
-
-	        <div class="container-fluid">
-	<!-- 게시판 title -->
-	<div class="card shadow mb-4">
-	  <div class="card-header py-3" id="boardHeader">
-			
-					<h3><c:choose>
-				<c:when test="${board.cateCode eq '0' }">
-					<h3>사!교육 공지사항</h3>
-				</c:when>
-				<c:when test="${board.cateCode eq '1' }">
-					<h3>사!교육 Q&A</h3>
-				</c:when>
-				<c:when test="${board.cateCode eq '2' }">
-					<h3>자유 게시판</h3>
-				</c:when>
-				<c:when test="${board.cateCode eq '3' }">
-					<h3>학원 공지사항</h3>
-				</c:when>
-				
-			</c:choose>	</h3>
-				
-	  </div>
-   	
+ <body>
+ <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
+	<!-- left 툴바 -->
+	<jsp:include page="../common/left.jsp"></jsp:include>
+       <!-- Page Content  -->
+       <div id="content" class="p-4 p-md-5">
+	      <div class="container-fluid">
+	         <!-- 상단 툴바  -->
+	         <jsp:include page="../common/toolbar.jsp"></jsp:include> 
+				<!-- 게시판 흰색 박스 부분-->
+				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; 
+					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+				  <!-- 게시판 title -->
+				  <div class="row" id="boardHeader">
+					<c:choose>
+					<c:when test="${board.cateCode eq '0' }">
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 공지사항</h3>
+					</c:when>
+					<c:when test="${board.cateCode eq '1' }">
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 Q&A</h3>
+					</c:when>
+					<c:when test="${board.cateCode eq '2' }">
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3>
+					</c:when>
+					<c:when test="${board.cateCode eq '3' }">
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;학원 공지사항</h3>
+					</c:when>
+					<c:when test="${search.isMine eq 'y' }">
+					  <h3>내가 쓴 게시글 보기</h3>
+					</c:when>
+					</c:choose>	
+	 			  </div><br>
   
 	
 	<div class="container-fluid">
@@ -128,17 +127,13 @@ function fncAddBoard(){
 		
 		</div>	
 				
-		</div>
-		
-	 	
-		
 		<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >등 &nbsp;록</button>
 			  &nbsp;<a class="btn btn-default" href="/board/listBoard" role="button">취&nbsp;소</a>
 		 	</div>
 		</div>
-		
+		</div>
 	</div>
 
   <div id="summernote"></div>
@@ -147,7 +142,7 @@ function fncAddBoard(){
     	 $('#summernote').summernote({
     	        placeholder: '내용을 입력해주세요.',
     	        tabsize: 2,
-    	        height: 400,
+    	        height: 500,
     	        lang: "ko-KR",
     	        maximumImageFileSize : 20 * 1024 * 1024,
     	  	  // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
