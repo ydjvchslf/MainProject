@@ -180,6 +180,11 @@
 		FROM edu
 		WHERE edu_academy_code = #{academyCode}
 	 </delete>
+	 <delete 	id="deleteBoard"	parameterType="String">
+		DELETE 
+		FROM board
+		WHERE aca_writer = #{academyCode}
+	 </delete>
 	<delete 	id="deleteReview"	parameterType="String">
 		DELETE
 		FROM review
@@ -188,6 +193,11 @@
 	<delete 	id="deleteConnection"	parameterType="String">
 		DELETE 
 		FROM connection
+		WHERE academy_code = #{academyCode}
+	 </delete>
+	 <delete 	id="deleteAllMultimedia"	parameterType="String">
+		DELETE 
+		FROM multimedia
 		WHERE academy_code = #{academyCode}
 	 </delete>
 	<delete 	id="deleteAcademy"	parameterType="String">
