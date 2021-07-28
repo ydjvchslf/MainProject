@@ -149,7 +149,6 @@ public class AcademyService {
 		return eduDao.getEduTotalCountforAca(academyCode);
 	};
 	
-	
 	// 학원 정보 모두삭제 --------------------------------------------------
 	
 	public void deleteAcademyAll(String academyCode) throws Exception{
@@ -164,6 +163,4 @@ public class AcademyService {
 		
 	}
 	
-
-
 }

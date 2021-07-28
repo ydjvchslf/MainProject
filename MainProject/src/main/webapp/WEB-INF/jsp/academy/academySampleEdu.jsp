@@ -31,6 +31,23 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
+		<style>
+		    #academytitle{
+				vertical-align : top;
+				font-size : 0px;
+				color : #1F4E79;
+				font-family : TmonMonsori;
+			}
+			
+			@font-face {
+			    font-family: 'TmonMonsori';
+			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+			    font-weight: normal;
+			    font-style: normal;
+			}
+
+ 		</style>
+		
 	<title>Academy SampleEdu</title>
 
     </head>
@@ -126,9 +143,6 @@
 		var count = '${imgcount+vidcount}';
 		var imgcount = '${imgcount}';
 		var vidcount = '${vidcount}';
-		
-		alert("학원 코드 = " + academyCode + " 학원 이름 = " + academyName + " \n이미지 파일 갯수 = " + imgcount + " 비디오 파일 갯수 = " + vidcount
-				+"\n총 갯수 = " + count);
 		
 		$(document).ready(function()
 		// input file 파일 첨부시 fileCheck 함수 실행

@@ -202,9 +202,6 @@
 		var role = '${user.role}';
 		var academyInfo = {};
 		
-		alert("academyCode : "+academyCode)
-			
-		
 		function getAcademyInfo(){
 			$.ajax({
 				 url : '/academy/json/getacademyInfo/'+academyCode,
