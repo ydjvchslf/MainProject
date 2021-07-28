@@ -96,7 +96,7 @@ public class AcademyController {
 
 	@RequestMapping("addAcademy")
 	public String addAcademy(@ModelAttribute("academy") Academy academy
-							, @RequestParam("userNo") int userNo) throws Exception {
+							, @RequestParam("userNo") int userNo,  Model model) throws Exception {
 		
 		System.out.println("addAcademy : POST");		
 		System.out.println("userNo = " + userNo);
@@ -105,6 +105,13 @@ public class AcademyController {
 		User user = new User();
 		user.setUserNo(userNo);
 		academy.setUser(user);
+		
+		// 툴바 학원 리스트
+		User user1 = UserUtil.user();
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user1.getUserNo());
+		
+		model.addAttribute("list", map.get("list"));
 		
 		String makeAcaCode = random();
 		
@@ -126,7 +133,7 @@ public class AcademyController {
 		
 		academyService.addAcademy(academy);
 		
-		return "main";
+		return "/academy/academyInfo";
 	}
 	
 	
@@ -141,6 +148,7 @@ public class AcademyController {
 		
 		model.addAttribute("academy", academy);
 		
+		// 툴바 학원 리스트
 		User user = UserUtil.user();
 		
 		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
@@ -181,15 +189,22 @@ public class AcademyController {
 		
 		System.out.println("academySampleEdu 아카데미 코드 = " + academyCode);
 		
+		// 툴바 학원 리스트
+		User user = UserUtil.user();
+				
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+				
+		model.addAttribute("list", map.get("list"));
+		
 		Academy academy = academyService.getAcademy(academyCode);
 		
-		Map<String, Object> map = academyService.getMultimediaList(academyCode);
+		Map<String, Object> mapm = academyService.getMultimediaList(academyCode);
 		
 		int imgcount = academyService.getImageCount(academyCode);
 		int vidcount = academyService.getVideoCount(academyCode);
 		
 		model.addAttribute("academy", academy);
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("listfile", mapm.get("list"));
 		model.addAttribute("imgcount", imgcount);
 		model.addAttribute("vidcount", vidcount);
 		

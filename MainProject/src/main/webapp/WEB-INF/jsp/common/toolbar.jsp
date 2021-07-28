@@ -19,10 +19,10 @@
 	            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	              <ul class="nav navbar-nav ml-auto">
 	                <li class="nav-item active">
-	                    <a class="nav-link" href="#">학원 정보</a>
+	                    <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">학원 정보</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="#">멀티미디어 정보</a>
+	                    <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
 	                </li>
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/edu/listEdu?acaCode=${academy.academyCode}">수업</a>
