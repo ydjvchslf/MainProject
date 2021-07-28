@@ -33,7 +33,7 @@
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
 				
-				<div class="container"><!-- container시작 -->
+				<div class="container-fluid"><!-- container시작 -->
 				
 				        <h1>내정보보기</h1>
 				        <hr>
@@ -52,6 +52,7 @@
 				                		</c:otherwise>
 			                		</c:choose>
 					              </h3>
+					              <c:if test="${!empty user.role }"> 
 					              <h3 class="m-0 font-weight-bold text-primary" align="right">
 									<a href="/user/updateUser?email=${user.email}"
 										class="btn btn-default btn-circle btn-sm" data-toggle="modal"
@@ -59,6 +60,7 @@
 											수정하기~~
 									</a>
 								  </h3>
+								  </c:if>
 					            </div>
 					            <div class="panel-body">
 					              <input type="hidden" value="${user.userNo}">
@@ -73,10 +75,7 @@
 			                			E-MAIL : ${email} <br><br>
 			                			회원님은 SNS 연동해제 상태입니다.<br>
 			                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
-			                			<span name="unify" data-toggle="modal"
-											data-target="#unifyModal" >
-											계정연동하기
-										</span>
+			                			<a href="/user/snsAddUser?email=${email}">계정연동하기</a>
 			                		</c:otherwise>
 				                </c:choose>
 					            </div>
@@ -147,8 +146,9 @@
 					         </c:if>
 					        </div><!-- /.col-sm-6 -->
 					      
-					    	  
+					       
 					        <div class="col-sm-6">
+					        <c:if test="${!empty user.role }"> 
 					          <div class="panel panel-default">
 					            <div class="panel-heading">
 					              <h3 class="panel-title">비밀번호 변경</h3>
@@ -179,6 +179,7 @@
 						            계정을 삭제할 수 있습니다.
 						         </div>
 					          </div>
+					          </c:if>
 					          
 					          <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
 					            <!-- 우리학원 인증하기 등록하기 -->
@@ -349,7 +350,101 @@
 						</div><!-- 계정휴면 모달 끝-->			
 					
 						
-				
+						<!-- 계정연동 모달 시작-->
+						<div class="modal fade" id="unifyModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">계정연동하기</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<h5>계정연동을 위해 추가정보 입력을 해주세요!</h5>
+										<hr>
+										<!-- 모달내용 태그 -->
+										<form class="user">
+											<div class="form-group"><!-- 사용자역할 -->
+												<span class="radio">
+							                        <label><input name="role" id="student8" name="student" type="radio" class="radio-label" checked value="student">학생 </label>
+										            <label><input name="role" id="parents8" name="parents" type="radio" class="radio-label" value="parents"> 학부모 </label>
+										            <label><input name="role" id="academy8" name="academy" type="radio" class="radio-label" value="academy"> 학원</label>
+							                    	<input type="hidden" class="form-control" id="email8" name="email" value="${snsEmail}">
+							                    </span>
+											</div>
+											<div class="form-group">
+												<div class="row"><!-- 비밀번호 입력 -->
+													<div class="col-6">
+														<div class="form-group">		
+															<input type="password" id="password0" name="password" class="form-control form-control-user"
+				                                                placeholder="비밀번호" aria-describedby="emailHelp">
+				                                        </div>
+				                                    </div>
+				                                    <div class="col-6"><!-- 비밀번호 확인 -->
+														<div class="form-group">		
+															<input type="password" class="form-control form-control-user"
+				                                                placeholder="비밀번호확인" id="password2" name="password2" aria-describedby="emailHelp">
+				                                        </div>
+				                                    </div>
+												      	<strong class="text_password"></strong>
+			                            		</div>
+											</div>
+											<div class="form-group">
+                                            <input type="text" id="name8" name="name" class="form-control form-control-user"
+                                               aria-describedby="emailHelp"
+                                                placeholder="이름">
+                                            <span class="text_name"></span>
+                                        </div>
+                                        <div class="row"><!-- 휴대전화번호 입력 -->
+												<div class="col-8">
+													<div class="form-group">		
+														<input type="text" id="phone8" name="phone" class="form-control form-control-user"
+			                                                placeholder="휴대전화번호"  aria-describedby="emailHelp">
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-4"><!-- 발송버튼 -->
+													<div class="form-group">
+														<div class="text-center">
+					                                       <a href="#" name="send_sms8" class="btn btn-primary btn-user btn-block">
+					                                            인증요청
+					                                        </a>
+					                                    </div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                <div class="row"><!-- 인증번호 입력 -->
+												<div class="col-8">
+													<div class="form-group">		
+														<input type="text" class="form-control form-control-user"
+			                                                placeholder="인증번호입력" id="vaildNum8" name="vaildNum8" aria-describedby="emailHelp">
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-4"><!-- 인증번호 확인버튼 -->
+													<div class="form-group">		
+														<div class="text-center">
+					                                        <a href="#" name="check_sms8" class="btn btn-primary btn-user btn-block">
+					                                            확인
+					                                        </a>
+					                                        <span class="text_sms8"></span>
+					                                    </div>
+			                                        </div>
+			                                    </div>
+			                                </div><!-- 계정연동 클릭이벤트 해야해 -->
+											<a href="#" name="unify"
+												class="btn btn-primary btn-user btn-block"> 계정연동하기 </a>
+										</form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 계정연동 모달 끝-->
 				
 				
 				
@@ -546,6 +641,7 @@
 		//alert("입력한 인증번호=>" + vaildNum)
 		
 		console.log("key : " +key)
+		console.log("vaildNum : " +vaildNum)
 		
 		if( vaildNum == key ){
 			
@@ -622,14 +718,12 @@
 
 					} else if (JSONData.message == "notExist") {
 
-						$(".connect_text").val("")
 						displayValue = "유효하지 않은 학원코드입니다."
-						$(".connect_text").css("color", "red");
+						$(".connect_text").text(displayValue).css("color", "red");
 
 					}
 
 					$("#academyCode").val("");
-					$(".connect_text").append(displayValue);
 
 				}
 			});
@@ -978,14 +1072,10 @@
 			 
 			 
 			
-			 
-		//sns 간편로그인 연동하기 클릭 event
-		$(function() {
-
-			$('span[name="unify"]').on("click", function() {
-				//self.location = "/user/updateUser?email=${user.email}"
-			});
-		});	 
+		 
+		
+		
+		
 		
 		<!--                학원 용 입니다               -->
 		
@@ -1079,11 +1169,135 @@
 			    });
 			}
 		}
+	
 		
-    
 		 $(document).ready(function(){
 	            academyList();
 	        });
+		 
+		 
+		 
+		 
+		 
+///////////////////////////////////////SNS 계정연동 시작//////////////
+
+	/*	
+	 
+		//sns 간편로그인 연동하기 클릭 event
+		$(function() {
+
+			$('span[name="unify"]').on("click", function() {
+				//self.location = "/user/updateUser?email=${user.email}"
+			});
+		});	
+		
+		
+		
+		
+		//연동에서 event 함수
+		$(function() {
+			
+			//내정보수정
+			//인증번호 발송 event
+			$( "a[name='send_sms8']" ).on("click" , events.click.phoneBtn);
+			//인증번호 확인 event
+			$( "a[name='check_sms8']" ).on("click" , events.click.vaildBtn);
+			
+			
+		});
+
+		
+		var events = {
+
+			click : {
+				
+				
+				phoneBtn : function() {
+					alert("인증번호발송 클릭")
+					fncAuth8();
+					
+				},
+				
+				vaildBtn : function() {
+					alert("인증확인 클릭")
+					fncKey8();
+					
+				}
+				
+			}
+		
+		}
+		
+		
+		
+
+		
+		
+		
+		//인증번호 발송 함수
+		function fncAuth8(){					
+			
+			var phone = $("#phone8").val()
+			alert("입력한 연락처 : "+phone);
+			
+			
+			$.ajax({
+					url : "/user/json/sms/"+phone ,
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : 
+							function(JSONData , status) {
+
+							//alert("status : "+status);
+							//alert("JSONData : \n"+JSONData);
+							//alert("JSONData : \n"+JSONData.key);
+							key = JSONData.key;
+							
+					}
+						
+			});	//End ajax 
+		};
+		
+		
+		
+		//인증번호 확인 함수
+		//test 용, 나중에 실제에서는 지우기
+		var key ="123456";
+		//var key = "";
+		
+		var vaildNum = $("#vaildNum8").val();
+		
+		function fncKey8() {	
+		
+			var vaildNum = $("#vaildNum8").val();
+			//alert("입력한 인증번호=>" + vaildNum)
+			
+			console.log("key : " +key)
+			console.log("vaildNum : " +vaildNum)
+			
+			if( vaildNum == key ){
+				
+				$(".text_sms8").text("인증번호가 맞습니다.");
+				$(".text_sms8").css("color", "blue");
+				
+				checkVaild = true;
+				
+			}else{
+				
+				$(".text_sms8").text("인증번호가 맞지 않습니다.");
+				$(".text_sms8").css("color", "red");
+			
+			}		
+		}	
+	  	
+	  	
+	*/
+		 
+		 
 	        
     
     </script>

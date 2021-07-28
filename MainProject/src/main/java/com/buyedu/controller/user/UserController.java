@@ -430,8 +430,8 @@ public class UserController {
 	          //아카데미 화면
 				String getUserView = this.getUser(session, user.getEmail(), model);
 				
-			return getUserView;   
-	        //return "main";
+			//return getUserView;   
+	         return "/search/searchList";
 				
 			}
 			
