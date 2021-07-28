@@ -24,21 +24,17 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:solid gold;">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
 		
         <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5"> 
+        <div id="content" class="p-4 p-md-5">
 	        
-	        <div class="container-fluid"  >
-	        
-	        	 <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
-	        
+	        <div class="container-fluid" >
 				<!-- 내용 때려 박으삼 이쁘게 -->
-				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
-						     <form>
+                          <form>
 								<div class="row" style=" position:absolute; right:100px;  top:80px; z-index:2;" >
 								  <div class="col-md-3">
 								  	<input type="text" name="searchAcademyName" class="form-control" placeholder="학원명 입력" >
@@ -46,7 +42,7 @@
 		
 								  <div class="col-md-3">
 									<select name="searchAcademyAddr" class="form-control" >
-								  		<option value="">지역</option>
+								  		<option value="" >지역</option>
 								  		<option value="종로구">종로구</option>
 								  		<option value="중구">중구</option>
 								  		<option value="용산구">용산구</option>
@@ -76,7 +72,7 @@
 		
 								  <div class="col-md-2">
 									<select name="searchAcademyGrade" class="form-control" >
-								  		<option value="">학년</option>
+								  		<option value="" >학년</option>
 								  		<option value="초등">초등</option>
 								  		<option value="중등">중등</option>
 								  		<option value="고등">고등</option>
@@ -87,7 +83,7 @@
 		
 								  <div class="col-md-3">
 									<select name="searchAcademySubject" class="form-control">
-								  		<option value="">과목</option>
+								  		<option value="" >과목</option>
 								  		<option value="국어">국어</option>
 								  		<option value="영어">영어</option>
 								  		<option value="수학">수학</option>
@@ -102,10 +98,10 @@
 								  	<button type="button" id="search" class="btn btn-primary">검색</button>
 								  </div>
 								</div>	
-							</form>
 								
-								<div id="map" style="width:auto;height:600px; border:3px solid white; position:relative; z-index:1; "></div>
-				</div>
+								<div id="map" style="width:100%;height:600px; border:7px solid gold; position:relative; z-index:1; "></div>	
+							</form>
+
 	      	</div>
       	
        </div>

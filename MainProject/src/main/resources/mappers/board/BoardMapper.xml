@@ -68,7 +68,7 @@
                        			from recommend
                       			 group by board_no
                                          order by cnt desc)c
-       	WHERE b.board_no = c.board_no(+) and b.category_Code='2' and u.user_no=b.board_writer
+       	WHERE b.board_no = c.board_no(+) and b.category_Code='2' and u.user_no=b.board_writer AND 1 &lt;=nvl(c.cnt,0)
        		  AND ROWNUM &lt; 4
    </select>
 

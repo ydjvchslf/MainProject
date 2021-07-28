@@ -2,6 +2,68 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+#buyEdu {
+font-family : Lobster;
+color : #F5C129;
+}
+
+a {
+	text-decoration-line: none;
+}
+
+@font-face {
+    font-family: 'EliceDigitalBaeum_Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/EliceDigitalBaeum_Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#buyeduInfo {
+font-family : 'ChosunGu';
+}
+
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+@font-face {
+    font-family: 'RIDIBatang';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Merienda&display=swap');
+
+.hover-me a {font-size : 57px;
+}
+
+.hover-me:hover{
+font-size: 0;
+}
+
+.hover-me:hover:after{
+content : 'login';
+font-size: 57px;
+font-family: lobster;
+}
+
+
+</style>
+
 
 <!DOCTYPE html>
 <html>
@@ -29,11 +91,13 @@
         <!-- Masthead-->
         <div class="masthead">
             <div class="masthead-content text-white" >
-                <div class="container-fluid px-4 px-lg-0" style="color:#EB8F05;">
-                    <h1 class="fst-italic lh-1 mb-4"><a href="/user/login" style="color:#EB8F05;" >Buy! Edu</a></h1>
-                    <p class="mb-5">모든 학생들이 맞는 학원에서 맞는 교육을 듣기를 바랍니다.</p>
-                    <p class="mb-5">우리는 원장님은 강의에 전념하시고 학생들은 수업에 집중하는 것이 맞다고 생각합니다.</p>
-                    
+                <div class="container-fluid px-4 px-lg-0" >
+                    <h1 class="fst-italic lh-1 mb-4" id="buyEdu"><a class="hover-me" href="/user/login" style="color:#F5C129;" >Buy! edu</a></h1>
+                    <p class="mb-5" id="buyeduInfo" style="color:#DFDEDA;">모든 학생들이 자신에게 최적화된 학원을 찾을 수 있는<br>
+                    모든 원장님들이 편리하게 수업을 관리할 수 있는<br>
+                    <span style="color : #F5C129; font-size : 25px;">플랫폼</span>을 제공합니다<br><br>
+                    <span style="color : #FCDE85; font-family: lobster; font-size : 19px;">Think 10 minutes later and 10 years later at the same time.</span> <br>
+                    <span style="font-family: ChosunGu; font-size : 17px;"><span style="font-family: Lobster;">Buy!edu</span>를 통해 당신의 10년 후를 꿈꿔보세요</span></p>
                 </div>
             </div>
         </div>
