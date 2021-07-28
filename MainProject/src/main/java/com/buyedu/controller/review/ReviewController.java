@@ -110,8 +110,12 @@ public class ReviewController {
 	public String updateReview(@RequestParam("reviewNo") int reviewNo , Model model , HttpServletRequest request) throws Exception {
 		
 		Review review = reviewService.getReview(reviewNo);
+		String academyCode = request.getParameter("academyCode");
+		System.out.println("아카데미코드 : "+academyCode);
 		
 		
+		
+		model.addAttribute("academyCode",academyCode);
 		model.addAttribute("review",review);
 		
 		return "/review/updateReviewView";
@@ -127,6 +131,7 @@ public class ReviewController {
 	
 		
 		review.setAcademyCode(academyCode);
+		System.out.println("reivew : "+review);
 		
 		
 		return "redirect:/review/getReview?reviewNo="+review.getReviewNo()+"&academyCode="+review.getAcademyCode();

@@ -191,6 +191,8 @@ body {
    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
+	
+
 	<div class="container">
 	
 <br/><br/><br/><br/>
@@ -203,7 +205,7 @@ body {
 				
 		<div class="col-md-1">
 		</div>
-		
+	
 	<div class="col-md-6" >
 	<table class="table" >
 	<br/><br/>
@@ -217,6 +219,8 @@ body {
 			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp;작성자</b></td>
 			<td id="content" width="825">&nbsp;&nbsp;${review.reviewWriter.email}</td>
 		</tr>
+		
+		
 		
 		<tr height="50">
 			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp; 작성일자</b></td>

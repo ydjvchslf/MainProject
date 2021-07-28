@@ -78,15 +78,6 @@
 											FROM review r, users u , academy a
 											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code AND r.academy_code = '${academyCode}' 
 											AND (r.review_state = '0' OR r.review_state = '1') 
-											<if test="searchCondition != null">
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				and u.name like '%${searchKeyword}%'
-													</if>
-													<if test="searchCondition == 1 and serachKeyword !='' ">
-														and r.review_content like '%${searchKeyword}%'
-													</if>
-												
-											</if>
 											ORDER BY review_date desc ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
@@ -107,17 +98,8 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT r.review_title , r.review_content , u.email , r.review_date , a.academy_code 
 						FROM review r , users u , academy a
-						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND r.academy_code = '${academyCode}'
-						<if test="searchCondition != null">
-							
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-									and review_title like '%${searchKeyword}%'
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-									and review_content like '%${searchKeyword}%'
-								</if>							
-							
-						</if> ) countTable						
+						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND r.academy_code = '${academyCode}' AND (r.review_state = '0' OR r.review_state = '1') 
+						 ) countTable						
 	 </select>
 	 
 	  <select id="getConnect" parameterType="map" resultType="int" >

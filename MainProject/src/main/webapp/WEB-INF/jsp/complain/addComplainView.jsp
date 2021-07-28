@@ -10,7 +10,7 @@
 <script type="text/javascript">
 
 
-	function fncAddReport(){
+	function fncAdd(){
 		
 		var receiveReporter = $("input[name='receiveReporter.email']").val();
 		if($("input[name='reportBoard.boardNo']").val() == null){

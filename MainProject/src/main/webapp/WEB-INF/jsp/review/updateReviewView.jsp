@@ -43,6 +43,7 @@
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	$( ".btn:contains('수')" ).on("click" , function() {
+		var academyCode=$("input[name='academyCode']").val();
 		fncupdateReview();
 	});
 });	
@@ -95,7 +96,7 @@ function fncupdateReview(){
 		
 		<h3 style="text-align:center;">후기 수정</h3> 
 		</div>
-		
+			학원코드${academyCode }
 	
 	<br/><br/>
 	
@@ -106,6 +107,13 @@ function fncupdateReview(){
 		    <label for="reviewTitle" class="col-sm-offset-1 col-sm-1 control-label">제목</label>
 		    <div class="col-sm-8">
 		      <input type="text" class="form-control" id="reviewTitle" name="reviewTitle" value="${review.reviewTitle}">
+		    </div>
+		</div>
+		
+		<div id="academyCode" class="form-group">
+		    <label for="academyCode" class="col-sm-offset-1 col-sm-1 control-label">학원코드</label>
+		    <div class="col-sm-8">
+		      <input type="text" class="form-control" id="academyCode" name="academyCode" value="${academyCode}" readonly>
 		    </div>
 		</div>
 		
