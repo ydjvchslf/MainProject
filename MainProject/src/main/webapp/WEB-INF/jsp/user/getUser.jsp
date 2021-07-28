@@ -115,7 +115,7 @@
 														<tr>
 															<td align="left">${ i }</td>
 															<td align="left"><span class="cntAcademyName"
-																name="cntAcademyName"><u>${connect.academy.academyName}</u></span>
+																name="cntAcademyName"><a href="/academy/academyInfo?academyCode=${connect.academy.academyCode}"><u>${connect.academy.academyName}</u></a></span>
 																<input type="hidden" name="cntAcademyCode"
 																value="${connect.academy.academyCode}"></td>
 															<td align="left"><c:choose>
@@ -854,6 +854,7 @@
 
 	});
 
+	/*
 	//등록한 학원 상세보기 페이지 이동 event
 	$(function() {
 		$('span[name="cntAcademyName"]').on("click", function() {
@@ -864,7 +865,8 @@
 		})
 
 	})
-
+	*/
+	
 	
 	// 비밀번호변경 -> 비밀번호 체인지 & 본래 비밀번호 맞는지
 	function passwordChange() {
