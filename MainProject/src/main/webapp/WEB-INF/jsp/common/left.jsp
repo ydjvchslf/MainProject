@@ -56,7 +56,7 @@
                     <a href="/user/listUser">회원 목록</a>
                 </li>
                 <li>
-                    <a href="#">현황 차트</a>
+                    <a href="/chart/getChart">현황 차트</a>
                 </li>
 	            </ul>
 	          </li>
@@ -111,7 +111,7 @@
 	        </ul>
 
 	        <div class="footer">
-	        	<a href="/user/logout">로그아웃</a>
+	        	<a name="logout" href="/user/logout">로그아웃</a>
 	        </div>
 
 	      </div>
@@ -132,6 +132,98 @@
             
             stompClient.send("/chat", {}, '{"test", "test"}');
         });
+        
+        
+        
+        
+        //로그아웃 JS
+        $(function() {	
+		
+			 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
+			
+			 $('a[name=logout]').on("click" , function() {
+				 
+				 alert("로그아웃 클릭")
+				 
+				 let x = document.cookie;
+				 
+				 const words = x.split("; ");
+				 
+				 var loginType = "";
+				 
+				 for(var i=0; i < words.length; i++ ){
+					 
+					if( words[i].split("=")[0] === "loginType" ){
+						 console.log( words[i].split("=")[1] )
+						 loginType = words[i].split("=")[1];
+					}
+				 }
+				 
+				 if(loginType == "kakao"){
+					 
+					 alert("카카오 로그아웃!")
+					 
+					 if (!Kakao.Auth.getAccessToken()) {
+						  console.log('Not logged in.');
+						  
+						  self.location = "/"
+						  
+						  return;
+					}
+					 
+					 Kakao.API.request({
+						 
+					  url: '/v1/user/unlink',
+					  success: function(response) {
+					    console.log(response);
+					    
+					    self.location = "/"
+					  },
+					  
+					  fail: function(error) {
+					    console.log(error);
+					  },
+					  
+					});
+					 
+				 }else if(loginType == "naver"){
+					 
+					 alert("네이버로그아웃")
+					 
+					 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+					 var tokenArray = accessToken.split(".");
+					 var finalToken = tokenArray[1]
+					 
+					  $.ajax({
+	                 		
+						  crossOrigin : true,
+						  contentType: "application/json",
+						  dataType : "json",
+						  
+		            	  url : "/user/json/naver/logout/" + finalToken,
+		                  success : function(JSONData, status){
+		                  	console.log("결과->" +JSONData);
+		                  	self.location = "/" 
+		                  }, error  : function (a,b,c) {
+		                  	console.log(a)
+		                  	alert("로그아웃 실패");
+		                  	
+		                  }
+		              })
+						
+				 }else{
+					 alert("일반 로그아웃");
+					 self.location = "logout"
+				 }
+				 
+			 });
+	});
+
+
+        
+        
+        
+        
     	</script>
 
 </body>
