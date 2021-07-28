@@ -1,43 +1,251 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
-
 <html lang="ko">
-	
+
 <head>
-	<meta charset="EUC-KR">
-	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	
+
+    <meta charset="utf-8">
     
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script>
+    <title> Forgot Password</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
 	
-	var checkVaild = false;
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-5 col-lg-9 col-md-6">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
+                                        <br>
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="email" name="name" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="ì´ë¦„">
+                                            <span id="helpBlock" class="help-block">
+										      	<strong class="text_name"></strong>
+										     </span>        
+                                        </div>
+                                       <div class="row"><!-- íœ´ëŒ€ì „í™”ë²ˆí˜¸ ì…ë ¥ -->
+												<div class="col-8">
+													<div class="form-group">		
+														<input type="text" class="form-control form-control-user"
+			                                               name="phone" placeholder="íœ´ëŒ€ì „í™”ë²ˆí˜¸" id="phone" aria-describedby="emailHelp">
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-4"><!-- ë°œì†¡ë²„íŠ¼ -->
+													<div class="form-group">
+														<div class="text-center">
+					                                       <a href="#" name="send_sms" class="btn btn-primary btn-user btn-block">
+					                                            ì¸ì¦ìš”ì²­
+					                                        </a>
+					                                    </div>
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                <div class="row"><!-- ì¸ì¦ë²ˆí˜¸ ì…ë ¥ -->
+												<div class="col-8">
+													<div class="form-group">		
+														<input type="text" class="form-control form-control-user"
+			                                                placeholder="ì¸ì¦ë²ˆí˜¸ì…ë ¥" id="vaildNum" aria-describedby="emailHelp">
+				                                        	<span id="helpBlock" class="help-block">
+															   <strong class="text_phone"></strong>
+															</span>	
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-4"><!-- ì¸ì¦ë²ˆí˜¸ í™•ì¸ë²„íŠ¼ -->
+													<div class="form-group">		
+														<div class="text-center">
+					                                        <a href="#" name="check_sms" class="btn btn-primary btn-user btn-block">
+					                                            í™•ì¸
+					                                        </a>
+					                                    </div>
+			                                        	<span id="helpBlock" class="help-block">
+														   <strong class="text_sms"></strong>
+														</span>	
+			                                        </div>
+			                                    </div>
+			                                </div>
+			                                <div class="form-group">
+	                                            <input type="email" name="email" class="form-control form-control-user"
+	                                                id="exampleInputEmail" aria-describedby="emailHelp"
+	                                                placeholder="Email">
+	                                            <span id="helpBlock" class="help-block">
+											      	<strong class="text_email"></strong>
+											     </span>
+											     <span id="helpBlock" class="help-block">
+											      	<strong class="explain1"></strong>
+											     </span>          
+                                       		 </div>
+		                                     <a href="#" name="findPassword" class="btn btn-primary btn-user btn-block">
+		                                            Find Password
+		                                     </a>
+                                    </form>
+                                    <hr>
+                                    
+                                    <form class="user" name="updateForm">
+                                    		<div class="row"><!-- ìƒˆë¹„ë°€ë²ˆí˜¸ ì…ë ¥ -->
+												<div class="col-6">
+													<div class="form-group">		
+														<input type="password" name="password" class="form-control form-control-user"
+			                                                placeholder="ìƒˆë¹„ë°€ë²ˆí˜¸" id="password" aria-describedby="emailHelp">
+			                                        </div>
+			                                    </div>
+			                                    <div class="col-6"><!-- ì¸ì¦ë²ˆí˜¸ í™•ì¸ë²„íŠ¼ -->
+													<div class="form-group">		
+														<input type="password" class="form-control form-control-user"
+			                                                placeholder="ë¹„ë°€ë²ˆí˜¸í™•ì¸" id="password2" aria-describedby="emailHelp">
+			                                        </div>
+			                                    </div>
+			                                    <span id="helpBlock" class="help-block">
+											      	<strong class="text_password"></strong>
+											     </span> 
+			                                </div>
+			                                <div class="row">
+			                                <div class="col-12"><!--ë¹„ë²ˆë³€ê²½ ë²„íŠ¼ -->
+													<div class="form-group">		
+														<div class="text-center">
+					                                        <a href="#" id="changePw" class="btn btn-primary btn-user btn-block">
+					                                            ìˆ˜ì •í•˜ê¸°
+					                                        </a>
+					                                    </div>
+			                                        </div>
+			                                    </div>
+			                                 </div>
+                                    		<span id="helpBlock" class="help-block">
+											   <strong class="text_phone"></strong>
+											</span>	
+                                    </form>		
+                                    <div class="text-center">
+                                        <a class="small" name="login" href="#">Already have an account? Login!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/sbadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</body>
+
+	<script type="text/javascript">
+	
+	
+	//íœ´ëŒ€ì „í™”ë²ˆí˜¸ ìë™ ëŒ€ì‹œ(-)ì‚½ì…
+	$(document).on("keyup", "input[name=phone]", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+	
 	
 	$( function() {
-		$("a[href='#' ]").on("click" , function() {
+		//ë¡œê·¸ì¸ ì´ë™ event
+		$('a[name=login]').on("click" , function() {
 			self.location = "/user/login"
 		});
+		
+		//ì´ë¦„ change ì´ë²¤íŠ¸
+		$('input[name=name]').on("change" , function() {
+			fncCheckName()
+		});
+		
+		//ì´ë©”ì¼ change ì´ë²¤íŠ¸
+		$('input[name=email]').on("change" , function() {
+			checkEmail()
+		});
+		
 	});
 	
 	
-	//ºñ¹Ğ¹øÈ£ Ã£±â ´­·¶À»¶§ true °ª Ã¼Å© ¸Ş¼­µå
+	//ì´ë¦„ ì²´í¬ í•¨ìˆ˜
+	function fncCheckName() {
+		
+		var name = $('input[name=name]').val();
+		
+	    if(name){
+	    	var nameRegExp = /^[ê°€-í£]{2,20}$/;
+	    	
+	    	if(nameRegExp.test(name)){
+	    		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì…ë‹ˆë‹¤.").css("color", "blue");
+	    		return true;
+	    	}else{
+	    		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤").css("color", "red");
+	    	}
+	    } else{
+	    	$(".text_name").text("ì´ë¦„ì„ í•„ìˆ˜ë¡œ ì…ë ¥í•˜ì„¸ìš”!");
+			$(".text_name").css("color", "red");
+	    }
+	    return false; //í™•ì¸ì´ ì™„ë£Œë˜ì—ˆì„ ë•Œ
+	}
+	
+	
+	//ì´ë©”ì¼ìœ íš¨ì„± í•¨ìˆ˜
+    function checkEmail() {
+		
+		var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+		var email=$("input[name='email']").val();
+		
+		// null , undefined, "" ë¹ˆê°’ì„ false ë¡œ ì¸ì‹, ë§Œì•½ ê°’ì´ ìˆìœ¼ë©´ true 
+		if (email) {
+			
+			if(emailRegExp.test(email)){
+				$(".explain1").text("ì˜¬ë°”ë¥¸ ì´ë©”ì¼ í˜•ì‹ì…ë‹ˆë‹¤.").css("color", "blue");
+				return true;		
+			} else {
+				$(".explain1").text("ì˜¬ë°”ë¥¸ ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
+				$(".explain1").css("color", "red");
+			}
+		} else {
+			$(".explain1").text("ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”.");
+			$(".explain1").css("color", "red");
+		}
+		return false;
+    }
+
+	
+	//ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ëˆŒë €ì„ë•Œ true ê°’ ì²´í¬ ë©”ì„œë“œ
 	function fncCheckAll() {
 		
 		var valid = false;
 		
-		if( checkVaildNumber() ){
+		if( checkEmail() && checkVaild ){
 			valid = true;
 		}
 		
@@ -48,15 +256,17 @@
 	
 	$(function() {
 		
-		//ÀÎÁõ¹øÈ£ ¹ß¼Û event
-		$( "button[name='send_sms']" ).on("click" , events.click.phonBtn);
+		//ì¸ì¦ë²ˆí˜¸ ë°œì†¡ event
+		$( "a[name='send_sms']" ).on("click" , events.click.phonBtn);
 		
-		//ÀÎÁõ¹øÈ£ È®ÀÎ event
-		$( "button[name='check_sms']" ).on("click" , events.click.vaildBtn);
+		//ì¸ì¦ë²ˆí˜¸ í™•ì¸ event
+		$( "a[name='check_sms']" ).on("click" , events.click.vaildBtn);
 		
-		//ºñ¹Ğ¹øÈ£Ã£±â event
-		$( "button[name='findPassword']" ).on("click" , events.click.findBtn);
+		//ë¹„ë°€ë²ˆí˜¸ì°¾ê¸° event
+		$( "a[name='findPassword']" ).on("click" , events.click.findBtn);
 		
+		//ë¹„ë°€ë²ˆí˜¸ 1 = 2 í™•ì¸
+		$("#password2").on("blur" , events.change.pw);
 	});
 	
 	
@@ -66,39 +276,47 @@
 			click : {
 				
 				phonBtn : function() {
-					alert("ÀÎÁõ¹øÈ£¹ß¼Û Å¬¸¯")
-					fncAuth();
+					alert("ì¸ì¦ë²ˆí˜¸ë°œì†¡ í´ë¦­")
+					if ( $("#phone").val() != "" ){
+						fncAuth();
+					}else{
+						swal('í•¸ë“œí° ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”!')
+					}
 					
 				},
 				
 				vaildBtn : function() {
-					alert("ÀÎÁõÈ®ÀÎ Å¬¸¯")
+					alert("ì¸ì¦í™•ì¸ í´ë¦­")
 					fncKey();
 					
 				},
 				
 				findBtn : function() {
-					alert("ºñ¹Ğ¹øÈ£Ã£±â¹öÆ° Å¬¸¯")
+					alert("ë¹„ë°€ë²ˆí˜¸ì°¾ê¸°ë²„íŠ¼ í´ë¦­")
 					
-					if( checkVaild ){
+					if( fncCheckAll() ){
 						alert("2222")
 						findPassword();
 					}
 					
 				}
+			},
+			
+			change : {
+				
+				pw : function() {
+					checkPw("first");
+				}
 			}
 	}
 	
-	//ÈŞ´ëÀüÈ­¹øÈ£ ÀÚµ¿ ´ë½Ã ÀÔ·Â
-	$(document).on("keyup", "#phone", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
-
 	
 	
-	//ÀÎÁõ¹øÈ£ ¹ß¼Û ÇÔ¼ö
+	//ì¸ì¦ë²ˆí˜¸ ë°œì†¡ í•¨ìˆ˜
 	function fncAuth(){					
 		
 		var phone = $("#phone").val()
-		alert("ÀÔ·ÂÇÑ ¿¬¶ôÃ³ : "+phone);
+		alert("ì…ë ¥í•œ ì—°ë½ì²˜ : "+phone);
 		
 		$.ajax({
 				url : "/user/json/sms/"+phone ,
@@ -122,8 +340,8 @@
 	};
 	
 	
-	//ÀÎÁõÈ®ÀÎ ÇÔ¼ö
-	//test ¿ë, ³ªÁß¿¡ ½ÇÁ¦¿¡¼­´Â Áö¿ì±â
+	//ì¸ì¦í™•ì¸ í•¨ìˆ˜
+	//test ìš©, ë‚˜ì¤‘ì— ì‹¤ì œì—ì„œëŠ” ì§€ìš°ê¸°
 	
 	var key ="123456";
 	//var key = "";
@@ -138,112 +356,130 @@
 		
 		if( vaildNum == key ){
 			
-			$(".text_sms").text("ÀÎÁõ¹øÈ£°¡ ¸Â½À´Ï´Ù.");
+			$(".text_sms").text("ì¸ì¦ë²ˆí˜¸ê°€ ë§ìŠµë‹ˆë‹¤.");
 			$(".text_sms").css("color", "blue");
-			
+			$("#vaildNum").attr('disabled', 'disabled')
 			checkVaild = true;
 			
 		}else{
 			
-			$(".text_sms").text("ÀÎÁõ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.");
+			$(".text_sms").text("ì¸ì¦ë²ˆí˜¸ê°€ ë§ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 			$(".text_sms").css("color", "red");
 		
 		}		
 	}		
 	
 	
-	
-	//Æû ÀÔ·Â ¿Ï¼º-> ºñ¹Ğ¹øÈ£ Ã£±â ´­·¶À»¶§
+	//í¼ ì…ë ¥ ì™„ì„±-> ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ëˆŒë €ì„ë•Œ
 	function findPassword() {
 			
-			console.log(checkVaild);
-			console.log('ÀßÁ¢±Ù!');
-			
-			var name = $("#name").val();
-			var phone = $("#phone").val();
-			var email = $("#email").val();
-			
-			console.log(name);
-			console.log(phone);
-			console.log(email);
+		console.log(checkVaild);
+		console.log('ì˜ì ‘ê·¼!');
 		
-			$.ajax({
-						url : "/user/json/findPassword",
-						method : "POST" ,
-						data : JSON.stringify({
-							name : name,
-							phone : phone,
-							email : email,
-						}),
-						dataType : "json" ,
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						success : function(JSONData, status) {
+		var name = $("input[name=name]").val();
+		var phone = $("input[name=phone]").val();
+		var email = $("input[name=email]").val();
+		
+		console.log(name);
+		console.log(phone);
+		console.log(email);
+	
+		$.ajax({
+					url : "/user/json/findPassword",
+					method : "POST" ,
+					data : JSON.stringify({
+						name : name,
+						phone : phone,
+						email : email,
+					}),
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status) {
+						
+						alert("ì„±ê³µ!");
+			    			
+						if (JSONData.message == "no") {
 							
-							alert("¼º°ø!");
-				    			
-							if (JSONData.message == "no") {
-								
-								var str = '¾ø´Â È¸¿øÁ¤º¸ÀÔ´Ï´Ù.';
-								
-								console.log("¾ø´Â Á¤º¸");
-								$('.explain1').text("")
-								$('.explain1').append(str).css("color", "red");
-								
-							} else if (JSONData.message == "ok") {
-								
-								$('button[name="changeButton"]').prop('disabled', false);
-								$("input[type='password']").removeAttr('disabled');
-								
-								var displayText = '»õ·Î¿î ºñ¹Ğ¹øÈ£·Î ¼öÁ¤ÇØÁÖ¼¼¿ä!';
-								$('.explain1').text("")
-								$('.explain1').append(displayText).css("color", "blue");
-							}
+							var str = 'ì—†ëŠ” íšŒì›ì •ë³´ì…ë‹ˆë‹¤.';
+							
+							//console.log("ì—†ëŠ” ì •ë³´");
+							$('.explain1').text("")
+							$('.explain1').append(str).css("color", "red");
+							
+						} else if (JSONData.message == "ok") {
+							
+							var str = 'ìƒˆë¡œìš´ ë¹„ë°€ë²ˆí˜¸ë¡œ ìˆ˜ì •í•´ì£¼ì„¸ìš”!';
+							$('.explain1').text("")
+							$('.explain1').text(str).css("color", "red");
+							
+							
+							
+							
+							
 						}
-			});
-	}
-			
-			
-	
-	
-	// ºñ¹Ğ¹øÈ£, »õ ºñ¹Ğ¹øÈ£ È®ÀÎ
-	 $(function(){
-
-		 $('#password2').blur(function(){
-				
-			   if($('#password').val() != $('#password2').val()){
-				   
-			    		if ( $('#password2').val() != '' ) {
-			    			
-			    			$('.text_password').text("");
-			    			
-			    			var str = 'ºñ¹Ğ¹øÈ£°¡ ¸ÂÁö ¾Ê½À´Ï´Ù.';
-			    			
-			    			$('.text_password').append(str).css("color", "red");
-				    	    $('#password2').val('');
-				         	$('#password2').focus();	
-						};
-			    }else{
-	    			$('.text_password').text("ºñ¹Ğ¹øÈ£°¡ ¸Â½À´Ï´Ù.").css("color", "blue");
-			    }
-			   
-			})   
-			
+					}
 		});
+	}
 	
 	
-	//»õ·Î¿î ºñ¹øÀ¸·Î ¼öÁ¤
+	
+	
+	
+	// ë¹„ë°€ë²ˆí˜¸, ìƒˆ ë¹„ë°€ë²ˆí˜¸ í™•ì¸
+	 
+	function checkPw(passwordType) {
+				
+		var passwordTarget = passwordType == "first" ? "password" : "password2";
+		var passwordCompare = passwordType == "first" ? "password2" : "password";
+		
+		
+		var pw = $("#" + passwordTarget).val();
+		var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+		
+		console.log(pw);
+		
+		if(reg.test(pw)) {
+			
+			var pw2 = $("#" + passwordCompare).val();
+			
+			if( pw == pw2 ){
+				
+				$(".text_password").text("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.");
+				$(".text_password").css("color", "blue");
+				
+				return true;
+				
+			}else{
+				
+				$(".text_password").text("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				$(".text_password").css("color", "red");
+			}
+			
+		}else {
+			
+			var str = 'ë¹„ë°€ë²ˆí˜¸ëŠ” 8ì ì´ìƒ, ìˆ«ì/ëŒ€ë¬¸ì/ì†Œë¬¸ì/íŠ¹ìˆ˜ë¬¸ìë¥¼ ëª¨ë‘ í¬í•¨í•´ì•¼ í•©ë‹ˆë‹¤.';
+			$('.text_password').text(str).css("color", "red");
+			$("#password").focus();
+		}
+		return false;
+			   
+	}  
+			
+	
+	
+	//ìƒˆë¡œìš´ ë¹„ë²ˆìœ¼ë¡œ ìˆ˜ì •
 	 $( function() { 
 			
-			$("button[name='changeButton']").click(function(){
+			$("#changePw").click(function(){
 				
-					console.log('ÀßÁ¢±Ù!');
+					console.log('ì˜ì ‘ê·¼!');
 					
-					var name = $("#name").val();
-					var phone = $("#phone").val();
-					var email = $("#email").val();
+					var name = $("input[name=name]").val();
+					var phone = $("input[name=phone]").val();
+					var email = $("input[name=email]").val();
 					var password = $("#password").val();
 					
 					console.log(name);
@@ -268,14 +504,16 @@
 								},
 								success : function(JSONData, status) {
 									
-									alert("¼º°ø!");
+									alert("ì„±ê³µ!");
 						    			
 									if (JSONData.message == "ok") {
 										
-										var str = 'ºñ¹Ğ¹øÈ£°¡ Àß ¼öÁ¤ µÇ¾ú½À´Ï´Ù!';
+										var str = 'ë¹„ë°€ë²ˆí˜¸ê°€ ì„±ê³µì ìœ¼ë¡œ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤^ã…‡^';
 										$('.text_password').text("")
 										$('.explain2').text("")
 										$('.explain2').append(str).css("color", "blue");
+										
+										swal(str);
 										
 									}
 								}
@@ -283,110 +521,13 @@
 				});
 			});
 
-
-	
-	//cool sms
-	
-	
-	
-	
-	
 	
 	
 
 	</script>
-    
-</head>
 
-<body>
 
-		<div class="col-md-9">
-				<div class="jumbotron">
-			  		<p>Password Ã£±â È­¸é</p>
-			  	</div>
 
-		<form class="form-horizontal" name="form1">
-			  <div class="form-group">
-			    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="name" name="name" placeholder="name">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">ÈŞ´ëÀüÈ­¹øÈ£</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="phone" name="phone" placeholder="phone">
-			      <button name="send_sms" class="btn btn-primary" onclick="return false">ÀÎÁõ¹øÈ£¹ß¼Û</button>
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label for="vaild" class="col-sm-offset-1 col-sm-3 control-label"></label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="vaildNum" name="vaildNum" placeholder="ÀÎÁõ¹øÈ£">
-			      <button name="check_sms" class="btn btn-primary" onclick="return false">ÀÎÁõÈ®ÀÎ</button>
-			    </div>
-				  <span id="helpBlock" class="help-block">
-					 <strong class="text_sms"></strong>
-				  </span>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸ŞÀÏ</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="email" name="email" placeholder="email">
-			    </div>
-			  </div>
-			  
-			   <div class="form-group">
-			    <div class="col-sm-offset-4  col-sm-4 text-center">
-			      <button type="button" name="findPassword" class="btn btn-primary">ºñ¹Ğ¹øÈ£ Ã£±â</button>
-			    </div>
-			  </div>
-			  
-			    <span id="helpBlock" class="help-block">
-				   <strong class="explain1"></strong>
-				 </span>
-			  
-		  </form> <!-- /////////////Ã¹¹øÂ° Æû ³¡ -->
-		  
-		 
-		  <form class="form-horizontal" name="form2">
-			  <div class="form-group">
-			    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">»õ ºñ¹Ğ¹øÈ£</label>
-			    <div class="col-sm-4">
-			      <input type="password" class="form-control" id="password" name="password" placeholder="»õ ºñ¹Ğ¹øÈ£" disabled="disabled">
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-			    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
-			    <div class="col-sm-4">
-			      <input type="password" class="form-control" id="password2" name="password2" placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ" disabled="disabled">
-			     	<span id="helpBlock" class="help-block">
-			      	  <strong class="text_password"></strong>
-			      	</span>
-			  	</div>
-			  </div>
-		  </form>
-		  
-		  <span id="helpBlock" class="help-block">
-		   <strong class="explain2"></strong>
-		 </span>
-		  
-		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" name="changeButton" class="btn btn-primary" disabled="disabled">¼öÁ¤ÇÏ±â</button>
-			  <a class="btn btn-primary btn" href="#" role="button">·Î±×ÀÎÇÏ·¯°¡±â</a>
-		    </div>
-		  </div>
-			
-		
-		  
-		</form>
-	
-</body>
+
 
 </html>

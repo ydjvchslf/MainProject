@@ -12,8 +12,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>academyInfo</title>
-        
         
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 		
@@ -30,7 +28,7 @@
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services">
 		</script>
 		
@@ -75,7 +73,7 @@
 
  		</style>
 
-	<title>Academy Info page</title>	
+	<title>Academy Info</title>	
     </head>
     <body>
 
@@ -129,8 +127,6 @@
 	    	
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-
-		
 		
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover" id="boardTable">
@@ -151,9 +147,6 @@
 			<c:set var="i" value="${i-1}" />
 			<tr>
 			  <td align="left">${i+1-(resultPage.currentPage-1)*5}</td>
-			  
-			   
-		
 	
 		<td id="listtable" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3&academyCode=${academy.academyCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 					  
@@ -195,13 +188,12 @@
 	
 	<div style="height: 100vh"></div>
                         <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
+                   		 </main>
                     </div>
-                </main>
                 </div>
-	</div>
-        </div>
+
 	
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="/js/scripts.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         
