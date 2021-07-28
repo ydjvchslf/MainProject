@@ -1,3 +1,4 @@
+<%@page import="com.buyedu.domain.Academy"%>
 <%@page import="com.buyedu.domain.Board"%>
 <%@page import="com.buyedu.domain.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,8 +9,22 @@
 <!DOCTYPE html>
 
 <html lang="ko">
-<title>사!교육</title>
 <head>
+<title>Buy Edu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
@@ -101,8 +116,8 @@
 			 	//var name = document.detailForm.prodName.value;
 				var title=$("input[name='boardTitle']").val();
 				var content=$("textarea[name='boardContent']").val();
-				var writer=$("input[name='boardWriter']").val();
-
+				var academyCode=$("input[name='acaWriter']").val();
+				
 				
 				/* var detail = document.detailForm.prodDetail.value;
 				var manuDate = document.detailForm.manuDate.value;
@@ -112,8 +127,8 @@
 				
 				$("form").attr("method" , "POST").attr("action" , "/board/updateBoard").submit();
 			}
-		
-		
+	
+	
 	</script>
 
 <html>
@@ -125,26 +140,27 @@
 </head>
 
 <body>
- <%@ include file="toolbar.jsp" %>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-	
-<br/><br/><br/><br/>
+ <div class="wrapper d-flex align-items-stretch">
+		
+		<!-- left -->
+		<jsp:include page="../common/left.jsp"></jsp:include>
+		
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5">
 
+	        <div class="container-fluid">
+	<!-- 게시판 title -->
+	<div class="card shadow mb-4">
+	  	<div class="card-header py-3" id="boardHeader">
+			<h3>${board.academyName} 공지사항</h3>
+	    </div>
+	    
+	    <div class="container-fluid">
 
 				<div class="view-wrap">
 				<!-- google_ad_section_start(name=post) -->
 				<!-- 본문 타이틀&정보 -->
-				<div class="page-header text-default" id="boardHeader">
-		
-		
-				<h3>${board.academyName} 학원 공지사항</h3>
-							
-	    </div>
 					
 					
 					<h3 id="boardTitle"><b>${board.boardTitle}</h3></b>
@@ -152,13 +168,9 @@
 						<c:if test="${user.role eq 'academy'}">
 						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.academyName}</span>
 						</c:if>
-						<c:if test="${user.role ne 'academy'}">
-						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.email}</span>
-						</c:if>
 						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> 
 						<fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd KK:mm:ss"/></td></td></span>
 						&nbsp;&nbsp;<span id="count"><i class="glyphicon glyphicon-eye-open" ></i> ${board.viewCnt+1}</span>
-						
 						
 					</div>
 					<hr>
@@ -168,23 +180,17 @@
 					</div>
 					</div>
 					</div>
-					
-					
 <br/>
-	
-
 
 <div class="form-group">
 		
 		   <input type="hidden" name="cateCode" id="cateCode" value="${board.cateCode}" />
-		   <input type="hidden" name="acaWriter" value="${academy.academyCode}" />	 
-		   
-		  
-		    <hr></br>
+		   <input type="hidden" name="acaWriter" value="${board.acaWriter}" />	 
+		   <hr></br>
+		    acaWriter : ${board.acaWriter}
+		    academy : ${academy}
 		    
-		    
-		    
-		    <c:if test="${userNo eq board.boardWriter}">
+		    <c:if test="${academy eq board.acaWriter}">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   
 		   	</div>
@@ -192,14 +198,12 @@
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="deleteButton" value="${board.boardNo}">삭&nbsp;제
 			</div>
-			</c:if>
+			</c:if> 
 		</div>
-	</div>
 	
 	
-	<%@ include file="getComment.jsp" %>
-	
-
+		</div>
+</div>
 
 </body>
 </html>

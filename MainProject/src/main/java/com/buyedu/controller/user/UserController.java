@@ -100,7 +100,7 @@ public class UserController {
 		
 		System.out.println("/user/addUser : GET");
 		
-		return "/user/addUserViewTiles";
+		return "/user/addUserView";
 	}
 	
 	
@@ -123,14 +123,19 @@ public class UserController {
 		User user = userService.getUser(email);
 		
 		List<Connect> list = userService.getConnectList(user.getUserNo());
-		model.addAttribute("list", list);
+		model.addAttribute("listAcademy", list);
 		// Model 과 View 연결
 		model.addAttribute("user", user);
 		
-		System.err.println(user);
+		//재현이꺼추가
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		model.addAttribute("list",map.get("list"));
 		
-//		return "/user/getUserTiles";
-		return "main";
+		System.err.println(user);
+		System.out.println(list);
+
+		
+		return "/user/getUser";
 	}
 
 	
@@ -195,7 +200,7 @@ public class UserController {
 		
 		System.out.println("비번변경화면으로 단순 네비게이션");
 		
-		return "/tiles/user/updatePasswordTiles";
+		return "/user/updatePasswordTiles";
 	}
 	
 	@RequestMapping( value="updatePassword", method=RequestMethod.POST )
@@ -221,7 +226,7 @@ public class UserController {
 		
 		System.out.println("비번 변경완료->정보조회 화면으로 네비게이션");
 		
-		return "/tiles/user/getUserTiles";
+		return "/user/getUser?email="+user2.getEmail();
 	}
 	
 	@RequestMapping( value="outUser", method=RequestMethod.GET )
@@ -383,7 +388,7 @@ public class UserController {
 		if ( dbUser == null ) {
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
-			return "/user/loginView";
+			return "/user/loginViewTiles";
 		}
 		
 		String accountState = dbUser.getAccountState();
@@ -391,13 +396,15 @@ public class UserController {
 		if ( accountState.equals("1") ) {
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
-			return "/user/loginView";
+			return "/user/loginViewTiles";
 		}
 		
 		if( user.getPassword().equals(dbUser.getPassword()) ){
 			
 			session.setAttribute("user", dbUser);
-			model.addAttribute("user", user);
+			model.addAttribute("user", dbUser);
+			
+			System.out.println("if문 dbuser >"+dbUser);
 			
 			// 쿠키에 로그인 타입 값 설정
 			Cookie ck = new Cookie("loginType", "normal");
@@ -415,25 +422,29 @@ public class UserController {
 				
 				Map<String, Object> map = academyService.getAcademyCodeList(dbUser.getUserNo());
 	            
+				System.out.println("2 if문 dbuser"+dbUser);
 	            model.addAttribute("list",map.get("list"));
-				
+	            
+				//model.addAttribute("user", dbUser);
+	            System.out.println(map.get("list"));
 	          //아카데미 화면
 				String getUserView = this.getUser(session, user.getEmail(), model);
 				
-				return getUserView;
+			return getUserView;   
+	        //return "main";
 				
 			}
 			
 			//일반유저, 관리자 화면
 			String getUserView = this.getUser(session, user.getEmail(), model);
 			
-			return getUserView;
-			
+			//return getUserView;
+			return "/search/searchList";
 			
 		}else{
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
-			return "/user/loginView";
+			return "/user/loginViewTiles";
 		
 		}	
 	}
@@ -482,7 +493,7 @@ public class UserController {
 	    	
 	    	model.addAttribute("email", email);
 	    	
-	    	return "/tiles/user/getUserTiles";
+	    	return "/user/getUser";
 	    	
 	    }else { //카카오 통합로그인
 	    	
@@ -509,7 +520,9 @@ public class UserController {
 	             
 	             model.addAttribute("list",map.get("list"));
 	 			
-	 			return "academyMain";
+	             String getUserView = this.getUser(session, email, model);
+	 			
+	 			return getUserView;
 	 			
 	 		}
 	 		
@@ -546,7 +559,7 @@ public class UserController {
 			
 			model.addAttribute("email", email);
 	    	
-	    	return "/tiles/user/getUserTiles";
+	    	return "/user/getUser";
 			
 		}else{//네이버 로그인 기존회원
 			
@@ -579,7 +592,9 @@ public class UserController {
 		            
 		            model.addAttribute("list",map.get("list"));
 					
-					return "academyMain";
+		            String getUserView = this.getUser(session, email, model);
+					
+					return getUserView;
 					
 				}
 				
@@ -645,7 +660,7 @@ public class UserController {
 		
 		System.out.println("listUser 끝");
 		
-		return "/tiles/user/listUserTiles";
+		return "/user/listUser";
 		
 	}
 	
@@ -695,14 +710,6 @@ public class UserController {
 	}
 	
 	
-	//인증용 test jsp 추후 삭제 예정
-	@RequestMapping( value="authority", method=RequestMethod.GET )
-	public String authority() throws Exception{
-	
-		System.out.println("/user/authority : GET");
-		
-		return "/user/authority";
-	}
 	
 
 	

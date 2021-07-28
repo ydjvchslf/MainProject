@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
+
+
 <body>
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
@@ -13,22 +15,32 @@
 	          <li>
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">내 학원</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="#">학원 1</a>
-                </li>
-                <li>
-                    <a href="#">학원 2</a>
-                </li>
-                <li>
-                    <a href="#">학원 3</a>
-                </li>
+
+			<c:if test="${list.size()<=2}">
+				<li>
+					<a href="/academy/addAcademyView">학원 등록</a>
+				</li>
+			</c:if> 
+			
+			<c:forEach var="academy" items="${list}">
+				
+				<li>
+					<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
+				</li>	
+			</c:forEach>			
+
+
+
+
 	            </ul>
 	          </li>
 	         </c:if> 
 	          
+	         <c:if test="${user.role != 'admin' }">
 	          <li>
 	              <a href="/user/getUser?email=${user.email}">내 정보</a>
 	          </li>
+	         </c:if> 
 	          
 	         <c:if test="${user.role != 'academy'}"> 
 	          <li>
@@ -82,15 +94,15 @@
               </ul>
 	          </li>
 	          
-	         <c:if test="${user.role == 'user'}">  
+	         <c:if test="${user.role == 'student' || user.role =='parents'}">  
 	          <li>
               <a href="#eduSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">수업</a>
               <ul class="collapse list-unstyled" id="eduSubmenu">
                 <li>
-                    <a href="/pickedu/listPickEdu">관심수업</a>
+                    <a href="/pickedu/listPickEdu?userNo=${user.userNo}">관심수업</a>
                 </li>
                 <li>
-                    <a href="/purchaseedu/listPurchaseEdu">구매수업</a>
+                    <a href="/purchaseedu/listPurchaseEdu?userNo=${user.userNo}">구매수업</a>
                 </li>
               </ul>
 	          </li>
@@ -104,6 +116,23 @@
 
 	      </div>
     	</nav>
+    	
+    	<script src="/js/sockjs.min.js"></script>
+    	<script src="/js/stomp.min.js"></script>
+    	
+    	<script>
+    	let socket = new SockJS("/socket");
+        let stompClient = Stomp.over(socket);
+        stompClient.connect({}, function(frame) {
+        	console.log("연결 성공", frame);
+        	stompClient.subscribe("/topic/message", (res) => {
+        		console.log("메시지를 받았습니다.");
+            	console.log("res", res);
+            });
+            
+            stompClient.send("/chat", {}, '{"test", "test"}');
+        });
+    	</script>
 
 </body>
 </html>

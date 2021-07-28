@@ -1,43 +1,151 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
-
 <html lang="ko">
-	
+
 <head>
-	<meta charset="UTF-8">
-	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	
+
+    <meta charset="utf-8">
     
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	<script>
+    <title> Forgot Password</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
 	
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-5 col-lg-9 col-md-6">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-2">Forgot Your Email?</h1>
+                                        <br>
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="email" name="name" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="ì´ë¦„">
+                                            <span id="helpBlock" class="help-block">
+										      	<strong class="text_name"></strong>
+										     </span>        
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" name="phone" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="íœ´ëŒ€ì „í™”ë²ˆí˜¸">
+                                            <span id="helpBlock" class="help-block">
+										      	<strong class="text_email"></strong>
+										     </span>    
+                                        </div>
+                                        <a href="#" name="findEmail" class="btn btn-primary btn-user btn-block">
+                                            Find Email
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="#">Create an Account!</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" name="login" href="#">Already have an account? Login!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/sbadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</body>
+
+<script type="text/javascript">
+
+
+	//íœ´ëŒ€ì „í™”ë²ˆí˜¸ ìë™ ëŒ€ì‹œ(-)ì‚½ì…
+	$(document).on("keyup", "input[name=phone]", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+
+
 	$( function() {
-		$("a[href='#']").on("click" , function() {
+		//ë¡œê·¸ì¸ ì´ë™ event
+		$('a[name=login]').on("click" , function() {
 			self.location = "/user/login"
 		});
+		
+		//ì´ë¦„ change ì´ë²¤íŠ¸
+		$('input[name=name]').on("change" , function() {
+			fncCheckName()
+		});
+		
 	});
+	
+	
+	//ì´ë¦„ ì²´í¬ í•¨ìˆ˜
+    function fncCheckName() {
+		
+		var name = $('input[name=name]').val();
+		
+        if(name){
+        	var nameRegExp = /^[ê°€-í£]{2,20}$/;
+        	
+        	if(nameRegExp.test(name)){
+        		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì…ë‹ˆë‹¤.").css("color", "blue");
+        		return true;
+        	}else{
+        		$(".text_name").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤").css("color", "red");
+        	}
+        } else{
+        	$(".text_name").text("ì´ë¦„ì„ í•„ìˆ˜ë¡œ ì…ë ¥í•˜ì„¸ìš”!");
+			$(".text_name").css("color", "red");
+        }
+        return false; //í™•ì¸ì´ ì™„ë£Œë˜ì—ˆì„ ë•Œ
+    }
+	
 	
 	
 	$( function() { 
 		
-		$("button[name='findEmail']").click(function(){
+		$('a[name=findEmail]').click(function(){
 			
-				console.log('ÀßÁ¢±Ù!');
+				console.log('ì˜ì ‘ê·¼!');
 				
-				var name = $("#name").val();
-				var phone = $("#phone").val();
+				var name = $('input[name=name]').val();
+				var phone = $('input[name=phone]').val();
 				
 				console.log(name);
 				console.log(phone);
@@ -57,25 +165,16 @@
 							},
 							success : function(JSONData, status) {
 								
-								//alert("¼º°ø!");
+								//alert("ì„±ê³µ!");
 					    			
 								if (JSONData.message == "no") {
 									
-									var str = '¾ø´Â È¸¿øÁ¤º¸ÀÔ´Ï´Ù.';
-									
-									console.log("¾ø´Â Á¤º¸");
-									$('.text_email').text("");
-									$('.text_email').append(str).css("color", "red");
+									swal('ì—†ëŠ” íšŒì›ì •ë³´ì…ë‹ˆë‹¤.');
 									
 								} else if (JSONData.message == "ok") {
 									
-									
 									var dbEmail = JSONData.dbEmail;
-									var str = 'È¸¿ø´ÔÀÇ emailÀº "'+dbEmail+'" ÀÔ´Ï´Ù!';
-									
-									//alert(dbEmail)
-									$('.text_email').text("");
-									$('.text_email').append(str).css("color", "red");
+									swal('íšŒì›ë‹˜ì˜ emailì€ "'+dbEmail+'" ì…ë‹ˆë‹¤!');
 								}
 								
 							}
@@ -90,48 +189,9 @@
 	
 
 	</script>
-    
-</head>
 
-<body>
 
-		<div class="col-md-9">
-				<div class="jumbotron">
-			  		<p>EmailÃ£±â È­¸é</p>
-			  	</div>
 
-		<form class="form-horizontal">
-		
-		  <div class="form-group">
-		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="name" name="name" placeholder="name">
-		       <span id="helpBlock" class="help-block">
-		      	<strong class="text_findEmail"></strong>
-		      </span>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="phone" class="col-sm-offset-1 col-sm-3 control-label">ÀüÈ­¹øÈ£</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="phone" name="phone" placeholder="phone">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" name="findEmail" class="btn btn-primary"  >Email Ã£±â</button>
-			  <a class="btn btn-primary btn" href="#" role="button">·Î±×ÀÎÇÏ·¯°¡±â</a>
-		    </div>
-		  </div>
-			
-		<span id="helpBlock" class="help-block">
-		   <strong class="text_email"></strong>
-		 </span>
-		  
-		</form>
-	
-</body>
+
 
 </html>

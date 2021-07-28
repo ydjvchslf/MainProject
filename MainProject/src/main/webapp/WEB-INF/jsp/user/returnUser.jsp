@@ -1,78 +1,177 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="EUC-KR"%>
-
-
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
-
 <html lang="ko">
-	
+
 <head>
-	<meta charset="EUC-KR">
+
+    <meta charset="utf-8">
+    
+    <title> Forgot Password</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/sbadmin/css/sb-admin-2.min.css" rel="stylesheet">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style></style>
-   	
-   	<!--  ///////////////////////// JavaScript ////////////////////////// -->
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-5 col-lg-9 col-md-6">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-2">Return Account!</h1>
+                                        <br>
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <input type="text" name="name" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="ì´ë¦„">
+                                        </div>
+                                        <span id="helpBlock" class="help-block">
+										      	<strong class="explain1"></strong>
+									    </span>    
+                                        <div class="form-group">
+                                            <input type="text" name="email" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="ì´ë©”ì¼">
+                                        </div>
+                                        <span id="helpBlock" class="help-block">
+										      	<strong class="explain2"></strong>
+										     </span>    
+                                        <div class="form-group">
+                                            <input type="password" name="password" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="ë¹„ë°€ë²ˆí˜¸">
+                                            <span id="helpBlock" class="help-block">
+										      	<strong class="explain3"></strong>
+										     </span>    
+                                        </div>
+                                        <a href="#" name="returnUser" class="btn btn-primary btn-user btn-block">
+                                            ê³„ì •ë³µêµ¬í•˜ê¸°
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" name="login" href="/user/login">Already have an account? Login!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/sbadmin/vendor/jquery/jquery.min.js"></script>
+    <script src="/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</body>
+
 	<script type="text/javascript">
-		
-		//============= ·Î±×ÀÎ È­¸éÀÌµ¿ =============
-		$( function() {
-			//==> Ãß°¡µÈºÎºĞ : "addUser"  Event ¿¬°á
-			$("a[href='#' ]:contains('·Î±×¾Æ¿ô')").on("click" , function() {
-				self.location = "/user/logout"
-			});
-		});
-		
-		$( function() {
-			//==> Ãß°¡µÈºÎºĞ : "getUser"  Event ¿¬°á
-			$("a[href='#' ]:contains('³»Á¤º¸º¸±â')").on("click" , function() {
-				self.location = "/user/getUser?email=${user.email}"
-			});
-		});
-		
-		$( function() {
-			$("a[href='#' ]:contains('ºñ¹Ğ¹øÈ£º¯°æ')").on("click" , function() {
-				self.location = "/user/updatePassword?email=${user.email}"
-			});
-		});
-		
-		$( function() {
-			//==> Ãß°¡µÈºÎºĞ : "listUser"  Event ¿¬°á
-			$("a[href='#' ]:contains('ÀüÃ¼È¸¿øº¸±â')").on("click" , function() {
-				self.location = "/user/listUser"
-			});
-		});
 	
+	
+	$(function() {
 		
-		
-		$( function() {
-			$("a[href='#']").on("click" , function() {
-				self.location = "/user/login"
-			});
+		$( "input[name=name]" ).on("change" , function() {
+			
+			fncCheckName();
 		});
 		
+		$( "input[name=email]" ).on("change" , function() {
+			
+			checkEmail();
+		});
 		
-		$( function() {
-			 
-			$("button[name='returnUser']").on("click" , function() {
+	});
+	
+	
+	//ì´ë¦„ ì²´í¬ í•¨ìˆ˜
+	function fncCheckName() {
+		
+		var name = $('input[name=name]').val();
+		
+	    if(name){
+	    	var nameRegExp = /^[ê°€-í£]{2,20}$/;
+	    	
+	    	if(nameRegExp.test(name)){
+	    		$(".explain1").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì…ë‹ˆë‹¤.").css("color", "blue");
+	    		return true;
+	    	}else{
+	    		$(".explain1").text("ì˜¬ë°”ë¥¸ ì´ë¦„ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤").css("color", "red");
+	    	}
+	    } else{
+	    	$(".explain1").text("ì´ë¦„ì„ í•„ìˆ˜ë¡œ ì…ë ¥í•˜ì„¸ìš”!");
+			$(".explain1").css("color", "red");
+	    }
+	    return false; //í™•ì¸ì´ ì™„ë£Œë˜ì—ˆì„ ë•Œ
+	}
+	
+	
+	//ì´ë©”ì¼ìœ íš¨ì„± í•¨ìˆ˜
+    function checkEmail() {
+		
+		var emailRegExp = /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+		var email=$("input[name='email']").val();
+		
+		// null , undefined, "" ë¹ˆê°’ì„ false ë¡œ ì¸ì‹, ë§Œì•½ ê°’ì´ ìˆìœ¼ë©´ true 
+		if (email) {
+			
+			if(emailRegExp.test(email)){
+				$(".explain2").text("ì˜¬ë°”ë¥¸ ì´ë©”ì¼ í˜•ì‹ì…ë‹ˆë‹¤.").css("color", "blue");
+				return true;		
+			} else {
+				$(".explain2").text("ì˜¬ë°”ë¥¸ ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.").css("color", "red");
+			}
+		} else {
+			$(".explain2").text("ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”.").css("color", "red");
+		}
+		return false;
+    }
+
+
+
+	$( function() {
+		 
+		$("a[name='returnUser']").on("click" , function() {
+			
+			if( fncCheckName() && checkEmail() ){
 				
-				var name = $("#name").val();
-				var password = $("#password").val();
-				var email = $("#email").val();
+				
+				var name = $("input[name=name]").val();
+				var password = $("input[name=password]").val();
+				var email = $("input[name=email]").val();
 				
 				console.log(name);
 				console.log(password);
@@ -94,33 +193,36 @@
 							},
 							success : function(JSONData, status) {
 								
-								//alert("¼º°ø!");
+								//alert("ì„±ê³µ!");
 
 								if (JSONData.message == "no") {
-									console.log("¾ø´Â È¸¿ø Á¤º¸");
-									$(".explain").val("");
-									$(".explain").text("¾ø´Â È¸¿ø Á¤º¸ÀÔ´Ï´Ù.");
-									$(".explain").css("color", "red");
+									console.log("ì—†ëŠ” íšŒì› ì •ë³´");
+									$(".explain3").val("");
+									$(".explain3").text("ì—†ëŠ” íšŒì› ì •ë³´ì…ë‹ˆë‹¤.");
+									$(".explain3").css("color", "red");
 									
 									$('form').each(function() {
 						                this.reset();
 						            });
 									
 								} else if (JSONData.message == "ok") {
-									console.log("º¹±¸ ¼º°ø");
+									console.log("ë³µêµ¬ ì„±ê³µ");
 									$(".explain").val("");
-									$(".explain").text("°èÁ¤À» º¹±¸ÇÏ¿´½À´Ï´Ù.");
-									$(".explain").css("color", "blue");
+									swal('ê³„ì •ì„ ë³µêµ¬í•˜ì˜€ìŠµë‹ˆë‹¤!^ã…‡^')
 									
 									$('form').each(function() {
 						                this.reset();
 						            });
 									
+									$(".explain1").empty();
+									$(".explain2").empty();
+									$(".explain3").empty();
+									
 								}else if (JSONData.message == "disable") {
-									console.log("º¹±¸°¡´É±â°£ ÃÊ°ú");
-									$(".explain").val("");
-									$(".explain").text("º¹±¸°¡´É ±â°£À» ÃÊ°úÇÏ¿´½À´Ï´Ù.");
-									$(".explain").css("color", "red");
+									console.log("ë³µêµ¬ê°€ëŠ¥ê¸°ê°„ ì´ˆê³¼");
+									$(".explain3").val("");
+									$(".explain3").text("ë³µêµ¬ê°€ëŠ¥ ê¸°ê°„ì„ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.");
+									$(".explain3").css("color", "red");
 									
 									$('form').each(function() {
 						                this.reset();
@@ -130,146 +232,25 @@
 							}
 				});
 				
-			});
+			}
+			
+			
 		});
-		
-		
-		
+	});
 	
-		
-	</script>	
+
 	
-</head>
-
-<body>
-
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-		
-        <div class="container">
-        
-        	<a class="navbar-brand" href="#">buyEdu</a>
-			
-			<!-- toolBar Button Start //////////////////////// -->
-			<div class="navbar-header">
-			    <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#target">
-			        <span class="sr-only">Toggle navigation</span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			    </button>
-			</div>
-			<!-- toolBar Button End //////////////////////// -->
-			
-			<div class="collapse navbar-collapse"  id="target">
-	             <ul class="nav navbar-nav navbar-right">
-	                 <li><a href="#">·Î±×¾Æ¿ô</a></li>
-	           	</ul>
-	       </div>
-   		
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->
-   	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	<div class="container">
-		
-		<!-- ´Ù´Ü·¹ÀÌ¾Æ¿ô  Start /////////////////////////////////////-->
-		<div class="row">
 	
-			<!--  Menu ±¸¼º Start /////////////////////////////////////-->     	
-			<div class="col-md-3">
-		        
-		       	<!--  È¸¿ø°ü¸® ¸ñ·Ï¿¡ Á¦¸ñ -->
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<i class="glyphicon glyphicon-heart"></i> ³»Á¤º¸°ü¸®
-         			</div>
-         			<!--  È¸¿ø°ü¸® ¾ÆÀÌÅÛ -->
-					<ul class="list-group">
-						 <li class="list-group-item">
-						 	<a href="#">³»Á¤º¸º¸±â</a> <i class="glyphicon glyphicon-ok"></i>
-						 </li>
-						 <li class="list-group-item">
-						 	<a href="#">ºñ¹Ğ¹øÈ£º¯°æ</a>
-						 </li>
-						 <li class="list-group-item">
-						 	<a href="#">³»°¡´Ù´Ï´ÂÇĞ¿ø</a>
-						 </li>
-						  <li class="list-group-item">
-						 	<a href="#">Å»ÅğÇÏ±â</a>
-						 </li>
-					</ul>
-		        </div>
-               
-               
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-							<i class="glyphicon glyphicon-briefcase"></i> È¸¿ø°ü¸®
-         			</div>
-					<ul class="list-group">
-						 <li class="list-group-item">
-						 	<a href="#">ÀüÃ¼È¸¿øº¸±â</a>
-						 </li>
-						 <li class="list-group-item">
-						 	<a href="#">Å»ÅğÈ¸¿øº¸±â</a>
-						 </li>
-					</ul>
-		        </div>
+	
+	
+	
+	
+	
 
-				
-			</div>
-			<!--  Menu ±¸¼º end /////////////////////////////////////-->   
-
-	 	 	<!--  Main start /////////////////////////////////////-->   		
-	 	 	<div class="col-md-9">
-				<div class="jumbotron">
-			  		<p>°èÁ¤ º¹±¸ È­¸é</p>
-			  	</div>
-		<!-- form Start /////////////////////////////////////-->	  	
-		<form class="form-horizontal" name="returnForm">
-		  
-		  <div class="form-group">
-		    <label for="name" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="name" name="name" placeholder="ÀÌ¸§">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="email" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸ŞÀÏ</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="ÀÌ¸ŞÀÏ">
-		  	</div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="ºñ¹Ğ¹øÈ£">
-		  	  <span id="helpBlock" class="help-block">
-		      	  <strong class="explain"></strong>
-		      	</span>	
-		  	</div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" name="returnUser" class="btn btn-primary">°èÁ¤º¹±¸½ÅÃ»</button>
-		      <a class="btn btn-primary btn" href="#" role="button">·Î±×ÀÎÇÏ·¯°¡±â</a>
-		    </div>
-		  </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-			  	
-			  	
-	      
-		
-	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	</script>
 
 
-</body>
+
+
 
 </html>

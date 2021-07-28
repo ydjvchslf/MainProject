@@ -38,6 +38,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 
 @Controller
@@ -90,12 +91,12 @@ public class AcademyController {
 		
 		System.out.println("addAcademyView 단순 네비게이터");
 		
-		return "/tiles/academy/addAcademyView";
+		return "/academy/addAcademyView";
 	}
 
 	@RequestMapping("addAcademy")
 	public String addAcademy(@ModelAttribute("academy") Academy academy
-							, @RequestParam("userNo") int userNo) throws Exception {
+							, @RequestParam("userNo") int userNo,  Model model) throws Exception {
 		
 		System.out.println("addAcademy : POST");		
 		System.out.println("userNo = " + userNo);
@@ -104,6 +105,13 @@ public class AcademyController {
 		User user = new User();
 		user.setUserNo(userNo);
 		academy.setUser(user);
+		
+		// 툴바 학원 리스트
+		User user1 = UserUtil.user();
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user1.getUserNo());
+		
+		model.addAttribute("list", map.get("list"));
 		
 		String makeAcaCode = random();
 		
@@ -125,11 +133,11 @@ public class AcademyController {
 		
 		academyService.addAcademy(academy);
 		
-		return "/tiles/academyMain";
+		return "/academy/academyInfo";
 	}
 	
 	
-	@RequestMapping(value = "academyInfo", method = RequestMethod.GET)
+	@RequestMapping(value = "academyInfo", method = {RequestMethod.GET, RequestMethod.POST})
 	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search, Model model, HttpSession session, HttpServletRequest request ) throws Exception{
 		
 		System.out.println("/academy/academyInfo : GET");
@@ -139,6 +147,13 @@ public class AcademyController {
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		model.addAttribute("academy", academy);
+		
+		// 툴바 학원 리스트
+		User user = UserUtil.user();
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		
+		model.addAttribute("list", map.get("list"));
 		
 		System.out.println(academy);
 		
@@ -152,19 +167,19 @@ public class AcademyController {
 		search.setPageSize(pageSize);
 		search.setCateCode(category);
 		
-		List<Board> list =boardService.getBoardListAcademy(search);
+		List<Board> listb =boardService.getBoardListAcademy(search);
 		
-		if(list.size()!=0) {
-			int totalCount = list.get(0).getTotalCount();
+		if(listb.size()!=0) {
+			int totalCount = listb.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
-		
-		model.addAttribute("list", list);
+			
+		model.addAttribute("listb", listb);
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		}
 		
-		return "/tiles/academy/academyInfo";
+		return "/academy/academyInfo";
 	}
 	
 	@RequestMapping(value = "academySampleEdu", method = RequestMethod.GET)
@@ -174,21 +189,28 @@ public class AcademyController {
 		
 		System.out.println("academySampleEdu 아카데미 코드 = " + academyCode);
 		
+		// 툴바 학원 리스트
+		User user = UserUtil.user();
+				
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+				
+		model.addAttribute("list", map.get("list"));
+		
 		Academy academy = academyService.getAcademy(academyCode);
 		
-		Map<String, Object> map = academyService.getMultimediaList(academyCode);
+		Map<String, Object> mapm = academyService.getMultimediaList(academyCode);
 		
 		int imgcount = academyService.getImageCount(academyCode);
 		int vidcount = academyService.getVideoCount(academyCode);
 		
 		model.addAttribute("academy", academy);
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("listfile", mapm.get("list"));
 		model.addAttribute("imgcount", imgcount);
 		model.addAttribute("vidcount", vidcount);
 		
 		System.out.println("academySampleEdu map = "+map.get("list"));
 		
-		return "/tiles/academy/academySampleEdu";
+		return "academy/academySampleEdu";
 	}
 	
 //	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
@@ -225,7 +247,7 @@ public class AcademyController {
 		
 		System.out.println("academyConnects map = "+map.get("connect"));
 		
-		return "/tiles/academy/academyConnect";
+		return "academy/academyConnect";
 	}
 	
 
