@@ -206,8 +206,7 @@
 	 
 	 회원번호 ${user.userNo} 
 	 학원코드1 ${academyCode }
-	 리뷰상태 ${reviewState }
-	 리뷰상태 ${review.reviewState }
+	 학원이름 : ${academyName }
 	 커넥트 ${connect }
 	 리뷰넘버 ${review.reviewNo}
 	 

@@ -39,7 +39,7 @@ public class ComplainController {
 	
 	@RequestMapping( value="addComplainView", method=RequestMethod.GET)
 	public String addComplain(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
-		System.out.println("addComplainReviewView");
+		System.out.println("애드컴플레인겟 시작");
 		
 
 		
@@ -50,7 +50,7 @@ public class ComplainController {
 	@RequestMapping (value="addComplain", method=RequestMethod.POST)
 	public String addComplain(@ModelAttribute("complain") Complain complain , @ModelAttribute("uesr") User user ,  HttpServletRequest httpRequest) throws Exception {
 		
-		System.out.println("애드리뷰포스트 시작");
+		System.out.println("애드컴플레인포스트 시작");
 		
 		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
 		System.out.println(userNo);

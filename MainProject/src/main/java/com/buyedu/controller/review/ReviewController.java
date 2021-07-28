@@ -74,6 +74,7 @@ public class ReviewController {
 		review.setReviewWriter(user);
 		
 		String academyCode = httpRequest.getParameter("academyCode");
+		String academyName = httpRequest.getParameter("academyName");
 		System.out.println("아카데미코드 : "+academyCode);
 		
 		System.out.println("리뷰가 들어가야함 review :" +review);
