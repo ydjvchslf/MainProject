@@ -4,11 +4,13 @@
 
 <html lang="en">
   <head>
-  	<title>학원 검색</title>
+  	<title>Academy Info</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 		
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/style.css">
@@ -20,6 +22,26 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>	
+	
+	<style>
+
+		    
+		    #academytitle{
+				vertical-align : top;
+				font-size : 0px;
+				color : #1F4E79;
+				font-family : TmonMonsori;
+			}
+			
+			@font-face {
+			    font-family: 'TmonMonsori';
+			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+			    font-weight: normal;
+			    font-style: normal;
+			}
+
+ 		</style>
+	
 
   </head>
   <body>
@@ -39,33 +61,12 @@
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
-					<div class="row" id="academytitle">
-						<h1><strong>학원이름</strong></h1>
-					</div>		
-						    
-					<div class="row" style="margin-top: 30px;">
-						<div class="col-md-1">
-							학생수
-						</div>
-						<div class="col-md-1">
-							수업수
-						</div>
-						
-						<div class="col-md-2"></div>
-
-						<div class="col-md-4">
-							소개
-							<input type="text" class="form-control" >
-							<button type="button" id="" class="btn btn-primary" style="margin-top: 7px;">소개수정버튼</button>
-						</div>
-						
-						<div class="col-md-4">
-							실적
-							<input type="text" class="form-control" >
-							<button type="button" id="" class="btn btn-primary" style="margin-top: 7px;">실적수정버튼</button>
-						</div>
-						
-					</div>	  
+					
+					<!-- 학원 이름, 전화번호 -->
+					<div id="academytitle" class="row" ></div>
+					
+					<!-- 학원 정보 -->
+					<div id="academyInfo" class="row" style="margin-top: 30px;"></div>	 
 					
 					<div class="row" style="margin-top: 30px;">
 						<div class="col-md-12" >
@@ -123,36 +124,29 @@
 				 academyInfo = data;
 				 
 				 var a = ''
-					 a += '<ul style="list-style: none;"><li style="float: left;">'
-					 a += '<img alt="학생수" src="/image/studentcount.png" height="20">'
-					 a += '<span>'+ data.count+'명 &nbsp;&nbsp;&nbsp;</span></li>'
-					 a += '<li style="float: left;">'
-					 a += '<img alt="강좌수" src="/image/educount.png" height="20">'
-					 a += '<span>'+ data.count2+'개 </span></li></ul>'
 					 
-				 	 a += '<br/>학원 번호 : ' + data.academyPhone
-			 		 a += '<br/>학원 주소 : ' + data.academyAddr
-			 		 a += '<br/>지역구 : ' + data.academyArea
-			 	 	 a += '<div id="AcademyIntro" style="white-space: pre;">'
+				 	 a += '<div class="col-md-6" id="AcademyIntro" style="white-space: pre;">'
 			 	 	 a += '학원 소개 : <br/>' + data.academyIntro
 			 	 	 
 			 	 if(role == 'academy'){
-			 	 	 a += '<a class="btn blue" onclick="updateIntro(\''+data.academyCode+'\')"> 수 정 </a>'
+			 	 	 a += '<br/><a class="btn btn-primary" style="margin-top: 7px;" onclick="updateIntro(\''+data.academyCode+'\')"> 수 정 </a>'
 			 	 }
 			 		 a += '</div>'
-			 		 a += '<div id="AcademyHistory" style="white-space: pre;">'
+			 		 
+			 		 a += '<div class="col-md-6" id="AcademyHistory" style="white-space: pre;">'
 			 		 a += '학원 실적 : <br/>' + data.academyHistory
 			 		 
 			 	if(role == 'academy'){
-					 a += '<a class="btn blue" onclick="updateHistory(\''+data.academyCode+'\')"> 수 정 </a>'
+					 a += '<br/><a class="btn btn-primary" style="margin-top: 7px;" onclick="updateHistory(\''+data.academyCode+'\')"> 수 정 </a>'
 			 	}
 					 a += '</div>'
+						
 					 
-			 					
 				var b = '';
-					b += '<div id="header"><h1 class="mt-4">'+data.academyName+'</h1></div>'
-					
-			            	
+					b += '<div id="title" class="row">'
+					b += '<div><h1 class="mt-4" style="display: inline;">'+data.academyName+'</h1></div>'
+					b += '<div style="float:center"><h4 style="display: inline;">수업 수 : '+data.count+'개</h4> <h4 style="display: inline;">학생 수 : '+data.count2+'명</h4></div>'
+			        b += '<div style="float:right"><h4 style="display: inline;"><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</h4></div></div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
@@ -168,7 +162,7 @@
 	    alert("코드 = " + academyCode + "소개글 = "+academyInfo.academyIntro);
 	    
 	    	intro += '<div id="AcademyIntro">';
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="100">'+academyInfo.academyIntro+'</textarea>'
+	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="40">'+academyInfo.academyIntro+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
 	   	 	intro += '</div>';
 	    
@@ -198,7 +192,7 @@
 	    alert("코드 = " + academyCode + "실적글 = "+academyInfo.academyHistory);
 	    
 	    	intro += '<div id="AcademyHistory">';
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="100">'+academyInfo.academyHistory+'</textarea>'
+	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="40">'+academyInfo.academyHistory+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
 	   	 	intro += '</div>';
 	    
@@ -248,7 +242,7 @@
 	
 			
 	</script>
-    <script src="/js/jquery.min.js"></script>
+	<!-- <script src="/js/jquery.min.js"></script> -->
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>

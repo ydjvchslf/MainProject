@@ -22,7 +22,7 @@ public interface ReviewDao {
 	
 	int getTotalCount(Search search);
 	
-	int deleteReview(Review review);
+	void deleteReview(int reviewNo);
 	
 	int getConnect(Map<String,Object> map) throws Exception ;
 	

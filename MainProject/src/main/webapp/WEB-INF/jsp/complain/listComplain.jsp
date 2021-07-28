@@ -1,6 +1,11 @@
 
 <%@page import="java.net.URLEncoder"%>
 <%@page import="org.springframework.ui.Model"%>
+<%@page import="com.buyedu.domain.Review"%>
+<%@page import="com.buyedu.domain.User" %>
+<%@page import="com.buyedu.domain.Board" %>
+<%@page import="com.buyedu.domain.Complain" %>
+
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="EUC-KR"%>
@@ -10,7 +15,7 @@
 
 
 <html>
-<title>listReview.jsp</title>
+<title>listComplain.jsp</title>
 <head>
 	<meta charset="UTF-8">
 	
@@ -43,8 +48,8 @@
 		
 			function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
-			var academyCode=$("input[name='academyCode']").val();
-			$("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode="+academyCode).submit();
+			var complainNo=$("input[name='complainNo']").val();
+			$("form").attr("method" , "POST").attr("action" , "/complain/listComplain?ComplainNo="+ComplainNo).submit();
 			//$("form").submit();
 		}
 		
@@ -60,23 +65,42 @@
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( ".btn:contains('글쓰기')" ).on("click" , function() {
-				fncAddReviewView();
+				fncAddComplainView();
 			});
 		});	
 		
 		
 		
-		function fncAddReviewView(){
+		function fncAddComplainView(){
 			
-			$("form").attr("method" , "POST").attr("action" , "/review/addReviewView").submit();
+			$("form").attr("method" , "POST").attr("action" , "/complain/addComplainView").submit();
 		}
 	</script>
 
 	</head>
+	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="/main/academyMain">Buy! Edu</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
 	
   <body>
-  
-  
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 
@@ -95,7 +119,7 @@
 		<br/><br/><br/>
 		
 		
-							<h3>후기 게시판 </h3> 
+							<h3>신고후기 게시판 </h3> 
 						
 					
 
@@ -149,36 +173,35 @@
 		
 	
       <!--  table Start /////////////////////////////////////-->
+      <table class="table table-hover table-striped" >
       
-
+        <thead>
+          <tr>
+            <th width="70" align="center">No</th>
+            <th width="400" align="center" >후기제목</th>
+            <th width="150" align="left">신고자</th>
+            <th width="200" align="left">신고일자</th>
+            
+        </thead>
        
    
        
 		<tbody>
 		
 		  <c:set var="i" value="${resultPage.totalCount }" />
-		  <c:forEach var="review" items="${list}">
+		  <c:forEach var="complain" items="${list}">
 			<c:set var="i" value="${i-1}" />
 			<tr>
-	
-			  
-			  
-			  <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h3 class="m-0 font-weight-bold text-primary">${review.reviewTitle }</h3>
-                                    <h5> 작성자 ${review.reviewWriter.email }       ${review.reviewDate }</h5>
-                                   
-                                </div>
-                                <div class="card-body">
-                                    ${review.reviewContent }
-                                </div>
-                            </div>
-                            
-                            
+			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
 		
 
+		<td id="listtable" align="left"><a href="/complain/getComplain?complainNo=${complain.complainNo}">신고후기제목</a></td>
+					  
 			  
-		</tr>
+			  <td id="listtable" align="left">${complain.complainUserNo.userNo}</td>
+			  <td id="listtable" align="left">${complain.complainDate}</td>
+			  
+			</tr>
           </c:forEach>
         
         </tbody>
@@ -186,15 +209,14 @@
       </table>
 	  <!--  table End /////////////////////////////////////-->
 	 
-	 회원번호 ${user.userNo} 
-	 학원코드1 ${academyCode }
-	후기내용 ${reivewContent }
-	후기내용 ${review.reviewContent }
-	 커넥트 ${connect }
-	 리뷰넘버 ${review.reviewNo}
+	 리폿넘버 ${complainNo} , ${complain.complainNo}
+	  
+	 학원코드	${complainUserNo.userNo }
+	 신고사유 ${complainReasonCode }
+	 신고일자 ${complainDate}
 	 
 	  
-	 <input type="hidden" name="academyCode" value="${academyCode}" /> 
+	 <input type="hidden" name="complainNo" value="${complainNo}" /> 
 	  <div class="form-group">
 	  	<c:if test="${user.role eq 'student' && connect == '1' }">
 		    <div class="col-sm-offset-11  col-sm-1 text-center">
@@ -210,7 +232,7 @@
 		    </div>
 		</div>
 	  
- 	</div>
+
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	

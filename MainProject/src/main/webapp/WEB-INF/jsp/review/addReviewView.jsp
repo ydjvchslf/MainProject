@@ -112,7 +112,7 @@ function fncAddReview(){
 		    </div>
 		</div>
 		
-			 	<div id="academyCode" class="form-group">
+		<div id="academyCode" class="form-group">
 		    <label for="academyCode" class="col-sm-offset-1 col-sm-1 control-label">학원코드</label>
 		    <div class="col-sm-8">
 		      <input type="text" class="form-control" id="academyCode" name="academyCode" value="${academyCode}" readonly>
@@ -123,7 +123,7 @@ function fncAddReview(){
 	 	<div class="form-group">
 		    <label for="reviewContent" height=100px class="col-sm-offset-1 col-sm-1 control-label">내용</label>
 		    <div class="col-sm-8" height=100px>
-		      <textarea class="form-control col-sm-5" rows="5" name="reviewContent"
+		      <textarea class="form-control col-sm-12" rows="5" name="reviewContent"
 						placeholder="내용" style="resize: none"></textarea>
 		    </div>
 		</div>

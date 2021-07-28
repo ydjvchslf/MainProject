@@ -49,9 +49,9 @@ public class ReviewService {
 
 	}
 	
-	public int deleteReview(Review review) throws Exception {
+	public void deleteReview(int reviewNo) throws Exception {
 		System.out.println("여기는 딜리트리뷰");
-		return reviewDao.deleteReview(review);
+		reviewDao.deleteReview(reviewNo);
 		
 	}
 	
