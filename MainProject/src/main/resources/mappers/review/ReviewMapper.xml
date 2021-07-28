@@ -11,7 +11,7 @@
 		<result property="reviewNo" 			column="review_no" 			jdbcType="NUMERIC"/>
 		<result property="academyCode" 		    column="academy_code" 		jdbcType="VARCHAR"/>
 		<result property="reviewWriter.userNo"	column="review_writer" 		jdbcType="NUMERIC" />
-		<result property="reviewWriter.name"	column="name" 				jdbcType="VARCHAR" />
+		<result property="reviewWriter.email"	column="email" 				jdbcType="VARCHAR" />
 		<result property="reviewState" 			column="review_state" 		jdbcType="CHAR" />
 		<result property="reviewTitle" 			column="review_title" 		jdbcType="VARCHAR" />
 		<result property="reviewContent" 		column="review_content" 	jdbcType="VARCHAR" />
@@ -33,13 +33,13 @@
 		r.review_no ,
         a.academy_code academy_code,
 		u.user_no review_writer ,
-		u.name ,
+		u.email ,
 		r.review_title ,
 		r.review_content ,
 		r.review_date 
 		FROM academy a , review r , 
 		(SELECT
-		u.user_no , u.name
+		u.user_no , u.email
 		from users u)u
 		WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND review_no = (#{value})
 	 </select>
@@ -52,7 +52,7 @@
 	 </select>-->
 	 
 	 <!-- SQL : UPDATE -->
-	 	<update id="updateReview" parameterType="review">
+	 <update id="updateReview" parameterType="review">
 		UPDATE review
 		<set>
 		    review_title = #{reviewTitle} ,
@@ -61,7 +61,7 @@
 		WHERE review_no = '${reviewNo}'
 	</update>
 	
-	<delete id="deleteReview" parameterType="review">
+	<delete id="deleteReview" parameterType="int">
 		update review
 		<set>
 			review_state = '2'
@@ -74,9 +74,10 @@
 	<select  id="getReviewList"  parameterType="search"	resultMap="reviewSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.name , r.review_date
+	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.email , r.review_date , r.review_state
 											FROM review r, users u , academy a
-											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code AND r.academy_code = '${academyCode}'
+											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code AND r.academy_code = '${academyCode}' 
+											AND (r.review_state = '0' OR r.review_state = '1') 
 											<if test="searchCondition != null">
 													<if test="searchCondition == 0 and searchKeyword !='' ">
 										 				and u.name like '%${searchKeyword}%'
@@ -104,7 +105,7 @@
 <!-- 	SQL : SELECT ROW Count	 --> 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT r.review_title , r.review_content , u.name , r.review_date , a.academy_code 
+	  	FROM(	SELECT r.review_title , r.review_content , u.email , r.review_date , a.academy_code 
 						FROM review r , users u , academy a
 						WHERE r.review_writer = u.user_no AND a.academy_code = r.academy_code AND r.academy_code = '${academyCode}'
 						<if test="searchCondition != null">

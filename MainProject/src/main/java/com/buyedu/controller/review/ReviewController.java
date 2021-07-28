@@ -95,6 +95,7 @@ public class ReviewController {
 		//String name = ((User)httpRequest.getSession().getAttribute("user")).getName();
 		String academyCode = request.getParameter("academyCode");
 		
+		
 		model.addAttribute("review" , review);
 		model.addAttribute("userNo", userNo);
 		model.addAttribute("academyCode" , academyCode);
@@ -106,7 +107,7 @@ public class ReviewController {
 	}
 	
 	@RequestMapping (value = "updateReview", method=RequestMethod.GET)
-	public String updateReview(@RequestParam("reviewNo") int reviewNo , Model model) throws Exception {
+	public String updateReview(@RequestParam("reviewNo") int reviewNo , Model model , HttpServletRequest request) throws Exception {
 		
 		Review review = reviewService.getReview(reviewNo);
 		
@@ -117,13 +118,18 @@ public class ReviewController {
 	}
 	
 	@RequestMapping( value="updateReview", method=RequestMethod.POST)
-	public String updateReview( @ModelAttribute("review") Review review, Model model) throws Exception{
+	public String updateReview( @ModelAttribute("reviewNo") Review review , HttpServletRequest request) throws Exception{
 		
 		
 		reviewService.updateReview(review);
+		String academyCode = request.getParameter("academyCode");
+		System.out.println("아카데미코드 : "+academyCode);
+	
+		
+		review.setAcademyCode(academyCode);
 		
 		
-		return "redirect:/review/getReview?reviewNo="+review.getReviewNo();
+		return "redirect:/review/getReview?reviewNo="+review.getReviewNo()+"&academyCode="+review.getAcademyCode();
 		
 	}
 	
@@ -137,7 +143,8 @@ public class ReviewController {
 		
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo(); 
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		System.out.println("userNo : "+userNo);
 		System.out.println("여기서 터지냐..?11111");
 		
 		System.out.println("여기서 터지냐..?22222");
@@ -150,6 +157,8 @@ public class ReviewController {
 		System.out.println("여기서터지나 44444444");
 		Map<String , Object> map = new HashMap<String , Object>();
 		String connectState = "1";
+		String reviewState = "0";
+		map.put("reviewState" , reviewState);
 		map.put("userNo", userNo);
 		map.put("academyCode", academyCode);
 		map.put("connectState", connectState);
@@ -158,6 +167,7 @@ public class ReviewController {
 		System.out.println("맵 : "+map);
 		
 		System.err.println("커낵트 : "+connect);
+		
 		
 		model.addAttribute("academyCode" , academyCode);
 		model.addAttribute("connect",connect);
@@ -176,13 +186,31 @@ public class ReviewController {
 	
 	
 	
-	/*@RequestMapping(value="deleteReview", method = RequestMethod.POST)
-	public int deleteReview(@RequestParam("review") Review r) throws Exception{
+	@RequestMapping(value="deleteReview", method = RequestMethod.GET)
+	public String deleteReview(@RequestParam("reviewNo") int reviewNo , HttpServletRequest request) throws Exception{
 		
-		reviewService.deleteReview(review);
+		System.out.println("/review/deleteReview : GET");
+		reviewService.deleteReview(reviewNo);
 		
-		return "redirect:/review/listReview";
+		Review review = new Review();
+		
+		review.setReviewNo(reviewNo);
+		
+		String academyCode = request.getParameter("academyCode");
+		System.out.println("아카데미코드 : "+academyCode);
+	
+		
+		review.setAcademyCode(academyCode);
+		System.out.println("리뷰넘버들어가냐..?"+reviewNo);
+		System.out.println("리뷰들어가냐"+review);
+		System.out.println("아카데미코드 들어가줘 제발"+academyCode);
+		
+		
+		
+		return "redirect:/review/listReview?academyCode="+review.getAcademyCode();
+		
+		
 	}
-	*/
+	
 
 }

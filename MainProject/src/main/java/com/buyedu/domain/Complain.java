@@ -1,6 +1,6 @@
 package com.buyedu.domain;
 
-
+import java.util.Date;
 
 public class Complain {
 	
@@ -8,9 +8,11 @@ public class Complain {
 	private int boardNo;
 	private int commentNo;
 	private int reviewNo;
-	private int complainUserNo;
+	private User complainUserNo;
 	private String complainReasonCode;
 	private String complainSort;
+	private Date complainDate;
+	private int totalCount;
 	
 	
 	
@@ -38,11 +40,11 @@ public class Complain {
 	public void setReviewNo(int reviewNo) {
 		this.reviewNo = reviewNo;
 	}
-	public int getComplainUserNo() {
+	public User getComplainUserNo() {
 		return complainUserNo;
 	}
-	public void setComplainUserNo(int complainUserNo) {
-		this.complainUserNo = complainUserNo;
+	public void setComplainUserNo(User user) {
+		this.complainUserNo = user;
 	}
 	public String getComplainReasonCode() {
 		return complainReasonCode;
@@ -61,6 +63,18 @@ public class Complain {
 		return "Complain [complainNo=" + complainNo + ", boardNo=" + boardNo + ", commentNo=" + commentNo
 				+ ", reviewNo=" + reviewNo + ", complainUserNo=" + complainUserNo + ", complainReasonCode="
 				+ complainReasonCode + ", complainSort=" + complainSort + "]";
+	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+	public Date getComplainDate() {
+		return complainDate;
+	}
+	public void setComplainDate(Date complainDate) {
+		this.complainDate = complainDate;
 	}
 	
 	

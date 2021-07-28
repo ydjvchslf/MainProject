@@ -21,7 +21,7 @@ import com.buyedu.domain.Search;
 		
 		int getTotalCount(Search search);
 		
-		int deleteComplain(Complain complain);
+		void deleteComplain(int complainNo);
 	
 
 }

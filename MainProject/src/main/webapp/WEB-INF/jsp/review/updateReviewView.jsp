@@ -112,7 +112,7 @@ function fncupdateReview(){
 		<div id="updateReview" class="form-group">
 		    <label for="reviewWriter.name" class="col-sm-offset-1 col-sm-1 control-label">ÀÛ¼ºÀÚ</label>
 		    <div class="col-sm-8">
-		      <input type="text" class="form-control" id="reviewWriter.name" name="reviewWriter.name" value="${review.reviewWriter.name}" readonly="true"/>
+		      <input type="text" class="form-control" id="reviewWriter.name" name="reviewWriter.name" value="${review.reviewWriter.email}" readonly="true"/>
 		    </div>
 		</div>
 			

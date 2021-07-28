@@ -36,8 +36,15 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( ".btn:contains('삭')" ).on("click" , function() {
+				 if(confirm("삭제하시겠습니까?")==true){
+					 
+				 
 				 var reviewNo = $("div").find('button#delete').val();
-					self.location = "/review/deleteReview?reviewNo="+reviewNo
+				 var academyCode=$("input[name='academyCode']").val();
+					self.location = "/review/deleteReview?reviewNo="+reviewNo+"&academyCode="+academyCode
+				 }else{
+					 return false;
+				 }
 				});
 		});
 		
@@ -52,7 +59,8 @@
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( ".btn:contains('수')" ).on("click" , function() {
 					 var reviewNo = $("div").find('button#update').val();
-						self.location = "/review/updateReview?reviewNo="+reviewNo
+					 var academyCode=$("input[name='academyCode']").val();
+						self.location = "/review/updateReview?reviewNo="+reviewNo+"&academyCode="+academyCode
 					});
 			});
 		 
@@ -207,7 +215,7 @@ body {
 		-->
 		<tr height="50" >
 			<td id="gettable"class="success" width="280"><b>&nbsp;&nbsp;작성자</b></td>
-			<td id="content" width="825">&nbsp;&nbsp;${review.reviewWriter.name}</td>
+			<td id="content" width="825">&nbsp;&nbsp;${review.reviewWriter.email}</td>
 		</tr>
 		
 		<tr height="50">
@@ -237,6 +245,8 @@ body {
 작성자 번호 : ${review.reviewWriter.userNo }
 유저넘버 : ${ userNo }
 학원코드 : ${academyCode }
+	 리뷰상태 ${reviewState }
+	 리뷰상태 ${review.reviewState }
  <input type="hidden" name="academyCode" value="${academyCode}" /> 
 	 <div class="form-group">
 	
@@ -259,9 +269,9 @@ body {
 
 		<butten class="btn btn-primary" id="back" >뒤&nbsp;로</butten>
 		
-		<butten class="btn btn-primary" id="complain" value="${review.reviewNo}">신&nbsp;고</butten>
+		<button class="btn btn-primary" id="complain" value="${review.reviewNo}" onClick="document.getElementById('mw_temp').style.display='block'">신&nbsp;고</button>
 	</div>
-	<p><button type="button" onClick="document.getElementById('mw_temp').style.display='block'">Open</button></p>
+	
  
  
 <div id="mw_temp" class="mw">
@@ -284,7 +294,8 @@ body {
     <label for="radio-3" class="radio-label">음란</label>
   </div>
 </div>
-		<button onclick="document.getElementById('mw_temp').style.display='none'" type="button">창닫기</button></p>
+		<button onclick="document.getElementById('mw_temp').style.display='none'" type="button">신고하기</button>
+		<button onclick="document.getElementById('mw_temp').style.display='none'" type="button">창닫기</button>
    		
     </div>
 </div>

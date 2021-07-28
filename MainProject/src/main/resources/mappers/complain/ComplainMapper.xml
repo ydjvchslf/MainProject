@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.buyedu.dao.complain.ComplainDao">
+ 	
+ 	
+	<resultMap id="complainSelectMap" type="complain">
+		<result property="complainNo" 				column="complain_no" 			jdbcType="NUMERIC"/>
+		<result property="boardNo" 		 	    	column="board_no" 				jdbcType="NUMERIC"/>
+		<result property="commentNo"				column="comment_no" 			jdbcType="NUMERIC" />
+		<result property="reviewNo"					column="review_no" 				jdbcType="NUMERIC" />
+		<result property="complainUserNo.userNo" 	column="complain_user_no" 		jdbcType="NUMERIC" />
+		<result property="complainReasonCode" 		column="complain_reason_code" 	jdbcType="CHAR" />
+		<result property="complainDate" 			column="complain_date"		 	jdbcType="DATE" />
+	</resultMap>
+	
+	
+	<insert 	id="addComplain"		parameterType="complain" >
+	 INSERT
+		INTO complain (complain_no, academy_code , review_writer, review_title, review_content, review_date)
+		VALUES ( seq_complain_complain_no.nextval , #{boardNo} , #{commentNo} , #{reviewNo} , #{complainUserNo.userNo} , ${complainReasonCode} ,
+				SYSDATE )
+	 </insert>
+	
+	 
+	
+	 <select 	id="getComplain"	parameterType="int"	resultMap="complainSelectMap">
+						SELECT c.complain_no , c.review_no , c.complain_user_no, a.complain_reason_name , c.complain_date
+						FROM complain c , complain_reason a
+						WHERE c.complain_reason_code = a.complain_reason_code AND complain_no = (#{value})
+	 </select>
+	 
+
+	<!--  <update id="updateComplain" parameterType="complain">
+		UPDATE review
+		<set>
+		  review_state = '0'
+		</set>
+		WHERE review_no = '${reviewNo}'
+	</update>
+	
+	<delete id="deleteComplain" parameterType="int">
+		update review
+		<set>
+			review_state = '2'
+		</set>
+		WHERE review_no = '${reviewNo}'
+	</delete>
+		  -->
+
+	
+	<select  id="getComplainList"  parameterType="search"	resultMap="complainSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT c.complain_no , c.review_no , c.complain_user_no, a.complain_reason_name , c.complain_date
+											FROM complain c , complain_reason a
+											WHERE c.complain_reason_code = a.complain_reason_code 
+											ORDER BY complain_no desc ) inner_table 
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	
+		
+	
+
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT c.complain_no , c.review_no , c.complain_user_no, a.complain_reason_name , c.complain_date
+						FROM complain c , complain_reason a
+						WHERE c.complain_reason_code = a.complain_reason_code ) countTable						
+	 </select>
+ 
+</mapper>
