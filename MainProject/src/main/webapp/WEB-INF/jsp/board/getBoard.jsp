@@ -110,22 +110,7 @@
 				});
 			});	
 		 
-		 function fncaddComplainBoard(){
-				//Form 유효성 검증
-			 	//var name = document.detailForm.prodName.value;
-				var title=$("input[name='boardTitle']").val();
-				var content=$("textarea[name='boardContent']").val();
-				var writer=$("input[name='boardWriter']").val();
-
-				
-				/* var detail = document.detailForm.prodDetail.value;
-				var manuDate = document.detailForm.manuDate.value;
-				var price = document.detailForm.price.value; */
-				
-				//var cateName = target.options[target.selectedIndex].text;
-				
-				$("form").attr("method" , "POST").attr("action" , "/board/updateBoard").submit();
-			}
+		 
 		
 		
 	</script>
@@ -268,8 +253,12 @@
 		    
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button class="btn success" id="deleteButton" value="${board.boardNo}">삭&nbsp;제
+			</div></c:if>
+			
+			<div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button class="btn success" id="resetButton" value="${board.cateCode}">목록으로
 			</div>
-			</c:if>
+			
 		</div>
 	</div>
 	

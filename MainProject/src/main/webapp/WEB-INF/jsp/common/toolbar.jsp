@@ -30,6 +30,9 @@
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/review/listReview?academyCode=${academy.academyCode}">후기</a>
 	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link" href="#">공지사항</a>
+	                </li>
 	              </ul>
 	            </div>
 	          
