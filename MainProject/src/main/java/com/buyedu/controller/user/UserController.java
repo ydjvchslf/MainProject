@@ -100,7 +100,7 @@ public class UserController {
 		
 		System.out.println("/user/addUser : GET");
 		
-		return "/user/addUserViewTiles";
+		return "/user/addUserView";
 	}
 	
 	
@@ -388,7 +388,7 @@ public class UserController {
 		if ( dbUser == null ) {
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
-			return "/user/loginView";
+			return "/user/loginViewTiles";
 		}
 		
 		String accountState = dbUser.getAccountState();
@@ -396,7 +396,7 @@ public class UserController {
 		if ( accountState.equals("1") ) {
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
-			return "/user/loginView";
+			return "/user/loginViewTiles";
 		}
 		
 		if( user.getPassword().equals(dbUser.getPassword()) ){
@@ -430,21 +430,21 @@ public class UserController {
 	          //아카데미 화면
 				String getUserView = this.getUser(session, user.getEmail(), model);
 				
-	         return getUserView;   
-			//	return "/main";
+			return getUserView;   
+	        //return "main";
 				
 			}
 			
 			//일반유저, 관리자 화면
 			String getUserView = this.getUser(session, user.getEmail(), model);
 			
-			return getUserView;
-			//return "/main";
+			//return getUserView;
+			return "/search/searchList";
 			
 		}else{
 			
 			model.addAttribute("message", "회원정보가 맞지 않습니다.");
-			return "/user/loginView";
+			return "/user/loginViewTiles";
 		
 		}	
 	}
@@ -493,7 +493,7 @@ public class UserController {
 	    	
 	    	model.addAttribute("email", email);
 	    	
-	    	return "/tiles/user/getUserTiles";
+	    	return "/user/getUser";
 	    	
 	    }else { //카카오 통합로그인
 	    	
@@ -520,7 +520,9 @@ public class UserController {
 	             
 	             model.addAttribute("list",map.get("list"));
 	 			
-	 			return "academyMain";
+	             String getUserView = this.getUser(session, email, model);
+	 			
+	 			return getUserView;
 	 			
 	 		}
 	 		
@@ -557,7 +559,7 @@ public class UserController {
 			
 			model.addAttribute("email", email);
 	    	
-	    	return "/tiles/user/getUserTiles";
+	    	return "/user/getUser";
 			
 		}else{//네이버 로그인 기존회원
 			
@@ -590,7 +592,9 @@ public class UserController {
 		            
 		            model.addAttribute("list",map.get("list"));
 					
-					return "academyMain";
+		            String getUserView = this.getUser(session, email, model);
+					
+					return getUserView;
 					
 				}
 				
@@ -706,14 +710,6 @@ public class UserController {
 	}
 	
 	
-	//인증용 test jsp 추후 삭제 예정
-	@RequestMapping( value="authority", method=RequestMethod.GET )
-	public String authority() throws Exception{
-	
-		System.out.println("/user/authority : GET");
-		
-		return "/user/authority";
-	}
 	
 
 	

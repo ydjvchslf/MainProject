@@ -102,9 +102,13 @@
 		
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-
-			<!-- 여기는 학원정보, 멀티정보등 이동 툴바 -->
-		<jsp:include page="../common/toolbar.jsp"></jsp:include>    
+		
+		<div id="header"><h1 class="mt-4">${edu.academy.academyName}</h1></div>
+		
+		<!-- 여기는 학원정보, 멀티정보등 이동 툴바 -->
+		<jsp:include page="../common/toolbar.jsp"></jsp:include>
+		
+		    
 	        
 	        <div class="container">
 				<!-- 내용 때려 박으삼 이쁘게 -->
@@ -202,12 +206,25 @@
 			        </div>
 			       </c:forEach>
 			  </div>
-        </table>
+        	</table>
+        
+        
 	      	</div>
+	      	
+	      	<!-- PageNavigation Start... -->
+			<jsp:include page="../common/pageNavigator_new.jsp"/>
+			<!-- PageNavigation End... -->
       	
        </div>
+       
+       <!-- PageNavigation Start... -->
+	   <jsp:include page="../common/pageNavigator_new.jsp"/>
+	   <!-- PageNavigation End... -->
+       
       
 	</div>
+	
+	
 	
 
     <script src="/js/jquery.min.js"></script>

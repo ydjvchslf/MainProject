@@ -166,7 +166,7 @@
 					          </div>
 					          <div class="panel panel-default">
 					            <div class="panel-heading">
-					              <h3 class="panel-title">계정 휴면</h3>
+					              <h3 class="panel-title">계정 탈퇴</h3>
 					              <h3 class="panel-title">
 					              	<a href="/user/outUser?email=${user.email}" 
 									 	class="btn btn-danger btn-circle btn-sm" data-toggle="modal"
@@ -176,7 +176,7 @@
 					              </h3>
 					            </div>
 					            <div class="panel-body"> 
-						            계정을 휴면할 수 있습니다.
+						            계정을 삭제할 수 있습니다.
 						         </div>
 					          </div>
 					          
@@ -987,9 +987,6 @@
 			});
 		});	 
 		
-		
-		
-		
 		<!--                학원 용 입니다               -->
 		
 		var userno = '${user.userNo}';
@@ -1081,8 +1078,6 @@
 			    });
 			}
 		}
-	
-		
 		
     
 		 $(document).ready(function(){
