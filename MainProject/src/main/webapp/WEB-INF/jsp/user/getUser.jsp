@@ -153,9 +153,9 @@
 					            <div class="panel-heading">
 					              <h3 class="panel-title">비밀번호 변경</h3>
 					              <h3 class="panel-title">
-					              	<a href="/user/updatePassword?email=${user.email}"
+					              	<a href=""
 										class="btn btn-info btn-circle btn-sm" data-toggle="modal"
-										data-target="#updatePwModal" align="right">
+										data-target="#passwordModal" align="right">
 										<i class="fas fa-info-circle"></i>
 									</a>
 					              </h3>
@@ -347,7 +347,75 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- 계정휴면 모달 끝-->			
+						</div><!-- 계정휴면 모달 끝-->		
+						
+						
+						
+						
+						
+						<!-- 비번수정 모달 -->
+						<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title" id="myModalLabel">
+											Update Your Password</h4>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<!-- 모달내용 태그 -->
+	                                    <form class="user" name="updatePwForm">
+	                                        <div class="form-group">
+	                                        	<input type="hidden" id="email" name="email" value="${user.email}">
+	                                            <input type="password" class="form-control form-control-user"
+	                                               name="pw_0" id="pw_0" aria-describedby="emailHelp"
+	                                                placeholder="현재비밀번호">
+	                                            <span id="helpBlock" class="help-block">
+											      	<strong class="update_password_check"></strong>
+											     </span>
+											     </div>
+											   <div class="form-group">  
+											     <input type="password" class="form-control form-control-user"
+	                                               name="pw_1" id="pw_1" aria-describedby="emailHelp"
+	                                                placeholder="새비밀번호">
+	                                            </div>
+	                                            <div class="form-group">
+											     <input type="password" class="form-control form-control-user"
+	                                               name="password" id="pw_2" aria-describedby="emailHelp"
+	                                                placeholder="비밀번호확인">
+	                                            <span id="helpBlock" class="help-block">
+											      	<strong class="update_password_check1"></strong>
+											     </span>
+	                                       		</div>
+	                                       		<div class="form-group">
+		                                        <button type="button" id="updatePw" name="updatePw" class="btn btn-primary btn-user btn-block">
+		                                           비밀번호수정
+		                                        </button>
+		                                        </div>
+		                                </form>
+										<!-- 모달 내용 끝 -->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div><!-- 비번수정 모달 끝-->	
+						
+						
+						
+						
+						
+						
+						
+						
+						
+							
 					
 						
 						<!-- 계정연동 모달 시작-->
@@ -718,12 +786,14 @@
 
 					} else if (JSONData.message == "notExist") {
 
+						$(".connect_text").val("")
 						displayValue = "유효하지 않은 학원코드입니다."
-						$(".connect_text").text(displayValue).css("color", "red");
+						$(".connect_text").css("color", "red");
 
 					}
 
 					$("#academyCode").val("");
+					$(".connect_text").append(displayValue);
 
 				}
 			});
@@ -1164,7 +1234,6 @@
 			        type : 'post',
 			        success : function(data){
 			            alert("삭제가 완료되었습니다!")
-			            academyList();
 			        }
 			    });
 			}
@@ -1179,125 +1248,216 @@
 		 
 		 
 		 
-///////////////////////////////////////SNS 계정연동 시작//////////////
+//////////////////////////추가부분임돵 ///////////비번변경 JS 시작//////////////////////
+		
+		
+//첫번째 비밀번호, 두번쨰 비밀번호 체크
+	var passwordDuplicationCheck_new = false;
+	
+	//비밀번호변경 눌렀을때 true 값 체크 메서드
+	function fncCheckAll_new() {
 
-	/*	
-	 
-		//sns 간편로그인 연동하기 클릭 event
-		$(function() {
+		var valid = false;
 
-			$('span[name="unify"]').on("click", function() {
-				//self.location = "/user/updateUser?email=${user.email}"
-			});
-		});	
+		if ( fncCheckPw_new() ) {
+			valid = true;
+		}
+
+		return valid;
+	}		
 		
 		
 		
+
+//event 함수
+	$(function() {
 		
-		//연동에서 event 함수
-		$(function() {
+		
+		//비밀번호변경
+		//현재비밀번호 변화 event
+		$('input[name="pw_0"]').on("change", events_new.change.password0);
+		//비밀번호1 변화 event
+		$('#pw_1').on("change", events_new.change.password);
+		//비밀번호2 변화 event
+		$('#pw_2').on("change", events_new.change.password2);
+		//비밀번호 수정하기 event 연결
+		$('button[name="updatePw"]').on("click", events_new.click.updatePw);
+	
+	});
+
+	
+	var events_new = {
+
+		click : {
+
+			updatePw : function() {
+				//alert("1접근")
+				if ( fncCheckAll_new() && passwordDuplicationCheck_new ) {
+					fncUpdatePassword_new();
+				}
+			}
 			
-			//내정보수정
-			//인증번호 발송 event
-			$( "a[name='send_sms8']" ).on("click" , events.click.phoneBtn);
-			//인증번호 확인 event
-			$( "a[name='check_sms8']" ).on("click" , events.click.vaildBtn);
-			
-			
+		},
+
+		change : {
+
+			password0 : function() {
+				alert("현재비밀번호 change 이벤트")
+				passwordChange_new();
+			},
+
+			password : function() {
+				//alert("3접근")
+				fncCheckPw_new("first");
+			},
+
+			password2 : function() {
+				//alert("4접근")
+				fncCheckPw_new("second");
+			},
+
+			password00 : function() {
+				alert("현재비밀번호 change 이벤트")
+				passwordChange00_new();
+			}
+
+		}
+	}
+	
+
+	// 비밀번호변경 -> 비밀번호 체인지 & 본래 비밀번호 맞는지
+	function passwordChange_new() {
+
+		var password = $('#pw_0').val();
+
+		// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
+		if (password) {
+
+			fncCheckCurrentPassword_new();
+
+		} else {
+			$(".update_password_check").text("비밀번호를 입력하세요.");
+			$(".update_password_check").css("color", "red");
+		}
+
+	}
+	
+	// 비번변경 -> 비밀번호 체인지 & 본래 비밀번호 맞는지
+	function passwordChange_new() {
+
+		var password = $('input[name="pw_0"]').val();
+
+		// null , undefined, "" 빈값을 false 로 인식, 만약 값이 있으면 true 
+		if (password) {
+
+			fncCheckCurrentPassword00_new();
+			return true;
+
+		} else {
+			$(".update_password_check").text("비밀번호를 입력하세요.");
+			$(".update_password_check").css("color", "red");
+		}
+
+	}
+
+	
+	//현재 비밀번호 맞는지 확인 ajax
+	function fncCheckCurrentPassword00_new() {
+
+		var email = $('#email').val();
+		var password = $('input[name="pw_0"]').val();
+
+		console.log(email);
+		console.log(password);
+
+		$.ajax({
+			url : "/user/json/checkPassword",
+			method : "POST",
+			data : JSON.stringify({
+				email : email,
+				password : password,
+			}),
+			dataType : "json",
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData, status) {
+
+				//alert("성공!");
+
+				if (JSONData.result == "no") {
+					console.log("비번 NO");
+
+					passwordDuplicationCheck_new = false;
+					$(".update_password_check").text("비밀번호가 맞지 않습니다");
+					$(".update_password_check").css("color", "red");
+
+				} else if (JSONData.result == "ok") {
+					console.log("비번 OK");
+
+					passwordDuplicationCheck_new = true;
+					$(".update_password_check").text("비밀번호가 맞습니다");
+					$(".update_password_check").css("color", "blue");
+				}
+			}
 		});
 
-		
-		var events = {
+	}
+	
 
-			click : {
-				
-				
-				phoneBtn : function() {
-					alert("인증번호발송 클릭")
-					fncAuth8();
-					
-				},
-				
-				vaildBtn : function() {
-					alert("인증확인 클릭")
-					fncKey8();
-					
-				}
-				
+	//첫번째,두번째 비밀번호 조건 함수
+	function fncCheckPw_new(passwordType) {
+
+		var passwordTarget = passwordType == "first" ? "pw_1" : "pw_2";
+		var passwordCompare = passwordType == "first" ? "pw_2": "pw_1";
+		
+		//'input[name="password"]'
+		var pw = $('#' + passwordTarget ).val();
+		var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+
+		console.log(pw);
+
+		if (reg.test(pw)) {
+
+			var pw2 = $('#' + passwordCompare ).val();
+
+			if (pw == pw2) {
+
+				$(".update_password_check1").text("비밀번호가 일치합니다.");
+				$(".update_password_check1").css("color", "blue");
+
+				return true;
+
+			} else {
+
+				$(".update_password_check1").text("비밀번호가 일치하지 않습니다.");
+				$(".update_password_check1").css("color", "red");
 			}
-		
+
+		} else {
+
+			var str = '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
+			$('.update_password_check1').text(str).css("color", "red");
+			$("#pw_1").focus();
 		}
-		
-		
-		
+		return false;
+	}
+	
+	
+	
+	//비밀번호 수정하기 함수
+	function fncUpdatePassword_new() {
+		$("form[name=updatePwForm]").attr("method", "POST").attr("action", "/user/updatePassword")
+				.submit();
+		//swal너무 빨리지나가 어떻게 수정하징
+		alert('비밀번호가 수정되었습니다!^ㅇ^')
 
-		
-		
-		
-		//인증번호 발송 함수
-		function fncAuth8(){					
-			
-			var phone = $("#phone8").val()
-			alert("입력한 연락처 : "+phone);
-			
-			
-			$.ajax({
-					url : "/user/json/sms/"+phone ,
-					method : "GET" ,
-					dataType : "json" ,
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success : 
-							function(JSONData , status) {
+	}
 
-							//alert("status : "+status);
-							//alert("JSONData : \n"+JSONData);
-							//alert("JSONData : \n"+JSONData.key);
-							key = JSONData.key;
-							
-					}
-						
-			});	//End ajax 
-		};
-		
-		
-		
-		//인증번호 확인 함수
-		//test 용, 나중에 실제에서는 지우기
-		var key ="123456";
-		//var key = "";
-		
-		var vaildNum = $("#vaildNum8").val();
-		
-		function fncKey8() {	
-		
-			var vaildNum = $("#vaildNum8").val();
-			//alert("입력한 인증번호=>" + vaildNum)
-			
-			console.log("key : " +key)
-			console.log("vaildNum : " +vaildNum)
-			
-			if( vaildNum == key ){
-				
-				$(".text_sms8").text("인증번호가 맞습니다.");
-				$(".text_sms8").css("color", "blue");
-				
-				checkVaild = true;
-				
-			}else{
-				
-				$(".text_sms8").text("인증번호가 맞지 않습니다.");
-				$(".text_sms8").css("color", "red");
-			
-			}		
-		}	
-	  	
-	  	
-	*/
-		 
-		 
+
+
+
 	        
     
     </script>

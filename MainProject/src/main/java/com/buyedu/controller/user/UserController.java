@@ -183,25 +183,25 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping( value="updatePassword", method=RequestMethod.GET )
-	public String updatePassword( @RequestParam("email") String email , Model model , HttpSession session ) throws Exception{
-
-		System.out.println("/user/updatePassword : GET");
-		
-		User user = userService.getUser(email);
-		
-		session.setAttribute("user", user);
-		
-		System.err.println("세션저장된 user ==> " + user);
-		
-		model.addAttribute("user", user);
-		
-		System.out.println( "세션저장된 유저 =>" + session.getAttribute("user") );
-		
-		System.out.println("비번변경화면으로 단순 네비게이션");
-		
-		return "/user/updatePasswordTiles";
-	}
+//	@RequestMapping( value="updatePassword", method=RequestMethod.GET )
+//	public String updatePassword( @RequestParam("email") String email , Model model , HttpSession session ) throws Exception{
+//
+//		System.out.println("/user/updatePassword : GET");
+//		
+//		User user = userService.getUser(email);
+//		
+//		session.setAttribute("user", user);
+//		
+//		System.err.println("세션저장된 user ==> " + user);
+//		
+//		model.addAttribute("user", user);
+//		
+//		System.out.println( "세션저장된 유저 =>" + session.getAttribute("user") );
+//		
+//		System.out.println("비번변경화면으로 단순 네비게이션");
+//		
+//		return "/user/updatePasswordTiles";
+//	}
 	
 	@RequestMapping( value="updatePassword", method=RequestMethod.POST )
 	public String updatePassword( @ModelAttribute("user") User user , Model model , HttpSession session ) throws Exception{
@@ -226,7 +226,11 @@ public class UserController {
 		
 		System.out.println("비번 변경완료->정보조회 화면으로 네비게이션");
 		
-		return "/user/getUser?email="+user2.getEmail();
+		//return "/user/getUser?email="+user2.getEmail();
+		
+		String getUserView = this.getUser(session, user.getEmail(), model);
+		
+		return getUserView;
 	}
 	
 	@RequestMapping( value="outUser", method=RequestMethod.GET )
@@ -430,8 +434,7 @@ public class UserController {
 	          //아카데미 화면
 				String getUserView = this.getUser(session, user.getEmail(), model);
 				
-			//return getUserView;   
-	         return "/search/searchList";
+	         return getUserView;
 				
 			}
 			
