@@ -169,7 +169,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			
 				Board board = boardService.getBoardAcademy(boardNo);
 				board.setRecommendCnt(recommendCnt);
-				board.setAcademyCode(academyCode);
+//				board.setAcademyCode(academyCode);
 				boardService.updateViewcnt(boardNo);
 				System.out.println("컨트롤러 겟보드아카 "+board);
 				// Model 과 View 연결
