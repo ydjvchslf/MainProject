@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
@@ -29,17 +30,16 @@ public class MessageController {
 	@MessageMapping("/info")
 	@SendToUser("/queue/info")
 	public String Info(String message, SimpMessageHeaderAccessor messageHeaderAccessor) {
-		HttpSession session = (HttpSession) messageHeaderAccessor.getSessionAttributes().get("session");
-		User talker = (User) session.getAttribute("user");
+		User user = (User) messageHeaderAccessor.getSessionAttributes().get("session");
 		return message;
 	}
 	
-	@MessageMapping("/chat")
+	@MessageMapping("/noti")
 	@SendTo("/topic/message")
 	public String chat(String message, SimpMessageHeaderAccessor messageHeaderAccessor) {
-		HttpSession session = (HttpSession) messageHeaderAccessor.getSessionAttributes().get("session");
-		User talker = (User) session.getAttribute("user");
-		if (talker == null) {
+		Map<String, Object> map = messageHeaderAccessor.getSessionAttributes();
+		User user = (User) messageHeaderAccessor.getSessionAttributes().get("session");
+		if (user == null) {
 			return "not found";
 		}
 		return "test";
