@@ -43,7 +43,7 @@ public class ReviewController {
 	@Value("5")
 	int pageUnit;
 	
-	@Value("10")
+	@Value("5")
 	int pageSize;
 	
 	@RequestMapping( value="addReviewView", method=RequestMethod.GET)
@@ -74,7 +74,6 @@ public class ReviewController {
 		review.setReviewWriter(user);
 		
 		String academyCode = httpRequest.getParameter("academyCode");
-		String academyName = httpRequest.getParameter("academyName");
 		System.out.println("아카데미코드 : "+academyCode);
 		
 		System.out.println("리뷰가 들어가야함 review :" +review);
@@ -154,7 +153,7 @@ public class ReviewController {
 		System.out.println("여기서 터지냐..?11111");
 		
 		System.out.println("여기서 터지냐..?22222");
-		
+
 	
 		List<Review> list = reviewService.getReviewList(search);
 		System.out.println("여기서터지나 3333333");
@@ -174,7 +173,7 @@ public class ReviewController {
 		
 		System.err.println("커낵트 : "+connect);
 		
-		
+
 		model.addAttribute("academyCode" , academyCode);
 		model.addAttribute("connect",connect);
 		model.addAttribute("list",list);

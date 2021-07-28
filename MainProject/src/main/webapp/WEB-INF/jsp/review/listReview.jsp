@@ -73,29 +73,10 @@
 	</script>
 
 	</head>
-	<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="/main/academyMain">Buy! Edu</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-                <div class="input-group">
-
-                </div>
-            </form>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
 	
   <body>
+  
+  
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
 
@@ -168,16 +149,8 @@
 		
 	
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
       
-        <thead>
-          <tr>
-            <th width="100" align="center">No</th>
-            <th width="400" align="center" >후기제목</th>
-            <th width="300" align="left">작성자</th>
-            <th width="200" align="left">작성일자</th>
-            
-        </thead>
+
        
    
        
@@ -187,26 +160,38 @@
 		  <c:forEach var="review" items="${list}">
 			<c:set var="i" value="${i-1}" />
 			<tr>
-			  <td align="left">${i+1-(resultPage.currentPage-1)*10}</td>
-		
+	
+			  
+			  
+			 				 <div class="card shadow mb-4">
+			 			
+			 				 
+                                <div class="card-header py-3">
+                                    <h3 class="m-0 font-weight-bold text-primary">${review.reviewTitle }</h3>
+                                    <h5 class="m-0 font-weight-bold text-primary"> 작성자 ${review.reviewWriter.email }       ${review.reviewDate }</h5>
+                                   
+                                </div>
+                                <div class="card-body">
+                                    ${review.reviewContent }
+                                </div>
+                                
 
-		<td id="listtable" align="left"><a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode}">${review.reviewTitle}</a></td>
-					  
-			  
-			  <td id="listtable" align="left">${review.reviewWriter.email}</td>
-			  <td id="listtable" align="left">${review.reviewDate}</td>
-			  
-			</tr>
+                                
+                                </div>
+                              
+                          
+		</tr>
           </c:forEach>
         
         </tbody>
       
-      </table>
+ 
 	  <!--  table End /////////////////////////////////////-->
 	 
 	 회원번호 ${user.userNo} 
 	 학원코드1 ${academyCode }
-	 학원이름 : ${academyName }
+	후기내용 ${reivewContent }
+	후기내용 ${review.reviewContent }
 	 커넥트 ${connect }
 	 리뷰넘버 ${review.reviewNo}
 	 
@@ -227,7 +212,7 @@
 		    </div>
 		</div>
 	  
- 	</div>
+ 
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	
