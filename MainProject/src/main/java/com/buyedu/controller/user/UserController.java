@@ -122,6 +122,19 @@ public class UserController {
 		//Business Logic
 		User user = userService.getUser(email);
 		
+		/*
+		//간편로그인 유저가 내정보 누를시 에러 안내게 해야하는데...
+		if ( user == null ) {
+			
+			System.out.println("이메일=>" +email);
+			
+			model.addAttribute("email", email);
+	    	
+	    	return "/user/getUser";
+ 			
+		}
+		*/
+		
 		List<Connect> list = userService.getConnectList(user.getUserNo());
 		model.addAttribute("listAcademy", list);
 		// Model 과 View 연결
@@ -136,6 +149,28 @@ public class UserController {
 
 		
 		return "/user/getUser";
+	}
+	
+	
+	//sns간편로그인이 내정보 누를때 
+	@RequestMapping( value="getUser/{email}", method=RequestMethod.GET )
+	public String getUserNew( HttpSession session, @PathVariable String email , Model model ) throws Exception {
+		
+		System.out.println("새로추가한 메서드,,,");
+		//Business Logic
+		User user = userService.getUser(email);
+		
+		//간편로그인 유저가 내정보 또 누를시 에러 안내게 해야하는데...
+		if ( user == null ) {
+			
+			System.out.println("이메일=>" +email);
+			
+			model.addAttribute("email", email);
+	    	
+	    	return "/user/getUser/"+email;
+		}
+		
+		return null;
 	}
 
 	
@@ -474,7 +509,7 @@ public class UserController {
 	@RequestMapping( value="/snsLogin/{email}" )
 	public String snsLogin( @PathVariable String email, Model model, HttpSession session , HttpServletResponse res) throws Exception{
 	    
-		session.invalidate();
+		//session.invalidate();
 		
 		System.out.println("/user/snsLogin");
 		
@@ -490,13 +525,18 @@ public class UserController {
 	    //카카오 간편로그인
 	    if( dbUser == null ){
 	    	
+	    	//변경전 시작
 	    	Cookie cookie = new Cookie("loginAccountType", "sns");
 	    	cookie.setPath("/");
 	    	res.addCookie(cookie);
 	    	
 	    	model.addAttribute("email", email);
 	    	
+	    	System.out.println("email=>" + email);
+	    	
 	    	return "/user/getUser";
+	    	//변경전 끝
+	    	
 	    	
 	    }else { //카카오 통합로그인
 	    	

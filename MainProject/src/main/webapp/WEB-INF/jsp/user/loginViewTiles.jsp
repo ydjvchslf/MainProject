@@ -97,6 +97,13 @@
 	a:hover {
     color: #000000;
     text-decoration: underline;
+    }
+    
+   
+   .loginMessage {
+   color: red; font-size:12px; color:red; font-family:'돋움';
+   } 
+   
 }
 	
 	
@@ -302,12 +309,12 @@
                                                 id="exampleInputPassword" placeholder="Password">
                                         </div>
                                         
-                                        <div><!-- 회원정보 맞지 않을때 메시지칸 -->
-											<strong><span class="loginMessage"></span></strong>
+                                        <div align="center"><!-- 회원정보 맞지 않을때 메시지칸 -->
+											<span class="loginMessage"></span>
 										</div>
-                                        
+                                        <br>
                                         <a href="#" name="loginBtn" class="btn btn-primary btn-user btn-block">
-                                            Login
+                                            로그인
                                         </a><hr>
                                         <span name="kakaoLogin"><img src="/image/kakao.png"></span><span id="naverIdLogin"></span>
                                         
@@ -315,17 +322,17 @@
                                     </form>
                                     <hr>
                                     <div class="text-center" name="findEmail">
-                                        <a class="small" href="#">Forgot Email?</a>
+                                        <a class="small" href="#">이메일 찾기</a>
                                     </div>
                                     <div class="text-center" name="findPassword">
-                                        <a class="small" href="#">Forgot Password?</a>
+                                        <a class="small" href="#">비밀번호 찾기</a>
                                     </div>
                                     <div class="text-center" name="returnUser">
-                                        <a class="small" href="#">Recover account</a>
+                                        <a class="small" href="#">계정 복구하기</a>
                                     </div>
                                     <hr>
                                     <div class="text-center" name="signup">
-                                        <a class="small" href="#">Create an Account!</a>
+                                        <a class="small" href="#">Buy!edu 회원가입</a>
                                     </div>
                                 </div>
                             </div>

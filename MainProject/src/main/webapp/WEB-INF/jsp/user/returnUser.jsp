@@ -53,6 +53,12 @@
 	a:hover {
     color: #000000;
     text-decoration: underline;
+    }
+    
+    
+    .explain1, .explain2{
+    font-size:12px; font-family:'돋움';
+    }
 
 </style>
 
@@ -81,17 +87,17 @@
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="이름">
                                         </div>
-                                        <span id="helpBlock" class="help-block">
-										      	<strong class="explain1"></strong>
-									    </span>    
+                                        <div class="form-group" align="center">
+										      	<span class="explain1"></span>
+									    </div> 
                                         <div class="form-group">
                                             <input type="text" name="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="이메일">
                                         </div>
-                                        <span id="helpBlock" class="help-block">
-										      	<strong class="explain2"></strong>
-										     </span>    
+                                        <div class="form-group" align="center">
+										     <span class="explain2"></span>
+									    </div> 
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
@@ -106,7 +112,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" name="login" href="/user/login">Already have an account? Login!</a>
+                                        <a class="small" name="login" href="/user/login">sLogin</a>
                                     </div>
                                 </div>
                             </div>
