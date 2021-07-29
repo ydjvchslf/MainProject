@@ -43,7 +43,7 @@ public class ReviewController {
 	@Value("5")
 	int pageUnit;
 	
-	@Value("5")
+	@Value("8")
 	int pageSize;
 	
 	@RequestMapping( value="addReviewView", method=RequestMethod.GET)
@@ -157,6 +157,7 @@ public class ReviewController {
 	
 		List<Review> list = reviewService.getReviewList(search);
 		System.out.println("여기서터지나 3333333");
+		if(list.size()!=0) {
 		int totalCount = list.get(0).getTotalCount();
 		Page resultPage = new Page (search.getCurrentPage(),totalCount,pageUnit,pageSize);
 		System.out.println("여기서터지나 44444444");
@@ -182,7 +183,7 @@ public class ReviewController {
 		//model.addAttribute("connect" , map.get("connect"));
 		
 		System.err.println(list);
-		
+		}
 	
 		return "/review/listReview";
 	}

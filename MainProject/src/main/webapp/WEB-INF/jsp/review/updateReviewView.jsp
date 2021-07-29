@@ -84,21 +84,19 @@ function fncupdateReview(){
 
 
 
-	<div class="navbar  navbar-default">
-	 <div class="container">
-        	<a class="navbar-brand">후기게시판</a>
-   		</div>
-   	</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
    	
-   	<div class="container">
+
 	
-		<div class="page-header text-default">
-		
-		<h3 style="text-align:center;">후기 수정</h3> 
-		</div>
-			학원코드${academyCode }
-	
-	<br/><br/>
 	
 	<form class="form-horizontal">
 	<input type="hidden" name="reviewNo" value="${review.reviewNo}" />
@@ -130,15 +128,14 @@ function fncupdateReview(){
 		      <textarea class="form-control col-sm-5" rows="5" name="reviewContent"
 						placeholder="내용" style="resize: none;">${review.reviewContent}</textarea>
 		    </div>
-		</div>
+		</div>	
 		
 		
 		
 		
 		
 		
-		
-		</div>
+
 				
 		<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
@@ -147,8 +144,15 @@ function fncupdateReview(){
 		    </div>
 		</div>
 	
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-</head>
 
 </form> 
 </body>
