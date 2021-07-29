@@ -530,7 +530,7 @@ public class UserController {
 	    	cookie.setPath("/");
 	    	res.addCookie(cookie);
 	    	
-	    	model.addAttribute("email", email);
+	    	model.addAttribute("mk", email);
 	    	
 	    	System.out.println("email=>" + email);
 	    	
