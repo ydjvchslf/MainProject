@@ -1156,7 +1156,7 @@
     						a += '<div class="panel-heading">'
     						a += '<h6 class="panel-title"> 학원 등록 하기 </h6></div>'
     						
-    						a += '<div class="card-body">'
+    						a += '<div class="panel-body">'
     						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a></div></div></div>'
     					}
         				
@@ -1164,15 +1164,15 @@
         					
         					a += '<div class="col-sm-4"><div class="panel panel-default">'
         					a += '<div class="panel-heading">'
-        					a += '<h6 class="panel-title">'
-        					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h6>'
+        					a += '<h3 class="panel-title">'
+        					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
         					a += '<div class="dropdown no-arrow">'
-        					a += '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>'
+        					a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h3>'
         					a += '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'
         					a += '<a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')" class="dropdown-item"> 학원 프로필 삭제 </a>'
         					a += '</div></div></div>'
         					
-        					a += '<div id="academyInfo_' + i +'" class="card-body">'
+        					a += '<div id="academyInfo_' + i +'" class="panel-body">'
         					a += ' 학원 정보 '+getAcademyInfo(i, value[i].academyCode) 
         					a += '</div></div></div>'
         				}
