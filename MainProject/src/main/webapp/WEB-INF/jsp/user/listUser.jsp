@@ -25,7 +25,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -34,17 +34,16 @@
         <div id="content" class="p-4 p-md-5">
 				
 				<div class="container-fluid"><!-- container시작 -->
-                        	
-						<div class="page-header text-info">
-					       <h3>회원목록조회</h3>
-					    </div>
-					    
+				
+                   <jsp:include page="../common/toolbar2.jsp"></jsp:include>
+					  
+					  <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">   
 					    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 					    <div class="row">
 					    
 						    <div class="col-md-6 text-left">
-						    	<p class="text-primary">
-						    		전체 회원 ${resultPage.totalCount } 명, 현재 ${resultPage.currentPage}  페이지
+						    	<p style="font-size:15px; color:black; font-family:'돋움';">
+						    		총 회원수 : ${resultPage.totalCount }명, 현재 ${resultPage.currentPage} 페이지
 						    	</p>
 						    </div>
 						    
@@ -54,7 +53,7 @@
 						    <div class="col-md-6 text-right">
 							    <form class="form-inline" name="detailForm">
 							    
-							     <div class="col-md-6 text-right">
+							     <div class="col-md-12 text-right">
 							    	<p>
 							    		<span><strong> 사용자 역할 </strong></span>
 							    		<input type="checkbox" name="searchRole" value="student"> 학생
@@ -68,21 +67,22 @@
 							    	</p>
 						   		 </div>
 							    
-								  <div class="form-group">
-								    <select class="form-control" name="searchCondition" >
-										<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>Email</option>
-										<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
-									</select>
+							     <div class="col-md-12 text-right">
+									  <div class="form-group">
+									    <select class="form-control" name="searchCondition" >
+											<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>Email</option>
+											<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
+										</select>
+									  </div>
+									  
+									  <div class="form-group">
+									    <label class="sr-only" for="searchKeyword">검색어</label>
+									    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+									    			onkeyup="enterEvent()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
+									  </div>
+									  
+									  <button type="button" class="btn btn-default">검색</button>
 								  </div>
-								  
-								  <div class="form-group">
-								    <label class="sr-only" for="searchKeyword">검색어</label>
-								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-								    			onkeyup="enterEvent()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
-								  </div>
-								  
-								  <button type="button" class="btn btn-default">검색</button>
-								  
 								  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 								  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 								  
@@ -137,14 +137,12 @@
 				      
 				      </table>
 				      <input type="button" name="allLogout" value="로그아웃"></input>
+				      
 				      <jsp:include page="../common/pageNavigator_new.jsp"/>
                     
 				
-				     
-				
-				
+				  </div>
 				</div>
-				
 	      	</div><!-- container 끝 -->
       	
        </div>

@@ -123,6 +123,7 @@
     	<script src="/js/sockjs.min.js"></script>
     	<script src="/js/stomp.min.js"></script>
     	
+    	
     	<script>
     	let socket = new SockJS("/socket");
         let stompClient = Stomp.over(socket);
