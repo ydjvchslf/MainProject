@@ -9,18 +9,17 @@
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
 		  		<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/image/student.png);"></a>
+		  		
+		  		
 	        <ul class="list-unstyled components mb-5">
+
+	        
+	        <c:if test="${user.role != null }"></c:if>
 	        
 	        <c:if test="${user.role == 'academy'}">
 	          <li>
 	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">내 학원</a>
 	            <ul class="collapse list-unstyled" id="homeSubmenu">
-
-			<c:if test="${list.size()<=2}">
-				<li>
-					<a href="/academy/addAcademyView">학원 등록</a>
-				</li>
-			</c:if> 
 			
 			<c:forEach var="academy" items="${list}">
 				
@@ -29,9 +28,6 @@
 					<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
 				</li>	
 			</c:forEach>			
-
-
-
 
 	            </ul>
 	          </li>
@@ -61,20 +57,7 @@
                 </li>
 	            </ul>
 	          </li>
-	          <li>
-              <a href="#comSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">신고관리</a>
-              <ul class="collapse list-unstyled" id="comSubmenu">
-                <li>
-                    <a href="#">후기 신고</a>
-                </li>
-                <li>
-                    <a href="#">게시글 신고</a>
-                </li>
-                <li>
-                    <a href="#">댓글 신고</a>
-                </li>
-              </ul>
-	          </li>	          
+          
 	         </c:if> 
 	          
 	          <li>

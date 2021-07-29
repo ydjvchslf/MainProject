@@ -33,6 +33,12 @@
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/board/listBoardAcademy?cateCode=3&academyCode=${academy.academyCode}">공지사항</a>
 	                </li>
+	                
+	                <c:if test="${user.role == 'academy'}">
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생관리</a>
+	                </li>
+	                </c:if>
 	              </ul>
 	            </div>
 	          
