@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.buyedu.domain.Academy;
 import com.buyedu.domain.Board;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.Search;
+import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
+import com.buyedu.util.UserUtil;
 //import com.buyedu.service.complain.ComplainService;
 import com.buyedu.domain.User;
 
@@ -38,6 +41,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		///Field
 		@Autowired
 		private BoardService boardService;
+		
+		@Autowired
+		private AcademyService academyService;
 //		private ComplainService complainService;
 		//setter Method 구현 않음
 		
@@ -226,6 +232,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		public String listBoard( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
 			
 			System.out.println("/board/listBoard : GET / POST");
+			
+			User user = UserUtil.user();
+		      
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		     
+		    model.addAttribute("list", map1.get("list"));
+		    
 			System.err.println("keyword : " +search.getSearchKeyword());
 			System.err.println("condition : " +search.getSearchConditionb());
 			System.err.println("condition 1 : " + request.getParameter("searchConditionb"));
@@ -273,7 +286,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //			Page resultPage2 = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 //			System.out.println(resultPage);
 			// Model 과 View 연결
-			model.addAttribute("list", list);
+			model.addAttribute("listc", list);
 			model.addAttribute("map", map);
 //			model.addAttribute("list2", list2);
 			model.addAttribute("resultPage", resultPage);
@@ -293,8 +306,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			
 			System.out.println("학원 공지사항 돌아간다");
 			
+			User user = UserUtil.user();
+		      
+		    Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		     
+		    model.addAttribute("list", map.get("list"));
+		    
+		    String academyCode = request.getParameter("academyCode");
+			Academy academy = academyService.getAcademy(academyCode);
+			model.addAttribute("academy", academy);
+			
+			System.err.println("여기는 서치 : "+search);
+			System.out.println("여기는 보드 : "+board);
 			String category = request.getParameter("cateCode"); // 게시판 종류
-			String academyCode = request.getParameter("academyCode");
+			
 			System.out.println("학원 공지사항 아카코드 : "+academyCode);
 			
 			if(search.getCurrentPage() ==0 ){
@@ -302,6 +327,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			}
 			search.setPageSize(pageSize);
 			search.setCateCode(category);
+		//	search.setAcademyCode(academyCode);
 			
 			List<Board> listb =boardService.getBoardListAcademy(search);
 			
@@ -313,8 +339,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			model.addAttribute("listb", listb);
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
+			
+			
+			
 			}
 			
+
 			return "/board/listBoard";
 		}
 		
