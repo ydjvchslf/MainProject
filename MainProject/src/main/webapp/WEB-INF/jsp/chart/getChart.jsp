@@ -77,7 +77,7 @@
     	$('#chat').on('click', function(){
     		var url = "https://academy-chat.herokuapp.com/chat.html?username=${user.name}&room=${academy.academyCode}&roomname=테스트중";
     		var name = "Chat"
-    		var option = "width=700, height=600, location=no,toolbars=no,status=no"
+    		var option = "width=800, height=600, location=no,toolbars=no,status=no"
     		window.open(url,name,option);
     	})
     	
