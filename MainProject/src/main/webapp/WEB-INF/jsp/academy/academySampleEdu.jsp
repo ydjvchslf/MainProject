@@ -79,38 +79,43 @@
 					<!-- 학원 이름, 전화번호 -->
 					<div id="academytitle" class="row" > </div>
 					
-					<div class="card mb-4">
+					<div class="card">
                             <div class="card-body">
-                                <p class="mb-0">
                                     
                                     학원 이미지 :
-                    <div id="image" class="card-image">
-				
-           		    <c:set var="i" value="0" />
-					<c:forEach var="academy" items="${listfile}">
-							<c:set var="i" value="${ i+1 }" />
-					
-					<c:if test="${academy.multimediarole == 'I'}">
-							<img height="400" src="/uploadImages/${academy.multimedia}" style="margin-top: 15;"/>
-							<a onclick="deleteMultimedia('${academy.multimediano}')">삭제</a>
-					</c:if>
-		        	</c:forEach>	
-		        	
-		        	</div>
-		        	
-		        	<br/><br/><br/>
-		        					샘플 영상 : 
-		        	
-		        	<c:set var="i" value="0" />
-					<c:forEach var="academy" items="${listfile}">
-							<c:set var="i" value="${ i+1 }" />
-					<c:if test="${academy.multimediarole == 'V'}">
-							<video controls>
-								<source src="/uploadImages/${academy.multimedia}">
-							</video>
-							<a onclick="deleteMultimedia('${academy.multimediano}')"> 삭제</a>
-					</c:if>
-		        	</c:forEach>
+		                    <div class="card-image">
+						
+		           		    <c:set var="i" value="0" />
+							<c:forEach var="academy" items="${listfile}">
+									<c:set var="i" value="${ i+1 }" />
+							
+							<c:if test="${academy.multimediarole == 'I'}">
+							<div>
+								<div class="col-md-3" style="">
+									<img height="300" src="/uploadImages/${academy.multimedia}"/>
+									</br>
+									<a onclick="deleteMultimedia('${academy.multimediano}')">삭제</a>
+									</br>
+								</div>
+							</div>
+							</c:if>
+				        	</c:forEach>	
+				        	
+				        	</div>
+				        	
+				        	<br/><br/><br/><br/><br/><br/>
+				        					샘플 영상 : 
+				        	
+				        	<c:set var="i" value="0" />
+							<c:forEach var="academy" items="${listfile}">
+									<c:set var="i" value="${ i+1 }" />
+							<c:if test="${academy.multimediarole == 'V'}">
+									<video controls>
+										<source src="/uploadImages/${academy.multimedia}">
+									</video>
+									<a onclick="deleteMultimedia('${academy.multimediano}')"> 삭제</a>
+							</c:if>
+				        	</c:forEach>
 		        	
                             </div>
 
@@ -293,38 +298,10 @@
 			});		
 		}
 		
-		function getImage(){
-			$.ajax({
-				 url : '/academy/json/academySampleEdu/'+academyCode,
-			     method : 'GET',
-			     dataType : "json",
-				 success : function(data){
-					 console.log(data);
-					 $.each(data, function(key,value){
-	        				
-	        				var a = '';
-	        				
-	        				alert(value[0].multimediano)
-	        				
-	        				for(var i=0; i<value.length; i=i+2){
-	        					
-	        					var i = '';
-	        						i += '<img height="400" src="/uploadImages/'+value[i].multimedia+'" style="margin-top: 15;"/>'
-	        						i += '삭제하기'
-	        				}
-	        				
-	            			$("#image").html(i);
-	        				
-	        			});
-						 
-				 }							
-			});		
-		}
 		
 		
 		$(document).ready(function(){
 			getAcademyInfo(); 
-			getImage()
 		});
 	
 			
