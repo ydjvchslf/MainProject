@@ -145,10 +145,7 @@ public class ReviewController {
 	@RequestMapping (value="listReview")
 	public String listReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		if(search.getCurrentPage() ==0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
+
 		
 		String academyCode = request.getParameter("academyCode");
 		Academy academy = academyService.getAcademy(academyCode);
@@ -159,13 +156,7 @@ public class ReviewController {
 		System.out.println("여기서 터지냐..?11111");
 		
 		System.out.println("여기서 터지냐..?22222");
-
-	
-		List<Review> list = reviewService.getReviewList(search);
-		System.out.println("여기서터지나 3333333");
-		if(list.size()!=0) {
-		int totalCount = list.get(0).getTotalCount();
-		Page resultPage = new Page (search.getCurrentPage(),totalCount,pageUnit,pageSize);
+		
 		System.out.println("여기서터지나 44444444");
 		Map<String , Object> map = new HashMap<String , Object>();
 		String connectState = "1";
@@ -183,15 +174,28 @@ public class ReviewController {
 		User user1 = UserUtil.user();
 	      
 	      Map<String, Object> map1 = academyService.getAcademyCodeList(user1.getUserNo());
-	      
-	      
-	      model.addAttribute("list", map1.get("list"));
+	      if(search.getCurrentPage() == 0) {
+				search.setCurrentPage(1);
+			}
+			search.setPageSize(pageSize);
+	
+
+		List<Review> list = reviewService.getReviewList(search);
+		System.out.println("여기서터지나 3333333"+list);
+		if(list.size()!=0) {
+		int totalCount = list.get(0).getTotalCount();
+		Page resultPage = new Page (search.getCurrentPage(),totalCount,pageUnit,pageSize);
+		
+		
+		model.addAttribute("resultPage" , resultPage);
+		
+		model.addAttribute("list", map1.get("list"));
 		
 		model.addAttribute("academy", academy);
 		model.addAttribute("academyCode" , academyCode);
 		model.addAttribute("connect",connect);
 		model.addAttribute("listc",list);
-		model.addAttribute("resultPage" , resultPage);
+
 		model.addAttribute("search",search);
 		//model.addAttribute("connect" , map.get("connect"));
 		System.err.println(academy);

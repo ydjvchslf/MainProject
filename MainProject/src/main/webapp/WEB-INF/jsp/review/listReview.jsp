@@ -30,8 +30,8 @@
 	function fncGetList(currentPage) {
 	$("#currentPage").val(currentPage)
 	var academyCode=$("input[name='academyCode']").val();
+	alert("${academyCode} 로 이동!");
 	$("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode="+academyCode).submit();
-	//$("form").submit();
 }
 
 
@@ -97,25 +97,26 @@ function fncAddReviewView(){
 	        	   <form>
 	        	   <!-- 학원 이름, 전화번호 -->
 					<div id="academytitle" class="row" ></div>
-	        	   <c:set var="i" value="${resultPage.totalCount }" />
-	        	  <c:set var="i" value="${i-1}" />
+	     
 	        	  
 	     <!-- 전체게시물 갯수잡는쪽 -->   	  
-	   	  <div class="row">
-		    <div class="col-md-6 text-left">
+
+		  
 		    			 
 		    	<p class="text-primary">
 		    		전체게시물  ${resultPage.totalCount }개, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
-		    </div>
-		    </div>
+
+
 		    
 		    <!-- 전체게시물 잡는쪽 종료 -->
-
+		
 	        	 <input type="hidden" id="currentPage" name="currentPage" value=""/>
 	        	 <!-- 게시물 forEach문 돌아가는쪽 시작 -->
-	          
-		 		 <c:forEach var="review" items="${listc}">
+	          <div class="row--fluid">
+		 		 <c:set var="i" value="${resultPage.totalCount }" />
+				    <c:forEach var="review" items="${listc}">
+				    <c:set var="i" value="${i-1}" />
 		 	 <div class="row-fruid" style="float: left; width: 50%; padding:10px;">
 		 		 	<div class="card shadow mb-4">
                                 <div id="card_box" class="card-header bg-dark py-3">
@@ -124,33 +125,36 @@ function fncAddReviewView(){
                                    
                                 </div>
                                 <div class="card-body">
-                                <button type="button" class="btn btn-dark">
+                             <button type="button" class="btn btn-dark">
                                    <a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode }" ><h8 class="text-warning">상세보기</h8></a></button>
                                 </div>
                             </div>                        
                     	  </div> 
 		 		 </c:forEach>
-		 		 
+		 		</div> 
 		 		  <!-- 게시물 forEach문 돌아가는쪽 종료 -->
 		 		
 		 		
 	<!-- 글쓰기 버튼 if문 돌아가는곳시작 -->
-		 
+	<div class="container-fluid">	 
 	<input type="hidden" name="academyCode" value="${academyCode}" /> 
-	  <div class="form-group">
+	 
 	  	<c:if test="${user.role eq 'student' && connect == '1' }">
-		    <div class="col-sm-11  col-sm-1 text-lift">
-		     &nbsp;&nbsp;<button type="button" class="btn btn-dark"  > 
-		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">글쓰기</h8></a></button>
+		    <div class="col-sm-11  col-sm-1 text-center">
+		     <button type="button" class="btn btn-dark" > 
+		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">글쓰기</h8></button>
+		      </div>
 		</c:if>	 
 		
 		<c:if test="${user.role eq 'parents' && connect == '1' }">
-		    <div class="col-sm-11  col-sm-1 text-lift">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-dark"  >
+		    <div class="col-sm-11  col-sm-1 text-center">
+		     <button type="button" class="btn btn-dark"  >
 		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">글쓰기</h8></a></button>
+		      </div>
 		</c:if>
-		
-	</div>
+
+
+</div>
 		    <!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
