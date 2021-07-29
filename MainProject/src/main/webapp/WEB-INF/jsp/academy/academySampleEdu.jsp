@@ -25,6 +25,32 @@
 	
 	<style>
 	
+	@font-face {
+    font-family: 'TmonMonsori';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	@font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    }
+    
+    		body{
+				overflow-x:hidden; overflow-y:visible;
+				font-family: 'ChosunGu';
+			}
+	
 			#title{
 				vertical-align : top;
 				font-size : 50px;
@@ -124,7 +150,7 @@
 									<c:set var="i" value="${ i+1 }" />
 							<c:if test="${academy.multimediarole == 'V'}">
 							<div class="col-md-4">
-									<video height="450" width="450" controls>
+									<video height="450" width="450" style="margin-bottom: 10px" controls>
 										<source src="/uploadImages/${academy.multimedia}">
 									</video>
 									</br>
@@ -144,8 +170,7 @@
 					
 
 					
-						<div class="container">
-						            
+						  </br></br></br>
 						  <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
 						  	<button class="btn btn-primary" id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">Upload</button>
 						  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
@@ -158,7 +183,6 @@
 							</div>
 						  	<button class="btn btn-primary" type="submit" style="border: 1px solid #ddd; outline: none;">Save</button>
 						  </form>
-						</div>
 					
 					
  
