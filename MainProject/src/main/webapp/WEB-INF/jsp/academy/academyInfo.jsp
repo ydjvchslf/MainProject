@@ -185,7 +185,6 @@
 	// 소개글 수정
 	function saveIntro(academyCode){
 	    var updateIntro = $('[name=academy_'+academyCode+']').val();
-	    
 	    $.ajax({
 	        url : '/academy/json/updateIntro/'+academyCode,
 	        type : 'POST',

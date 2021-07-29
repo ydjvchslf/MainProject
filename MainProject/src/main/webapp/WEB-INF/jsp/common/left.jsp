@@ -25,6 +25,7 @@
 			<c:forEach var="academy" items="${list}">
 				
 				<li>
+					<input type="hidden" name="codes" value="${academy.academyCode}" />
 					<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
 				</li>	
 			</c:forEach>			
@@ -110,9 +111,11 @@
 	          
 	        </ul>
 
+			<button name="test" onclick="send();">테스트</button>
 	        <div class="footer">
 	        	<a name="logout" href="/user/logout">로그아웃</a>
 	        </div>
+	        
 
 	      </div>
     	</nav>
@@ -123,18 +126,46 @@
     	<script>
     	let socket = new SockJS("/socket");
         let stompClient = Stomp.over(socket);
-        stompClient.connect({}, function(frame) {
-        	console.log("연결 성공", frame);
-        	stompClient.subscribe("/topic/message", (res) => {
-        		console.log("메시지를 받았습니다.");
-            	console.log("res", res);
-            });
-            
-            stompClient.send("/chat", {}, '{"test", "test"}');
+        
+		function connect(){
+			stompClient.connect("", "", function(frame) {
+	        	console.log("연결 성공", frame);
+	        	subscribe();
+	        });
+        }
+		
+		function subscribe(){
+			document.getElementsByName("codes").forEach(item => {
+				stompClient.subscribe("/subscribe/noti/" + item.value + "/userNo", (res) => {
+					setNotis(res);
+	        		alert("message");
+	        		console.log("메시지를 받았습니다.");
+	            	console.log("res", res);
+	            });	
+			});
+		}
+		
+		function setNotis(res){
+			let notis = JSON.parse(res);
+			let notiCount = notis.length;
+			addNotiList(notis);
+		}
+		
+		function addNotiList(notis){
+			//알람 리스트 생성
+		}
+        
+        function close(){
+        	socket.close();
+        }
+        
+        document.addEventListener("DOMContentLoaded", function(){
+        	connect();
+        	socket.onclose = function() {
+        	    console.log('close');
+        	    stompClient.disconnect();
+        	};
         });
-        
-        
-        
         
         //로그아웃 JS
         $(function() {	
