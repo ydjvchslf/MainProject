@@ -31,7 +31,7 @@
 	                    <a class="nav-link" href="/review/listReview?academyCode=${academy.academyCode}">후기</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="#">공지사항</a>
+	                    <a class="nav-link" href="/board/listBoardAcademy?cateCode=3&academyCode=${academy.academyCode}">공지사항</a>
 	                </li>
 	              </ul>
 	            </div>

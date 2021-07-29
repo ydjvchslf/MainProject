@@ -58,43 +58,39 @@
 	
 	</script>
 	<style>
-	#boardHeader{
-	vertical-align : top;
-	font-size : 0px;
-	color : #1F4E79;
-	font-family : TmonMonsori;
-	}
-	
-	
 	
 	@font-face {
     font-family: 'TmonMonsori';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
     font-weight: normal;
     font-style: normal;
-}
+	}
+	
+	body{
+	overflow-x:hidden; overflow-y:visible;
+	}
+	
+	#boardHeader{
+	vertical-align : top;
+	font-size : 0px;
+	color : black;
+	font-family : TmonMonsori;
+	}
+	
+	
+	
 
 	#recommendPosition{
-	background-color : #D4EAFB;
+	background-color : #FFF5E1;
 	font-weight : bold;
 	
 	}
 	
 	#tableHead{
-	background-color : #2E75B6;
+	background-color : #F8B739;
 	color : white;
 	text-align : center;
 	font-size : 18px;
-	}
-	
-	@font-face {
-     @font-face {
-	 font-family: 'NanumBarunGothic';
-	 font-style: normal;
-	 font-weight: 400;
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
-	 src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
-	}
 	}
 	
 	#searchPosition{
@@ -103,6 +99,19 @@
 	right : -17%;
 	top : 4.7%;
 	}
+	
+	#boardTable{
+	width : 110%;
+	}
+	
+	#tablerow{
+	border-bottom: 1px solid #FFD78B;
+	}
+	
+	 a:link { color: black; text-decoration: none;}
+	 a:visited { color: black; text-decoration: none;}
+	 a:hover { color: black; text-decoration: underline;}
+
 	</style>
 	
 	
@@ -114,30 +123,38 @@
        <div id="content" class="p-4 p-md-5">
 	      <div class="container-fluid">
 	         <!-- 상단 툴바  -->
+	         <c:if test="${search.cateCode eq '3' }">
+	         <jsp:include page="../common/toolbar.jsp" ></jsp:include>
+	         </c:if> 
+	         
+	         <c:if test="${search.cateCode ne '3' }">
 	         <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
+	         </c:if>
 				<!-- 게시판 흰색 박스 부분-->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; 
-					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;
+					 width : 100%;">
 				  <!-- 게시판 title -->
 				  <div class="row" id="boardHeader">
 					<c:choose>
-					<c:when test="${search.cateCode eq '0' }">
+					<c:when test="${board.cateCode eq '0' }">
 					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 공지사항</h3>
 					</c:when>
-					<c:when test="${search.cateCode eq '1' }">
+					<c:when test="${board.cateCode eq '1' }">
 					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 Q&A</h3>
 					</c:when>
 					<c:when test="${board.cateCode eq '2' }">
 					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3>
 					</c:when>
-					<c:when test="${search.cateCode eq '3' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;학원 공지사항</h3>
+					<c:when test="${board.cateCode eq '3' }">
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;${academy.academyName}학원 공지사항</h3>
 					</c:when>
 					<c:when test="${search.isMine eq 'y' }">
 					  <h3>내가 쓴 게시글 보기</h3>
 					</c:when>
 					</c:choose>	
 	 			  </div><br>
+	 
 			 	<!-- 검색부분  -->
 		   		<div class="row">
 		   		  <!-- 검색그룹  -->
@@ -160,7 +177,7 @@
 				  	</div>
 				  	<!-- 검색 버튼  -->
 				  	<div>
-				  	<button type="button" class="btn btn-default">검색</button>
+				  	<button type="button" class="btn btn-primary">검색</button>
 				 	 <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				 	 <input type="hidden" id="currentPage" name="currentPage" value=""/>
 					</form>
@@ -170,13 +187,15 @@
 		
       		<!-- 게시판 table Start -->
 			<div class="table-responsive">
-      	       <table class="table table-hover" id="boardTable" width="100%" cellspacing="0" ">
+      	       <table class="table table-hover" id="boardTable" >
         		 <!-- 게시판 table head -->
         		 <thead id="tableHead">
 	         	   <tr>
 		             <th width=10% align="center"></th>
 		             <th width=30% align="center" >게시글제목</th>
+		            <c:if test="${board.cateCode ne '3'}">
 		             <th width=20% align="center">작성자</th>
+		            </c:if>
 		             <th width=15% align="left">작성일자</th>
 		             <th width=10% align="center">조회수</th>
 		            <c:if test="${board.cateCode eq '2'}">
@@ -189,13 +208,13 @@
 		 			<c:set var="i" value="${resultPage.totalCount }" />
 		 			<c:forEach var="board" items="${map}">
 				  <tr>
-				    <td width=10% align="center">추천</td>
-				    <td width=30% align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.COMMENT_CNT}</span>)</a></td>
-				    <td width=20% align="left">${board.EMAIL}</td>
-				    <td width=15% align="left">
+				    <td id="tablerow" width=10% align="center">추천</td>
+				    <td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.COMMENT_CNT}</span>)</a></td>
+				    <td id="tablerow" width=20% align="left">${board.EMAIL}</td>
+				    <td id="tablerow" width=15% align="left">
 				  	  <fmt:formatDate value="${board.BOARD_DATE}" pattern="yyyy-MM-dd"/></td>
-				    <td width=10% align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.VIEW_COUNT}</td>
-				    <td width=10% align="left"><span id="recommendCnt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.RECNT}</span></td>
+				    <td id="tablerow" width=10% align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.VIEW_COUNT}</td>
+				    <td id="tablerow" width=10% align="left"><span id="recommendCnt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.RECNT}</span></td>
 				  </tr>
          			 </c:forEach></c:if>
        	     	</tbody>
@@ -205,21 +224,43 @@
 				    <c:forEach var="board" items="${list}">
 				    <c:set var="i" value="${i-1}" />
 				  <tr>
-					<td width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>
-					<td width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
-					<td width=20% align="left">${board.email}</td>
-					<td width=15% align="left">
+					<td id="tablerow" width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>
+					<c:if test="${search.isMine eq 'y' }">
+				    <td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&isMine=y">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+				    </c:if>
+				    <c:if test="${search.isMine ne 'y' }">
+					<td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+					</c:if>
+					<td id="tablerow" width=20% align="left">${board.email}</td>
+					<td id="tablerow" width=15% align="left">
 					  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
-					<td width=10% align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.viewCnt}</td>
+					<td id="tablerow" width=10% align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.viewCnt}</td>
 					<c:if test="${search.isMine eq 'n' && board.cateCode eq '2'}">
-					<td width=10% align="left"><span id="recommendCnt">
+					<td id="tablerow" width=10% align="left"><span id="recommendCnt">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.recommendCnt}</span></td>
 					</c:if>
 				  </tr>
            		 	</c:forEach>
           		</tbody>
+          		<!-- 학원공지사항 table list --> 
+          		<tbody>
+          			<c:if test="${board.cateCode eq '3' }">
+		  			<c:set var="i" value="${resultPage.totalCount }" />
+		 			<c:forEach var="board" items="${listb}">
+					<c:set var="i" value="${i-1}" />
+				  <tr>
+			 		<td align="left">${i+1-(resultPage.currentPage-1)*5}</td>
+					<td id="tablerow" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+				    <td id="tablerow" align="left">
+			  		  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
+			  		<td id="tablerow" align="left">${board.viewCnt}</td>
+				  </tr>
+          			</c:forEach></c:if>
+        		</tbody>
      	 	</table>
      	</div>
+     	
+     	
     	<!--  table End /////////////////////////////////////-->
 	  <!-- 글쓰기 버튼 -->
 	  <div class="form-group">
