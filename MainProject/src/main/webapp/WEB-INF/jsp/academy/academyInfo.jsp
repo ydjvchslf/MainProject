@@ -48,7 +48,6 @@
 			
 			#panel-color{
 				background-color: black !important;
-
 			}
 			
 			

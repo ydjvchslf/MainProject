@@ -40,6 +40,7 @@ import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
 import com.buyedu.service.noti.NotiService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 @RestController
 @RequestMapping("/academy/*")
@@ -150,6 +151,22 @@ public class AcademyRestController {
 		return academy;
 	}
 	
+	
+	@RequestMapping(value = "json/academySampleEdu/{academyCode}", method = RequestMethod.GET)
+	public Map<String, Object> getAcademySampleEdu(HttpServletRequest httpRequest,
+													@PathVariable String academyCode) throws Exception{
+		
+		System.out.println("레스트로 가져오자");
+		
+		System.out.println("academySampleEdu 아카데미 코드 = " + academyCode);
+		
+		Map<String, Object> map = academyService.getMultimediaList(academyCode);
+		
+		int imgcount = academyService.getImageCount(academyCode);
+		
+		
+		return map;
+	}
 	
 	
 	@ResponseBody
