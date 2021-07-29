@@ -38,5 +38,20 @@ public class ChartService {
 		
 		return map;
 	}
+	
+	public int getBoardCnt() {
+		
+		return chartDao.getBoardCnt();
+	}
+	
+	public int getEduCnt() {
+		
+		return chartDao.getEduCnt();
+	}
+	
+	public int getReviewCnt() {
+		
+		return chartDao.getReviewCnt();
+	}
 
 }
