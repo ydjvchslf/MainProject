@@ -504,7 +504,7 @@ public class UserController {
 	    	cookie.setPath("/");
 	    	res.addCookie(cookie);
 	    	
-	    	 System.out.println("로긴한 user=>" + dbUser);
+	    	System.out.println("로긴한 user=>" + dbUser);
 		        
 	 	    session.setAttribute("user", dbUser);
 	 	    model.addAttribute("user", dbUser);
@@ -529,9 +529,9 @@ public class UserController {
 	 			
 	 		}
 	 		
-	 		String getUserView = this.getUser(session, email, model);
+	 		//String getUserView = this.getUser(session, email, model);
 			
-			return getUserView;
+	 		return "/search/searchList";
 		
 	    }
 	    
@@ -601,9 +601,11 @@ public class UserController {
 					
 				}
 				
-				String getUserView = this.getUser(session, email, model);
+				//String getUserView = this.getUser(session, email, model);
 				
-				return getUserView;
+				//return getUserView;
+				
+				return "/search/searchList";
 			
 		}
 		

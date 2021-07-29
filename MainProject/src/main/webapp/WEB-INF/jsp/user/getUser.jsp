@@ -25,7 +25,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -34,10 +34,11 @@
         <div id="content" class="p-4 p-md-5">
 				
 				<div class="container-fluid"><!-- container시작 -->
-				
-				        <h1>내정보보기</h1>
-				        <hr>
-				        
+						
+						<jsp:include page="../common/toolbar2.jsp"></jsp:include> 
+						
+						<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+						
 					      <div class="row"><!-- 첫번째 row 시작 -->
 					        <div class="col-sm-6">
 					          <div class="panel panel-default">
@@ -54,11 +55,8 @@
 					              </h3>
 					              <c:if test="${!empty user.role }"> 
 					              <h3 class="m-0 font-weight-bold text-primary" align="right">
-									<a href="/user/updateUser?email=${user.email}"
-										class="btn btn-default btn-circle btn-sm" data-toggle="modal"
-											data-target="#updateModal" align="right">
-											수정하기~~
-									</a>
+									<img src="/image/modify.png" width="30" data-toggle="modal"
+											data-target="#updateModal">
 								  </h3>
 								  </c:if>
 					            </div>
@@ -152,32 +150,20 @@
 					          <div class="panel panel-default">
 					            <div class="panel-heading">
 					              <h3 class="panel-title">비밀번호 변경</h3>
-					              <h3 class="panel-title">
-					              	<a href=""
-										class="btn btn-info btn-circle btn-sm" data-toggle="modal"
-										data-target="#passwordModal" align="right">
-										<i class="fas fa-info-circle"></i>
-									</a>
+					              <h3 class="panel-title" align="right">
+					              	<img src="/image/password.png" width="30" data-toggle="modal"
+											data-target="#passwordModal">
 					              </h3>
 					            </div>
-					            <div class="panel-body"> 
-						            비밀번호를 변경할 수 있습니다.
-						         </div>
-					          </div>
+					          </div><br>
 					          <div class="panel panel-default">
 					            <div class="panel-heading">
 					              <h3 class="panel-title">계정 탈퇴</h3>
-					              <h3 class="panel-title">
-					              	<a href="/user/outUser?email=${user.email}" 
-									 	class="btn btn-danger btn-circle btn-sm" data-toggle="modal"
-										data-target="#outModal" align="right">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+					              <h3 class="panel-title" align="right">
+					              	<img src="/image/trash.png" width="30" data-toggle="modal"
+											data-target="#outModal">
 					              </h3>
 					            </div>
-					            <div class="panel-body"> 
-						            계정을 삭제할 수 있습니다.
-						         </div>
 					          </div>
 					          </c:if>
 					          
@@ -186,11 +172,12 @@
 						          <div class="panel panel-default">
 						            <div class="panel-heading">
 						              <h3 class="panel-title">학원 인증하기</h3>
-						              <h3 class="panel-title">
+						              <h3 class="panel-title" align="right">
 						                <!-- 인증하기 버튼 -->
-											<span name="addConnect" class="btn btn-success btn-circle btn-sm">
+											<!--  <span name="addConnect" class="btn btn-success btn-circle btn-sm">
 			                                   <i class="fas fa-check">인증버튼</i>
-			                                </span>
+			                                </span>-->
+			                               <span name="addConnect"><img src="/image/plus.png" width="30"></span>
 						              </h3>
 						            </div>
 						            <div class="panel-body"> 
@@ -515,7 +502,7 @@
 						</div><!-- 계정연동 모달 끝-->
 				
 				
-				
+				</div>
 				
 	      	</div><!-- container 끝 -->
       	
@@ -770,7 +757,7 @@
 
 						$(".connect_text").val("")
 						displayValue = "최대 인증 갯수를 초과했습니다."
-						$(".connect_text").css("color", "red");
+						$(".connect_text").text(displayValue).css("color", "red");
 
 					} else if (JSONData.message == "ok") {
 
@@ -782,18 +769,18 @@
 
 						$(".connect_text").val("")
 						displayValue = "이미 등록된 학원입니다."
-						$(".connect_text").css("color", "red");
+						$(".connect_text").text(displayValue).css("color", "red");
 
 					} else if (JSONData.message == "notExist") {
 
 						$(".connect_text").val("")
 						displayValue = "유효하지 않은 학원코드입니다."
-						$(".connect_text").css("color", "red");
+						$(".connect_text").text(displayValue).css("color", "red");
 
 					}
 
 					$("#academyCode").val("");
-					$(".connect_text").append(displayValue);
+					$(".connect_text").text(displayValue);
 
 				}
 			});
