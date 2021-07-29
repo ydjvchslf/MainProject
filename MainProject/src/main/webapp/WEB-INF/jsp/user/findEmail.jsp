@@ -9,7 +9,7 @@
 
     <meta charset="utf-8">
     
-    <title> Forgot Password</title>
+    <title>Buy!edu</title>
 
     <!-- Custom fonts for this template-->
     <link href="/sbadmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -53,6 +53,12 @@
 	a:hover {
     color: #000000;
     text-decoration: underline;
+    }
+    
+    
+   .text_name {
+   color: red; font-size:12px; color:red; font-family:'돋움';
+   } 
 
 </style>
 
@@ -79,29 +85,23 @@
                                         <div class="form-group">
                                             <input type="email" name="name" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="이름">
+                                                placeholder="이름"><br>
                                             <span id="helpBlock" class="help-block">
-										      	<strong class="text_name"></strong>
+										      <div align="center" class="text_name"></div>
 										     </span>        
                                         </div>
                                         <div class="form-group">
                                             <input type="email" name="phone" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="휴대전화번호">
-                                            <span id="helpBlock" class="help-block">
-										      	<strong class="text_email"></strong>
-										     </span>    
-                                        </div>
+                                        </div><br>
                                         <a href="#" name="findEmail" class="btn btn-primary btn-user btn-block">
-                                            Find Email
+                                            이메일 찾기
                                         </a>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="#">Create an Account!</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" name="login" href="#">Already have an account? Login!</a>
+                                        <a class="small" name="login" href="#">Login</a>
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
         		$(".text_name").text("올바른 이름 형식입니다.").css("color", "blue");
         		return true;
         	}else{
-        		$(".text_name").text("올바른 이름 형식이 아닙니다").css("color", "red");
+        		$(".text_name").text("올바른 이름 형식이 아닙니다.").css("color", "red");
         	}
         } else{
         	$(".text_name").text("이름을 필수로 입력하세요!");

@@ -73,7 +73,8 @@
 			                			E-MAIL : ${email} <br><br>
 			                			회원님은 SNS 연동해제 상태입니다.<br>
 			                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
-			                			<a href="/user/snsAddUser?email=${email}">계정연동하기</a>
+			                			<a href="#" data-toggle="modal"
+											data-target="#unify">계정연동하기</a>
 			                		</c:otherwise>
 				                </c:choose>
 					            </div>
@@ -397,100 +398,110 @@
 						
 						
 						
-						
-						
-						
-						
-						
 							
 					
 						
 						<!-- 계정연동 모달 시작-->
-						<div class="modal fade" id="unifyModal" tabindex="-1" role="dialog"
+						<div class="modal fade" id="unify" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">계정연동하기</h4>
+										<h4 class="modal-title" id="myModalLabel">계정연동을 위해 추가정보 입력을 해주세요!</h4>
 										<button type="button" class="close" data-dismiss="modal"
 											aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
 									<div class="modal-body">
-										<h5>계정연동을 위해 추가정보 입력을 해주세요!</h5>
-										<hr>
 										<!-- 모달내용 태그 -->
-										<form class="user">
-											<div class="form-group"><!-- 사용자역할 -->
-												<span class="radio">
-							                        <label><input name="role" id="student8" name="student" type="radio" class="radio-label" checked value="student">학생 </label>
-										            <label><input name="role" id="parents8" name="parents" type="radio" class="radio-label" value="parents"> 학부모 </label>
-										            <label><input name="role" id="academy8" name="academy" type="radio" class="radio-label" value="academy"> 학원</label>
-							                    	<input type="hidden" class="form-control" id="email8" name="email" value="${snsEmail}">
-							                    </span>
-											</div>
-											<div class="form-group">
-												<div class="row"><!-- 비밀번호 입력 -->
+											<form class="user">
+						                          <div class="form-group" align="center">
+						                             <div class="custom-control custom-checkbox small">
+						                                <span class="radio">
+											                   <label><input name="role" id="student" name="student" type="radio" class="radio-label" checked value="student">학생</label>
+														       <label><input name="role" id="parents" name="parents" type="radio" class="radio-label" value="parents"> 학부모 </label>
+														       <label><input name="role" id="academy" name="academy" type="radio" class="radio-label" value="academy"> 학원</label>
+											            </span>
+							                         </div>
+							                      </div>
+							                      
+							                      <div class="form-group">
+						                              <input type="hidden" name="email" value="${email}">
+						                          </div>
+							                      <div class="row"><!-- 비밀번호 입력 -->
 													<div class="col-6">
 														<div class="form-group">		
-															<input type="password" id="password0" name="password" class="form-control form-control-user"
-				                                                placeholder="비밀번호" aria-describedby="emailHelp">
-				                                        </div>
-				                                    </div>
-				                                    <div class="col-6"><!-- 비밀번호 확인 -->
+															<input type="password" id="PASSWORD1" name="password" class="form-control form-control-user"
+										                            placeholder="비밀번호" aria-describedby="emailHelp">
+							                             </div>
+							                        </div>
+							                        <div class="col-6"><!-- 새비밀번호 -->
 														<div class="form-group">		
 															<input type="password" class="form-control form-control-user"
-				                                                placeholder="비밀번호확인" id="password2" name="password2" aria-describedby="emailHelp">
-				                                        </div>
-				                                    </div>
-												      	<strong class="text_password"></strong>
-			                            		</div>
-											</div>
-											<div class="form-group">
-                                            <input type="text" id="name8" name="name" class="form-control form-control-user"
-                                               aria-describedby="emailHelp"
-                                                placeholder="이름">
-                                            <span class="text_name"></span>
-                                        </div>
-                                        <div class="row"><!-- 휴대전화번호 입력 -->
-												<div class="col-8">
-													<div class="form-group">		
-														<input type="text" id="phone8" name="phone" class="form-control form-control-user"
-			                                                placeholder="휴대전화번호"  aria-describedby="emailHelp">
-			                                        </div>
-			                                    </div>
-			                                    <div class="col-4"><!-- 발송버튼 -->
-													<div class="form-group">
-														<div class="text-center">
-					                                       <a href="#" name="send_sms8" class="btn btn-primary btn-user btn-block">
-					                                            인증요청
-					                                        </a>
-					                                    </div>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="row"><!-- 인증번호 입력 -->
-												<div class="col-8">
-													<div class="form-group">		
-														<input type="text" class="form-control form-control-user"
-			                                                placeholder="인증번호입력" id="vaildNum8" name="vaildNum8" aria-describedby="emailHelp">
-			                                        </div>
-			                                    </div>
-			                                    <div class="col-4"><!-- 인증번호 확인버튼 -->
-													<div class="form-group">		
-														<div class="text-center">
-					                                        <a href="#" name="check_sms8" class="btn btn-primary btn-user btn-block">
-					                                            확인
-					                                        </a>
-					                                        <span class="text_sms8"></span>
-					                                    </div>
-			                                        </div>
-			                                    </div>
-			                                </div><!-- 계정연동 클릭이벤트 해야해 -->
-											<a href="#" name="unify"
-												class="btn btn-primary btn-user btn-block"> 계정연동하기 </a>
-										</form>
+										                           placeholder="비밀번호확인" id="PASSWORD2" name="password2" aria-describedby="emailHelp">
+										                </div>
+										            </div>
+										            <div class="col-12">
+											            <div class="form-group" align="center">
+													     	<span class="TEXT_PASSWORD"></span>
+														</div>
+													</div>
+										            
+							                      </div>
+						                              <div class="form-group">
+						                                  <input type="text" id="NAME" name="name" class="form-control form-control-user"
+						                                     aria-describedby="emailHelp"
+						                                      placeholder="이름">
+						                              </div>
+						                              <div class="col-12">
+											            <div class="form-group" align="center">
+													     	<span class="TEXT_NAME"></span>
+														</div>
+													</div>
+							                        <div class="row"><!-- 휴대전화번호 입력 -->
+														<div class="col-8">
+															<div class="form-group">		
+																<input type="text" id="PHONE" name="phone" class="form-control form-control-user"
+											                           placeholder="휴대전화번호"  aria-describedby="emailHelp">
+											                 </div>
+											            </div>
+											            <div class="col-4"><!-- 발송버튼 -->
+															<div class="form-group">
+																<div class="text-center">
+							                                   		<a href="#" name="SEND_SMS" class="btn btn-primary btn-user btn-block">
+							                                         인증요청
+							                                    	</a>
+							                                	</div>
+							                             	</div>
+							                             </div>
+							                        </div>
+							                          <div class="row"><!-- 인증번호 입력 -->
+														<div class="col-8">
+															<div class="form-group">		
+																<input type="text" class="form-control form-control-user"
+							                                          placeholder="인증번호입력" id="VAILDNUM" name="VAILDNUM" aria-describedby="emailHelp">
+							                                 </div>
+							                            </div>
+							                             <div class="col-4"><!-- 인증번호 확인버튼 -->
+														  <div class="form-group">		
+															<div class="text-center">
+										                        <a href="#" name="CHECK_SMS" class="btn btn-primary btn-user btn-block">
+										                             확인</a>
+										                    </div>
+										                 </div>
+										                  </div>
+										                 <div class="col-12">
+											            <div class="form-group" align="center">
+													     	<span class="TEXT_SMS"></span>
+														</div>
+													</div>
+										               
+							                          </div>
+							                               <a href="#" name="btnJoin" id="btnJoin" class="btn btn-primary btn-user btn-block">
+							                                   계정연동하기
+							                               </a>
+							                      </form>
 										<!-- 모달 내용 끝 -->
 									</div>
 									<div class="modal-footer">
@@ -500,6 +511,7 @@
 								</div>
 							</div>
 						</div><!-- 계정연동 모달 끝-->
+				
 				
 				
 				</div>
@@ -1035,7 +1047,7 @@
 
 		} else {
 
-			var str = '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
+			var str = '비밀번호는 8자 이상이어야 하며, 숫자/영문/특수문자를 모두 포함해야 합니다.';
 			$('.text_password').text(str).css("color", "red");
 			$("#password").focus();
 		}
@@ -1443,7 +1455,344 @@
 	}
 
 
+	
+	
+	
+	
+	
+	
+	
+//////////////////////////////계정연동 js 시작 //////////////////////////////////////
+	
+	
+	
+	
+  	//휴대전화번호 자동 대시(-)삽입
+	$(document).on("keyup", "#PHONE", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+	
+        
+    var checkVaild_ = false;
+	
+	//가입버튼 눌렀을때 모든 true 값 체크 메서드
+	function fncCheckAll_() {
+		
+		var valid = false;
+		
+		if( fncCheckPw_() && fncCheckName_() && fncCheckPhone_ && checkVaild_ ){
+			valid = true;
+		}
+		
+		return valid;
+	}
+	
 
+	
+	$(function() {
+		
+		//가입 event 연결
+		$( "#btnJoin" ).on("click" , events_.click.signup);
+		
+		//비밀번호1 변화 event
+		$('#PASSWORD1').on("change", events_.change.password);
+		
+		//비밀번호2 변화 event
+		$('#PASSWORD2').on("change", events_.change.password2);
+		
+		//이름 변화 event
+		$("#NAME").on("change", events_.change.name);
+		
+		//핸드폰 변화 event
+		$("#PHONE").on("change", events_.change.phone);
+		
+		//인증번호 발송 event
+		$( "a[name='SEND_SMS']" ).on("click" , events_.click.phoneBtn);
+		
+		//인증번호 확인 event
+		$( "a[name='CHECK_SMS']" ).on("click" , events_.click.vaildBtn);
+		
+		
+		
+	});	
+	
+	
+	
+	
+	var events_ = {
+			
+		click : {
+			signup : function() {
+				alert("가입연동클릭")
+				if(fncCheckAll_()){
+					alert("가입연동 모든 유효성 검사 ok")
+					fncAddUser_();
+				}
+				
+			},
+			
+			phoneBtn : function() {
+				alert("인증번호발송 클릭")
+				fncAuth_();
+				
+			},
+			
+			vaildBtn : function() {
+				alert("인증확인 클릭")
+				fncKey_();
+				
+			}
+			
+		},
+	
+		change : {
+			
+			password : function(){
+				fncCheckPw_("first");
+			},
+			
+			password2 : function(){
+				fncCheckPw_("second");
+			},
+			
+			name : function(){
+				fncCheckName_();
+			},
+			
+			phone : function(){
+				fncCheckPhone_();
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	//이름 체크 함수
+    function fncCheckName_() {
+		
+		var name = $("#NAME").val();
+		
+		console.log(name)
+		
+        if(name){
+        	var nameRegExp = /^[가-힣]{2,20}$/;
+        	
+        	if(nameRegExp.test(name)){
+        		$(".TEXT_NAME").text("올바른 이름 형식입니다.");
+				$(".TEXT_NAME").css("color", "blue");
+        		return true;
+        	}else{
+        		$(".TEXT_NAME").text("올바른 이름 형식이 아닙니다");
+				$(".TEXT_NAME").css("color", "red");
+        	}
+        } else{
+        	$(".TEXT_NAME").text("이름을 필수로 입력하세요!");
+			$(".TEXT_NAME").css("color", "red");
+        }
+        return false; //확인이 완료되었을 때
+    }
+	
+	
+	
+    
+
+	//핸드폰 체크 함수 
+    function fncCheckPhone_(){
+    	
+    	var phone = $("#PHONE").val();
+    	
+    	if(phone){
+    		
+    		var regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+    		
+    		if(regExp.test(phone)){
+    			
+    			$(".text_phone").text("올바른 휴대폰 형식입니다.");
+				$(".text_phone").css("color", "blue");
+				
+				return true;
+				
+    		}else{
+    			
+    			$(".text_phone").text("올바르지 않은 휴대폰 형식입니다.");
+				$(".text_phone").css("color", "red");
+    			
+    		}
+    	}else{
+    		
+    		$(".text_phone").text("휴대폰번호를 필수로 적어주세요!");
+			$(".text_phone").css("color", "red");
+    		
+    	}
+    	return false;
+    }
+
+
+	
+	//회원가입 버튼 함수
+	function fncAddUser_() {
+		alert("게정연동에 성공했습니다! 로그인 후 이용해주세요!")
+		$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+	}
+	
+
+	
+
+	
+	
+	
+	 
+	//이메일 중복확인 함수 ajax
+	function fncCheckEmailDuplication_() {
+
+		var email = $("#email").val();
+		
+		$.ajax({
+			url : "/user/json/checkEmail/"+email,
+			method : "GET" ,
+			dataType : "json" ,
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},
+			success : function(JSONData, status) {
+				
+				console.log(JSONData)
+				//alert(JSONData);
+
+				if (JSONData.result == 1) {
+					
+					emailDuplicationCheck = false;
+					$(".email_check").text("사용중인 이메일입니다.");
+					$(".email_check").css("color", "red");
+					
+				} else {
+					
+					emailDuplicationCheck = true;
+					$(".email_check").text("사용가능한 이메일입니다.");
+					$(".email_check").css("color", "blue");
+					
+				}
+			}
+		});
+			
+	}
+	
+	
+	
+	//첫번째,두번째 비밀번호 조건
+	
+	function fncCheckPw_(passwordType){
+		var passwordTarget = passwordType == "first" ? "PASSWORD1" : "PASSWORD2";
+		var passwordCompare = passwordType == "first" ? "PASSWORD2" : "PASSWORD1";
+		
+		
+		var pw = $("#" + passwordTarget).val();
+		var reg = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+		
+		console.log(pw);
+		
+		if(reg.test(pw)) {
+			
+			var pw2 = $("#" + passwordCompare).val();
+			
+			if( pw == pw2 ){
+				
+				$(".TEXT_PASSWORD").text("비밀번호가 일치합니다.");
+				$(".TEXT_PASSWORD").css("color", "blue");
+				
+				return true;
+				
+			}else{
+				
+				$(".TEXT_PASSWORD").text("비밀번호가 일치하지 않습니다.");
+				$(".TEXT_PASSWORD").css("color", "red");
+			}
+			
+		}else {
+			
+			var str = '비밀번호는 8자 이상이어야 하며, 숫자/영문/특수문자를 모두 포함해야 합니다.';
+			$('.TEXT_PASSWORD').text(str).css("color", "red");
+			$("#PASSWORD1").focus();
+		}
+		return false;
+	}   
+    
+    
+	
+	//인증번호 발송 함수
+	function fncAuth_(){					
+		
+		var phone = $("#PHONE").val()
+		alert("입력한 연락처 : "+phone);
+		
+		$.ajax({
+				url : "/user/json/sms/"+phone ,
+				method : "GET" ,
+				dataType : "json" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : 
+						function(JSONData , status) {
+
+						//alert("status : "+status);
+						//alert("JSONData : \n"+JSONData);
+						//alert("JSONData : \n"+JSONData.key);
+						key = JSONData.key;
+						
+				}
+					
+		});	//End ajax
+	};
+	
+	
+	//인증확인 함수
+	//test 용, 나중에 실제에서는 지우기
+	
+	var key ="123456";
+	//var key = "";
+	
+	var vaildNum = $("#VAILDNUM").val();
+	
+	function fncKey_() {	
+		
+		var vaildNum = $("#VAILDNUM").val();
+		
+		console.log("key : " +key)
+		
+		if( vaildNum == key ){
+			
+			$(".TEXT_SMS").text("인증번호가 맞습니다.");
+			$(".TEXT_SMS").css("color", "blue");
+			
+			$("#VAILDNUM").attr('disabled', 'disabled')
+			
+			checkVaild_ = true;
+			
+		}else{
+			
+			$(".TEXT_SMS").text("인증번호가 맞지 않습니다.");
+			$(".TEXT_SMS").css("color", "red");
+		
+		}		
+	}		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	        
     
