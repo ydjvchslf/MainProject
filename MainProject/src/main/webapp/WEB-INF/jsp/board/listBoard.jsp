@@ -66,8 +66,23 @@
     font-style: normal;
 	}
 	
+	@font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 	body{
 	overflow-x:hidden; overflow-y:visible;
+	font-family: 'ChosunGu';
 	}
 	
 	#boardHeader{
@@ -76,14 +91,10 @@
 	color : black;
 	font-family : TmonMonsori;
 	}
-	
-	
-	
 
 	#recommendPosition{
 	background-color : #FFF5E1;
 	font-weight : bold;
-	
 	}
 	
 	#tableHead{
@@ -105,12 +116,16 @@
 	}
 	
 	#tablerow{
-	border-bottom: 1px solid #FFD78B;
+	border-bottom: 1px solid #85827D;
 	}
 	
-	 a:link { color: black; text-decoration: none;}
-	 a:visited { color: black; text-decoration: none;}
-	 a:hover { color: black; text-decoration: underline;}
+	 #ListboardTitle:hover{
+	 text-decoration: underline;
+	 }
+	 
+	 #ListboardTitle{
+	 color: black;
+	 }
 
 	</style>
 	
@@ -187,7 +202,7 @@
 		
       		<!-- 게시판 table Start -->
 			<div class="table-responsive">
-      	       <table class="table table-hover" id="boardTable" >
+      	       <table class="table" id="boardTable" >
         		 <!-- 게시판 table head -->
         		 <thead id="tableHead">
 	         	   <tr>
@@ -209,7 +224,8 @@
 		 			<c:forEach var="board" items="${map}">
 				  <tr>
 				    <td id="tablerow" width=10% align="center">추천</td>
-				    <td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">${board.BOARD_TITLE} (<span class="commentCount">${board.COMMENT_CNT}</span>)</a></td>
+				    <td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.BOARD_NO}&cateCode=${board.CATEGORY_CODE}">
+				    	<span id="ListboardTitle">${board.BOARD_TITLE}</span> (<span class="commentCount">${board.COMMENT_CNT}</span>)</a></td>
 				    <td id="tablerow" width=20% align="left">${board.EMAIL}</td>
 				    <td id="tablerow" width=15% align="left">
 				  	  <fmt:formatDate value="${board.BOARD_DATE}" pattern="yyyy-MM-dd"/></td>
@@ -229,7 +245,8 @@
 				    <td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&isMine=y">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 				    </c:if>
 				    <c:if test="${search.isMine ne 'y' }">
-					<td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+					<td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">
+						<span id="ListboardTitle">${board.boardTitle}</span> (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 					</c:if>
 					<td id="tablerow" width=20% align="left">${board.email}</td>
 					<td id="tablerow" width=15% align="left">
@@ -250,7 +267,8 @@
 					<c:set var="i" value="${i-1}" />
 				  <tr>
 			 		<td align="left">${i+1-(resultPage.currentPage-1)*5}</td>
-					<td id="tablerow" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+					<td id="tablerow" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3">
+					<span id="ListboardTitle">${board.boardTitle}</span>(<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 				    <td id="tablerow" align="left">
 			  		  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
 			  		<td id="tablerow" align="left">${board.viewCnt}</td>
@@ -269,25 +287,25 @@
 		 	<c:choose>
 			  <c:when test="${search.cateCode eq '0' && user.userNo eq 140 }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
 		     	 <a href="/board/addBoard?cateCode=0" >글쓰기</a></button>
 		    	</div>
 			  </c:when>
 			  <c:when test="${search.cateCode eq '1' }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default" value="${search.cateCode}" >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary" value="${search.cateCode}" >
 		     	 <a href="/board/addBoard?cateCode=1" >글쓰기</button>
 		    	</div>
 			  </c:when>
 			  <c:when test="${search.cateCode eq '2' }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
 		     	 <a href="/board/addBoard?cateCode=2" >글쓰기</a></button>
 		    	</div>
 			  </c:when>
 			  <c:when test="${search.cateCode eq '3' && user.role eq 'academy'}">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
 		     	 <a href="/board/addBoard?cateCode=3" >글쓰기</a></button>
 		    	</div>
 			  </c:when>
