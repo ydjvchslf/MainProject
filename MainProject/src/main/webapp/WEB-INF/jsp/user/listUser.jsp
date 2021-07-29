@@ -24,6 +24,7 @@
 
   </head>
   
+  
   <style>
   
        @font-face {
@@ -37,9 +38,26 @@
    overflow-x:hidden; overflow-y:visible;
    font-family: ChosunGu;
    }
-  
+   
+   
+   .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #F8B739;
+    border-color: #F8B739;
+	}
+	
+	#tableHead{
+	background-color : #4D4D4D;
+	color : white;
+	text-align : center;
+	font-size : 18px;
+	}
+   
+   
   </style>
-  
+ 
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
@@ -64,7 +82,6 @@
 						    	</p>
 						    </div>
 						    
-						   
 						    <div><br></br></div>
 						    
 						    <div class="col-md-6 text-right">
@@ -98,7 +115,7 @@
 									    			onkeyup="enterEvent()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 									  </div>
 									  
-									  <button type="button" class="btn btn-primary">검색</button>
+									  <button type="button" id="search" class="btn btn-primary">검색</button>
 								  </div>
 								  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 								  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -111,10 +128,10 @@
 						
 						
 				      <!--  table Start /////////////////////////////////////-->
-				      <table class="table table-hover table-striped" >
+				      <table class="table table-hover table-striped">
 				      
 				        <thead>
-				          <tr>
+				          <tr id="tableHead">
 				            <th align="center">No</th>
 				            <th align="left">구분</th>
 				            <th align="left">회원명</th>
@@ -201,7 +218,7 @@
 		});
 		
 		
-		$( "button.btn.btn-default" ).on("click" , function() {
+		$( "#search" ).on("click" , function() {
 			fncGetList(1);
 		});
 		 

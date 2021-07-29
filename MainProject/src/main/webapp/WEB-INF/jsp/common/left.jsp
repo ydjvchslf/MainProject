@@ -2,7 +2,16 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
+
 <html>
+
+<head>
+
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+
+</head>
 
 
 <body>
@@ -105,9 +114,6 @@
     	
     	<script src="/js/sockjs.min.js"></script>
     	<script src="/js/stomp.min.js"></script>
-    	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-		<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-		<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
     	
     	
     	<script>
@@ -206,8 +212,6 @@
     				 
     			 }else if(loginType == "naver"){
     				 
-    				 alert("네이버로그아웃")
-    				 
     				 var accessToken = localStorage.getItem("com.naver.nid.access_token")
     				 var tokenArray = accessToken.split(".");
     				 var finalToken = tokenArray[1]
@@ -238,9 +242,6 @@
     	});
 
 
-
-        
-        
         
     	</script>
 
