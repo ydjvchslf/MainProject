@@ -24,8 +24,19 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>	
 	
 	<style>
+	
+		#middle{
+			position: absolute;
+			top: 8%;
+			left: 40%;
+		}
+		
+		#right{
+			position: absolute;
+			top: 8%;
+			left: 88%;
+		}
 
-		    
 		    #academytitle{
 				vertical-align : top;
 				font-size : 0px;
@@ -125,7 +136,7 @@
 				 
 				 var a = ''
 					 
-				 	 a += '<div class="col-md-6" id="AcademyIntro" style="white-space: pre;">'
+				 	 a += '<div class="col-md-5" id="AcademyIntro" style="white-space: pre; margin-left: 10px; margin-right: 30px; border:3px solid; padding:30px; border-radius: 50px; border-color:gold;">'
 			 	 	 a += '학원 소개 : <br/>' + data.academyIntro
 			 	 	 
 			 	 if(role == 'academy'){
@@ -133,7 +144,7 @@
 			 	 }
 			 		 a += '</div>'
 			 		 
-			 		 a += '<div class="col-md-6" id="AcademyHistory" style="white-space: pre;">'
+			 		 a += '<div class="col-md-5" id="AcademyHistory" style="white-space: pre; margin-left: 10px; margin-right: 30px; border:3px solid; padding:30px; border-radius: 50px; border-color:gold;">'
 			 		 a += '학원 실적 : <br/>' + data.academyHistory
 			 		 
 			 	if(role == 'academy'){
@@ -142,11 +153,12 @@
 					 a += '</div>'
 						
 					 
+					 
 				var b = '';
 					b += '<div id="title" class="row">'
-					b += '<div><h1 class="mt-4" style="display: inline;">'+data.academyName+'</h1></div>'
-					b += '<div style="float:center"><h4 style="display: inline;">수업 수 : '+data.count+'개</h4> <h4 style="display: inline;">학생 수 : '+data.count2+'명</h4></div>'
-			        b += '<div style="float:right"><h4 style="display: inline;"><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</h4></div></div>'
+					b += '<h1 class="mt-4" style="display: inline;">&nbsp;&nbsp;&nbsp;'+data.academyName+'</h1>'
+					b += '<span id="middle"><h4 style="display: inline;">수업 수 : '+data.count+'개</h4> <h4 style="display: inline;">&nbsp;&nbsp;학생 수 : '+data.count2+'명</h4></span>'
+			        b += '<span id="right"><h4 style="display: inline;"><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</h4></span></div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
@@ -173,7 +185,6 @@
 	// 소개글 수정
 	function saveIntro(academyCode){
 	    var updateIntro = $('[name=academy_'+academyCode+']').val();
-	    
 	    $.ajax({
 	        url : '/academy/json/updateIntro/'+academyCode,
 	        type : 'POST',

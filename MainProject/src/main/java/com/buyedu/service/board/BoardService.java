@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.buyedu.dao.board.BoardDao;
 import com.buyedu.domain.Search;
+import com.buyedu.service.noti.NotiService;
 import com.buyedu.domain.Board;
 
 
@@ -16,9 +17,14 @@ public class BoardService {
 	
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private NotiService notiService;
 			
 	public void addBoard(Board board) throws Exception {
+		String code = "xrYC6SH";
 		boardDao.addBoard(board);
+		notiService.noti(code);
 	}
 
 	public Board getBoard(int boardNo) throws Exception {

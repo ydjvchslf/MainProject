@@ -22,6 +22,40 @@
 	
 </head>
 
+<style>
+
+	.bg-gradient-primary {
+	    /* background-color: #F6EAC7; */
+	    background-image: linear-gradient(
+		180deg
+		,#D8D8D8 10%,#F6EAC7 100%);
+		    background-size: cover;
+	}
+	
+	.btn-primary {
+    color: #fff;
+     background-color: #636363; 
+     border-color: #636363; 
+	}
+	
+	.btn-primary:hover {
+    color: #fff;
+    background-color: #323232;
+    border-color: #323232;
+	}
+	
+	a {
+    color: #323232;
+    text-decoration: none;
+    background-color: transparent;
+	}
+	
+	a:hover {
+    color: #000000;
+    text-decoration: underline;
+
+</style>
+
 <body class="bg-gradient-primary">
 
     <div class="container">

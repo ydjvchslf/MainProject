@@ -29,7 +29,7 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 	<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js"></script>
-<!-- Bootstrap core JavaScript-->
+	<!-- Bootstrap core JavaScript-->
     <script src="/sbadmin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -68,6 +68,36 @@
     border-color: #FFFFFF;
 	}
 	
+	.bg-gradient-primary {
+    /* background-color: #F6EAC7; */
+    background-image: linear-gradient(
+	180deg
+	,#D8D8D8 10%,#F6EAC7 100%);
+	    background-size: cover;
+	}
+	
+	.btn-primary {
+    color: #fff;
+     background-color: #636363; 
+     border-color: #636363; 
+	}
+	
+	.btn-primary:hover {
+    color: #fff;
+    background-color: #323232;
+    border-color: #323232;
+	}
+	
+	a {
+    color: #323232;
+    text-decoration: none;
+    background-color: transparent;
+	}
+	
+	a:hover {
+    color: #000000;
+    text-decoration: underline;
+}
 	
 	
 	
@@ -92,7 +122,7 @@
 	
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$('a[name="loginBtn"]').on("click", function() {
-				alert("로그인버튼클릭")
+				//alert("로그인버튼클릭")
 						var id = $("input[name='email']").val();
 						var pw = $("input[name='password']").val();
 	
