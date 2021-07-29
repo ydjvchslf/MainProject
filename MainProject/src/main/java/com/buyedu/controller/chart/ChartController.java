@@ -20,8 +20,9 @@ public class ChartController {
 		
 		model.addAttribute("userData", chartService.getUserData());
 		model.addAttribute("academyData", chartService.getAcademyData());
-		
-		
+		model.addAttribute("board", chartService.getBoardCnt());
+		model.addAttribute("edu", chartService.getEduCnt());
+		model.addAttribute("review", chartService.getReviewCnt());
 		return "chart/getChart";
 	}
 	
