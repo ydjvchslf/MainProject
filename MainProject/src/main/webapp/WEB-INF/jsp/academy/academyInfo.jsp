@@ -25,12 +25,57 @@
 	
 	<style>
 	
-		    #academytitle{
+	@font-face {
+    font-family: 'TmonMonsori';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	@font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	@font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+			body{
+				overflow-x:hidden; overflow-y:visible;
+				font-family: 'ChosunGu';
+			}
+	
+		    #title{
 				vertical-align : top;
-				font-size : 0px;
+				font-size : 50px;
 				color : #1F4E79;
 				font-family : TmonMonsori;
 			}
+			
+			#count{
+				vertical-align : bottom;
+				font-size : 20px;
+				color : #1F4E79;
+				font-family : TmonMonsori;
+			}
+			
+			#phone{
+				vertical-align : right;
+				font-size : 15px;
+				color : #1F4E79;
+				font-family : TmonMonsori;
+			}
+			
+			#panel-color{
+				background-color: black !important;
+			}
+			
 			
 			@font-face {
 			    font-family: 'TmonMonsori';
@@ -40,34 +85,7 @@
 			}
 			
 			
-			#titlecontainer {
-			    position:relative;
-			    height:400px;
-			    width:100%;
-			    border:thick solid black;
-			}
-			#container div {
-			    background:grey;
-			    width:200px;
-			}
-			#left {
-			    float: left;
-    width:30%;
-    box-sizing: border-box;
-			}
-			#center {
-			    float: left;
-    margin-left: 5%;
-    width:30%;
-    box-sizing: border-box;
-			}
-			#right {
-			    float: right;
-    width:30%;
-    box-sizing: border-box;
-			}
-						
-
+		
  		</style>
 	
 
@@ -91,7 +109,9 @@
 					
 					
 					<!-- 학원 이름, 전화번호 -->
-					<div id="academytitle" class="row" ></div>
+					<div id="academytitle" class="row" > </div>
+					
+					
 					
 					<!-- 학원 정보 -->
 					<div id="academyInfo" class="row" style="margin-top: 30px;"></div>	
@@ -157,7 +177,7 @@
 					 
 				 	 a += '<div class="col-sm-6" id="AcademyIntro">'
 				 	 a += '<div class="panel panel-default">'
-				 	 a += '<div class="panel-heading">'
+				 	 a += '<div id="panel-color" class="panel-heading">'
 			 	 	 a += '<h3 class="panel-title">학원 소개</h3>'
 			 	 if(role == 'academy'){	 
 			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>' 
@@ -170,7 +190,7 @@
 			 		 
 			 		 a += '<div class="col-sm-6" id="AcademyHistory">'
 			 		 a += '<div class="panel panel-default">'
-					 a += '<div class="panel-heading">'
+					 a += '<div id="panel-color" class="panel-heading">'
 			 		 a += '<h3 class="panel-title">학원 실적</h3>'
 			 	if(role == 'academy'){
 			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>'
@@ -178,16 +198,13 @@
 			 		 a += '</div>' 
 				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto;">'
 			 		 a += data.academyHistory+'</div>'
-			 		 
 					 a += '</div></div>'
 						
 					 
-					 
 				var b = '';
-					b += '<div id="titlecontainer" class="row">'
-					b += '<div id="left">'+data.academyName+'</div>'
-					b += '<div id="center">학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
-			        b += '<div id="right"><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div></div>'
+					b += '<div id="title" class="col-md-4" style="">'+data.academyName+'</div>'
+					b += '<div id="count" class="col-md-5" > 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
+			        b += '<div id="phone" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
