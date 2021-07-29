@@ -142,7 +142,6 @@
 			        type : 'post',
 			        success : function(data){
 			            alert("삭제가 완료되었습니다!")
-			            function academyList();
 			        }
 			    });
 			}

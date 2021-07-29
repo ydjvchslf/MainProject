@@ -38,7 +38,7 @@
  </br></br>
  <body>
  	  <div class="container-fluid">
-        댓글 <span class="commentCount"></span>
+       <div > 댓글 <span class="commentCount"></span>
         <form name="commentInsertForm" onsubmit="return false">
             <div class="input-group">
                <input type="hidden" name="boardNo" value="${board.boardNo}"/>
@@ -103,8 +103,6 @@ function commentList(){
                 if (sessionId == value.COMMENT_WRITER){
                 a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
                 a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
-                if (sessionId != value.COMMENT_WRITER){
-                a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';}
         		a += '</div>'
                 a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> '+value.COMMENT_CONTENT+'</p>';
                 a += '</div></div>';
@@ -146,8 +144,8 @@ function commentUpdate(commentNo, content){
     var a ='';
     
     a += '<div class="input-group">';
-    a += '<input type="text" class="form-control" id="content" name="content_'+commentNo+'" value="'+content+'"/>';
-    a += '<span class="input-group-btn"><button class="btn btn-default" id="commentInsert" type="button" onclick="commentUpdateProc('+commentNo+');">수정</button> </span>';
+    a += '<input type="text" class="form-control" id="cmtcontent" name="content_'+commentNo+'" value="'+content+'"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-primary" id="commentInsert" type="button" onclick="commentUpdateProc('+commentNo+');">수정</button> </span>';
     a += '</div>';
     
     $('.commentContent'+commentNo).html(a);

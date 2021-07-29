@@ -17,8 +17,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.messaging.converter.StringMessageConverter;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +38,7 @@ import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
+import com.buyedu.service.noti.NotiService;
 import com.buyedu.service.user.UserService;
 
 @RestController
@@ -50,6 +54,12 @@ public class AcademyRestController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private NotiService notiService;
+	
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
+	
 	public AcademyRestController() {
 		System.out.println(this.getClass());
 	}
@@ -59,6 +69,11 @@ public class AcademyRestController {
 	
 	@Value("5")
 	int pageSize;
+	
+	@GetMapping("testSocket")
+	public void testSocket() {
+		notiService.noti("xrYC6SH");
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "json/academyProfile/{userNo}", method = RequestMethod.GET)

@@ -25,6 +25,7 @@
 			<c:forEach var="academy" items="${list}">
 				
 				<li>
+					<input type="hidden" name="codes" value="${academy.academyCode}" />
 					<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
 				</li>	
 			</c:forEach>			
@@ -56,7 +57,7 @@
                     <a href="/user/listUser">회원 목록</a>
                 </li>
                 <li>
-                    <a href="#">현황 차트</a>
+                    <a href="/chart/getChart">현황 차트</a>
                 </li>
 	            </ul>
 	          </li>
@@ -110,9 +111,11 @@
 	          
 	        </ul>
 
+			<button name="test" onclick="send();">테스트</button>
 	        <div class="footer">
-	        	<a href="/user/logout">로그아웃</a>
+	        	<a name="logout" href="/user/logout">로그아웃</a>
 	        </div>
+	        
 
 	      </div>
     	</nav>
@@ -120,18 +123,139 @@
     	<script src="/js/sockjs.min.js"></script>
     	<script src="/js/stomp.min.js"></script>
     	
+    	
     	<script>
     	let socket = new SockJS("/socket");
         let stompClient = Stomp.over(socket);
-        stompClient.connect({}, function(frame) {
-        	console.log("연결 성공", frame);
-        	stompClient.subscribe("/topic/message", (res) => {
-        		console.log("메시지를 받았습니다.");
-            	console.log("res", res);
-            });
-            
-            stompClient.send("/chat", {}, '{"test", "test"}');
+        
+		function connect(){
+			stompClient.connect("", "", function(frame) {
+	        	console.log("연결 성공", frame);
+	        	subscribe();
+	        });
+        }
+		
+		function subscribe(){
+			document.getElementsByName("codes").forEach(item => {
+				stompClient.subscribe("/subscribe/noti/" + item.value + "/userNo", (res) => {
+					setNotis(res);
+	        		alert("message");
+	        		console.log("메시지를 받았습니다.");
+	            	console.log("res", res);
+	            });	
+			});
+		}
+		
+		function setNotis(res){
+			let notis = JSON.parse(res);
+			let notiCount = notis.length;
+			addNotiList(notis);
+		}
+		
+		function addNotiList(notis){
+			//알람 리스트 생성
+		}
+        
+        function close(){
+        	socket.close();
+        }
+        
+        document.addEventListener("DOMContentLoaded", function(){
+        	connect();
+        	socket.onclose = function() {
+        	    console.log('close');
+        	    stompClient.disconnect();
+        	};
         });
+        
+        //로그아웃 JS
+        $(function() {	
+		
+			 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
+			
+			 $('a[name=logout]').on("click" , function() {
+				 
+				 alert("로그아웃 클릭")
+				 
+				 let x = document.cookie;
+				 
+				 const words = x.split("; ");
+				 
+				 var loginType = "";
+				 
+				 for(var i=0; i < words.length; i++ ){
+					 
+					if( words[i].split("=")[0] === "loginType" ){
+						 console.log( words[i].split("=")[1] )
+						 loginType = words[i].split("=")[1];
+					}
+				 }
+				 
+				 if(loginType == "kakao"){
+					 
+					 alert("카카오 로그아웃!")
+					 
+					 if (!Kakao.Auth.getAccessToken()) {
+						  console.log('Not logged in.');
+						  
+						  self.location = "/"
+						  
+						  return;
+					}
+					 
+					 Kakao.API.request({
+						 
+					  url: '/v1/user/unlink',
+					  success: function(response) {
+					    console.log(response);
+					    
+					    self.location = "/"
+					  },
+					  
+					  fail: function(error) {
+					    console.log(error);
+					  },
+					  
+					});
+					 
+				 }else if(loginType == "naver"){
+					 
+					 alert("네이버로그아웃")
+					 
+					 var accessToken = localStorage.getItem("com.naver.nid.access_token")
+					 var tokenArray = accessToken.split(".");
+					 var finalToken = tokenArray[1]
+					 
+					  $.ajax({
+	                 		
+						  crossOrigin : true,
+						  contentType: "application/json",
+						  dataType : "json",
+						  
+		            	  url : "/user/json/naver/logout/" + finalToken,
+		                  success : function(JSONData, status){
+		                  	console.log("결과->" +JSONData);
+		                  	self.location = "/" 
+		                  }, error  : function (a,b,c) {
+		                  	console.log(a)
+		                  	alert("로그아웃 실패");
+		                  	
+		                  }
+		              })
+						
+				 }else{
+					 alert("일반 로그아웃");
+					 self.location = "logout"
+				 }
+				 
+			 });
+	});
+
+
+        
+        
+        
+        
     	</script>
 
 </body>

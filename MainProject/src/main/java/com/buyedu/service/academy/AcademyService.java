@@ -153,11 +153,15 @@ public class AcademyService {
 	
 	public void deleteAcademyAll(String academyCode) throws Exception{
 		
+		academyDao.deleteBoard(academyCode);
+		
 		academyDao.deleteReview(academyCode);
 		
 		academyDao.deleteEdu(academyCode);
 		
 		academyDao.deleteConnection(academyCode);
+		
+		academyDao.deleteAllMultimedia(academyCode);
 		
 		academyDao.deleteAcademy(academyCode);
 		

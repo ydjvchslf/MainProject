@@ -20,12 +20,28 @@
 		SELECT role , COUNT(*) user_count
 		FROM users
 		GROUP BY role
+		HAVING role != 'admin'
 	</select>
 	
 	<select id="getAcademyChart" resultMap="chartSelectMap">
 		SELECT academy_area , COUNT(*) academy_count
 		FROM academy
 		GROUP BY academy_area
+	</select>
+	
+	<select id="getBoardCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM board
+	</select>
+	
+	<select id="getEduCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM edu
+	</select>
+	
+	<select id="getReviewCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM review
 	</select>
 	
 </mapper>
