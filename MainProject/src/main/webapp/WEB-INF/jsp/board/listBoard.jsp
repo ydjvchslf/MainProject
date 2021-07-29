@@ -27,12 +27,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
   </head>
   	<script type="text/javascript">
-	
+  	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
 		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
 			var cateCode=$("input[name='cateCode']").val();
+			
 			var isMine=$("input[name='isMine']").val();
 			if(isMine=='n'){
 				$("form").attr("method" , "POST").attr("action" , "/board/listBoard?cateCode="+cateCode).submit();
@@ -53,8 +54,6 @@
 				fncGetList(1);
 			});
 		 });
-	
-		
 	
 	</script>
 	<style>
@@ -169,7 +168,7 @@
 					</c:when>
 					</c:choose>	
 	 			  </div><br>
-	 
+	 카테코드 : ${board.cateCode}----
 			 	<!-- 검색부분  -->
 		   		<div class="row">
 		   		  <!-- 검색그룹  -->
@@ -237,7 +236,7 @@
 				<!-- 게시판 기본 table list -->  
 		    	<tbody>
 				    <c:set var="i" value="${resultPage.totalCount }" />
-				    <c:forEach var="board" items="${list}">
+				    <c:forEach var="board" items="${listc}">
 				    <c:set var="i" value="${i-1}" />
 				  <tr>
 					<td id="tablerow" width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>

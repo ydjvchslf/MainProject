@@ -42,6 +42,7 @@
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   
 	<style>
 		#complainButton{
 	      background-color:white;
@@ -77,6 +78,7 @@
 	      position:relative;
 	      z-index:3;
 	    }
+	    
 	</style>
 	<script type="text/javascript">
 		
@@ -188,7 +190,7 @@
 		   <input type="hidden" name="acaWriter" value="${board.acaWriter}" />	 
 		   <hr></br>
 		    acaWriter : ${board.acaWriter}
-		    academy : ${academy}
+		    academy : ${academy.academyCode}
 		    
 		    <c:if test="${academy eq board.acaWriter}">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
