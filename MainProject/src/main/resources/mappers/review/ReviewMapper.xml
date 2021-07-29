@@ -10,6 +10,7 @@
 	<resultMap id="reviewSelectMap" type="review">
 		<result property="reviewNo" 			column="review_no" 			jdbcType="NUMERIC"/>
 		<result property="academyCode" 		    column="academy_code" 		jdbcType="VARCHAR"/>
+		<result property="academyName"			column="academy_name"		jdbcType="VARCHAR"/>
 		<result property="reviewWriter.userNo"	column="review_writer" 		jdbcType="NUMERIC" />
 		<result property="reviewWriter.email"	column="email" 				jdbcType="VARCHAR" />
 		<result property="reviewState" 			column="review_state" 		jdbcType="CHAR" />

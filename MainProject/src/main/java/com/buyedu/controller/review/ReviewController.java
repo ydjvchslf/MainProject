@@ -27,6 +27,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.review.ReviewService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 @Controller
 
@@ -35,6 +36,9 @@ public class ReviewController {
 	
 	@Autowired
 	private ReviewService reviewService;
+	
+	@Autowired
+	private AcademyService academyService;
 	
 	public ReviewController() {
 		System.out.println(this.getClass());
@@ -147,6 +151,8 @@ public class ReviewController {
 		search.setPageSize(pageSize);
 		
 		String academyCode = request.getParameter("academyCode");
+		Academy academy = academyService.getAcademy(academyCode);
+		
 		System.out.println("아카데미코드 : "+academyCode);
 		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
 		System.out.println("userNo : "+userNo);
@@ -174,14 +180,21 @@ public class ReviewController {
 		
 		System.err.println("커낵트 : "+connect);
 		
-
+		User user1 = UserUtil.user();
+	      
+	      Map<String, Object> map1 = academyService.getAcademyCodeList(user1.getUserNo());
+	      
+	      
+	      model.addAttribute("list", map1.get("list"));
+		
+		model.addAttribute("academy", academy);
 		model.addAttribute("academyCode" , academyCode);
 		model.addAttribute("connect",connect);
-		model.addAttribute("list",list);
+		model.addAttribute("listc",list);
 		model.addAttribute("resultPage" , resultPage);
 		model.addAttribute("search",search);
 		//model.addAttribute("connect" , map.get("connect"));
-		
+		System.err.println(academy);
 		System.err.println(list);
 		}
 	

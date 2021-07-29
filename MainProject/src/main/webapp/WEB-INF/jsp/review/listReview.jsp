@@ -81,17 +81,22 @@ function fncAddReviewView(){
 <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
 <!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
-		
+	
+	        
+
+	         
 		        <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5"> 
         
 			<div class="container-fluid"  >
-	        	 
-	        	 <jsp:include page="../common/toolbar.jsp"></jsp:include> 
-	        	  
+			
+ <jsp:include page="../common/toolbar.jsp"></jsp:include> 
+	         
 	        	 <!-- 예쁘게 때려박아주셈!! -->
 	        	 <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 	        	   <form>
+	        	   <!-- 학원 이름, 전화번호 -->
+					<div id="academytitle" class="row" ></div>
 	        	   <c:set var="i" value="${resultPage.totalCount }" />
 	        	  <c:set var="i" value="${i-1}" />
 	        	  
@@ -110,7 +115,7 @@ function fncAddReviewView(){
 	        	 <input type="hidden" id="currentPage" name="currentPage" value=""/>
 	        	 <!-- 게시물 forEach문 돌아가는쪽 시작 -->
 	          
-		 		 <c:forEach var="review" items="${list}">
+		 		 <c:forEach var="review" items="${listc}">
 		 	 <div class="row-fruid" style="float: left; width: 50%; padding:10px;">
 		 		 	<div class="card shadow mb-4">
                                 <div id="card_box" class="card-header bg-dark py-3">
@@ -119,6 +124,7 @@ function fncAddReviewView(){
                                    
                                 </div>
                                 <div class="card-body">
+                                <button type="button" class="btn btn-dark">
                                    <a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode }" ><h8 class="text-warning">상세보기</h8></a></button>
                                 </div>
                             </div>                        
@@ -143,11 +149,15 @@ function fncAddReviewView(){
 		      &nbsp;&nbsp;<button type="button" class="btn btn-dark"  >
 		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">글쓰기</h8></a></button>
 		</c:if>
+		
 	</div>
 		    <!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
-
+  	 <script src="/js/jquery.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
 
 	<!-- 글쓰기 버튼 if문 돌아가는곳종료 -->
 </form> 
