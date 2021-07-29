@@ -20,9 +20,26 @@
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
   	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	
 
   </head>
+  
+  <style>
+  
+  	.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0px; 
+	}
+  
+  
+  </style>
+  
+  
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
@@ -41,8 +58,8 @@
 						
 					      <div class="row"><!-- 첫번째 row 시작 -->
 					        <div class="col-sm-6">
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
+					          <div class="panel" style="border:5px solid #FFCA77;">
+					            <div class="panel-heading" style="background-color:#FFCA77;">
 					              <h3 class="panel-title">
 					              	<c:choose>
 				                		<c:when test="${!empty user.role}">
@@ -81,8 +98,8 @@
 					          </div>
 					          
 					       <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">  
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
+					          <div class="panel" style="border:5px solid #FFCA77;">
+					            <div class="panel-heading" style="background-color:#FFCA77;">
 					              <h3 class="panel-title">My Academy</h3>
 					            </div>
 					            <div class="panel-body">
@@ -148,8 +165,8 @@
 					       
 					        <div class="col-sm-6">
 					        <c:if test="${!empty user.role }"> 
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
+					          <div class="panel" style="border:5px solid #FFCA77;">
+					            <div class="panel-heading" style="background-color:#FFCA77;">
 					              <h3 class="panel-title">비밀번호 변경</h3>
 					              <h3 class="panel-title" align="right">
 					              	<img src="/image/password.png" width="30" data-toggle="modal"
@@ -157,8 +174,8 @@
 					              </h3>
 					            </div>
 					          </div><br>
-					          <div class="panel panel-default">
-					            <div class="panel-heading">
+					          <div class="panel" style="border:5px solid #FFCA77;">
+					            <div class="panel-heading" style="background-color:#FFCA77;">
 					              <h3 class="panel-title">계정 탈퇴</h3>
 					              <h3 class="panel-title" align="right">
 					              	<img src="/image/trash.png" width="30" data-toggle="modal"
@@ -170,8 +187,8 @@
 					          
 					          <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
 					            <!-- 우리학원 인증하기 등록하기 -->
-						          <div class="panel panel-default">
-						            <div class="panel-heading">
+						          <div class="panel" style="border:5px solid #FFCA77;">
+						            <div class="panel-heading" style="background-color:#FFCA77;">
 						              <h3 class="panel-title">학원 인증하기</h3>
 						              <h3 class="panel-title" align="right">
 						                <!-- 인증하기 버튼 -->
@@ -511,6 +528,73 @@
 								</div>
 							</div>
 						</div><!-- 계정연동 모달 끝-->
+						
+						
+						
+						
+						<!-- 학원등록 모달 시작 -->
+						
+						<!-- Modal -->
+						<div class="modal fade" id="addAca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">기본정보 입력</h4>
+						      </div>
+						      <div class="modal-body">
+						      <!-- 모달 내용 -->
+						        <form>
+						            
+						            <div class="row">
+									  
+									  <div class="col-xs-12 col-md-8">
+									  	<input type="text" name="academyName" placeholder="학원명" class="form-control"> <br/><br/>
+									  </div>
+									  
+									  <div class="col-xs-6 col-md-4">
+									  	<input type="text" name="academyPhone" placeholder="학원전화번호" class="form-control"> <br/><br/>
+									  </div>
+								
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<input class="form-control" type="text" onclick="sample5_execDaumPostcode()" id="sample5_address" name="academyAddr"  placeholder="주소" readonly/> <br/><br/>
+									  </div>
+
+								
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<div id="map" style="width:470;height:300; display:none"></div>
+									  </div>
+
+								
+									</div>
+						
+										<input type="hidden" class="form-control" type="text" id="sample5_address_extra" name="academyArea" placeholder="구이름" readonly/>
+										<input  type="hidden"  id="lat" name="academyLat"  placeholder="위도" readonly/>
+										<input type="hidden" id="lng" name="academyLng"  placeholder="경도" readonly/>
+
+								</form>
+								
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						        <button type="button" id="ok" class="btn btn-primary">등록</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						
+						
+						
+						
+						
+						<!-- 학원등록 모달 끝 -->
 				
 				
 				
@@ -1164,25 +1248,23 @@
         				var a = '';
         				
         				if(value.length<=2){
-        					a += '<div class="col-sm-4"><div class="panel panel-default">'
-    						a += '<div class="panel-heading">'
-    						a += '<h6 class="panel-title"> 학원 등록 하기 </h6></div>'
+        					a += '<div class="col-sm-4"><div class="panel" style="border:5px solid #FFCA77;">'
+    						a += '<div class="panel-heading" style="background-color:#FFCA77;">'
+    						a += '<h6 class="panel-title"> 학원 등록 하기 </h6>'
     						
-    						a += '<div class="panel-body">'
-    						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a></div></div></div>'
+    						a += '<h3 class="panel-title" align="right"> <img src="/image/plus.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
+			              
+    						a += '</div></div>'
     					}
         				
         				for(var i=0; i<value.length;i++){
         					
-        					a += '<div class="col-sm-4"><div class="panel panel-default">'
-        					a += '<div class="panel-heading">'
+        					a += '<div class="col-sm-4"><div class="panel" style="border:5px solid #FFCA77;">'
+        					a += '<div class="panel-heading" style="background-color:#FFCA77;">'
         					a += '<h3 class="panel-title">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
-        					a += '<div class="dropdown no-arrow">'
-        					a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h3>'
-        					a += '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'
-        					a += '<a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')" class="dropdown-item"> 학원 프로필 삭제 </a>'
-        					a += '</div></div></div>'
+        					a += '<h6 align="right"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')" class="dropdown-item"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h6>'
+        					a += '</div>'
         					
         					a += '<div id="academyInfo_' + i +'" class="panel-body">'
         					a += ' 학원 정보 '+getAcademyInfo(i, value[i].academyCode) 
@@ -1783,7 +1865,86 @@
 	
 	
 	
+///////////////////////////////////////학원 등록 지도 js //////////////////////////
+
+$(function(){
+				$("#ok").on('click',function(){
+					
+					var acaname=$("input[name='academyName']").val();
+					var acaadde=$("input[name='academyAddr']").val();
+					var acaphone=$("input[name='academyPhone']").val();
+					
+					if(acaname == null || acaname.length <1){
+						alert("학원 이름을 입력해주세요.");
+						return;
+					}
+					
+					if(acaphone == null || acaphone.length <1){
+						alert("학원 전화번호를 입력해주세요");
+						return;
+					}
+					
+					if(acaadde == null || acaadde.length <1){
+						alert("학원 주소를 입력해주세요");
+						return;
+					}
+					
+					$("form").attr("method" , "POST").attr("action" , "/academy/addAcademy?userNo=${user.userNo}").submit();
+		
+				});
+			});
+			
+
+
+				
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	        mapOption = {
+	            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+	            level: 3 // 지도의 확대 레벨
+	        };
 	
+		    //지도를 미리 생성
+		    var map = new daum.maps.Map(mapContainer, mapOption);
+		    //주소-좌표 변환 객체를 생성
+		    var geocoder = new daum.maps.services.Geocoder();
+		    //마커를 미리 생성
+		    var marker = new daum.maps.Marker({
+		        position: new daum.maps.LatLng(37.537187, 127.005476),
+		        map: map
+		    });	
+
+			
+			function sample5_execDaumPostcode() {
+			        new daum.Postcode({
+			            oncomplete: function(data) {
+			                var addr = data.address; // 최종 주소 변수
+							var extra = data.sigungu; // 시, 구 이름
+			                // 주소 정보를 해당 필드에 넣는다.
+			                document.getElementById("sample5_address").value = addr;
+			                document.getElementById("sample5_address_extra").value = extra;
+			                // 주소로 상세 정보를 검색
+			                geocoder.addressSearch(data.address, function(results, status) {
+			                    // 정상적으로 검색이 완료됐으면
+			                    if (status === daum.maps.services.Status.OK) {
+			
+			                        var result = results[0]; //첫번째 결과의 값을 활용
+			
+			                        // 해당 주소에 대한 좌표를 받아서
+			                        var coords = new daum.maps.LatLng(result.y, result.x);
+			                        // 지도를 보여준다.
+			                        mapContainer.style.display = "block";
+			                        map.relayout();
+			                        // 지도 중심을 변경한다.
+			                        map.setCenter(coords);
+			                        // 마커를 결과값으로 받은 위치로 옮긴다.
+			                        marker.setPosition(coords)
+			                        document.getElementById("lat").value = result.y
+			    	                document.getElementById("lng").value = result.x
+			                    }
+			                });
+			            }
+			        }).open();
+			    }
 	
 	
 	
