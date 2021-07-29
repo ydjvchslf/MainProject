@@ -105,13 +105,13 @@ font-family: lobster;
         <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
         <div class="social-icons">
             <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
-            	<div class="fw-bolder" style="color:white">Developer</div>
+            	<div class="fw-bolder" id="profile" style="color:white; font-family:ChosunGu;">Developer</div>
             	<a class="btn btn-dark m-3" id="moon"><img class="image" alt="없음" src="/image/moon.jpg"></a>
-            	<a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/kim.png"></a>
-            	<a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/mk.jpg"></a>
-            	<a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/jenny.jpg"></a>
-                <a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/rea.jpg"></a>
-                <a class="btn btn-dark m-3" ><img class="image" alt="없음" src="/image/jeawoo.jpg"></a>
+            	<a class="btn btn-dark m-3" id="kim"><img class="image" alt="없음" src="/image/kim.png"></a>
+            	<a class="btn btn-dark m-3" id="mk" ><img class="image" alt="없음" src="/image/mk.jpg"></a>
+            	<a class="btn btn-dark m-3" id="jenny" ><img class="image" alt="없음" src="/image/jenny.jpg"></a>
+                <a class="btn btn-dark m-3" id="rea" ><img class="image" alt="없음" src="/image/rea.jpg"></a>
+                <a class="btn btn-dark m-3" id="jang" ><img class="image" alt="없음" src="/image/jeawoo.jpg"></a>
             </div>
         </div>
         <!-- Bootstrap core JS-->
@@ -119,8 +119,29 @@ font-family: lobster;
 
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
         <script type="text/javascript">
-        $(".btn.btn-dark").on("click",function(){
-        	alert("나중에 프로필 띄우기");
+        //mouseenter
+        //mouseleave
+        $("#moon").on("mouseenter",function(){
+        	$('#profile').text("문재현")
+        })
+        $("#kim").on("mouseenter",function(){
+        	$('#profile').text("김현중")
+        })
+        $("#mk").on("mouseenter",function(){
+        	$('#profile').text("용미경")
+        })
+        $("#jenny").on("mouseenter",function(){
+        	$('#profile').text("변희진")
+        })
+        $("#rea").on("mouseenter",function(){
+        	$('#profile').text("우형래")
+        })
+        $("#jang").on("mouseenter",function(){
+        	$('#profile').text("장재우")
+        })
+        
+        $(".btn.btn-dark").on("mouseleave",function(){
+        	$('#profile').text("Developer")
         })
         
         </script>

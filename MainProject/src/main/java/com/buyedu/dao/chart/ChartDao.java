@@ -12,5 +12,11 @@ public interface ChartDao {
 	public List<Chart> getUserChart();
 	
 	public List<Chart> getAcademyChart();
+	
+	public int getBoardCnt();
+	
+	public int getEduCnt();
+	
+	public int getReviewCnt();
 
 }

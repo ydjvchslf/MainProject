@@ -37,8 +37,8 @@ public class ReviewService {
 		int totalCount = reviewDao.getTotalCount(search);
 		
 		
-	
-		list.get(0).setTotalCount(totalCount);
+		if(list.size()!=0) {
+		list.get(0).setTotalCount(totalCount);}
 		System.err.println(list);
 		return list;
 	}

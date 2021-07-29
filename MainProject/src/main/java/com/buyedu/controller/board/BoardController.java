@@ -104,7 +104,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println("들어갔나 정보 : "+board1);
 			System.out.println("추천수가 안나오지? "+boardLike);
 			
-			return "/board/getBoard";
+			return "redirect:/board/listBoard?cateCode="+board.getCateCode();
 		}
 		
 		//@RequestMapping("/getProduct.do")
@@ -118,6 +118,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			String category = request.getParameter("cateCode");
 			String academyCode = request.getParameter("academyCode");
+			String isMine = request.getParameter("isMine");
+			System.out.println("겟보드 이즈마인 :" +isMine);
 			
 			Board board = boardService.getBoard(boardNo);
 			
@@ -135,6 +137,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			boardService.updateViewcnt(boardNo);
 			// Model 과 View 연결
 			model.addAttribute("board", board);
+			model.addAttribute("isMine", isMine);
 			System.out.println("겟 프로덕트 : "+board);
 			System.err.println(board.getEmail());
 			
@@ -284,24 +287,36 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			return "/board/listBoard";
 		}
 		
-//		@RequestMapping( value="listBoardpin" )
-//		public String listBoardpin( @ModelAttribute("board") Board board , Model model , HttpServletRequest request) throws Exception{
-//			
-//			System.out.println("/board/listBoardpin : GET / POST");
-//			
-//			// Business logic 수행
-//			board.setCateCode("2");
-//			List<Board> list1 =boardService.getBoardListPin(board);
-//			
-////			Map<String , Object> cgmap=categoryService.getCategoryList();
-//			
-//			// Model 과 View 연결
-//			model.addAttribute("list", list1);
-//			model.addAttribute("board", board);
-//			System.out.println("listBoardPin 컨트롤러 : "+list1);
-//			
-//			return "/board/listBoard";
-//		}
+		//@RequestMapping("/listProduct.do")
+		@RequestMapping( value="listBoardAcademy" )
+		public String listBoardAcademy( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
+			
+			System.out.println("학원 공지사항 돌아간다");
+			
+			String category = request.getParameter("cateCode"); // 게시판 종류
+			String academyCode = request.getParameter("academyCode");
+			System.out.println("학원 공지사항 아카코드 : "+academyCode);
+			
+			if(search.getCurrentPage() ==0 ){
+				search.setCurrentPage(1);
+			}
+			search.setPageSize(pageSize);
+			search.setCateCode(category);
+			
+			List<Board> listb =boardService.getBoardListAcademy(search);
+			
+			if(listb.size()!=0) {
+				int totalCount = listb.get(0).getTotalCount();
+				Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
+				System.out.println(resultPage);
+				
+			model.addAttribute("listb", listb);
+			model.addAttribute("resultPage", resultPage);
+			model.addAttribute("search", search);
+			}
+			
+			return "/board/listBoard";
+		}
 		
 		@RequestMapping( value="deleteBoard", method = RequestMethod.GET)
 		public String  deleteBoard( @RequestParam("boardNo") int boardNo, HttpServletRequest request) throws Exception {
