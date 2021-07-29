@@ -9,7 +9,12 @@
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
 		  		<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/image/student.png);"></a>
+		  		
+		  		
 	        <ul class="list-unstyled components mb-5">
+
+	        
+	        <c:if test="${user.role != null }"></c:if>
 	        
 	        <c:if test="${user.role == 'academy'}">
 	          <li>
@@ -23,9 +28,6 @@
 					<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
 				</li>	
 			</c:forEach>			
-
-
-
 
 	            </ul>
 	          </li>
