@@ -1152,9 +1152,9 @@
         				var a = '';
         				
         				if(value.length<=2){
-        					a += '<div class="col-lg-4"><div class="card shadow mb-4">'
-    						a += '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'
-    						a += '<h6 class="m-0 font-weight-bold text-primary"> 학원 등록 하기 </h6></div>'
+        					a += '<div class="col-sm-4"><div class="panel panel-default">'
+    						a += '<div class="panel-heading">'
+    						a += '<h6 class="panel-title"> 학원 등록 하기 </h6></div>'
     						
     						a += '<div class="card-body">'
     						a += '<a href="/academy/addAcademyView"> >> 학원 등록 하기 << </a></div></div></div>'
@@ -1162,22 +1162,19 @@
         				
         				for(var i=0; i<value.length;i++){
         					
-        					a += '<div class="col-lg-4"><div class="card shadow mb-4">'
-        					a += '<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">'
-        					a += '<h6 class="m-0 font-weight-bold text-primary">'
+        					a += '<div class="col-sm-4"><div class="panel panel-default">'
+        					a += '<div class="panel-heading">'
+        					a += '<h6 class="panel-title">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h6>'
         					a += '<div class="dropdown no-arrow">'
-        					a += '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-        					a += '<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i></a>'
+        					a += '<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>'
         					a += '<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">'
-        					a += '<div class="dropdown-header">Dropdown Header:</div>'
         					a += '<a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')" class="dropdown-item"> 학원 프로필 삭제 </a>'
         					a += '</div></div></div>'
         					
         					a += '<div id="academyInfo_' + i +'" class="card-body">'
         					a += ' 학원 정보 '+getAcademyInfo(i, value[i].academyCode) 
         					a += '</div></div></div>'
-        													
         				}
         				
             			$("#academyList").html(a);
@@ -1223,6 +1220,7 @@
 			        type : 'post',
 			        success : function(data){
 			            alert("삭제가 완료되었습니다!")
+			            academyList();
 			        }
 			    });
 			}
