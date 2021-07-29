@@ -25,18 +25,6 @@
 	
 	<style>
 	
-		#middle{
-			position: absolute;
-			top: 8%;
-			left: 40%;
-		}
-		
-		#right{
-			position: absolute;
-			top: 8%;
-			left: 88%;
-		}
-
 		    #academytitle{
 				vertical-align : top;
 				font-size : 0px;
@@ -50,6 +38,35 @@
 			    font-weight: normal;
 			    font-style: normal;
 			}
+			
+			
+			#titlecontainer {
+			    position:relative;
+			    height:400px;
+			    width:100%;
+			    border:thick solid black;
+			}
+			#container div {
+			    background:grey;
+			    width:200px;
+			}
+			#left {
+			    float: left;
+    width:30%;
+    box-sizing: border-box;
+			}
+			#center {
+			    float: left;
+    margin-left: 5%;
+    width:30%;
+    box-sizing: border-box;
+			}
+			#right {
+			    float: right;
+    width:30%;
+    box-sizing: border-box;
+			}
+						
 
  		</style>
 	
@@ -77,13 +94,15 @@
 					<div id="academytitle" class="row" ></div>
 					
 					<!-- 학원 정보 -->
-					<div id="academyInfo" class="row" style="margin-top: 30px;"></div>	 
+					<div id="academyInfo" class="row" style="margin-top: 30px;"></div>	
 					
 					<div class="row" style="margin-top: 30px;">
 						<div class="col-md-12" >
 							<div id="map" style="width:auto;height:400px; border:3px solid gold; "></div>
 						</div>
 					</div>
+					
+					
  
 						    
 				</div>
@@ -136,29 +155,39 @@
 				 
 				 var a = ''
 					 
-				 	 a += '<div class="col-md-5" id="AcademyIntro" style="white-space: pre; margin-left: 10px; margin-right: 30px; border:3px solid; padding:30px; border-radius: 50px; border-color:gold;">'
-			 	 	 a += '학원 소개 : <br/>' + data.academyIntro
-			 	 	 
-			 	 if(role == 'academy'){
-			 	 	 a += '<br/><a class="btn btn-primary" style="margin-top: 7px;" onclick="updateIntro(\''+data.academyCode+'\')"> 수 정 </a>'
+				 	 a += '<div class="col-sm-6" id="AcademyIntro">'
+				 	 a += '<div class="panel panel-default">'
+				 	 a += '<div class="panel-heading">'
+			 	 	 a += '<h3 class="panel-title">학원 소개</h3>'
+			 	 if(role == 'academy'){	 
+			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>' 
 			 	 }
-			 		 a += '</div>'
+			 	 	 a += '</div>'
+			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto;">'
+			 	 	 a += data.academyIntro +'</div>'
+			 		 a += '</div></div>'
 			 		 
-			 		 a += '<div class="col-md-5" id="AcademyHistory" style="white-space: pre; margin-left: 10px; margin-right: 30px; border:3px solid; padding:30px; border-radius: 50px; border-color:gold;">'
-			 		 a += '학원 실적 : <br/>' + data.academyHistory
 			 		 
+			 		 a += '<div class="col-sm-6" id="AcademyHistory">'
+			 		 a += '<div class="panel panel-default">'
+					 a += '<div class="panel-heading">'
+			 		 a += '<h3 class="panel-title">학원 실적</h3>'
 			 	if(role == 'academy'){
-					 a += '<br/><a class="btn btn-primary" style="margin-top: 7px;" onclick="updateHistory(\''+data.academyCode+'\')"> 수 정 </a>'
+			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>'
 			 	}
-					 a += '</div>'
+			 		 a += '</div>' 
+				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto;">'
+			 		 a += data.academyHistory+'</div>'
+			 		 
+					 a += '</div></div>'
 						
 					 
 					 
 				var b = '';
-					b += '<div id="title" class="row">'
-					b += '<h1 class="mt-4" style="display: inline;">&nbsp;&nbsp;&nbsp;'+data.academyName+'</h1>'
-					b += '<span id="middle"><h4 style="display: inline;">수업 수 : '+data.count+'개</h4> <h4 style="display: inline;">&nbsp;&nbsp;학생 수 : '+data.count2+'명</h4></span>'
-			        b += '<span id="right"><h4 style="display: inline;"><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</h4></span></div>'
+					b += '<div id="titlecontainer" class="row">'
+					b += '<div id="left">'+data.academyName+'</div>'
+					b += '<div id="center">학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
+			        b += '<div id="right"><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div></div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
