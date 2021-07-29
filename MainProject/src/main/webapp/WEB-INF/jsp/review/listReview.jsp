@@ -1,226 +1,166 @@
 
-<%@page import="java.net.URLEncoder"%>
-<%@page import="org.springframework.ui.Model"%>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="EUC-KR"%>
-
+    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
-<title>listReview.jsp</title>
 <head>
-	<meta charset="UTF-8">
+ <title>Buy!Edu</title>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/style.css">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+  </head>
+  <!-- ìŠ¤í¬ë¦½íŠ¸ ì‹œì‘ -->
+  <script type="text/javascript">
+//=============    ï¿½Ë»ï¿½ / page ï¿½Î°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½  Event  Ã³ï¿½ï¿½ =============	
 	
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   <link href="/css/style.css" rel="stylesheet">  
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  
-  	<script type="text/javascript">
-	
-		//=============    °Ë»ö / page µÎ°¡Áö °æ¿ì ¸ğµÎ  Event  Ã³¸® =============	
-		
-			function fncGetList(currentPage) {
-			$("#currentPage").val(currentPage)
-			var academyCode=$("input[name='academyCode']").val();
-			$("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode="+academyCode).submit();
-			//$("form").submit();
-		}
-		
-		
-		
-		$(function() {
-			 //==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button.btn.btn-default" ).on("click" , function() {
-				fncGetList(1);
-			});
-		 });
-		
-		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( ".btn:contains('±Û¾²±â')" ).on("click" , function() {
-				fncAddReviewView();
-			});
-		});	
-		
-		
-		
-		function fncAddReviewView(){
-			
-			$("form").attr("method" , "POST").attr("action" , "/review/addReviewView").submit();
-		}
-	</script>
-
-	</head>
-	
-  <body>
-  
-  
-	
-	<!-- ToolBar Start /////////////////////////////////////-->
-
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
-	<!-- <form name="detailForm" action="/product/listProduct?menu=${menu}" method="post"> -->
-	
-	<!-- ¸Ş´º -->
-	<!-- <form>
-	<input type="hidden" name="menu" value="${menu}" />
-	-->
-	<div class="container">
-	
-		<div class="page-header text-default">
-		<br/><br/><br/>
-		
-		
-							<h3>ÈÄ±â °Ô½ÃÆÇ </h3> 
-						
-					
+	function fncGetList(currentPage) {
+	$("#currentPage").val(currentPage)
+	var academyCode=$("input[name='academyCode']").val();
+	$("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode="+academyCode).submit();
+	//$("form").submit();
+}
 
 
-					
-	    </div>
-	    
 
-	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
-	    <div class="row">
+$(function() {
+	 //==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 $( "button.btn.btn-default" ).on("click" , function() {
+		fncGetList(1);
+	});
+});
 
-	    
+$(function() {
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	$( ".btn:contains('ê¸€ì“°ê¸°')" ).on("click" , function() {
+		fncAddReviewView();
+	});
+});	
+
+
+
+function fncAddReviewView(){
+	
+	$("form").attr("method" , "POST").attr("action" , "/review/addReviewView").submit();
+}
+</script>
+
+<!-- ìŠ¤í¬ë¦½íŠ¸ ì¢… -->
+</head>
+
+<!--ìŠ¤íƒ€ì¼ ì‹œì‘ë¶€ë¶„-->
+<style>
+.card_box {
+    column-gap: 0.25rem;
+}
+
+.card_box {
+            display: flex;
+            margin: 0 70px;
+            justify-content : space-between;
+            margin-top: 65px;
+            flex-wrap: wrap;
+       
+        }
+</style>
+<!-- ìŠ¤íƒ€ì¼ ì¢…ë£Œë¶€ë¶„ -->
+<body>
+<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+<!-- left -->
+		<jsp:include page="../common/left.jsp"></jsp:include>
+		
+		        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5"> 
+        
+			<div class="container-fluid"  >
+	        	 
+	        	 <jsp:include page="../common/toolbar.jsp"></jsp:include> 
+	        	  
+	        	 <!-- ì˜ˆì˜ê²Œ ë•Œë ¤ë°•ì•„ì£¼ì…ˆ!! -->
+	        	 <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+	        	   <form>
+	        	   <c:set var="i" value="${resultPage.totalCount }" />
+	        	  <c:set var="i" value="${i-1}" />
+	        	  
+	     <!-- ì „ì²´ê²Œì‹œë¬¼ ê°¯ìˆ˜ì¡ëŠ”ìª½ -->   	  
+	   	  <div class="row">
 		    <div class="col-md-6 text-left">
 		    			 
 		    	<p class="text-primary">
-		    		ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö
+		    		ì „ì²´ê²Œì‹œë¬¼  ${resultPage.totalCount }ê°œ, í˜„ì¬ ${resultPage.currentPage}  í˜ì´ì§€
 		    	</p>
 		    </div>
+		    </div>
 		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" >
-			    <input type="hidden" name="searchCategory" id="searchCategory" value="0" />
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" style="width:120px;">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ÀÛ¼ºÀÚ</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>³»¿ë</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">°Ë»ö</button>
-				  
-<br/><br/>
-				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-		
-				</form>
-	    	</div>
-	    	
-		</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		    <!-- ì „ì²´ê²Œì‹œë¬¼ ì¡ëŠ”ìª½ ì¢…ë£Œ -->
 
-		
-	
-      <!--  table Start /////////////////////////////////////-->
-      
-
-       
-   
-       
-		<tbody>
-		
-		  <c:set var="i" value="${resultPage.totalCount }" />
-		  <c:forEach var="review" items="${list}">
-			<c:set var="i" value="${i-1}" />
-			<tr>
-	
-			  
-			  
-			  <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h3 class="m-0 font-weight-bold text-primary">${review.reviewTitle }</h3>
-                                    <h5> ÀÛ¼ºÀÚ ${review.reviewWriter.email }       ${review.reviewDate }</h5>
+	        	 <input type="hidden" id="currentPage" name="currentPage" value=""/>
+	        	 <!-- ê²Œì‹œë¬¼ forEachë¬¸ ëŒì•„ê°€ëŠ”ìª½ ì‹œì‘ -->
+	          
+		 		 <c:forEach var="review" items="${list}">
+		 	 <div class="row-fruid" style="float: left; width: 50%; padding:10px;">
+		 		 	<div class="card shadow mb-4">
+                                <div id="card_box" class="card-header bg-dark py-3">
+                                    <h3 class="m-0 font-weight-bold text-warning">${review.reviewTitle }</h3>
+                                    <h5 class="text-warning"> ì‘ì„±ì ${review.reviewWriter.email }</h5> <h5 class="text-warning">${review.reviewDate }</h5>
                                    
                                 </div>
                                 <div class="card-body">
-                                    ${review.reviewContent }
+                                   <a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode }" ><h8 class="text-warning">ìƒì„¸ë³´ê¸°</h8></a></button>
                                 </div>
-                            </div>
-                            
-                            
-		
-
-			  
-		</tr>
-          </c:forEach>
-        
-        </tbody>
-      
-      </table>
-	  <!--  table End /////////////////////////////////////-->
-	 
-	 È¸¿ø¹øÈ£ ${user.userNo} 
-	 ÇĞ¿øÄÚµå1 ${academyCode }
-	ÈÄ±â³»¿ë ${reivewContent }
-	ÈÄ±â³»¿ë ${review.reviewContent }
-	 Ä¿³ØÆ® ${connect }
-	 ¸®ºä³Ñ¹ö ${review.reviewNo}
-	 
-	  
-	 <input type="hidden" name="academyCode" value="${academyCode}" /> 
+                            </div>                        
+                    	  </div> 
+		 		 </c:forEach>
+		 		 
+		 		  <!-- ê²Œì‹œë¬¼ forEachë¬¸ ëŒì•„ê°€ëŠ”ìª½ ì¢…ë£Œ -->
+		 		
+		 		
+	<!-- ê¸€ì“°ê¸° ë²„íŠ¼ ifë¬¸ ëŒì•„ê°€ëŠ”ê³³ì‹œì‘ -->
+		 
+	<input type="hidden" name="academyCode" value="${academyCode}" /> 
 	  <div class="form-group">
 	  	<c:if test="${user.role eq 'student' && connect == '1' }">
-		    <div class="col-sm-offset-11  col-sm-1 text-center">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
-		      <a href="/review/addReviewView?academyCode=${academyCode }" >±Û¾²±â</a></button>
+		    <div class="col-sm-11  col-sm-1 text-lift">
+		     &nbsp;&nbsp;<button type="button" class="btn btn-dark"  > 
+		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">ê¸€ì“°ê¸°</h8></a></button>
 		</c:if>	 
 		
 		<c:if test="${user.role eq 'parents' && connect == '1' }">
-		    <div class="col-sm-offset-11  col-sm-1 text-center">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
-		      <a href="/review/addReviewView?academyCode=${academyCode }" >±Û¾²±â</a></button>
+		    <div class="col-sm-11  col-sm-1 text-lift">
+		      &nbsp;&nbsp;<button type="button" class="btn btn-dark"  >
+		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">ê¸€ì“°ê¸°</h8></a></button>
 		</c:if>
-		    </div>
-		</div>
-	  
- 	</div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
- 	
- 	
- 	<!-- PageNavigation Start... -->
+	</div>
+		    <!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
-	
-<!--  </form> -->
-  
-  
+
+
+	<!-- ê¸€ì“°ê¸° ë²„íŠ¼ ifë¬¸ ëŒì•„ê°€ëŠ”ê³³ì¢…ë£Œ -->
+</form> 
+</div>	
+	        	 <!-- ì—¬ê¸°ê¹Œì§€ ë•Œë ¤ë°•ëŠ”ê±°ì¸ë“¯!! -->
+	        </div>
+	    </div>
+
+</div>
+
+
+
+
+
 </body>
 </html>
-    
