@@ -176,9 +176,9 @@
 						
 					 
 				var b = '';
-					b += '<div id="title" class="col-md-3" style="">'+data.academyName+'</div>'
-					b += '<div id="count" class="col-md-6" > 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
-			        b += '<div id="phone" class="col-md-3" > <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
+					b += '<div id="title" class="col-md-4" style="">'+data.academyName+'</div>'
+					b += '<div id="count" class="col-md-5" > 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
+			        b += '<div id="phone" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
