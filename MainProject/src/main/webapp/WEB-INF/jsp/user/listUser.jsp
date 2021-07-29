@@ -23,6 +23,23 @@
 	
 
   </head>
+  
+  <style>
+  
+       @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+   }
+	
+   body{
+   overflow-x:hidden; overflow-y:visible;
+   font-family: ChosunGu;
+   }
+  
+  </style>
+  
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
@@ -81,7 +98,7 @@
 									    			onkeyup="enterEvent()" value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 									  </div>
 									  
-									  <button type="button" class="btn btn-default">검색</button>
+									  <button type="button" class="btn btn-primary">검색</button>
 								  </div>
 								  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 								  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -136,7 +153,7 @@
 				        </tbody>
 				      
 				      </table>
-				      <input type="button" name="allLogout" value="로그아웃"></input>
+				      <input type="hidden" name="allLogout" value="로그아웃"></input>
 				      
 				      <jsp:include page="../common/pageNavigator_new.jsp"/>
                     

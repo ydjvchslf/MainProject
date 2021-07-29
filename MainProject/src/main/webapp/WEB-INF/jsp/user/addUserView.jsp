@@ -53,6 +53,13 @@
 	a:hover {
     color: #000000;
     text-decoration: underline;
+    }
+    
+   .email_check, .text_name, .text_password, .text_sms {
+    font-size:12px; font-family:'돋움';
+    }
+    
+    
 
 </style>
 
@@ -89,8 +96,10 @@
                                             <input type="text" id="email" name="email" class="form-control form-control-user"
                                                 id="aaa" aria-describedby="emailHelp"
                                                 placeholder="ex)buyedu@co.kr">
-                                            <span class="email_check"></span>
                                         </div>
+                                        <div class="form-group" align="center">
+										     <span class="email_check"></span>
+										</div>
                                         <div class="row"><!-- 비밀번호 입력 -->
 												<div class="col-6">
 													<div class="form-group">		
@@ -104,16 +113,18 @@
 			                                                placeholder="비밀번호확인" id="password2" name="password2" aria-describedby="emailHelp">
 			                                        </div>
 			                                    </div>
-			                                    <span id="helpBlock" class="help-block">
-											      	<strong class="text_password"></strong>
-											     </span> 
+			                                    <div class="form-group" align="center">
+												     <span class="text_password"></span>
+												</div>
 			                            </div>
                                         <div class="form-group">
                                             <input type="text" id="name" name="name" class="form-control form-control-user"
                                                aria-describedby="emailHelp"
                                                 placeholder="이름">
-                                            <span class="text_name"></span>
                                         </div>
+                                        <div class="form-group" align="center">
+										     <span class="text_name"></span>
+										</div>
                                         <div class="row"><!-- 휴대전화번호 입력 -->
 												<div class="col-8">
 													<div class="form-group">		
@@ -144,11 +155,13 @@
 					                                        <a href="#" name="check_sms" class="btn btn-primary btn-user btn-block">
 					                                            확인
 					                                        </a>
-					                                        <span class="text_sms"></span>
 					                                    </div>
 			                                        </div>
 			                                    </div>
 			                                </div>
+			                                <div class="form-group" align="center">
+												<span class="text_sms"></span>
+											</div>
                                         <a href="#" name="btnJoin" id="btnJoin" class="btn btn-primary btn-user btn-block">
                                             가입하기
                                         </a>
@@ -363,7 +376,7 @@
 				$(".text_name").css("color", "blue");
         		return true;
         	}else{
-        		$(".text_name").text("올바른 이름 형식이 아닙니다");
+        		$(".text_name").text("올바른 이름 형식이 아닙니다.");
 				$(".text_name").css("color", "red");
         	}
         } else{
@@ -487,7 +500,7 @@
 			
 		}else {
 			
-			var str = '비밀번호는 8자 이상, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
+			var str = '비밀번호는 8자 이상, 숫자/영문/특수문자를 모두 포함해야 합니다.';
 			$('.text_password').text(str).css("color", "red");
 			$("#password").focus();
 		}

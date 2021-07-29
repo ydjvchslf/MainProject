@@ -30,7 +30,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -40,14 +40,16 @@
 
 			<!-- 여기는 학원정보, 멀티정보등 이동 툴바 -->
 	        <div class="container-fluid">
+	        
+	        	<jsp:include page="../common/toolbar2.jsp"></jsp:include>
 	        	
-	        	
-	        	<h1>추가정보등록하기</h1>
-	        	
-				<div class="col-sm-4"></div>
+	        	<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+	        	 
+	        	<div class="row">
 				<div class="col-sm-4">
 					<form class="user">
                           <div class="form-group" align="center">
+                          	<h4>계정연동하기</h4><br>
                              <div class="custom-control custom-checkbox small">
                                 <span class="radio">
 					                <label><input name="role" id="student" name="student" type="radio" class="radio-label" checked value="student">학생 </label>
@@ -61,10 +63,10 @@
                               <input type="hidden" name="email" value="${snsEmail}">
                           </div>
 	                      <div class="row"><!-- 비밀번호 입력 -->
-							<div class="col-6">
+							<div class="col-4">
 								<div class="form-group">		
 									<input type="password" id="password" name="password" class="form-control form-control-user"
-				                            placeholder="새비밀번호" aria-describedby="emailHelp">
+				                            placeholder="비밀번호" aria-describedby="emailHelp">
 	                             </div>
 	                        </div>
 	                        <div class="col-6"><!-- 새비밀번호 -->
@@ -73,16 +75,23 @@
 				                           placeholder="비밀번호확인" id="password2" name="password2" aria-describedby="emailHelp">
 				                </div>
 				            </div>
-				            <span id="helpBlock" class="help-block">
-						      	<strong class="text_password"></strong>
-						    </span> 
+				            <div class="col-12">
+					            <div class="form-group" align="center">
+							     	<span class="text_password"></span>
+								</div>
+							</div>
+				            
 	                      </div>
                               <div class="form-group">
                                   <input type="text" id="name" name="name" class="form-control form-control-user"
                                      aria-describedby="emailHelp"
                                       placeholder="이름">
-                                  <span class="text_name"></span>
                               </div>
+                              <div class="col-12">
+					            <div class="form-group" align="center">
+							     	<span class="text_name"></span>
+								</div>
+							</div>
 	                        <div class="row"><!-- 휴대전화번호 입력 -->
 								<div class="col-8">
 									<div class="form-group">		
@@ -112,22 +121,30 @@
 									<div class="text-center">
 				                        <a href="#" name="check_sms" class="btn btn-primary btn-user btn-block">
 				                             확인</a>
-				                 		<span class="text_sms"></span>
 				                    </div>
 				                 </div>
-				                </div>
+				                  </div>
+				                 <div class="col-12">
+					            <div class="form-group" align="center">
+							     	<span class="text_sms"></span>
+								</div>
+							</div>
+				               
 	                          </div>
 	                               <a href="#" name="btnJoin" id="btnJoin" class="btn btn-primary btn-user btn-block">
 	                                   계정연동하기
 	                               </a>
 	                      </form>
                   		</div>
-                  <div class="col-sm-4"></div>
+                  		<div class="col-sm-8" align="center">
+                  			<img src="/image/addsns.jpg" width="900">
+                  		</div>
 				<!-- form Start /////////////////////////////////////-->
-						
-			</div><!-- container -->
-      	
-       </div>
+				</div>
+			</div>	
+		</div><!-- container -->
+     	
+      </div>
       
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -393,7 +410,7 @@
 			
 		}else {
 			
-			var str = '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
+			var str = '비밀번호는 8자 이상이어야 하며, 숫자/영문/특수문자를 모두 포함해야 합니다.';
 			$('.text_password').text(str).css("color", "red");
 			$("#password").focus();
 		}
