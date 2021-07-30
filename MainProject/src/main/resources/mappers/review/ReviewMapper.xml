@@ -63,10 +63,8 @@
 	</update>
 	
 	<delete id="deleteReview" parameterType="int">
-		update review
-		<set>
-			review_state = '2'
-		</set>
+		DELETE 
+		FROM review
 		WHERE review_no = '${reviewNo}'
 	</delete>
 		 
@@ -75,7 +73,7 @@
 	<select  id="getReviewList"  parameterType="search"	resultMap="reviewSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.email , r.review_date , r.review_state
+	  					FROM		(	SELECT r.review_no , r.review_title , r.review_content , u.user_no, u.email , r.review_date , r.review_state
 											FROM review r, users u , academy a
 											WHERE r.review_writer = u.user_no AND r.academy_code = a.academy_code AND r.academy_code = '${searchAcademyCode}' 
 											AND (r.review_state = '0' OR r.review_state = '1') 
