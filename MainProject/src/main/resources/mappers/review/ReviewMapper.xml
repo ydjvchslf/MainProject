@@ -115,5 +115,11 @@
 			FROM review 
 			WHERE review_writer = #{value}
      </select>
+     
+     <select id="countmyReview" parameterType="map" resultType="int">
+			SELECT  count(*)
+			FROM review 
+			WHERE review_writer = #{review_writer} AND academy_code = #{academy_code}
+     </select>
 	 
 </mapper>

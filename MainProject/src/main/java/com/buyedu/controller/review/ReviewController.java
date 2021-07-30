@@ -1,5 +1,6 @@
 package com.buyedu.controller.review;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,9 @@ public class ReviewController {
 	
 	@Autowired
 	private AcademyService academyService;
+	
+	@Autowired
+	private UserService userService;
 	
 	public ReviewController() {
 		System.out.println(this.getClass());
@@ -84,8 +88,9 @@ public class ReviewController {
 		
 		reviewService.addReview(review);
 		
-		review.setAcademyCode(academyCode);
+		Academy academy = new Academy();
 		
+		academy.setAcademyCode(academyCode);
 		
 		return "redirect:/review/listReview?academyCode="+review.getAcademyCode();
 	}
@@ -133,8 +138,10 @@ public class ReviewController {
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
 	
+		Academy academy = new Academy();
 		
-		review.setAcademyCode(academyCode);
+		academy.setAcademyCode(academyCode);
+		
 		System.out.println("reivew : "+review);
 		
 		
@@ -150,6 +157,22 @@ public class ReviewController {
 		
 		String academyCode = request.getParameter("academyCode");
 		Academy academy = academyService.getAcademy(academyCode);
+		
+		
+		// 해당 학원에서 리뷰 쓴 갯수 찾기
+		Map<String, Object> countmap = new HashMap<String, Object>();
+		
+		countmap.put("review_writer", userNo);
+		countmap.put("academy_code", academyCode);
+		
+		int count = reviewService.countmyReview(countmap);
+		
+		System.out.println("해당 학원에서 리뷰가 있는지 ="+count);
+		
+		model.addAttribute("count", count);
+		
+		
+		
 		
 		model.addAttribute("academy", academy);
 		
@@ -222,8 +245,10 @@ public class ReviewController {
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
 	
+		Academy academy = new Academy();
 		
-		review.setAcademyCode(academyCode);
+		academy.setAcademyCode(academyCode);
+		
 		System.out.println("리뷰넘버들어가냐..?"+reviewNo);
 		System.out.println("리뷰들어가냐"+review);
 		System.out.println("아카데미코드 들어가줘 제발"+academyCode);
@@ -237,21 +262,21 @@ public class ReviewController {
 	
 	
 	
-	@RequestMapping(value="getmyReview")
-	public String getmyReview(@RequestParam int userNo, @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
+	@RequestMapping(value="listmyReview")
+	public String getmyReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
+		
+		User user = UserUtil.user();
+		
+		int userNo = user.getUserNo();
 		
 		Map<String, Object> map =  reviewService.getmyReviewList(userNo);
 		
+		User user1 =  userService.getUserByUserNo(userNo);
+		
 		model.addAttribute("reviewList", map.get("list"));
+		model.addAttribute("user", user1);
 		
-		/*
-		 *   1. (mapper) 내가 쓴 후기 -> writer = userNo 로 리스트 뽑기
-		 *   2. 맵 -> list / 맵 자체를 모달에 넣기 
-		 *   3. 
-		 */
-		
-		
-		return "/review/mylistReview";
+		return "/review/listmyReview";
 	}
 	
 
