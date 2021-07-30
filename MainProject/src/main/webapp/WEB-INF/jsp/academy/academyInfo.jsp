@@ -135,8 +135,6 @@
 						</div>
 					</div>
 					
-					
- 
 						    
 				</div>
 	      	</div>
@@ -237,12 +235,14 @@
 	function updateIntro(academyCode){
 	    var intro ='';
 	    
-	    alert("코드 = " + academyCode + "소개글 = "+academyInfo.academyIntro);
-	    
-	    	intro += '<div id="AcademyIntro">';
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="40">'+academyInfo.academyIntro+'</textarea>'
+	    	intro += '<div class="col-sm-12" id="AcademyIntro">';
+	    	intro += '<div class="panel" style="border:5px solid #FFCA77;">'
+	    	intro += '<div class="panel-heading" style="background-color:#FFCA77;">'
+	    	intro += '<h3 class="panel-title">학원 실적</h3>'
+	    	intro += '</div>'
+	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
-	   	 	intro += '</div>';
+	   	 	intro += '</div></div>';
 	    
 	    $('#AcademyIntro').html(intro);
 	    
@@ -256,7 +256,7 @@
 	        type : 'POST',
 	        data : {'academyCode' : academyCode, 'updateIntro' : updateIntro},
 	        success : function(data){
-	        	alert("수정 완료!");
+	        	alert("수정 완료되었습니다.");
 	        	getAcademyInfo();
 	        }
 	    });
@@ -264,16 +264,20 @@
 	
 	// 실적글 텍스트 area 변경
 	function updateHistory(academyCode){
-	    var intro ='';
+	    var history ='';
 	    
 	    alert("코드 = " + academyCode + "실적글 = "+academyInfo.academyHistory);
 	    
-	    	intro += '<div id="AcademyHistory">';
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="40">'+academyInfo.academyHistory+'</textarea>'
-	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
-	   	 	intro += '</div>';
+	    	history += '<div class="col-sm-12" id="AcademyHistory">';
+	    	history += '<div class="panel" style="border:5px solid #FFCA77;">'
+	    	history += '<div class="panel-heading" style="background-color:#FFCA77;">'
+	    	history += '<h3 class="panel-title">학원 실적</h3>'
+	    	history += '</div>'
+	    	history += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyHistory+'</textarea>'
+	    	history += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
+	    	history += '</div></div>';
 	    
-	    $('#AcademyHistory').html(intro);
+	    $('#AcademyHistory').html(history);
 	    
 	}
 	 
@@ -286,7 +290,7 @@
 	        type : 'POST',
 	        data : {'academyCode' : academyCode, 'updateHistory' : updateHistory},
 	        success : function(data){
-	        	alert("수정 완료!");
+	        	alert("수정 완료되었습니다.");
 	        	getAcademyInfo();
 	        }
 	    });
