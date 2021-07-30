@@ -45,12 +45,6 @@ public class EduController {
 	@Value("6")
 	int pageSize;
 	
-	@RequestMapping( value = "cancle", method=RequestMethod.GET)
-	public String cancle() throws Exception {
-		
-		return "/purchase/cancle";
-	}
-	
 	@RequestMapping ( value = "addEdu", method=RequestMethod.GET )
 	public String addEduView(@RequestParam String academyCode, Model model) throws Exception {
 		
@@ -139,28 +133,30 @@ public class EduController {
 		}
 		
 		String role = ((User)request.getSession().getAttribute("user")).getRole();
-		
-		System.err.println(role);
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Academy academy = acaService.getAcademy(acaCode);
 		
 		search.setSearchRoleByEdu(role);
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(acaCode);
+		search.setSearchEduState(search.getSearchEduState());
+
+		System.out.println("삭제하지말 것 =========== " + search.getSearchEduState() );
 		
 		Map<String , Object> map= eduService.getEduList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.err.println(map);
 		
-		Map<String, Object> map2 = acaService.getAcademyCodeList(140);
+		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
 		
 		model.addAttribute("list", map2.get("list"));
-		System.out.println("aaaaaaaa============"+map2);
 		model.addAttribute("eduList", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		model.addAttribute("academy", academy);
 		
 		System.out.println("listEdu End");
 		
-		return "/edu/listEduTest";
+		return "/edu/listEdu";
 	}
 }
