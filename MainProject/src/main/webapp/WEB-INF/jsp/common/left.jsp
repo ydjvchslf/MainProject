@@ -87,6 +87,11 @@
 		              </ul>
 		          </li>
 		          
+		         <c:if test="${user.role eq 'academy'}"> 
+		          <li>
+		              <a href="/purchaseedu/listPurchaseAcademy?academyCode=${academy.academyCode}">결제 목록</a>
+		          </li>
+		         </c:if> 
 		          
 		          
 		         <c:if test="${user.role != 'academy'}"> 
@@ -205,7 +210,10 @@
     		
     		 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
     		
+    		 
     		 $('#allLogout').on("click" , function() {
+    			 
+    			 console.log("2222로그아웃클릭")
     			 
     			 let x = document.cookie;
     			 
