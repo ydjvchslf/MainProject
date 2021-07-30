@@ -19,6 +19,8 @@ public class Review {
 	
 	private int connectState;
 	
+	private int reviewcount;
+	
 	
 	public int getConnectState() {
 		return connectState;
