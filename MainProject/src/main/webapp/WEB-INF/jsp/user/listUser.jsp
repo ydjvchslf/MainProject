@@ -72,14 +72,12 @@
 				
                    <jsp:include page="../common/toolbar2.jsp"></jsp:include>
 					  
-					  <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">   
+					  <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; 
+					  			  padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">   
 					    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 					    <div class="row">
-					    
+					    	
 						    <div class="col-md-6 text-left">
-						    	<p style="font-size:15px; color:black; font-family:'돋움';">
-						    		총 회원수 : ${resultPage.totalCount }명, 현재 ${resultPage.currentPage} 페이지
-						    	</p>
 						    </div>
 						    
 						    <div><br></br></div>

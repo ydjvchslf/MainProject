@@ -24,4 +24,8 @@ public interface PurchaseEduDao {
 	
 	int getPurchaseAcademyTotalCount(Search search);
 	
+	int getPayNo(int userNo);
+	
+	int deletePurchaseEdu(PurchaseEdu purchaseEdu);
+	
 }

@@ -22,6 +22,20 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>	
 
   </head>
+  
+   <style>
+  @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	body{
+	font-family: ChosunGu;
+	}
+  </style>
+  
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
