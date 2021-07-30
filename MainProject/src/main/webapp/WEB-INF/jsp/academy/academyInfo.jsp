@@ -25,6 +25,13 @@
 	
 	<style>
 	
+	.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0px; 
+	}
+	
 	@font-face {
     font-family: 'TmonMonsori';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
@@ -112,8 +119,8 @@
 					<div id="academytitle" class="row" ></div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<button id="chat" class="btn btn-primary" align="left">Academy Talk</button>
+						<div align="right" class="col-md-12">
+							<button id="chat" class="btn btn-primary" style="background-color:#FFCA77;" align="left">Academy Talk</button>
 						</div>
 					</div>
 					
@@ -190,11 +197,11 @@
 				 var a = ''
 					 
 				 	 a += '<div class="col-sm-6" id="AcademyIntro">'
-				 	 a += '<div class="panel panel-default">'
-				 	 a += '<div id="panel-color" class="panel-heading">'
+				 	 a += '<div class="panel" style="border:5px solid #FFCA77;">'
+				 	 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
 			 	 	 a += '<h3 class="panel-title">학원 소개</h3>'
 			 	 if(role == 'academy'){	 
-			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>' 
+			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>' 
 			 	 }
 			 	 	 a += '</div>'
 			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto;">'
@@ -203,11 +210,11 @@
 			 		 
 			 		 
 			 		 a += '<div class="col-sm-6" id="AcademyHistory">'
-			 		 a += '<div class="panel panel-default">'
-					 a += '<div id="panel-color" class="panel-heading">'
+			 		 a += '<div class="panel" style="border:5px solid #FFCA77;">'
+					 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
 			 		 a += '<h3 class="panel-title">학원 실적</h3>'
 			 	if(role == 'academy'){
-			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>'
+			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>'
 			 	}
 			 		 a += '</div>' 
 				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto;">'
@@ -222,7 +229,6 @@
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
-					 
 			 }							
 		});		
 	}
