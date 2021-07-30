@@ -26,26 +26,21 @@
 			
 		function fncGetList(currentPage) {
 			
-			var acaCode = $("#acaCode")
-			alert ( acaCode )
+			var acaCode = "${ academy.academyCode }"
 			
 			$("#currentPage").val(currentPage)
-		   	$("form").attr("method", "POST").attr("action","/edu/listEdu").submit();
+		   	$("form").attr("method", "POST").attr("action","/edu/listEdu?acaCode="+acaCode).submit();
 		};
 		
 		
 		$(function() {
 			
-			$( "button.btn.btn-default" ).on("click" , function() {
+			$( "button.btn.btn-primary" ).on("click" , function() {
 				fncGetList(1);
 			});
-			 
-		});
-		
-		$(function() {
 			
 			$( "input:radio" ).on("click" , function() {
-	
+				
 				fncGetList(1);
 			});
 			 
@@ -53,41 +48,43 @@
 		
 		$( function() {
 		      
-		      $( "td:nth-child(2)" ).on("click" , function() {
-	
-		    	 var eduNo = $(this).find('input').val()
-		         self.location ="/edu/getEdu?eduNo="+eduNo;
-		         
-		      });
-		      
-		      $( "td:nth-child(2)" ).css("color" , "red");
-		      
-		      $( ".btn:contains('수업삭제')" ).on("click" , function() {
-					 
-					 var eduNo = $(this).find('input').val()
-					 var eduState = $(this).find('#eduState').val()
-					 
-					 if( eduState == 1 ) {
-						 alert ("판매중인 수업은 삭제가 불가능합니다.")
-					 } else if( eduState == 2 ) {
-						 alert ("판매완료된 수업은 삭제가 불가능합니다.")
-					 } else if( eduState == 0 ) {
-						 $.ajax({
-						     url : '/edu/json/deleteEdu/'+eduNo ,
-						     method : 'POST',
-						     dataType : "json",
-						     headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json; charset:UTF-8"
-							},
-						    success : function(data, status){
-	
-						    	alert("수업이 삭제되었습니다.")
-						    }
-						});
-					 }
-					 
-				})
+	        $( ".btn:contains('삭제')" ).on("click" , function() {
+				 
+				var eduNo = $(this).find('#eduNo').val()
+				var eduState = $(this).find('#eduState').val()
+				 
+				if( eduState == 1 ) {
+					
+				 	alert ("판매중인 수업은 삭제가 불가능합니다.")
+				} else if( eduState == 2 ) {
+					alert ("판매완료된 수업은 삭제가 불가능합니다.")
+				} else if( eduState == 0 ) {
+					$.ajax({
+						
+					    url : '/edu/json/deleteEdu/'+eduNo ,
+					    method : 'POST',
+					    dataType : "json",
+				     	headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json; charset:UTF-8"
+						},
+					    success : function(data, status){
+
+					    	alert("수업이 삭제되었습니다.")
+					    }
+						
+					});
+				 }
+				 
+			})
+				
+			$( ".btn:contains('등록')").on("click", function() {
+				
+				var academyCode = "${ academy.academyCode }"
+				
+				self.location = "/edu/addEdu?academyCode="+academyCode;
+				
+			})
 		      
 		});
 		
@@ -112,32 +109,28 @@
 					
 					<div class="row">
 					
-						<div class="col-xs-12 col-md-5">
-							<p class="text-primary">
+						<div class="col-md-6 text-left">
+							<p style="font-size:15px; color:black; font-family:'돋움';">
 					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+					    	</p>
+					    	<p>
+					    	<button type="button" class="btn btn-primary">등록</button>
 					    	</p>
 						</div>
 						
-						<div class="col-xs-12 col-md-3">
-								<div class="radio">
-									  <label >
-									    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
-									    판매대기중
-									  </label>
-									  <label style="margin-left:20px;">
-									    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
-									    판매중
-									  </label>
-									  <label style="margin-left:20px;">
-									    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" >
-									    판매완료
-									  </label>
-								 </div>
-						
-						</div>
-						
-						<div class="col-xs-12 col-md-4">
+						<div class="col-md-6 text-right">
 							<form class="form-inline" name="detailForm">
+								
+								<div class="col-md-12 text-right">
+							    	<p>
+							    		<span><strong> 판매상태 </strong></span>
+							    		<input type="radio" name="searchEduState" id="searchEduState" value="0" > 판매대기중
+										<input type="radio" name="searchEduState" id="searchEduState" value="1" > 판매중
+							    		<input type="radio" name="searchEduState" id="searchEduState" value="2" > 판매완료
+							    	</p>
+								</div>
+
+								<div class="col-md-12 text-right">
 								  <div class="form-group">
 								    <select class="form-control" name="searchCondition" >
 										<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>수업명</option>
@@ -152,6 +145,7 @@
 								  </div>
 								  
 								  <button type="button" class="btn btn-primary">검색</button>
+								</div>
 								  
 								  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 								  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -188,7 +182,9 @@
 							          <div class="thumbnail">
 							            <img src="/image/BBBB.png" width="200" height="auto">
 							            <div class="caption" align="center">
-							              <h2>${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
+							              <h2>${ edu.academy.academyName }
+								              <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/>
+							              </h2>
 							              <h5>${ edu.eduName }</h5>
 							              <p>&#8361; ${ edu.eduPrice } 원</p>
 							              <p>
@@ -203,11 +199,17 @@
 							              	</c:if>
 							              </p>
 							              <p>
-							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&currentPage=${search.currentPage}" class="btn btn-primary" role="button">상세보기</a> 
+							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&currentPage=${search.currentPage}" class="btn btn-primary" role="button">상세보기</a>
+										  <c:if test="${ user.role == 'academy' }">
+											  <button type="button" class="btn btn-default">삭제
+											  	<input type="hidden" name="eduState" id="eduState" value="${edu.eduState}"/>
+											  	<input type="hidden" name="eduNo" id="eduNo" value="${edu.eduNo}"/>
+											  </button>
+										  </c:if>
 							            </div>
 							          </div>
 							        </div>
-							       </c:forEach>
+							     </c:forEach>
 				    	</table>
 					</div>
 					
@@ -221,9 +223,8 @@
        </div>
       	
 	</div>
-	
 
-    <script src="/js/jquery.min.js"></script>
+    <!-- <script src="/js/jquery.min.js"></script> -->
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>

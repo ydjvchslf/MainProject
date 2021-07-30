@@ -46,9 +46,6 @@
 	   
 	   $( function() {
 		   
-		   // 여기 alert 추가
-		   alert('${code}')
-		
 		   $('#eduStartDate').datepicker( { dateFormat : "yy-mm-dd" } );
 		   
 		   $('#eduEndDate').datepicker( { dateFormat : "yy-mm-dd" } );

@@ -1,36 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<title>ìƒí’ˆë“±ë¡</title>
-	<meta charset="EUC-KR">
+<html lang="en">
+  <head>
+  	<title>Buy Edu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/style.css">
 	
-	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 70px;
-        }
-    </style>
-
-	<link rel="stylesheet" href="/css/admin.css" type="text/css">
-	
-	<script type="text/javascript" src="../javascript/calendar.js"></script>
 	
 	<script type="text/javascript">
 	
@@ -41,7 +28,7 @@
 	   
 	   $( function() {
 	      
-	      $( ".btn:contains('ë“± ë¡')").on("click", function() {
+	      $( ".btn:contains('µî ·Ï')").on("click", function() {
 	         
 	         fncAddProduct();
 	      });
@@ -50,7 +37,7 @@
 	   
 	   $( function() {
 	      
-	      $( ".btn btn-primary btn:contains('ì·¨ì†Œ')").on("click", function() {
+	      $( ".btn btn-primary btn:contains('Ãë¼Ò')").on("click", function() {
 	          
 	    	  window.history.back();
 	      });
@@ -59,9 +46,6 @@
 	   
 	   $( function() {
 		   
-		   // ì—¬ê¸° alert ì¶”ê°€
-		   alert('${code}')
-		
 		   $('#eduStartDate').datepicker( { dateFormat : "yy-mm-dd" } );
 		   
 		   $('#eduEndDate').datepicker( { dateFormat : "yy-mm-dd" } );
@@ -70,130 +54,157 @@
 	   
 	
 	</script>
-	</head>
-	
-	<body>
-   	
-   	<div class="container">
-	
-		<h1 class="text-center">ìˆ˜ ì—… ë“± ë¡</h1>
+		
+	</script>
+
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+		
+		<!-- left -->
+		<jsp:include page="../common/left.jsp"></jsp:include>
+		
+        <!-- Page Content  -->
+        <div id="content" class="p-4 p-md-5">
+		
+		<div id="header"><h1 class="mt-4">${edu.academy.academyName}</h1></div>
+		
+		<!-- ¿©±â´Â ÇĞ¿øÁ¤º¸, ¸ÖÆ¼Á¤º¸µî ÀÌµ¿ Åø¹Ù -->
+		<jsp:include page="../common/toolbar.jsp"></jsp:include>
+	        
+	        <div class="container">
+				<!-- ³»¿ë ¶§·Á ¹ÚÀ¸»ï ÀÌ»Ú°Ô -->
+				
+				<h1 class="text-center">¼ö ¾÷ µî ·Ï</h1>
 	
 	<form class="form-horizontal" enctype="multipart/form-data">
 		
 		
 		  <div class="form-group">
-		    <label for="eduName" class="col-sm-offset-1 col-sm-1 control-label">ìˆ˜ ì—… ëª…</label>
+		    <label for="eduName" class="col-sm-offset-1 col-sm-1 control-label">¼ö ¾÷ ¸í</label>
 		    <div class="col-lg-3">
-		      <input type="text" class="form-control" id="eduName" name="eduName" placeholder="ìˆ˜ì—…ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.">
+		      <input type="text" class="form-control" id="eduName" name="eduName" placeholder="¼ö¾÷¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.">
 		    </div>
-		    <label for="eduTeacher" class="col-sm-1 control-label">ê°• ì‚¬ ëª…</label>
-		    <div class="col-lg-2">
-		      <input type="text" class="form-control" id="eduTeacher" name="eduTeacher" placeholder="ê°•ì‚¬ëª…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.">
+		    <label for="eduTeacher" class="col-sm-2 control-label">°­ »ç ¸í</label>
+		    <div class="col-lg-3">
+		      <input type="text" class="form-control" id="eduTeacher" name="eduTeacher" placeholder="°­»ç¸íÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduPrice" class="col-sm-offset-1 col-sm-1 control-label">ìˆ˜ ê°• ë£Œ</label>
+		    <label for="eduPrice" class="col-sm-offset-1 col-sm-1 control-label">¼ö °­ ·á</label>
 		    <div class="col-lg-3">
-		      <input type="text" class="form-control" id="eduPrice" name="eduPrice" placeholder="ìˆ˜ê°•ë£Œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.">
-		      <span style = "color:red">ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”.</span>
+		      <input type="text" class="form-control" id="eduPrice" name="eduPrice" placeholder="¼ö°­·á¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.">
+		      <span style = "color:red">¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä.</span>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		  	<label for="eduStartDate" class="col-sm-2 control-label">ìˆ˜ì—… ì‹œì‘ ë‚ ì§œ</label>
+		  	<label for="eduStartDate" class="col-sm-2 control-label">¼ö¾÷ ½ÃÀÛ ³¯Â¥</label>
 			    <div class="col-lg-3">
-			      <input type="text" class="form-control" id="eduStartDate" name="eduStartDate" placeholder="ìˆ˜ì—… ì‹œì‘ë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”."/>
+			      <input type="text" class="form-control" id="eduStartDate" name="eduStartDate" placeholder="¼ö¾÷ ½ÃÀÛ³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä."/>
 			    </div>
-		    <label for="eduEndDate" class="col-sm-2 control-label">ìˆ˜ì—… ì¢…ë£Œ ë‚ ì§œ</label>
+		    <label for="eduEndDate" class="col-sm-2 control-label">¼ö¾÷ Á¾·á ³¯Â¥</label>
 			    <div class="col-sm-3">
-			      <input type="text" class="form-control" id="eduEndDate" name="eduEndDate" placeholder="ìˆ˜ì—… ì¢…ë£Œë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”."/>
+			      <input type="text" class="form-control" id="eduEndDate" name="eduEndDate" placeholder="¼ö¾÷ Á¾·á³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä."/>
 			    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduDay" class="col-sm-2 control-label">ìˆ˜ì—… ë‚ ì§œ</label>
+		    <label for="eduDay" class="col-sm-2 control-label">¼ö¾÷ ³¯Â¥</label>
 		    <div class="col-sm-3">
-		      <input type="text" class="form-control" id="eduDay" name="eduDay" placeholder="ìˆ˜ì—…ë‚ ì§œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”."/>
+		      <input type="text" class="form-control" id="eduDay" name="eduDay" placeholder="¼ö¾÷³¯Â¥¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä."/>
 		    </div>
-		    <label for="eduMember" class="col-sm-2 control-label">ìˆ˜ì—… ì´ ì¸ì›</label>
+		    <label for="eduMember" class="col-sm-2 control-label">¼ö¾÷ ÃÑ ÀÎ¿ø</label>
 		    <div class="col-sm-3">
-		      <input type="text" class="form-control" id="eduMember" name="eduMember" placeholder="ìˆ˜ì—… ì´ì •ì›ì„ ì…ë ¥í•´ì£¼ì„¸ìš”."/>
-		      <span style = "color:red">ìˆ«ìë§Œ ì…ë ¥í•´ì£¼ì„¸ìš”.</span>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="eduStartTime" class="col-sm-2 control-label">ìˆ˜ì—… ì‹œì‘ ì‹œê°„</label>
-		    <div class="col-sm-3">
-		      <input type="text" class="form-control" id="eduStartTime" name="eduStartTime" placeholder="EX) ì˜¤ì „ 9ì‹œ , AM 9:00"/>
-		    </div>
-		    <label for="eduEndTime" class="col-sm-2 control-label">ìˆ˜ì—… ì¢…ë£Œ ì‹œê°„</label>
-		    <div class="col-sm-3">
-		      <input type="text" class="form-control" id="eduEndTime" name="eduEndTime" placeholder="EX) ì˜¤í›„ 9ì‹œ , PM 9:00"/>
+		      <input type="text" class="form-control" id="eduMember" name="eduMember" placeholder="¼ö¾÷ ÃÑÁ¤¿øÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä."/>
+		      <span style = "color:red">¼ıÀÚ¸¸ ÀÔ·ÂÇØÁÖ¼¼¿ä.</span>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduIntro" class="col-sm-2 control-label">ìˆ˜ì—… ë§›ë³´ê¸°</label>
+		    <label for="eduStartTime" class="col-sm-2 control-label">¼ö¾÷ ½ÃÀÛ ½Ã°£</label>
 		    <div class="col-sm-3">
-		      <textarea rows="8" cols="62" name="eduIntro", id="eduIntro">"ë°”ê¹¥ë¶€ë¶„ì— ê°’ì„ ë„£ì–´ì¤€ë‹¤!</textarea>
+		      <input type="text" class="form-control" id="eduStartTime" name="eduStartTime" placeholder="EX) ¿ÀÀü 9½Ã , AM 9:00"/>
+		    </div>
+		    <label for="eduEndTime" class="col-sm-2 control-label">¼ö¾÷ Á¾·á ½Ã°£</label>
+		    <div class="col-sm-3">
+		      <input type="text" class="form-control" id="eduEndTime" name="eduEndTime" placeholder="EX) ¿ÀÈÄ 9½Ã , PM 9:00"/>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="eduGrade" class="col-sm-2 control-label">ìˆ˜ì—… ëŒ€ìƒí•™ë…„</label>
+		    <label for="eduIntro" class="col-sm-2 control-label">¼ö¾÷ ¸Àº¸±â</label>
+		    <div class="col-sm-3">
+		      <textarea rows="8" cols="62" name="eduIntro", id="eduIntro"> ¼ö¾÷³»¿ëÀ» °£·«È÷ ÀÛ¼ºÇØÁÖ¼¼¿ä.</textarea>
+		    </div>
+		  </div>
+		  
+		  <div class="form-group">
+		    &nbsp;&nbsp;&nbsp;<label for="eduGrade" class="col-sm-2 control-label">¼ö¾÷ ´ë»óÇĞ³â</label>
 		    <label class="btn btn-default">
-			  <input type="checkbox" name="eduGrade" value="ì´ˆë“±">ì´ˆë“±
+			  <input type="checkbox" name="eduGrade" value="ÃÊµî">ÃÊµî
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduGrade" value="ì¤‘ë“±">ì¤‘ë“±
+			  <input type="checkbox" name="eduGrade" value="Áßµî">Áßµî
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduGrade" value="ê³ 1~ê³ 2">ê³ 1~ê³ 2
+			  <input type="checkbox" name="eduGrade" value="°í1~°í2">°í1~°í2
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduGrade" value="ê³ 3">ê³ 3
+			  <input type="checkbox" name="eduGrade" value="°í3">°í3
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduGrade" value="Nìˆ˜">Nìˆ˜
+			  <input type="checkbox" name="eduGrade" value="N¼ö">N¼ö
 			 </label>
+			 <span style="color : red"> 1°³¸¸ ¼±ÅÃÇØÁÖ¼¼¿ä </span>
 		  </div>
 		  
 		  <div class="form-group">
-		  <label for="eduSubject" class="col-sm-2 control-label">ìˆ˜ì—… ê³¼ëª©</label>
+		  &nbsp;&nbsp;&nbsp;<label for="eduSubject" class="col-sm-2 control-label">¼ö¾÷ °ú¸ñ</label>
 		     <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="êµ­ì–´">êµ­ì–´
+			  <input type="checkbox" name="eduSubject" value="±¹¾î">±¹¾î
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="ì˜ì–´">ì˜ì–´
+			  <input type="checkbox" name="eduSubject" value="¿µ¾î">¿µ¾î
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="ìˆ˜í•™">ìˆ˜í•™
+			  <input type="checkbox" name="eduSubject" value="¼öÇĞ">¼öÇĞ
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="ì‚¬íšŒ">ì‚¬íšŒ
+			  <input type="checkbox" name="eduSubject" value="»çÈ¸">»çÈ¸
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="ê³¼í•™">ê³¼í•™
+			  <input type="checkbox" name="eduSubject" value="°úÇĞ">°úÇĞ
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="ì œ 2ì™¸êµ­ì–´">ì œ 2ì™¸êµ­ì–´
+			  <input type="checkbox" name="eduSubject" value="Á¦ 2¿Ü±¹¾î">Á¦ 2¿Ü±¹¾î
 			 </label>
 			 <label class="btn btn-default">
-			  <input type="checkbox" name="eduSubject" value="ì˜ˆì²´ëŠ¥">ì˜ˆì²´ëŠ¥
+			  <input type="checkbox" name="eduSubject" value="¿¹Ã¼´É">¿¹Ã¼´É
 			 </label>
+			 <span style="color : red"> 1°³¸¸ ¼±ÅÃÇØÁÖ¼¼¿ä </span>
 		  </div>
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" id="add">ë“± ë¡</button>
-			  <a class="btn btn-primary btn" href="#" role="button">ì·¨&nbsp;ì†Œ</a>
+		      <button type="button" class="btn btn-primary" id="add">µî ·Ï</button>
+			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
 		    </div>
 		  </div>
 		  
 	</form>
+        
+	      	</div>
+      	
+       </div>
+      
 	</div>
 	
-</body>
+    <!-- <script src="/js/jquery.min.js"></script> -->
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
 </html>
