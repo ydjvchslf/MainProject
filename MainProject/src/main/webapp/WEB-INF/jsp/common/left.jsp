@@ -17,14 +17,31 @@
 <body>
 			<nav id="sidebar">
 				<div class="p-4 pt-5">
-		  		<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/image/student.png);"></a>
-		  		
+				<br></br>
+				<c:choose>
+	           		<c:when test="${user.role eq 'admin'}">
+	           			<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/image/admin2.png); width:190px; height: 190px;"></a>
+	           		</c:when>
+	           		<c:when test="${user.role eq 'student' || user.role eq 'parents' || empty user.role}">
+	           			<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/image/student2.png); width:190px; height: 190px;"></a>
+	           		</c:when>
+	           		<c:when test="${user.role eq 'academy'}">
+	           			<a href="#" class="img logo rounded-circle mb-5" style="background-image: url(/image/teacher2.png); width:190px; height: 190px;"></a>
+	           		</c:when>
+	           	</c:choose>
+	           	
 		  		
 	        <ul class="list-unstyled components mb-5">
 	        
 	       		<c:choose>
 	           		<c:when test="${!empty user.role}">
-	           			<div align="center"><span style="color:#F8B739"> ${user.name}(${user.role})</span> 님</div>
+	           			<div align="center">
+	           				<span style="color:#F8B739">${user.name}</span>
+	           					 <c:if test="${user.role eq 'student' }">(학생)</c:if>
+		           				 <c:if test="${user.role eq 'parents' }">(학부모)</c:if>
+		           				 <c:if test="${user.role eq 'academy' }">(원장)</c:if>
+		           				 <c:if test="${user.role eq 'admin' }">(관리자)</c:if> 님
+	           			</div>
 	           		</c:when>
 	           		<c:otherwise>
 	          			<div align="center"><span style="color:#F8B739">${email}</span> 님</div>
@@ -51,12 +68,31 @@
 		            </ul>
 		          </li>
 		         </c:if> 
-		          
-		         <c:if test="${user.role != 'admin' }">
+		         
+		         
 		          <li>
-		              <a href="/user/getUser?email=${user.email}">내 정보</a>
+		            <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">내 정보</a>
+		          	 <ul class="collapse list-unstyled" id="userSubmenu">
+				          <li>
+				              <a href="/user/getUser?email=${user.email}">회원 정보</a>
+				          </li>
+				          <c:if test="${user.role eq 'student' || user.role eq 'parents'}">
+					          <li>
+			                    <a href="/review/listmyReview?uesrNo=${user.userNo}">내 후기 보기</a>
+			               	 </li>
+			               	 <li>
+			                    <a href="/board/listBoard?isMine=y">내 게시글 보기</a>
+			                </li>
+		                  </c:if>
+		              </ul>
+		          </li>
+		          
+		         <c:if test="${user.role eq 'academy'}"> 
+		          <li>
+		              <a href="/purchaseedu/listPurchaseAcademy?academyCode=${academy.academyCode}">결제 목록</a>
 		          </li>
 		         </c:if> 
+		          
 		          
 		         <c:if test="${user.role != 'academy'}"> 
 		          <li>
@@ -76,7 +112,6 @@
 	                </li>
 		            </ul>
 		          </li>
-	          
 		         </c:if> 
 		          
 		          <li>
@@ -90,9 +125,6 @@
 	                </li>
 	                <li>
 	                    <a href="/board/listBoard?cateCode=1">QnA</a>
-	                </li>
-	                <li>
-	                    <a href="/board/listBoard?isMine=y">내 게시글 보기</a>
 	                </li>
 	              </ul>
 		          </li>
@@ -178,7 +210,10 @@
     		
     		 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
     		
-    		 $('a[name=allLogout]').on("click" , function() {
+    		 
+    		 $('#allLogout').on("click" , function() {
+    			 
+    			 console.log("2222로그아웃클릭")
     			 
     			 let x = document.cookie;
     			 
@@ -196,7 +231,7 @@
     			 
     			 if(loginType == "kakao"){
     				 
-    				 //alert("카카오 로그아웃!")
+    				 alert("카카오 로그아웃!")
     				 
     				 if (!Kakao.Auth.getAccessToken()) {
     					  console.log('Not logged in.');
@@ -245,8 +280,11 @@
     	              })
     					
     			 }else{
-    				 //alert("일반 로그아웃");
-    				 self.location = "logout"
+    				 alert("일반 로그아웃");
+    				 self.location = "/user/logout"
+    				 
+    				 //수정전
+    				 //self.location = "logout"
     			 }
     			 
     		 });
@@ -257,13 +295,13 @@
     	</script>
 	
 		<!-- 로그아웃모달 -->
-		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="abc"
 	        aria-hidden="true">
 	        <div class="modal-dialog" role="document">
 	            <div class="modal-content">
 	                <div class="modal-header">
 	                    <div align="center">
-	                    	<h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+	                    	<h5 class="modal-title" id="abc">로그아웃 하시겠습니까?</h5>
 	                    </div>
 	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
 	                        <span aria-hidden="true">×</span>
@@ -271,7 +309,7 @@
 	                </div>
 	                <div class="modal-footer">
 	                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-	                    <a class="btn btn-primary" name="allLogout" href="#" onclick="return false;">Logout</a>
+	                    <a class="btn btn-primary" id="allLogout" name="allLogout" href="#" onclick="return false;">Logout</a>
 	                </div>
 	            </div>
 	        </div>

@@ -138,7 +138,6 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<title>Insert title here</title>
 </head>
 
 <body>
@@ -154,7 +153,7 @@
 	        <div class="container-fluid">
 	<!-- 게시판 title -->
 	<div class="card shadow mb-4">
-	  	<div class="card-header py-3" id="boardHeader">
+	  	<div class="card-header py-3" id="titlef">
 			<h3>${board.academyName} 공지사항</h3>
 	    </div>
 	    

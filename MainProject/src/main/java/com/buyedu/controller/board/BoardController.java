@@ -232,11 +232,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		public String listBoard( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
 			
 			System.out.println("/board/listBoard : GET / POST");
-			
 			User user = UserUtil.user();
-		      
 		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
-		     
 		    model.addAttribute("list", map1.get("list"));
 		    
 			System.err.println("keyword : " +search.getSearchKeyword());
@@ -266,11 +263,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			search.setSearchUserNo(userNo);
 	//		search.setAcademyCode(academyCode);
 			// Business logic 수행
-			List<Board> list =boardService.getBoardList(search);
+			List<Board> listc =boardService.getBoardList(search);
+			
+			Page resultPage1 = new Page( 1, 0, pageUnit, pageSize);
+			model.addAttribute("resultPage", resultPage1);
 			
 //			Map<String , Object> cgmap=categoryService.getCategoryList();
-			if(list.size()!=0) {
-			int totalCount = list.get(0).getTotalCount();
+			if(listc.size()!=0) {
+			int totalCount = listc.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
 			
@@ -286,7 +286,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //			Page resultPage2 = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 //			System.out.println(resultPage);
 			// Model 과 View 연결
-			model.addAttribute("listc", list);
+			model.addAttribute("listc", listc);
 			model.addAttribute("map", map);
 //			model.addAttribute("list2", list2);
 			model.addAttribute("resultPage", resultPage);
@@ -305,11 +305,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		public String listBoardAcademy( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
 			
 			System.out.println("학원 공지사항 돌아간다");
-			
 			User user = UserUtil.user();
-		      
 		    Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
-		     
 		    model.addAttribute("list", map.get("list"));
 		    
 		    String academyCode = request.getParameter("academyCode");
@@ -330,6 +327,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		//	search.setAcademyCode(academyCode);
 			
 			List<Board> listb =boardService.getBoardListAcademy(search);
+			model.addAttribute("search", search);
+			Page resultPage1 = new Page( 1, 0, pageUnit, pageSize);
+			model.addAttribute("resultPage", resultPage1);
 			
 			if(listb.size()!=0) {
 				int totalCount = listb.get(0).getTotalCount();
@@ -339,13 +339,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			model.addAttribute("listb", listb);
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
-			
-			
-			
 			}
 			
-
-			return "/board/listBoard";
+			return "/board/listBoardAcademy";
 		}
 		
 		@RequestMapping( value="deleteBoard", method = RequestMethod.GET)

@@ -19,9 +19,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
@@ -50,23 +48,21 @@ function fncAddBoard(){
 		alert("글 제목을 입력해주세요.");
 		return;
 	}
-	
-	/* var detail = document.detailForm.prodDetail.value;
-	var manuDate = document.detailForm.manuDate.value;
-	var price = document.detailForm.price.value; */
-	//var target = document.getElementById("cate");
-	//var cateName = target.options[target.selectedIndex].text;
-	//var cateName = $("#cate option:checked").text();
-	//console.log('name : ' + cateName)
-	//document.getElementById("cateName").value = cateName;
-	
-
-	
 	$("form").attr("method" , "POST").attr("action" , "/board/addBoard").submit();
 }
 </script>
+<style>
+@font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+body{
+font-family: ChosunGu;
+}
 
-
+</style>
  <body>
  <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
 	<!-- left 툴바 -->
@@ -75,33 +71,30 @@ function fncAddBoard(){
        <div id="content" class="p-4 p-md-5">
 	      <div class="container-fluid">
 	         <!-- 상단 툴바  -->
-	         <jsp:include page="../common/toolbar.jsp"></jsp:include> 
+	         <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
 				<!-- 게시판 흰색 박스 부분-->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; 
 					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 				  <!-- 게시판 title -->
-				  <div class="row" id="boardHeader">
+				  <div class="row" id="titlef">
 					<c:choose>
 					<c:when test="${board.cateCode eq '0' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 공지사항</h3>
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h3>
 					</c:when>
 					<c:when test="${board.cateCode eq '1' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 Q&A</h3>
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;Q&A</h3>
 					</c:when>
 					<c:when test="${board.cateCode eq '2' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3>
+					  <h2>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h2>
 					</c:when>
 					<c:when test="${board.cateCode eq '3' }">
 					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;학원 공지사항</h3>
 					</c:when>
-					<c:when test="${search.isMine eq 'y' }">
-					  <h3>내가 쓴 게시글 보기</h3>
-					</c:when>
+				
 					</c:choose>	
 	 			  </div><br>
   
 	
-	<div class="container-fluid">
 	<form class="form-horizontal">
 	
 	<input type="hidden" name="boardWriter" value="${user.userNo}" />
@@ -123,20 +116,22 @@ function fncAddBoard(){
 		    </div>
 		</div>
 		
-</form>
+		</form>
 		
-		</div>	
+		
 				
 		<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >등 &nbsp;록</button>
-			  &nbsp;<a class="btn btn-default" href="/board/listBoard" role="button">취&nbsp;소</a>
+		      &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
+			  &nbsp;<a class="btn btn-primary" href="#" onClick="history.back()" role="button">취&nbsp;소</a>
 		 	</div>
-		</div>
-		</div>
-	</div>
-
+		</div><br>
+		
   <div id="summernote"></div>
+  </div>
+  	
+  </div>
+  </div>
   <script>
     $(document).ready(function() {
     	 $('#summernote').summernote({
