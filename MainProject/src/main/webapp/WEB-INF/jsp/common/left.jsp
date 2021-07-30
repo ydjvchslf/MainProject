@@ -35,8 +35,13 @@
 	        
 	       		<c:choose>
 	           		<c:when test="${!empty user.role}">
-	           			<div align="center"><span style="color:#F8B739"> ${user.name}</span> 님</div>
-	           			<div align="center">${user.role}</div>
+	           			<div align="center">
+	           				<span style="color:#F8B739">${user.name}</span>
+	           					 <c:if test="${user.role eq 'student' }">(학생)</c:if>
+		           				 <c:if test="${user.role eq 'parents' }">(학부모)</c:if>
+		           				 <c:if test="${user.role eq 'academy' }">(원장)</c:if>
+		           				 <c:if test="${user.role eq 'admin' }">(관리자)</c:if> 님
+	           			</div>
 	           		</c:when>
 	           		<c:otherwise>
 	          			<div align="center"><span style="color:#F8B739">${email}</span> 님</div>
@@ -218,7 +223,7 @@
     			 
     			 if(loginType == "kakao"){
     				 
-    				 //alert("카카오 로그아웃!")
+    				 alert("카카오 로그아웃!")
     				 
     				 if (!Kakao.Auth.getAccessToken()) {
     					  console.log('Not logged in.');
@@ -267,7 +272,7 @@
     	              })
     					
     			 }else{
-    				 //alert("일반 로그아웃");
+    				 alert("일반 로그아웃");
     				 self.location = "logout"
     			 }
     			 

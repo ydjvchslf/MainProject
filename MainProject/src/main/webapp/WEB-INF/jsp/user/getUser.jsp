@@ -189,6 +189,7 @@
 					          </div>
 					          </c:if>
 					          
+					          </br>
 					          <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
 					            <!-- 우리학원 인증하기 등록하기 -->
 						          <div class="panel" style="border:5px solid #FFCA77;">
