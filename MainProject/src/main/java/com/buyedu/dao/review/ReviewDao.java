@@ -29,5 +29,7 @@ public interface ReviewDao {
 	String getReviewWriter(int userNo);
 	
 	List<Review> getmyReview(int userNo);
+	
+	int countmyReview(Map<String, Object> map) throws Exception;
 
 }

@@ -119,6 +119,13 @@
 	   	WHERE connection_no = #{connectNo}
 	 </update>
 	 
+	 <!-- 리뷰에서 쓰는 인증 확인 입니당 -->
+	 <select id="getConnectReviewUser" parameterType="map" resultType="String">
+			SELECT  connect_state
+			FROM connection 
+			WHERE user_no = #{userNo} AND academy_code = #{academyCode}
+     </select>
+	 
 	 
 	 
 </mapper>

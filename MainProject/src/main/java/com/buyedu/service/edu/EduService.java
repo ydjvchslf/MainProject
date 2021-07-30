@@ -157,5 +157,15 @@ public class EduService {
 		
 		return eduDao.updateEduRest(edu);
 	}
+	
+	public int getPayNo(int userNo) throws Exception {
+		
+		return purchaseDao.getPayNo(userNo);
+	}
+	
+	public int deletePurchaseEdu(PurchaseEdu purchaseEdu) throws Exception {
+		
+		return purchaseDao.deletePurchaseEdu(purchaseEdu);
+	}
 
 }

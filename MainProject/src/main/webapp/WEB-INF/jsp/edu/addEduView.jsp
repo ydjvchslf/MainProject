@@ -41,11 +41,10 @@
 	   });
 	   
 	   $( function() {
-	      
-	      $( ".btn btn-primary btn:contains('취소')").on("click", function() {
-	          
-	    	  window.history.back();
-	      });
+		   
+		    $("a[href='#' ]").on("click" , function() {
+				window.history.back();
+			});
 	      
 	   });
 	   
@@ -72,12 +71,14 @@
 	        
 	        <div class="container-fluid"  >
 	        
-	        	 <jsp:include page="../common/toolbar.jsp"></jsp:include> 
+	        	 <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
 	        
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
-					<h1 class="text-center">수 업 등 록</h1>
+					<h1 class="text-center" id="titlef">수 업 등 록</h1>
+					
+					<br/>
 	
 					<form class="form-horizontal" enctype="multipart/form-data">
 						

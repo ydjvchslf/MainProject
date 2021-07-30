@@ -32,39 +32,31 @@
 	        
 	        <div class="container-fluid"  >
 	        
-	        	 <jsp:include page="../common/toolbar.jsp"></jsp:include> 
-	        
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
-
-					<div class="row">
-						<div class="col-md-12">
-						<c:if test="${count == 0 && state == '1'}">
-							<button type="button" id="addReview" class="btn btn-primary" onclick="addReview()">작성</button>
-						</c:if>
-						</div>	
-					</div>
 					
-					<div class="row">	
-					<div class="col-md-12">
 					<form>	
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>
 						<table class="table">
 							 <thead>
 							   <tr>
 							      <th>후기 제목</th>
+							      <th>후기 내용</th>
 							      <th>작성자</th>
+							      <th>작성 학원</th>
 							      <th>작성일자</th>
 							   </tr>
 							 </thead>
 							 
 							 <tbody>
 							 
-							 <c:forEach var="review" items="${listR}">
+							 <c:forEach var="review" items="${reviewList}">
 							 
 							 	<tr>
 							      <td>${review.reviewTitle}</td>
-							      <td>${review.reviewWriter.email}</td>
+							      <td>${review.reviewContent}</td>
+							      <td>${user.email}</td>
+							      <th><a href="/review/listReview?academyCode=${review.academyCode}">학원 가기</a></th>
 							      <td>${review.reviewDate}</td>
 							   </tr>
 							 
@@ -74,10 +66,7 @@
 							
 						</table>
 					</form>
-					</div>
-					</div>
-						
-						<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
+				
 						
 				</div>
 	      	</div>
@@ -87,15 +76,9 @@
 	</div>
 	
 	<script >
-		function fncGetList(currentPage){
-			$("#currentPage").val(currentPage)	
-			$("form").attr("method","post").attr("action","/review/listReview?academyCode=${academy.academyCode}").submit()	
-		}
 		
-		function addReview(){
-			self.location = "/review/testAddReview?userNo=${user.userNo}&academyCode=${academy.academyCode}"
-		}
-		
+	$(document).ready(function(){
+	});	
 		
 	</script>
     <script src="/js/jquery.min.js"></script>

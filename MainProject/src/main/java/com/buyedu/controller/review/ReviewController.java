@@ -1,5 +1,6 @@
 package com.buyedu.controller.review;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,9 @@ public class ReviewController {
 	
 	@Autowired
 	private AcademyService academyService;
+	
+	@Autowired
+	private UserService userService;
 	
 	public ReviewController() {
 		System.out.println(this.getClass());
@@ -84,8 +88,9 @@ public class ReviewController {
 		
 		reviewService.addReview(review);
 		
-		review.setAcademyCode(academyCode);
+		Academy academy = new Academy();
 		
+		academy.setAcademyCode(academyCode);
 		
 		return "redirect:/review/listReview?academyCode="+review.getAcademyCode();
 	}
@@ -133,8 +138,10 @@ public class ReviewController {
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
 	
+		Academy academy = new Academy();
 		
-		review.setAcademyCode(academyCode);
+		academy.setAcademyCode(academyCode);
+		
 		System.out.println("reivew : "+review);
 		
 		
@@ -150,6 +157,22 @@ public class ReviewController {
 		
 		String academyCode = request.getParameter("academyCode");
 		Academy academy = academyService.getAcademy(academyCode);
+		
+		
+		// 해당 학원에서 리뷰 쓴 갯수 찾기
+		Map<String, Object> countmap = new HashMap<String, Object>();
+		
+		countmap.put("userNo", userNo);
+		countmap.put("academyCode", academyCode);
+		
+		int count = reviewService.countmyReview(countmap);
+		String state = reviewService.getConnectReviewUser(countmap);
+		
+		System.out.println("해당 학원에서 리뷰가 있는지 ="+count);
+		
+		model.addAttribute("count", count);
+		model.addAttribute("state",state);
+		
 		
 		model.addAttribute("academy", academy);
 		
@@ -222,8 +245,10 @@ public class ReviewController {
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
 	
+		Academy academy = new Academy();
 		
-		review.setAcademyCode(academyCode);
+		academy.setAcademyCode(academyCode);
+		
 		System.out.println("리뷰넘버들어가냐..?"+reviewNo);
 		System.out.println("리뷰들어가냐"+review);
 		System.out.println("아카데미코드 들어가줘 제발"+academyCode);
@@ -235,50 +260,23 @@ public class ReviewController {
 		
 	}
 	
-	@RequestMapping(value="getmyReview")
+	
+	
+	@RequestMapping(value="listmyReview")
 	public String getmyReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
 		
-		System.out.println("getmyReview 시작");
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
-		
-		String academyCode = request.getParameter("academyCode");
-		Academy academy = academyService.getAcademy(academyCode);
-		
-		model.addAttribute("academy", academy);
-		
-		// 툴바 학원 리스트
 		User user = UserUtil.user();
 		
-		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		int userNo = user.getUserNo();
 		
-		model.addAttribute("list", map.get("list"));
+		Map<String, Object> map =  reviewService.getmyReviewList(userNo);
 		
+		User user1 =  userService.getUserByUserNo(userNo);
 		
-		System.out.println("search : "+search);
+		model.addAttribute("reviewList", map.get("list"));
+		model.addAttribute("user", user1);
 		
-		System.out.println("academyCode : "+academyCode);
-		
-		System.out.println("userNo : "+userNo);
-		
-		if(search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		search.setSearchAcademyCode(academyCode);
-				
-		Map<String , Object> map2 = reviewService.getReviewList(search);
-		System.out.println("컨트롤 쪽 map : "+map2);
-		
-		int totalCount = ((Integer)map2.get("totalCount")).intValue();
-		
-		Page resultPage = new Page(search.getCurrentPage(),totalCount , pageUnit , search.getPageSize());
-		
-		model.addAttribute("listR" , map2.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		
-		
-		
-		return "/review/mylistReview";
+		return "/review/listmyReview";
 	}
 	
 

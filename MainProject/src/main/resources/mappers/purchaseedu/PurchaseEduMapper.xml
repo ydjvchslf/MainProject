@@ -42,6 +42,13 @@
 		WHERE purchase_uid = '${value}'
 	</select>
 	
+	<select 	id="getPayNo"	parameterType="String"	resultMap="purchaseEduSelectMap">
+		SELECT
+		pay_no
+		FROM purchase_edu
+		WHERE purchase_user_no = '${value}'
+	</select>
+	
 	<!--  buyEdu : Purchase Edu UPDATE -->
  	<update	id="updatePurchaseEdu"	parameterType="purchaseedu" >
 	   	UPDATE purchase_edu
@@ -91,7 +98,10 @@
 						  WHERE pc.purchase_user_no = u.user_no AND pc.purchase_aca_code = #{searchAcademyCode} AND
 						  e.edu_academy_code = a.academy_code AND purchase_edu_no = e.edu_no )
 	</select>
-		
-	 
+	
+	<delete	id="deletePurchaseEdu"	parameterType="purchaseEdu" >
+	   	DELETE from purchase_edu
+	   	WHERE purchase_user_no = #{userNo} AND PURCHASE_EDU_NO = #{eduNo}
+	 </delete>
 
 </mapper>

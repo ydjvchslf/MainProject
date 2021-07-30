@@ -39,6 +39,7 @@
 	                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">원생관리</a>
 	                </li>
 	                </c:if>
+	                
 	              </ul>
 	            </div>
 	          

@@ -101,13 +101,25 @@
 			WHERE academy_code= #{academyCode} AND user_no= ${userNo} AND connect_state = '1'
      </select>
      
-     <select id="getmyReview" parameterType="int">
+     <select id="getmyReview1" parameterType="int">
 				SELECT  a.academy_name ,r.review_title , r.review_writer , r.review_content ,  r.review_date
 					FROM academy a , 
 					(SELECT r.review_writer , r.review_no , r.academy_code , r.review_date , r.review_title , r.review_content
 					FROM review r
 					WHERE r.review_writer = #{userNo}) r
 				WHERE r.academy_code = a.academy_code 
+     </select>
+     
+     <select id="getmyReview" parameterType="int" resultMap="reviewSelectMap">
+			SELECT  *
+			FROM review 
+			WHERE review_writer = #{value}
+     </select>
+     
+     <select id="countmyReview" parameterType="map" resultType="int">
+			SELECT  count(*)
+			FROM review 
+			WHERE review_writer = #{userNo} AND academy_code = #{academyCode}
      </select>
 	 
 </mapper>

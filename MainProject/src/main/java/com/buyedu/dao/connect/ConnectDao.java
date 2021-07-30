@@ -1,6 +1,7 @@
 package com.buyedu.dao.connect;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -37,5 +38,8 @@ public interface ConnectDao {
 	public String updateConnectAcceptaca(int connectNo) throws Exception;
 	
 	int getStudentCount(String academyCode) throws Exception;
+	
+	// 후기에서 쓰는 커넥스 입니다.
+	String getConnectReviewUser(Map map) throws Exception;
 
 }
