@@ -238,7 +238,7 @@
 	    	intro += '<div class="col-sm-12" id="AcademyIntro">';
 	    	intro += '<div class="panel" style="border:5px solid #FFCA77;">'
 	    	intro += '<div class="panel-heading" style="background-color:#FFCA77;">'
-	    	intro += '<h3 class="panel-title">학원 실적</h3>'
+	    	intro += '<h3 class="panel-title">학원 소개</h3>'
 	    	intro += '</div>'
 	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
