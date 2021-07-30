@@ -215,14 +215,15 @@
 						       </div><!-- /.col-sm-6 -->
 					     </div><!-- 첫번째 row 끝 -->  
 					     
+					     
 					      <c:if test="${user.role eq 'academy'}">
 	                        <div id="academyList" class="row"><!-- 두번째 row -->
 	                        </div>
 	                     </c:if> 
-	                     
-					      <div class="row"><!-- 두번쨰 row 시작 -->
-					       <div class="col-sm-12">
-					        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+					     
+					     
+					    
+					     <!--    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 							  <div class="carousel-inner">
 							    <div class="carousel-item active">
 							      <img class="d-block w-400" src="/image/myimage.png" alt="First slide">
@@ -242,9 +243,7 @@
 							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 							    <span class="sr-only">Next</span>
 							  </a>
-							</div>
-						   </div>
-					      </div>
+							</div> -->
 				
 	
 <!-- //////////////////////////////모달 영역/////////////////////////////////////////// -->
@@ -624,18 +623,43 @@
 						</div>
 						
 						
-						
-						
-						
 						<!-- 학원등록 모달 끝 -->
-				
+				 <div class="row">
+				<div class="col-sm-12">
+				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+							  <div class="carousel-inner">
+							    <div class="carousel-item active">
+							      <img class="d-block w-400" src="/image/myimage.png" alt="First slide">
+							    </div>
+							    <div class="carousel-item">
+							      <img class="d-block w-400" src="/image/myimage.png" alt="Second slide">
+							    </div>
+							    <div class="carousel-item">
+							      <img class="d-block w-400" src="/image/myimage.png" alt="Third slide">
+							    </div>
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							  </a>
+							  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Next</span>
+							  </a>
+							</div>
+				</div>
+				</div>
 				
 				
 				</div>
 				
 	      	</div><!-- container 끝 -->
+	      
+	      	
+      	
       	
        </div>
+       
       
 	</div>
 	
