@@ -120,6 +120,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			System.out.println("/board/getBoard : GET");
 			//Business Logic
 			
+			//레프트 툴바
+			User user = UserUtil.user();
+			Map<String, Object> map2 = academyService.getAcademyCodeList(user.getUserNo());
+			model.addAttribute("list", map2.get("list"));
+			
 			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			String category = request.getParameter("cateCode");
