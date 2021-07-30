@@ -50,9 +50,11 @@ public class EduController {
 		
 		// 여기 모델 추가
 		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Academy academy = acaService.getAcademy(academyCode);
 		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
 		
 		model.addAttribute("list", map2.get("list"));
+		model.addAttribute("code", academy);
 		
 		System.out.println("/edu/addEdu : GET ");
 		
@@ -61,9 +63,9 @@ public class EduController {
 	
 	@RequestMapping ( value = "addEdu", method=RequestMethod.POST )
 	public String addEdu( @ModelAttribute("edu") Edu edu, 
-							@RequestParam("academyCode") String acaCode , Model model, HttpServletRequest httpRequest ) throws Exception {
+							@RequestParam("academyCode") String acaCode , Model model, HttpServletRequest request ) throws Exception {
 		
-		String userEmail = ((User)httpRequest.getSession().getAttribute("user")).getEmail();   
+		String userEmail = ((User)request.getSession().getAttribute("user")).getEmail();   
 		
 		edu.setUser( userService.getUser(userEmail));
 		edu.setAcademy( acaService.getAcademy(acaCode) );
@@ -78,6 +80,11 @@ public class EduController {
 		System.err.println(edu);
 		
 		eduService.addEdu(edu);
+		
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		
+		model.addAttribute("list", map2.get("list"));
 		
 		return "forward:/edu/getEdu?eduNo="+edu.getEduNo();
 	}
