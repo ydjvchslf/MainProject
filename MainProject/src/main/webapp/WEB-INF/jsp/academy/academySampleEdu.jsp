@@ -119,7 +119,17 @@
 					
 					<div class="card">
                             <div class="card-body">
-                                    
+                            
+                            <c:if test="${imgcount+vidcount < 1}">
+				        	
+				        	<img alt="noImage" src="/image/BuyEdyLogo.png">
+				        	
+				        	--이미지를 등록해 주세요!
+				        	
+				        	</c:if> 
+                            
+                            
+                            <c:if test="${imgcount+vidcount > 0}">        
                                     Image
 		                    <div class="row">
 						
@@ -144,6 +154,10 @@
 				        	</br></br></br></br>
 				        			Media
 				        	</br>	
+				        	
+				        	
+				        	
+				        	
 				        	<div class="row">
 				        	
 				        	<c:set var="i" value="0" />
@@ -164,7 +178,7 @@
 				        	</c:forEach>
 		        	
 		        			</div>
-		        	
+		        			</c:if>
 		        	
 		        	
                             </div>
