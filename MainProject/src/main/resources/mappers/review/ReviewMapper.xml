@@ -119,7 +119,7 @@
      <select id="countmyReview" parameterType="map" resultType="int">
 			SELECT  count(*)
 			FROM review 
-			WHERE review_writer = #{review_writer} AND academy_code = #{academy_code}
+			WHERE review_writer = #{userNo} AND academy_code = #{academyCode}
      </select>
 	 
 </mapper>

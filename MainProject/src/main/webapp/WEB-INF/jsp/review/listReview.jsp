@@ -39,7 +39,7 @@
 
 					<div class="row">
 						<div class="col-md-12">
-						<c:if test="${count == 0}">
+						<c:if test="${count == 0 && state == '1'}">
 							<button type="button" id="addReview" class="btn btn-primary" onclick="addReview()">¿€º∫</button>
 						</c:if>
 						</div>	

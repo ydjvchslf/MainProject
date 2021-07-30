@@ -88,5 +88,12 @@ public class ReviewService {
 		return count;
 	};
 	
+	public String getConnectReviewUser(Map map) throws Exception{
+		
+		String state = connectDao.getConnectReviewUser(map);
+		
+		return state;
+	};
+	
 
 }

@@ -162,16 +162,16 @@ public class ReviewController {
 		// 해당 학원에서 리뷰 쓴 갯수 찾기
 		Map<String, Object> countmap = new HashMap<String, Object>();
 		
-		countmap.put("review_writer", userNo);
-		countmap.put("academy_code", academyCode);
+		countmap.put("userNo", userNo);
+		countmap.put("academyCode", academyCode);
 		
 		int count = reviewService.countmyReview(countmap);
+		String state = reviewService.getConnectReviewUser(countmap);
 		
 		System.out.println("해당 학원에서 리뷰가 있는지 ="+count);
 		
 		model.addAttribute("count", count);
-		
-		
+		model.addAttribute("state",state);
 		
 		
 		model.addAttribute("academy", academy);
