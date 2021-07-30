@@ -39,7 +39,18 @@
 	.text_sms, .password_check, .update_password_check, .update_password_check1, .out_text, .out_password_check {
 	font-size:12px; font-family:'돋움';
 	}
-  
+	
+	  
+   @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+   }
+   
+   body{
+   font-family: ChosunGu;
+   }
   
   </style>
   
@@ -64,7 +75,7 @@
 					        <div class="col-sm-6">
 					          <div class="panel" style="border:5px solid #FFCA77;">
 					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title">
+					              <h3 class="panel-title" id="titlef">
 					              	<c:choose>
 				                		<c:when test="${!empty user.role}">
 				                			${user.name}님의 Profile
@@ -75,7 +86,7 @@
 			                		</c:choose>
 					              </h3>
 					              <c:if test="${!empty user.role }"> 
-					              <h3 class="m-0 font-weight-bold text-primary" align="right">
+					              <h3 class="m-0 font-weight-bold text-primary" align="right" id="titlef">
 									<img src="/image/modify1.png" width="30" data-toggle="modal"
 											data-target="#updateModal">
 								  </h3>
@@ -85,17 +96,21 @@
 					              <input type="hidden" value="${user.userNo}">
 					              <c:choose>
 			                		<c:when test="${!empty user.role}">
-							            E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.email} <br>
-				                		NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.name} <br>
-										PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; ${user.phone} <br>
-										REG_DATE&nbsp;: ${user.inDate} <br>
+							            <h4>
+								            <strong>E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.email} <br>
+					                		<strong>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.name} <br>
+											<strong>PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.phone} <br>
+											<strong>REG_DATE&nbsp;&nbsp;</strong>: &nbsp;${user.inDate} <br>
+										</h4>
 			                		</c:when>
 			                		<c:otherwise>
-			                			E-MAIL : ${email} <br><br>
-			                			회원님은 SNS 연동해제 상태입니다.<br>
-			                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
-			                			<a href="#" data-toggle="modal"
-											data-target="#unify">계정연동하기</a>
+			                			<h4>
+				                			E-MAIL : ${email} <br><br>
+				                			회원님은 SNS 연동해제 상태입니다.<br>
+				                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
+				                			<a href="#" data-toggle="modal"
+												data-target="#unify">계정연동하기</a>
+										</h4>
 			                		</c:otherwise>
 				                </c:choose>
 					            </div>
@@ -113,9 +128,9 @@
 										<c:choose>
 											<c:when test="${empty listAcademy}">
 												<span>
-													<h6><img src="/image/crying.png">
+													<h4 id="titlef" align="center"><img src="/image/crying.png">
 														인증된 학원이 없습니다. 학원을 인증해주세요!
-													</h6>
+													</h4>
 												</span>
 											</c:when>
 											<c:otherwise>
@@ -148,7 +163,7 @@
 																</c:choose></td>
 															<td align="left">
 																<span name="delete">
-													                &nbsp; &nbsp; &nbsp;
+													                &nbsp; &nbsp;
 													                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
 																	  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
 																	</svg>
@@ -171,8 +186,8 @@
 					        <c:if test="${!empty user.role }"> 
 					          <div class="panel" style="border:5px solid #FFCA77;">
 					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title">비밀번호 변경</h3>
-					              <h3 class="panel-title" align="right">
+					              <h3 class="panel-title" id="titlef">비밀번호 변경</h3>
+					              <h3 class="panel-title" align="right" id="titlef">
 					              	<img src="/image/password1.png" width="30" data-toggle="modal"
 											data-target="#passwordModal">
 					              </h3>
@@ -180,8 +195,8 @@
 					          </div><br>
 					          <div class="pLanel" style="border:5px solid #FFCA77;">
 					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title">계정 탈퇴</h3>
-					              <h3 class="panel-title" align="right">
+					              <h3 class="panel-title" id="titlef">계정 탈퇴</h3>
+					              <h3 class="panel-title" align="right" id="titlef">
 					              	<img src="/image/trash1.png" width="30" data-toggle="modal"
 											data-target="#outModal">
 					              </h3>
@@ -194,8 +209,8 @@
 					            <!-- 우리학원 인증하기 등록하기 -->
 						          <div class="panel" style="border:5px solid #FFCA77;">
 						            <div class="panel-heading" style="background-color:#FFCA77;">
-						              <h3 class="panel-title">학원 인증하기</h3>
-						              <h3 class="panel-title" align="right">
+						              <h3 class="panel-title" id="titlef">학원 인증하기</h3>
+						              <h3 class="panel-title" align="right" id="titlef">
 						                <!-- 인증하기 버튼 -->
 											<!--  <span name="addConnect" class="btn btn-success btn-circle btn-sm">
 			                                   <i class="fas fa-check">인증버튼</i>
@@ -256,7 +271,7 @@
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h4 class="modal-title" id="myModalLabel">
+										<h4 class="modal-title" id="myModalLabel" id="titlef">
 											Update Your Info</h4>
 										<button type="button" class="close" data-dismiss="modal"
 											aria-label="Close">
@@ -624,32 +639,32 @@
 						</div>
 						
 						
-						<!-- 학원등록 모달 끝 -->
+				<!-- 하단 캐러셀 시작 -->
 				 <div class="row">
-				<div class="col-sm-12">
-				<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-							  <div class="carousel-inner">
-							    <div class="carousel-item active">
-							      <img class="d-block w-400" src="/image/myimage.png" alt="First slide">
-							    </div>
-							    <div class="carousel-item">
-							      <img class="d-block w-400" src="/image/myimage.png" alt="Second slide">
-							    </div>
-							    <div class="carousel-item">
-							      <img class="d-block w-400" src="/image/myimage.png" alt="Third slide">
-							    </div>
-							  </div>
-							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							    <span class="sr-only">Previous</span>
-							  </a>
-							  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-							    <span class="sr-only">Next</span>
-							  </a>
-							</div>
-				</div>
-				</div>
+					<div class="col-sm-12">
+						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+						  <div class="carousel-inner">
+						    <div class="carousel-item active">
+						      <img class="d-block w-400" src="/image/myimage.png" alt="First slide">
+						    </div>
+						    <div class="carousel-item">
+						      <img class="d-block w-400" src="/image/myimage1.png" alt="Second slide">
+						    </div>
+						    <div class="carousel-item">
+						      <img class="d-block w-400" src="/image/myimage2.png" alt="Third slide">
+						    </div>
+						  </div>
+						  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						    <span class="sr-only">Previous</span>
+						  </a>
+						  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+						    <span class="sr-only">Next</span>
+						  </a>
+						</div>
+					</div>
+				</div><!-- 캐러셀 끝 -->
 				
 				
 				</div>
@@ -676,6 +691,9 @@
   	//휴대전화번호 자동 대시(-)삽입
 	$(document).on("keyup", "input[name=phone]", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
 	
+  	//학원 전화번호 자동 대시
+  	$(document).on("keyup", "input[name=academyPhone]", function() { $(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+  	
   	//첫번째 비밀번호, 두번쨰 비밀번호 체크
 	var passwordDuplicationCheck = false;
 	

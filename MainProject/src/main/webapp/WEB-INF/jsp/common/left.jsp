@@ -87,12 +87,6 @@
 		              </ul>
 		          </li>
 		          
-		         <c:if test="${user.role eq 'academy'}"> 
-		          <li>
-		              <a href="/purchaseedu/listPurchaseAcademy?academyCode=${academy.academyCode}">결제 목록</a>
-		          </li>
-		         </c:if> 
-		          
 		          
 		         <c:if test="${user.role != 'academy'}"> 
 		          <li>
@@ -213,7 +207,7 @@
     		 
     		 $('#allLogout').on("click" , function() {
     			 
-    			 console.log("2222로그아웃클릭")
+    			 //console.log("2222로그아웃클릭")
     			 
     			 let x = document.cookie;
     			 
@@ -231,7 +225,7 @@
     			 
     			 if(loginType == "kakao"){
     				 
-    				 alert("카카오 로그아웃!")
+    				 //alert("카카오 로그아웃!")
     				 
     				 if (!Kakao.Auth.getAccessToken()) {
     					  console.log('Not logged in.');
@@ -280,7 +274,7 @@
     	              })
     					
     			 }else{
-    				 alert("일반 로그아웃");
+    				 //alert("일반 로그아웃");
     				 self.location = "/user/logout"
     				 
     				 //수정전

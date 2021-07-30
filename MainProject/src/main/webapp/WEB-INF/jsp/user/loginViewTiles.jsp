@@ -317,7 +317,7 @@
                                         <a href="#" name="loginBtn" class="btn btn-primary btn-user btn-block">
                                             로그인
                                         </a><hr>
-                                        <span name="kakaoLogin"><img src="/image/kakao.png"></span><span id="naverIdLogin"></span>
+                                        <span name="kakaoLogin"><a href="#"><img src="/image/kakao.png"></a></span><span id="naverIdLogin"></span>
                                         
 										
                                     </form>

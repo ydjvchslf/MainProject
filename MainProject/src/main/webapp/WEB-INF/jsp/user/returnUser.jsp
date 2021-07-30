@@ -112,7 +112,7 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" name="login" href="/user/login">sLogin</a>
+                                        <a class="small" name="login" href="/user/login">Login</a>
                                     </div>
                                 </div>
                             </div>
