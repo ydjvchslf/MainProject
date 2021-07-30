@@ -241,6 +241,12 @@ public class AcademyController {
 		
 		System.out.println("academyConnect 아카데미 코드 = " + academyCode);
 		
+		User user1 = UserUtil.user();
+		
+		Map<String, Object> map2 = academyService.getAcademyCodeList(user1.getUserNo());
+		
+		model.addAttribute("list", map2.get("list"));
+		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		Map<String, Object> map = academyService.academyConnect(academyCode);

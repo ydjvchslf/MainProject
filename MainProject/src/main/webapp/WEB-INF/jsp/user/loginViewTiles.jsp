@@ -37,6 +37,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/sbadmin/js/sb-admin-2.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     
     
     <style>
@@ -134,13 +135,13 @@
 						var pw = $("input[name='password']").val();
 	
 						if (id == null || id.length < 1) {
-							alert('ID 를 입력하지 않으셨습니다.');
+							swal('Email을 입력해주세요!');
 							$("input[name='email']").focus();
 							return;
 						}
 	
 						if (pw == null || pw.length < 1) {
-							alert('패스워드를 입력하지 않으셨습니다.');
+							swal('비밀번호를 입력해주세요!');
 							$("input[name='password']").focus();
 							return;
 						}
