@@ -10,6 +10,21 @@ public class PurchaseEdu {
 	
 	private int payNo;
 	private int payState;
+	private int userNo;
+	private int eduNo;
+	
+	public int getUserNo() {
+		return userNo;
+	}
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+	public int getEduNo() {
+		return eduNo;
+	}
+	public void setEduNo(int eduNo) {
+		this.eduNo = eduNo;
+	}
 	private Date payDate;
 	private String purchaseUid;
 	
@@ -55,13 +70,12 @@ public class PurchaseEdu {
 	public void setPurchaseUid(String purchaseUid) {
 		this.purchaseUid = purchaseUid;
 	}
+	
 	@Override
 	public String toString() {
 		return "PurchaseEdu [buyer=" + buyer + ", purchaseEdu=" + purchaseEdu + ", purchaseAcademy=" + purchaseAcademy
 				+ ", payNo=" + payNo + ", payState=" + payState + ", payDate=" + payDate + ", purchaseUid="
 				+ purchaseUid + "]";
 	}
-
-	
 	
 }

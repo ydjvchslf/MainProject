@@ -42,7 +42,7 @@
 	$(function() {
 		
 		$("a[href='#' ]").on("click" , function() {
-			$("form")[0].reset();
+			window.history.back();
 		});
 	});
 	
@@ -74,7 +74,7 @@
 	        
 	        <div class="container-fluid"  >
 	        
-	        	<jsp:include page="../common/toolbar.jsp"></jsp:include> 
+	        	<jsp:include page="../common/toolbar2.jsp"></jsp:include> 
 	        
 				<!-- ³»¿ë ¶§·Á ¹ÚÀ¸»ï ÀÌ»Ú°Ô -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">

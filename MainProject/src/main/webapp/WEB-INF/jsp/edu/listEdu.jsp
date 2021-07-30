@@ -20,6 +20,16 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	
+	<style>
+		.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+	    z-index: 3;
+	    color: #fff;
+	    cursor: default;
+	    background-color: #F8B739;
+	    border-color: #F8B739;
+	   }
+	</style>
+	
 	<script type="text/javascript">
 	
 		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
@@ -201,7 +211,7 @@
 							              	</c:if>
 							              </p>
 							              <p>
-							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&currentPage=${search.currentPage}" class="btn btn-primary" role="button">상세보기</a>
+							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&academyCode=${edu.academy.academyCode}" class="btn btn-primary" role="button">상세보기</a>
 										  <c:if test="${ user.role == 'academy' }">
 											  <button type="button" class="btn btn-default">삭제
 											  	<input type="hidden" name="eduState" id="eduState" value="${edu.eduState}"/>
@@ -227,6 +237,7 @@
 	</div>
 
     <!-- <script src="/js/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>

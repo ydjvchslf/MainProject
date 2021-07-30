@@ -215,7 +215,6 @@
 				  			<button type="button" class="btn btn-primary">수업목록</button>
 			  			<c:if test="${user.role == 'student' || user.role == 'parents'}">
 			  				<button type="button" class="btn btn-primary">관심수업등록</button>
-				  			<button type="button" class="btn btn-primary">관심수업삭제</button>
 			  				<button type="button" class="btn btn-primary">수업구매</button>
 			  			</c:if>
 		

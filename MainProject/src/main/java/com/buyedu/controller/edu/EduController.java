@@ -46,12 +46,13 @@ public class EduController {
 	int pageSize;
 	
 	@RequestMapping ( value = "addEdu", method=RequestMethod.GET )
-	public String addEduView(@RequestParam String academyCode, Model model) throws Exception {
-		
-		System.out.println(academyCode);
+	public String addEduView(@RequestParam String academyCode, Model model , HttpServletRequest request) throws Exception {
 		
 		// 여기 모델 추가
-		model.addAttribute("code",academyCode);
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		
+		model.addAttribute("list", map2.get("list"));
 		
 		System.out.println("/edu/addEdu : GET ");
 		
@@ -82,26 +83,35 @@ public class EduController {
 	}
 	
 	@RequestMapping ("getEdu")
-	public String getEdu( @RequestParam("eduNo") int eduNo, Model model ) throws Exception {
+	public String getEdu( @RequestParam("eduNo") int eduNo, 
+						  @RequestParam("academyCode") String academyCode , Model model , HttpServletRequest request) throws Exception {
 		
 		System.out.println("/edu/getEdu : GET");
 		
 		Edu edu = eduService.getEdu(eduNo);
+		Academy academy = acaService.getAcademy(academyCode);
 		
-		System.err.println("get edu 테스트 :" + edu);
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
 		
+		model.addAttribute("list", map2.get("list"));		
 		model.addAttribute("edu", edu);
+		model.addAttribute("academy", academy);
 		
 		return "/edu/getEdu";
 	}
 	
 	@GetMapping ( "updateEdu" )
-	public String updateEdu( @RequestParam("eduNo") int eduNo, Model model) throws Exception {
+	public String updateEdu( @RequestParam("eduNo") int eduNo , Model model , HttpServletRequest request) throws Exception {
 		
 		System.out.println("/edu/updateEdu : GET");
 		
 		Edu edu = eduService.getEdu(eduNo);
 		
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		
+		model.addAttribute("list", map2.get("list"));
 		model.addAttribute("edu", edu);
 		
 		return "/edu/updateEduView";
@@ -159,4 +169,5 @@ public class EduController {
 		
 		return "/edu/listEdu";
 	}
+	
 }
