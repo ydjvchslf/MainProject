@@ -21,92 +21,106 @@
 		  		
 		  		
 	        <ul class="list-unstyled components mb-5">
-
 	        
-	        <c:if test="${user.role != null }"></c:if>
-	        
-	        <c:if test="${user.role == 'academy'}">
-	          <li>
-	            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">내 학원</a>
-	            <ul class="collapse list-unstyled" id="homeSubmenu">
-			
-			<c:forEach var="academy" items="${list}">
+	       		<c:choose>
+	           		<c:when test="${!empty user.role}">
+	           			<div align="center"><span style="color:#F8B739"> ${user.name}(${user.role})</span> 님</div>
+	           		</c:when>
+	           		<c:otherwise>
+	          			<div align="center"><span style="color:#F8B739">${email}</span> 님</div>
+	           		</c:otherwise>
+	           	</c:choose>
+		        
+		        <br>
+		        
+		        <c:if test="${user.role != null }"></c:if>
+		        
+		        <c:if test="${user.role == 'academy'}">
+		          <li>
+		            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">내 학원</a>
+		            <ul class="collapse list-unstyled" id="homeSubmenu">
 				
-				<li>
-					<input type="hidden" name="codes" value="${academy.academyCode}" />
-					<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
-				</li>	
-			</c:forEach>			
-
-	            </ul>
-	          </li>
-	         </c:if> 
+				<c:forEach var="academy" items="${list}">
+					
+					<li>
+						<input type="hidden" name="codes" value="${academy.academyCode}" />
+						<a href="/academy/academyInfo?academyCode=${academy.academyCode}" >${academy.academyName}</a>		 
+					</li>	
+				</c:forEach>			
+	
+		            </ul>
+		          </li>
+		         </c:if> 
+		          
+		         <c:if test="${user.role != 'admin' }">
+		          <li>
+		              <a href="/user/getUser?email=${user.email}">내 정보</a>
+		          </li>
+		         </c:if> 
+		          
+		         <c:if test="${user.role != 'academy'}"> 
+		          <li>
+		              <a href="/search/searchAcademy">학원검색</a>
+		          </li>
+		         </c:if> 
+		         
+		         <c:if test="${user.role == 'admin'}">  
+		          <li>
+		            <a href="#siteSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">사이트 관리</a>
+		            <ul class="collapse list-unstyled" id="siteSubmenu">
+	                <li>
+	                    <a href="/user/listUser">회원 목록</a>
+	                </li>
+	                <li>
+	                    <a href="/chart/getChart">현황 차트</a>
+	                </li>
+		            </ul>
+		          </li>
 	          
-	         <c:if test="${user.role != 'admin' }">
-	          <li>
-	              <a href="/user/getUser?email=${user.email}">내 정보</a>
-	          </li>
-	         </c:if> 
-	          
-	         <c:if test="${user.role != 'academy'}"> 
-	          <li>
-	              <a href="/search/searchAcademy">학원검색</a>
-	          </li>
-	         </c:if> 
-	         
-	         <c:if test="${user.role == 'admin'}">  
-	          <li>
-	            <a href="#siteSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">사이트 관리</a>
-	            <ul class="collapse list-unstyled" id="siteSubmenu">
-                <li>
-                    <a href="/user/listUser">회원 목록</a>
-                </li>
-                <li>
-                    <a href="/chart/getChart">현황 차트</a>
-                </li>
-	            </ul>
-	          </li>
-          
-	         </c:if> 
-	          
-	          <li>
-              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">게시판</a>
-              <ul class="collapse list-unstyled" id="pageSubmenu">
-                <li>
-                    <a href="/board/listBoard?cateCode=2">자유게시판</a>
-                </li>
-                <li>
-                    <a href="/board/listBoard?cateCode=0">공지사항</a>
-                </li>
-                <li>
-                    <a href="/board/listBoard?cateCode=1">QnA</a>
-                </li>
-                <li>
-                    <a href="/board/listBoard?isMine=y">내 게시글 보기</a>
-                </li>
-              </ul>
-	          </li>
-	          
-	         <c:if test="${user.role == 'student' || user.role =='parents'}">  
-	          <li>
-              <a href="#eduSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">수업</a>
-              <ul class="collapse list-unstyled" id="eduSubmenu">
-                <li>
-                    <a href="/pickedu/listPickEdu?userNo=${user.userNo}">관심수업</a>
-                </li>
-                <li>
-                    <a href="/purchaseedu/listPurchaseEdu?userNo=${user.userNo}">구매수업</a>
-                </li>
-              </ul>
-	          </li>
-	         </c:if> 
-	          
+		         </c:if> 
+		          
+		          <li>
+	              <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">게시판</a>
+	              <ul class="collapse list-unstyled" id="pageSubmenu">
+	                <li>
+	                    <a href="/board/listBoard?cateCode=2">자유게시판</a>
+	                </li>
+	                <li>
+	                    <a href="/board/listBoard?cateCode=0">공지사항</a>
+	                </li>
+	                <li>
+	                    <a href="/board/listBoard?cateCode=1">QnA</a>
+	                </li>
+	                <li>
+	                    <a href="/board/listBoard?isMine=y">내 게시글 보기</a>
+	                </li>
+	              </ul>
+		          </li>
+		          
+		         <c:if test="${user.role == 'student' || user.role =='parents'}">  
+		          <li>
+	              <a href="#eduSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">수업</a>
+	              <ul class="collapse list-unstyled" id="eduSubmenu">
+	                <li>
+	                    <a href="/pickedu/listPickEdu?userNo=${user.userNo}">관심수업</a>
+	                </li>
+	                <li>
+	                    <a href="/purchaseedu/listPurchaseEdu?userNo=${user.userNo}">구매수업</a>
+	                </li>
+	              </ul>
+		          </li>
+		         </c:if> 
+		         
+		         	</br>
+		         	
+	                   <div align="center"><span name="logout" href="#" data-toggle="modal" data-target="#logoutModal"><u>로그아웃</u></span></div>
+	                
+                
 	        </ul>
+	        
+	        	
 
 			<button name="test" onclick="send();">테스트</button>
-	        <div class="footer">
-	        	<a name="logout" href="/user/logout">로그아웃</a>
-	        </div>
 	        
 
 	      </div>
@@ -167,7 +181,7 @@
     		
     		 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
     		
-    		 $('a[name=logout]').on("click" , function() {
+    		 $('a[name=allLogout]').on("click" , function() {
     			 
     			 let x = document.cookie;
     			 
@@ -185,7 +199,7 @@
     			 
     			 if(loginType == "kakao"){
     				 
-    				 alert("카카오 로그아웃!")
+    				 //alert("카카오 로그아웃!")
     				 
     				 if (!Kakao.Auth.getAccessToken()) {
     					  console.log('Not logged in.');
@@ -234,7 +248,7 @@
     	              })
     					
     			 }else{
-    				 alert("일반 로그아웃");
+    				 //alert("일반 로그아웃");
     				 self.location = "logout"
     			 }
     			 
@@ -244,6 +258,27 @@
 
         
     	</script>
+	
+		<!-- 로그아웃모달 -->
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	        aria-hidden="true">
+	        <div class="modal-dialog" role="document">
+	            <div class="modal-content">
+	                <div class="modal-header">
+	                    <div align="center">
+	                    	<h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+	                    </div>
+	                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+	                        <span aria-hidden="true">×</span>
+	                    </button>
+	                </div>
+	                <div class="modal-footer">
+	                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+	                    <a class="btn btn-primary" name="allLogout" href="#" onclick="return false;">Logout</a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 
 </body>
 </html>

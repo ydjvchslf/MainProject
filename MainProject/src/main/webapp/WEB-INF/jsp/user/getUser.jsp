@@ -35,6 +35,10 @@
     border-top-left-radius: 0px; 
     border-top-right-radius: 0px; 
 	}
+	
+	.text_sms, .password_check, .update_password_check, .update_password_check1, .out_text, .out_password_check {
+	font-size:12px; font-family:'돋움';
+	}
   
   
   </style>
@@ -72,7 +76,7 @@
 					              </h3>
 					              <c:if test="${!empty user.role }"> 
 					              <h3 class="m-0 font-weight-bold text-primary" align="right">
-									<img src="/image/modify.png" width="30" data-toggle="modal"
+									<img src="/image/modify1.png" width="30" data-toggle="modal"
 											data-target="#updateModal">
 								  </h3>
 								  </c:if>
@@ -169,16 +173,16 @@
 					            <div class="panel-heading" style="background-color:#FFCA77;">
 					              <h3 class="panel-title">비밀번호 변경</h3>
 					              <h3 class="panel-title" align="right">
-					              	<img src="/image/password.png" width="30" data-toggle="modal"
+					              	<img src="/image/password1.png" width="30" data-toggle="modal"
 											data-target="#passwordModal">
 					              </h3>
 					            </div>
 					          </div><br>
-					          <div class="panel" style="border:5px solid #FFCA77;">
+					          <div class="pLanel" style="border:5px solid #FFCA77;">
 					            <div class="panel-heading" style="background-color:#FFCA77;">
 					              <h3 class="panel-title">계정 탈퇴</h3>
 					              <h3 class="panel-title" align="right">
-					              	<img src="/image/trash.png" width="30" data-toggle="modal"
+					              	<img src="/image/trash1.png" width="30" data-toggle="modal"
 											data-target="#outModal">
 					              </h3>
 					            </div>
@@ -195,7 +199,7 @@
 											<!--  <span name="addConnect" class="btn btn-success btn-circle btn-sm">
 			                                   <i class="fas fa-check">인증버튼</i>
 			                                </span>-->
-			                               <span name="addConnect"><img src="/image/plus.png" width="30"></span>
+			                               <span name="addConnect"><img src="/image/plus1.png" width="30"></span>
 						              </h3>
 						            </div>
 						            <div class="panel-body"> 
@@ -210,11 +214,32 @@
 						         </c:if>
 						       </div><!-- /.col-sm-6 -->
 					     </div><!-- 첫번째 row 끝 -->  
-					       
-					      <c:if test="${user.role eq 'academy'}">
-						      <div id="academyList" class="row"><!-- 두번째 row -->
-						      </div>
-					      </c:if> 
+					     
+					      <div class="row"><!-- 두번쨰 row 시작 -->
+					       <div class="col-sm-12">
+					        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+							  <div class="carousel-inner">
+							    <div class="carousel-item active">
+							      <img class="d-block w-400" src="/image/myimage.png" alt="First slide">
+							    </div>
+							    <div class="carousel-item">
+							      <img class="d-block w-400" src="/image/myimage.png" alt="Second slide">
+							    </div>
+							    <div class="carousel-item">
+							      <img class="d-block w-400" src="/image/myimage.png" alt="Third slide">
+							    </div>
+							  </div>
+							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Previous</span>
+							  </a>
+							  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="sr-only">Next</span>
+							  </a>
+							</div>
+						   </div>
+					      </div>
 				
 	
 <!-- //////////////////////////////모달 영역/////////////////////////////////////////// -->
@@ -285,12 +310,12 @@
 					                                            확인
 					                                        </a>
 					                                    </div>
-			                                        	<span id="helpBlock" class="help-block">
-														   <strong class="text_sms"></strong>
-														</span>	
 			                                        </div>
 			                                    </div>
 			                                </div>
+			                                <div class="form-group" align="center">
+	                                        	<span class="text_sms"></span>
+			                                 </div>
 			                                    
 		                                        <button type="button" id="update" name="update" class="btn btn-primary btn-user btn-block">
 		                                            수정하기
@@ -299,7 +324,7 @@
 										<!-- 내정보수정 모달 폼 끝 -->
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
+										<button type="button" class="btn btn-primary"
 											data-dismiss="modal">닫기</button>
 									</div>
 								</div>
@@ -332,13 +357,16 @@
 	                                            <input type="password" class="form-control form-control-user"
 	                                               name="password00" id="exampleInputEmail" aria-describedby="emailHelp"
 	                                                placeholder="현재비밀번호">
-	                                            <span id="helpBlock" class="help-block">
-											      	<strong class="out_password_check"></strong>
-											     </span>
-											     <br>
-				                                    <p>정말 탈퇴하시겠습니까? <br>
-				                                       계정복구는 신청한 날짜로부터 <strong style="color:red">30일</strong> 이내만 가능합니다.
-								 					</p>
+	                                        </div>
+	                                        <div class="form-group" align="center">
+	                                        	<span class="out_password_check"></span>
+	                                        </div>
+	                                        <div class="form-group" align="center">
+	                                        	<div class="out_text">
+		                                        	<p>정말 탈퇴하시겠습니까? <br>
+					                                    계정복구는 신청한 날짜로부터 <strong style="color:red">30일</strong> 이내만 가능합니다.
+									 				</p>
+								 				</div>
 	                                        </div>
 		                                        <button type="button" id="out" name="out" class="btn btn-primary btn-user btn-block">
 		                                            탈퇴하기
@@ -347,7 +375,7 @@
 										<!-- 모달 내용 끝 -->
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
+										<button type="button" class="btn btn-primary"
 											data-dismiss="modal">닫기</button>
 									</div>
 								</div>
@@ -379,10 +407,10 @@
 	                                            <input type="password" class="form-control form-control-user"
 	                                               name="pw_0" id="pw_0" aria-describedby="emailHelp"
 	                                                placeholder="현재비밀번호">
-	                                            <span id="helpBlock" class="help-block">
-											      	<strong class="update_password_check"></strong>
-											     </span>
-											     </div>
+										    </div>
+											<div class="form-group" align="center">
+												<span class="update_password_check"></span>
+											</div>     
 											   <div class="form-group">  
 											     <input type="password" class="form-control form-control-user"
 	                                               name="pw_1" id="pw_1" aria-describedby="emailHelp"
@@ -392,10 +420,10 @@
 											     <input type="password" class="form-control form-control-user"
 	                                               name="password" id="pw_2" aria-describedby="emailHelp"
 	                                                placeholder="비밀번호확인">
-	                                            <span id="helpBlock" class="help-block">
-											      	<strong class="update_password_check1"></strong>
-											     </span>
 	                                       		</div>
+	                                       		<div class="form-group" align="center">
+											      	<span class="update_password_check1"></span>
+											     </div>
 	                                       		<div class="form-group">
 		                                        <button type="button" id="updatePw" name="updatePw" class="btn btn-primary btn-user btn-block">
 		                                           비밀번호수정
@@ -405,7 +433,7 @@
 										<!-- 모달 내용 끝 -->
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
+										<button type="button" class="btn btn-primary"
 											data-dismiss="modal">닫기</button>
 									</div>
 								</div>
@@ -522,7 +550,7 @@
 										<!-- 모달 내용 끝 -->
 									</div>
 									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
+										<button type="button" class="btn btn-primary"
 											data-dismiss="modal">닫기</button>
 									</div>
 								</div>
@@ -701,7 +729,7 @@
 			},
 			
 			updateInfo : function() {
-				alert("내정보보기수정클릭")
+				//alert("내정보보기수정클릭")
 				if ( fncCheckInfo() ) {
 					fncUpdateInfo();
 				}
@@ -709,13 +737,13 @@
 			
 			
 			phoneBtn : function() {
-				alert("인증번호발송 클릭")
+				//alert("인증번호발송 클릭")
 				fncAuth();
 				
 			},
 			
 			vaildBtn : function() {
-				alert("인증확인 클릭")
+				//alert("인증확인 클릭")
 				fncKey();
 				
 			}
@@ -725,7 +753,7 @@
 		change : {
 
 			password0 : function() {
-				alert("현재비밀번호 change 이벤트")
+				//alert("현재비밀번호 change 이벤트")
 				passwordChange();
 			},
 
@@ -781,8 +809,8 @@
 	
 	//인증번호 확인 함수
 	//test 용, 나중에 실제에서는 지우기
-	var key ="123456";
-	//var key = "";
+	//var key ="123456";
+	var key = "";
 	
 	var vaildNum = $("#vaildNum").val();
 	
@@ -858,7 +886,7 @@
 					} else if (JSONData.message == "ok") {
 
 						$(".connect_text").val("")
-						alert("정상등록 되었습니다.")
+						swal("정상등록 되었습니다.")
 						self.location = "/user/getUser?email=${user.email}"
 
 					} else if (JSONData.message == "duplication") {
@@ -991,7 +1019,7 @@
 	//내정보 수정하기 함수
 	function fncUpdateInfo() {
 		//swal너무 빨리지나가 어떻게 수정하징
-		alert('내 정보가 수정되었습니다!^ㅇ^')
+		swal('내 정보가 수정되었습니다!^ㅇ^');
 		$("form[name=updateInfoForm]").attr("method", "POST").attr("action", "/user/updateUser")
 				.submit();
 	}
@@ -1000,10 +1028,12 @@
 
 	//비밀번호 수정하기 함수
 	function fncUpdatePassword() {
+		swal('비밀번호가 수정되었습니다!^ㅇ^~~~~')
 		$("form[name=updatePwForm]").attr("method", "POST").attr("action", "/user/updatePassword")
 				.submit();
 		//swal너무 빨리지나가 어떻게 수정하징
-		alert('비밀번호가 수정되었습니다!^ㅇ^')
+		//alert("난가")
+		
 
 	}
 
@@ -1037,14 +1067,14 @@
 					console.log("비번 NO");
 
 					passwordDuplicationCheck = false;
-					$(".password_check").text("비밀번호가 맞지 않습니다");
+					$(".password_check").text("비밀번호가 맞지 않습니다.");
 					$(".password_check").css("color", "red");
 
 				} else if (JSONData.result == "ok") {
 					console.log("비번 OK");
 
 					passwordDuplicationCheck = true;
-					$(".password_check").text("비밀번호가 맞습니다");
+					$(".password_check").text("비밀번호가 맞습니다.");
 					$(".password_check").css("color", "blue");
 				}
 			}
@@ -1083,14 +1113,14 @@
 					console.log("비번 NO");
 
 					passwordDuplicationCheck = false;
-					$(".out_password_check").text("비밀번호가 맞지 않습니다");
+					$(".out_password_check").text("비밀번호가 맞지 않습니다.");
 					$(".out_password_check").css("color", "red");
 
 				} else if (JSONData.result == "ok") {
 					console.log("비번 OK");
 
 					passwordDuplicationCheck = true;
-					$(".out_password_check").text("비밀번호가 맞습니다");
+					$(".out_password_check").text("비밀번호가 맞습니다.");
 					$(".out_password_check").css("color", "blue");
 				}
 			}
@@ -1263,7 +1293,7 @@
         					a += '<div class="panel-heading" style="background-color:#FFCA77;">'
         					a += '<h3 class="panel-title">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
-        					a += '<h6 align="right"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')" class="dropdown-item"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h6>'
+        					a += '<h6 align="right"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash1.png" height="30"></a></h6>'
         					a += '</div>'
         					
         					a += '<div id="academyInfo_' + i +'" class="panel-body">'
@@ -1383,7 +1413,7 @@
 		change : {
 
 			password0 : function() {
-				alert("현재비밀번호 change 이벤트")
+				//alert("현재비밀번호 change 이벤트")
 				passwordChange_new();
 			},
 
@@ -1471,14 +1501,14 @@
 					console.log("비번 NO");
 
 					passwordDuplicationCheck_new = false;
-					$(".update_password_check").text("비밀번호가 맞지 않습니다");
+					$(".update_password_check").text("비밀번호가 맞지 않습니다.");
 					$(".update_password_check").css("color", "red");
 
 				} else if (JSONData.result == "ok") {
 					console.log("비번 OK");
 
 					passwordDuplicationCheck_new = true;
-					$(".update_password_check").text("비밀번호가 맞습니다");
+					$(".update_password_check").text("비밀번호가 맞습니다.");
 					$(".update_password_check").css("color", "blue");
 				}
 			}
@@ -1518,7 +1548,7 @@
 
 		} else {
 
-			var str = '비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.';
+			var str = '비밀번호는 8자 이상이어야 하며, 숫자/영문/특수문자를 모두 포함해야 합니다.';
 			$('.update_password_check1').text(str).css("color", "red");
 			$("#pw_1").focus();
 		}
@@ -1532,7 +1562,7 @@
 		$("form[name=updatePwForm]").attr("method", "POST").attr("action", "/user/updatePassword")
 				.submit();
 		//swal너무 빨리지나가 어떻게 수정하징
-		alert('비밀번호가 수정되었습니다!^ㅇ^')
+		swal('비밀번호가 수정되었습니다!^ㅇ^')
 
 	}
 
@@ -1834,8 +1864,8 @@
 	//인증확인 함수
 	//test 용, 나중에 실제에서는 지우기
 	
-	var key ="123456";
-	//var key = "";
+	//var key ="123456";
+	var key = "";
 	
 	var vaildNum = $("#VAILDNUM").val();
 	
