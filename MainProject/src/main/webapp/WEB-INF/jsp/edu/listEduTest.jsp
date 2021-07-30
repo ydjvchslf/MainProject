@@ -114,7 +114,9 @@
 					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 					    	</p>
 					    	<p>
+					    	<c:if test="${user.role == 'academy'}">
 					    	<button type="button" class="btn btn-primary">등록</button>
+					    	</c:if>
 					    	</p>
 						</div>
 						

@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy Edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -17,10 +17,16 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
+	<style>
+ 		body > div.container{
+        	border: 3px solid #D6CDB7;
+            margin-top: 70px;
+        }
+     </style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
 	function fncPurchaseEdu() {
@@ -122,26 +128,27 @@
 	 })
 		
 	</script>
-	
+
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
 		
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
+		
+		<div id="header"><h1 class="mt-4">${edu.academy.academyName}</h1></div>
+		
+		<!-- 여기는 학원정보, 멀티정보등 이동 툴바 -->
+		<jsp:include page="../common/toolbar.jsp"></jsp:include>
 	        
-	        <div class="container-fluid"  >
-	        
-	        	 <jsp:include page="../common/toolbar.jsp"></jsp:include> 
-	        
-				 <!-- 내용 때려 박으삼 이쁘게 -->
-				 <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
-				 
-				 <div  class="row">
+	        <div class="container">
+				<!-- 내용 때려 박으삼 이쁘게 -->
+				
+				<div  class="row">
 					<div class="float-left">
 						 <h3 class=" text-info">수업상세보기 화면</h3>
 			      		 <h5 class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
@@ -213,20 +220,23 @@
 			  				<button type="button" class="btn btn-primary">수업정보수정</button>
 			  			</c:if>
 				  			<button type="button" class="btn btn-primary">수업목록</button>
-			  			<c:if test="${user.role == 'student' || user.role == 'parents'}">
-			  				<button type="button" class="btn btn-primary">관심수업등록</button>
+				  			<button type="button" class="btn btn-primary">관심수업등록</button>
 				  			<button type="button" class="btn btn-primary">관심수업삭제</button>
-			  				<button type="button" class="btn btn-primary">수업구매</button>
-			  			</c:if>
+			  			<c:choose>
+							  <c:when test= "${edu.eduState == '1' }">
+								 <button type="button" class="btn btn-primary">수업구매</button>
+							  </c:when>
+							  <c:when test= "${edu.eduState == '2' }">
+							  </c:when>
+						</c:choose>
 		
 			  		</div>
 				</div>
-				 
-			</div>
-	    </div>
-      		
-        </div>
-      	
+		      	
+		   </div>
+      
+	</div>
+
     <!-- <script src="/js/jquery.min.js"></script> -->
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>

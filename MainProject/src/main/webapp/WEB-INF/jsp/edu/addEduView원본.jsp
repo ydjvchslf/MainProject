@@ -54,8 +54,6 @@
 	   
 	
 	</script>
-		
-	</script>
 
   </head>
   <body>
