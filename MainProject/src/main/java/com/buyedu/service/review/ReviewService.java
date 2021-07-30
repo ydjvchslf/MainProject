@@ -63,23 +63,23 @@ public class ReviewService {
 		return reviewDao.getReviewWriter(userNo);
 	}
 	
-public Map<String, Object> academyConnect(String academyCode) throws Exception{
-		
-		List<Connect> connect = connectDao.academyConnect(academyCode);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("connect", connect);
-		
-		return map;
-}
+
 
 public int getConnect(Map<String,Object> map) throws Exception {	
 	return reviewDao.getConnect(map);
 }
 
-public List<Review> getmyReview(int userNo) throws Exception {
+public Map<String,Object> getmyReviewList(Search search) throws Exception {
 	
-	return reviewDao.getmyReview(userNo);
+	List<Review> list = reviewDao.getReviewList(search);
+	int totalCount = reviewDao.getTotalCount(search);
+	
+	Map<String , Object> map = new HashMap();
+	
+	map.put("list", list);
+	map.put("totalCount",totalCount);
+	
+	return map;
 }
 
 
