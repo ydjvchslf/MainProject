@@ -146,9 +146,26 @@ public class ReviewController {
 	public String listReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		System.out.println("listReview 시작");
-		System.out.println("search : "+search);
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		
 		String academyCode = request.getParameter("academyCode");
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		model.addAttribute("academy", academy);
+		
+		// 툴바 학원 리스트
+		User user = UserUtil.user();
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		
+		model.addAttribute("list", map.get("list"));
+		
+		
+		System.out.println("search : "+search);
+		
 		System.out.println("academyCode : "+academyCode);
+		
+		System.out.println("userNo : "+userNo);
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -156,19 +173,36 @@ public class ReviewController {
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(academyCode);
 				
-		Map<String , Object> map = reviewService.getReviewList(search);
-		System.out.println("컨트롤 쪽 map : "+map);
+		Map<String , Object> map2 = reviewService.getReviewList(search);
+		System.out.println("컨트롤 쪽 map : "+map2);
 		
-		int totalCount = ((Integer)map.get("totalCount")).intValue();
+		int totalCount = ((Integer)map2.get("totalCount")).intValue();
 		
 		Page resultPage = new Page(search.getCurrentPage(),totalCount , pageUnit , search.getPageSize());
 		
-		model.addAttribute("listR" , map.get("list"));
+		model.addAttribute("listR" , map2.get("list"));
 		model.addAttribute("resultPage", resultPage);
-		
-		
-	
+
 		return "/review/listReview";
+	}
+	
+	//test
+	@RequestMapping(value="testAddReview")
+	public String testAddReview(HttpServletRequest request, Model model) throws Exception {
+		System.out.println("testAddReview");
+		
+		System.out.println(request.getParameter("userNo"));
+		System.out.println(request.getParameter("academyCode"));
+		
+		// 툴바 시작
+		Academy academy = academyService.getAcademy(request.getParameter("academyCode"));
+		model.addAttribute("academy", academy);
+		User user = UserUtil.user();
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		model.addAttribute("list", map.get("list"));
+		// 툴바 끝
+		
+		return "/review/testAdd";
 	}
 	
 	

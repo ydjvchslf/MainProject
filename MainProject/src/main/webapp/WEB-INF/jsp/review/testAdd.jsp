@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>	
 
   </head>
   <body>
@@ -36,47 +36,37 @@
 	        
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
-
-					<div class="row">
-						<div class="col-md-12">
-							<button type="button" id="addReview" class="btn btn-primary" onclick="addReview()">작성</button>
-						</div>	
+					
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addReview">
+					  후기작성
+					</button>
+					
+					<!-- Modal -->
+					<div class="modal fade" id="addReview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h4 class="modal-title" id="myModalLabel">후기 작성</h4>
+					      </div>
+					      
+					      <form>
+					      <div class="modal-body">
+					        <input name="reviewTitle" placeholder="후기제목">
+					        <input name="reviewContent" placeholder="후기내용">
+					        <input name="academyCode" value="${academy.academyCode}" type="hidden">
+					        <input name="email" value="${user.email}" type="hidden">
+					      </div>
+					      </form>
+					      
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					        <button type="button" onclick="add()" class="btn btn-primary">등록</button>
+					      </div>
+					    </div>
+					  </div>
 					</div>
 					
-					<div class="row">	
-					<div class="col-md-12">
-					<form>	
-						<input type="hidden" id="currentPage" name="currentPage" value=""/>
-						<table class="table">
-							 <thead>
-							   <tr>
-							      <th>후기 제목</th>
-							      <th>작성자</th>
-							      <th>작성일자</th>
-							   </tr>
-							 </thead>
-							 
-							 <tbody>
-							 
-							 <c:forEach var="review" items="${listR}">
-							 
-							 	<tr>
-							      <td>${review.reviewTitle}</td>
-							      <td>${review.reviewWriter.email}</td>
-							      <td>${review.reviewDate}</td>
-							   </tr>
-							 
-							 </c:forEach>
-
-							 </tbody> 
-							
-						</table>
-					</form>
-					</div>
-					</div>
-						
-						<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
-						
 				</div>
 	      	</div>
       	
@@ -85,16 +75,10 @@
 	</div>
 	
 	<script >
-		function fncGetList(currentPage){
-			$("#currentPage").val(currentPage)	
-			$("form").attr("method","post").attr("action","/review/listReview?academyCode=${academy.academyCode}").submit()	
-		}
-		
-		function addReview(){
-			self.location = "/review/testAddReview?userNo=${user.userNo}&academyCode=${academy.academyCode}"
-		}
-		
-		
+	 	function add(){
+	 		$("form").attr("method","POST").attr("action","/review/addReview").submit()
+	 	}
+			
 	</script>
     <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.js"></script>
