@@ -180,7 +180,7 @@
 					}else{
     					a += '<thead id="tableHead"><tr>'
     					a += '<th align="center">No</th>'
-    					a += '<th align="center">학생이름</th>'	
+    					a += '<th align="center">이름</th>'	
     					a += '<th align="center">인증상태</th>'		
     					a += '<th align="center">인증취소</th>'
     					a += '</tr></thead>'

@@ -109,7 +109,13 @@
 					
 					
 					<!-- 학원 이름, 전화번호 -->
-					<div id="academytitle" class="row" > </div>
+					<div id="academytitle" class="row" ></div>
+					
+					<div class="row">
+						<div class="col-md-12">
+							<button id="chat" class="btn btn-primary" align="left">Academy Talk</button>
+						</div>
+					</div>
 					
 					
 					
@@ -133,6 +139,14 @@
 	</div>
 	
 	<script >
+	
+	$('#chat').on('click', function(){
+		var url = "https://academy-chat.herokuapp.com/chat.html?username=${user.name}&room=${academy.academyCode}&roomname=${academy.academyName}";
+		var name = "Chat"
+		var option = "width=800, height=600, location=no,toolbars=no,status=no"
+		window.open(url,name,option);
+	})
+	
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(${academy.academyLat}, ${academy.academyLng}), // 지도의 중심좌표

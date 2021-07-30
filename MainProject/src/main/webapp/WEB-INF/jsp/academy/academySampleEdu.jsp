@@ -129,11 +129,12 @@
 							
 							<c:if test="${academy.multimediarole == 'I'}">
 							<div class="col-md-4">
-									<img style="margin-bottom: 10px" height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
+									<img style="margin-bottom: 10px; border: 5px solid yellow;" height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
 									</br>
-								
+									<c:if test="${user.role == 'academy' }">
 									<span id=deleteButtonImage><a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')">삭제</a></span>
 									</br>
+									</c:if>
 							</div>
 							</c:if>
 				        	</c:forEach>	
@@ -150,12 +151,14 @@
 									<c:set var="i" value="${ i+1 }" />
 							<c:if test="${academy.multimediarole == 'V'}">
 							<div class="col-md-4">
-									<video height="450" width="450" style="margin-bottom: 10px" controls>
+									<video height="450" width="450" style="margin-bottom: 10px; border: 5px solid yellow;" controls>
 										<source src="/uploadImages/${academy.multimedia}">
 									</video>
+									<c:if test="${user.role == 'academy' }">
 									</br>
 									<span id="deleteButtonVideo" > <a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')"> 삭제</a></span>
 									</br>
+									</c:if>
 							</div>
 							</c:if>
 				        	</c:forEach>
@@ -171,6 +174,8 @@
 
 					
 						  </br></br></br>
+						<c:if test="${user.role == 'academy' }">
+						  
 						  <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
 						  	<button class="btn btn-primary" id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">Upload</button>
 						  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
@@ -183,7 +188,8 @@
 							</div>
 						  	<button class="btn btn-primary" type="submit" style="border: 1px solid #ddd; outline: none;">Save</button>
 						  </form>
-					
+						  
+						</c:if>
 					
  
 						    
@@ -332,8 +338,8 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="title" class="col-md-3" style="">'+data.academyName+'</div>'
-						b += '<div id="count" class="col-md-6" > 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
+						b += '<div id="title" class="col-md-4" style="">'+data.academyName+'</div>'
+						b += '<div id="count" class="col-md-5" > 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
 				        b += '<div id="phone" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
 						 
 					$("#academytitle").html(b);

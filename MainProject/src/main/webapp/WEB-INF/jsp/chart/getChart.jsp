@@ -41,7 +41,6 @@
 					<div class="row" >  
 						<div class="col-xs-12 col-md-12">
 							<h1><strong>Academy</strong></h1>
-							<button id="chat" class="btn btn-primary">Academy Talk</button>
 						</div>
 					</div>
 					
@@ -72,17 +71,6 @@
       
 	</div>
     <script>
-    	//채팅 부분
-    	
-    	$('#chat').on('click', function(){
-    		var url = "https://academy-chat.herokuapp.com/chat.html?username=${user.name}&room=${academy.academyCode}&roomname=테스트중";
-    		var name = "Chat"
-    		var option = "width=800, height=600, location=no,toolbars=no,status=no"
-    		window.open(url,name,option);
-    	})
-    	
-    	//채팅 부분 끝
-    
 		
 			var user = new Array;
 			var userData = new Array;
