@@ -73,6 +73,7 @@ public class PurchaseEduController {
 		} else {
 			eduService.updateEduRest(edu);
 		}
+		
 		purchase.setPurchaseAcademy( acaService.getAcademy( acaService.getAcademyCodeforEdu(eduNo) ) );
 		purchase.setPurchaseUid(uid);
 		

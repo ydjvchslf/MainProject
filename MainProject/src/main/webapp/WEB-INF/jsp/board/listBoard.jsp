@@ -31,6 +31,7 @@
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
 		function fncGetList(currentPage) {
+			alert("1");
 			$("#currentPage").val(currentPage)
 			var cateCode=$("input[name='cateCode']").val();
 			
@@ -50,10 +51,13 @@
 		
 		$(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button.btn.btn-default" ).on("click" , function() {
+			$( "#search" ).on("click" , function() {
 				fncGetList(1);
 			});
+			 
 		 });
+		
+		  
 	
 	</script>
 	<style>
@@ -125,6 +129,14 @@
 	 #ListboardTitle{
 	 color: black;
 	 }
+	
+	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #F8B739;
+    border-color: #F8B739;
+	}
 
 	</style>
 	
@@ -152,19 +164,19 @@
 				  <div class="row" id="boardHeader">
 					<c:choose>
 					<c:when test="${board.cateCode eq '0' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 공지사항</h3>
+					  <a href="/board/listBoard?cateCode=0"><h3>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h3></a>
 					</c:when>
 					<c:when test="${board.cateCode eq '1' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 Q&A</h3>
+					  <a href="/board/listBoard?cateCode=1"><h3>&nbsp;&nbsp;&nbsp;&nbsp;Q&A</h3></a>
 					</c:when>
 					<c:when test="${board.cateCode eq '2' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3>
+					  <a href="/board/listBoard?cateCode=2"><h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3></a>
 					</c:when>
 					<c:when test="${board.cateCode eq '3' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;${academy.academyName}학원 공지사항</h3>
+					  <a href="/board/listBoard?cateCode=3&academyCode="+${academy.academyCode}><h3>&nbsp;&nbsp;&nbsp;&nbsp;${academy.academyName} 공지사항</h3></a>
 					</c:when>
 					<c:when test="${search.isMine eq 'y' }">
-					  <h3>내가 쓴 게시글 보기</h3>
+					  <a href="/board/listBoard?isMine=y"><h3>&nbsp;&nbsp;&nbsp;&nbsp;내가 쓴 게시글 보기</h3></a>
 					</c:when>
 					</c:choose>	
 	 			  </div><br>
@@ -179,7 +191,6 @@
 				    <div class="form-group">
 					    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
 							<option value="0"  ${ ! empty search.searchConditionb && search.searchConditionb==0 ? "selected" : "" }>제목</option>
-							<option value="1"  ${ ! empty search.searchConditionb && search.searchConditionb==1 ? "selected" : "" }>내용</option>
 							<option value="2"  ${ ! empty search.searchConditionb && search.searchConditionb==2 ? "selected" : "" }>작성자</option>
 						</select>
 					</div>
@@ -191,10 +202,12 @@
 				  	</div>
 				  	<!-- 검색 버튼  -->
 				  	<div>
-				  	<button type="button" class="btn btn-primary">검색</button>
+				  	<button type="button" id="search" class="btn btn-primary">검색</button>
 				 	 <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				 	 <input type="hidden" id="currentPage" name="currentPage" value=""/>
+					
 					</form>
+					
 					</div>
 	    		  </div>
 				</div>
@@ -236,7 +249,7 @@
 				<!-- 게시판 기본 table list -->  
 		    	<tbody>
 				    <c:set var="i" value="${resultPage.totalCount }" />
-				    <c:forEach var="board" items="${listc}">
+				    <c:forEach var="board" items="${list}">
 				    <c:set var="i" value="${i-1}" />
 				  <tr>
 					<td id="tablerow" width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>
@@ -258,22 +271,6 @@
 				  </tr>
            		 	</c:forEach>
           		</tbody>
-          		<!-- 학원공지사항 table list --> 
-          		<tbody>
-          			<c:if test="${board.cateCode eq '3' }">
-		  			<c:set var="i" value="${resultPage.totalCount }" />
-		 			<c:forEach var="board" items="${listb}">
-					<c:set var="i" value="${i-1}" />
-				  <tr>
-			 		<td align="left">${i+1-(resultPage.currentPage-1)*5}</td>
-					<td id="tablerow" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3">
-					<span id="ListboardTitle">${board.boardTitle}</span>(<span class="commentCount">${board.comment_cnt}</span>)</a></td>
-				    <td id="tablerow" align="left">
-			  		  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
-			  		<td id="tablerow" align="left">${board.viewCnt}</td>
-				  </tr>
-          			</c:forEach></c:if>
-        		</tbody>
      	 	</table>
      	</div>
      	
@@ -283,36 +280,35 @@
 	  <div class="form-group">
 		<input type="hidden" name="cateCode" value="${search.cateCode}" />	    
 		<input type="hidden" name="isMine" value="${search.isMine}" />	  
-		 	<c:choose>
-			  <c:when test="${search.cateCode eq '0' && user.userNo eq 140 }">
+		 	
+			  <c:if test="${search.cateCode eq '1'}">
+			<div class="col-sm-offset-11  col-sm-1 text-center">
+			<button type="button" class="btn btn-primary" id="cw" >
+		     <a href="/board/addBoard?cateCode=1" >글쓰기</a></button>
+		    </div>
+		    </c:if>
+			
+		  <c:choose>
+			<c:when test="${search.cateCode eq '0' && user.userNo eq 140 }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
 		     	 <a href="/board/addBoard?cateCode=0" >글쓰기</a></button>
 		    	</div>
-			  </c:when>
-			  <c:when test="${search.cateCode eq '1' }">
+			</c:when>
+			
+			<c:when test="${search.cateCode eq '2' }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary" value="${search.cateCode}" >
-		     	 <a href="/board/addBoard?cateCode=1" >글쓰기</button>
-		    	</div>
-			  </c:when>
-			  <c:when test="${search.cateCode eq '2' }">
-				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
 		     	 <a href="/board/addBoard?cateCode=2" >글쓰기</a></button>
 		    	</div>
-			  </c:when>
-			  <c:when test="${search.cateCode eq '3' && user.role eq 'academy'}">
-				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
-		     	 <a href="/board/addBoard?cateCode=3" >글쓰기</a></button>
-		    	</div>
-			  </c:when>
-		    </c:choose>	
-			 	<!-- PageNavigation Start... -->
+			</c:when>
+			
+		  </c:choose>	
+			 	
+		</div>
+		<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>
 				<!-- PageNavigation End... -->
-		</div>
   	</div>
   	 <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.js"></script>
