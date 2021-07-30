@@ -134,8 +134,9 @@ public class EduController {
 		}
 		
 		eduService.updateEdu(edu);
+		String academyCode = acaService.getAcademyCodeforEdu(edu.getEduNo());
 		
-		return "forward:/edu/getEdu?eduNo="+edu.getEduNo();
+		return "forward:/edu/getEdu?eduNo="+edu.getEduNo()+"&academyCode="+academyCode;
 	}
 	
 	@RequestMapping( value="listEdu" )

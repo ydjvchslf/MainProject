@@ -40,6 +40,12 @@
 	                </li>
 	                </c:if>
 	                
+	               <c:if test="${user.role == 'academy'}">
+                   <li class="nav-item">
+                       <a class="nav-link" href="/purchaseedu/listPurchaseAcademy?academyCode=${academy.academyCode}">결제목록</a>
+                   </li>
+                   </c:if>
+	                
 	              </ul>
 	            </div>
 	          
