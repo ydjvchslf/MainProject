@@ -35,8 +35,13 @@
 	        
 	       		<c:choose>
 	           		<c:when test="${!empty user.role}">
-	           			<div align="center"><span style="color:#F8B739"> ${user.name}</span> 님</div>
-	           			<div align="center">${user.role}</div>
+	           			<div align="center">
+	           				<span style="color:#F8B739">${user.name}</span>
+	           					 <c:if test="${user.role eq 'student' }">(학생)</c:if>
+		           				 <c:if test="${user.role eq 'parents' }">(학부모)</c:if>
+		           				 <c:if test="${user.role eq 'academy' }">(원장)</c:if>
+		           				 <c:if test="${user.role eq 'admin' }">(관리자)</c:if> 님
+	           			</div>
 	           		</c:when>
 	           		<c:otherwise>
 	          			<div align="center"><span style="color:#F8B739">${email}</span> 님</div>
@@ -82,6 +87,11 @@
 		              </ul>
 		          </li>
 		          
+		         <c:if test="${user.role eq 'academy'}"> 
+		          <li>
+		              <a href="/purchaseedu/listPurchaseAcademy?academyCode=${academy.academyCode}">결제 목록</a>
+		          </li>
+		         </c:if> 
 		          
 		          
 		         <c:if test="${user.role != 'academy'}"> 
@@ -200,7 +210,10 @@
     		
     		 Kakao.init('ceef97deb317ea49500db9f27e7cc2fa');
     		
+    		 
     		 $('#allLogout').on("click" , function() {
+    			 
+    			 console.log("2222로그아웃클릭")
     			 
     			 let x = document.cookie;
     			 
@@ -218,7 +231,7 @@
     			 
     			 if(loginType == "kakao"){
     				 
-    				 //alert("카카오 로그아웃!")
+    				 alert("카카오 로그아웃!")
     				 
     				 if (!Kakao.Auth.getAccessToken()) {
     					  console.log('Not logged in.');
@@ -267,8 +280,11 @@
     	              })
     					
     			 }else{
-    				 //alert("일반 로그아웃");
-    				 self.location = "logout"
+    				 alert("일반 로그아웃");
+    				 self.location = "/user/logout"
+    				 
+    				 //수정전
+    				 //self.location = "logout"
     			 }
     			 
     		 });

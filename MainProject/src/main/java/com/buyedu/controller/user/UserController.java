@@ -304,7 +304,7 @@ public class UserController {
 		
 		System.out.println("~~회원탈퇴 끝~~");
 		
-		return "/user/loginView";
+		return "/user/loginViewTiles";
 	}
 	
 	
