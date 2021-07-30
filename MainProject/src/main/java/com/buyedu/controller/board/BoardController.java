@@ -263,14 +263,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			search.setSearchUserNo(userNo);
 	//		search.setAcademyCode(academyCode);
 			// Business logic 수행
-			List<Board> list =boardService.getBoardList(search);
+			List<Board> listc =boardService.getBoardList(search);
 			
 			Page resultPage1 = new Page( 1, 0, pageUnit, pageSize);
 			model.addAttribute("resultPage", resultPage1);
 			
 //			Map<String , Object> cgmap=categoryService.getCategoryList();
-			if(list.size()!=0) {
-			int totalCount = list.get(0).getTotalCount();
+			if(listc.size()!=0) {
+			int totalCount = listc.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
 			
@@ -286,7 +286,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //			Page resultPage2 = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 //			System.out.println(resultPage);
 			// Model 과 View 연결
-			model.addAttribute("list", list);
+			model.addAttribute("listc", listc);
 			model.addAttribute("map", map);
 //			model.addAttribute("list2", list2);
 			model.addAttribute("resultPage", resultPage);

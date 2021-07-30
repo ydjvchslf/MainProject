@@ -249,7 +249,7 @@
 				<!-- 게시판 기본 table list -->  
 		    	<tbody>
 				    <c:set var="i" value="${resultPage.totalCount }" />
-				    <c:forEach var="board" items="${list}">
+				    <c:forEach var="board" items="${listc}">
 				    <c:set var="i" value="${i-1}" />
 				  <tr>
 					<td id="tablerow" width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>
