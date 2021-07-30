@@ -21,6 +21,20 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   </head>
+  
+   <style>
+  @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	body{
+	font-family: ChosunGu;
+	}
+  </style>
+  
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
@@ -40,7 +54,7 @@
 
 					<div class="row" >  
 						<div class="col-xs-12 col-md-12">
-							<h1><strong>Academy</strong></h1>
+							<h1 id="titlef"><strong>Academy</strong></h1>
 						</div>
 					</div>
 					
@@ -52,12 +66,12 @@
 		  			
 		  			<div class="row" style="margin-top: 50px">
 						<div class="col-xs-12 col-md-6">
-							<h1><strong>User</strong></h1>
+							<h1 id="titlef"><strong>User</strong></h1>
 							<div style="background-color:white;" class="container-fluid"><canvas id="userChart" width="400" height="300"></canvas></div>
 						</div>
 						
 						<div class="col-xs-12 col-md-6">
-							<h1><strong>Ect</strong></h1>
+							<h1 id="titlef"><strong>Ect</strong></h1>
 							<div style="background-color:white;" class="container-fluid"><canvas id="ectChart" width="400" height="300"></canvas></div>
 						</div>
 		  			</div>
