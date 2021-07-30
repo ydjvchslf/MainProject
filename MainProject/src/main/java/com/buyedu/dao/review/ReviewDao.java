@@ -27,5 +27,7 @@ public interface ReviewDao {
 	int getConnect(Map<String,Object> map) throws Exception ;
 	
 	String getReviewWriter(int userNo);
+	
+	List<Review> getmyReview(int userNo);
 
 }

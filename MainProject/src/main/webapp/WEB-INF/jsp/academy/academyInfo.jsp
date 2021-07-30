@@ -25,6 +25,13 @@
 	
 	<style>
 	
+	.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px; 
+    border-top-right-radius: 0px; 
+	}
+	
 	@font-face {
     font-family: 'TmonMonsori';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
@@ -112,8 +119,8 @@
 					<div id="academytitle" class="row" ></div>
 					
 					<div class="row">
-						<div class="col-md-12">
-							<button id="chat" class="btn btn-primary" align="left">Academy Talk</button>
+						<div align="right" class="col-md-12">
+							<button id="chat" class="btn btn-primary" style="background-color:#FFCA77;" align="left">Academy Talk</button>
 						</div>
 					</div>
 					
@@ -128,8 +135,6 @@
 						</div>
 					</div>
 					
-					
- 
 						    
 				</div>
 	      	</div>
@@ -190,11 +195,11 @@
 				 var a = ''
 					 
 				 	 a += '<div class="col-sm-6" id="AcademyIntro">'
-				 	 a += '<div class="panel panel-default">'
-				 	 a += '<div id="panel-color" class="panel-heading">'
+				 	 a += '<div class="panel" style="border:5px solid #FFCA77;">'
+				 	 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
 			 	 	 a += '<h3 class="panel-title">학원 소개</h3>'
 			 	 if(role == 'academy'){	 
-			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>' 
+			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>' 
 			 	 }
 			 	 	 a += '</div>'
 			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto;">'
@@ -203,11 +208,11 @@
 			 		 
 			 		 
 			 		 a += '<div class="col-sm-6" id="AcademyHistory">'
-			 		 a += '<div class="panel panel-default">'
-					 a += '<div id="panel-color" class="panel-heading">'
+			 		 a += '<div class="panel" style="border:5px solid #FFCA77;">'
+					 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
 			 		 a += '<h3 class="panel-title">학원 실적</h3>'
 			 	if(role == 'academy'){
-			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>'
+			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>'
 			 	}
 			 		 a += '</div>' 
 				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto;">'
@@ -222,7 +227,6 @@
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
-					 
 			 }							
 		});		
 	}
@@ -231,12 +235,14 @@
 	function updateIntro(academyCode){
 	    var intro ='';
 	    
-	    alert("코드 = " + academyCode + "소개글 = "+academyInfo.academyIntro);
-	    
-	    	intro += '<div id="AcademyIntro">';
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="40">'+academyInfo.academyIntro+'</textarea>'
+	    	intro += '<div class="col-sm-12" id="AcademyIntro">';
+	    	intro += '<div class="panel" style="border:5px solid #FFCA77;">'
+	    	intro += '<div class="panel-heading" style="background-color:#FFCA77;">'
+	    	intro += '<h3 class="panel-title">학원 소개</h3>'
+	    	intro += '</div>'
+	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
-	   	 	intro += '</div>';
+	   	 	intro += '</div></div>';
 	    
 	    $('#AcademyIntro').html(intro);
 	    
@@ -250,7 +256,7 @@
 	        type : 'POST',
 	        data : {'academyCode' : academyCode, 'updateIntro' : updateIntro},
 	        success : function(data){
-	        	alert("수정 완료!");
+	        	alert("수정 완료되었습니다.");
 	        	getAcademyInfo();
 	        }
 	    });
@@ -258,16 +264,20 @@
 	
 	// 실적글 텍스트 area 변경
 	function updateHistory(academyCode){
-	    var intro ='';
+	    var history ='';
 	    
 	    alert("코드 = " + academyCode + "실적글 = "+academyInfo.academyHistory);
 	    
-	    	intro += '<div id="AcademyHistory">';
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="3" cols="40">'+academyInfo.academyHistory+'</textarea>'
-	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
-	   	 	intro += '</div>';
+	    	history += '<div class="col-sm-12" id="AcademyHistory">';
+	    	history += '<div class="panel" style="border:5px solid #FFCA77;">'
+	    	history += '<div class="panel-heading" style="background-color:#FFCA77;">'
+	    	history += '<h3 class="panel-title">학원 실적</h3>'
+	    	history += '</div>'
+	    	history += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyHistory+'</textarea>'
+	    	history += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
+	    	history += '</div></div>';
 	    
-	    $('#AcademyHistory').html(intro);
+	    $('#AcademyHistory').html(history);
 	    
 	}
 	 
@@ -280,7 +290,7 @@
 	        type : 'POST',
 	        data : {'academyCode' : academyCode, 'updateHistory' : updateHistory},
 	        success : function(data){
-	        	alert("수정 완료!");
+	        	alert("수정 완료되었습니다.");
 	        	getAcademyInfo();
 	        }
 	    });

@@ -257,11 +257,11 @@ body {
 	   <c:if test="${userNo eq review.reviewWriter.userNo }">
 		 <div class="col-sm-offset-4  col-sm-4 text-center">
 
-		      <button class="btn btn-primary" id="update" value="${review.reviewNo}">수 &nbsp;정</button>
+		      <button class="btn btn-primary" id="update" value="${review.reviewNo}">수&nbsp;정</button>
 		    &nbsp;
 		      <button class="btn btn-primary" id="delete" value="${review.reviewNo}">삭&nbsp;제</button>
 			&nbsp;
-			  <butten class="btn btn-primary" id="back" >뒤&nbsp;로</butten>
+			  <button class="btn btn-primary" id="back" >뒤&nbsp;로</button>
 		</div>
 		</c:if>
 		
@@ -271,38 +271,14 @@ body {
 	<c:if test="${userNo ne review.reviewWriter.userNo }">
    <div class="col-sm-offset-4  col-sm-4 text-center">
 
-		<butten class="btn btn-primary" id="back" >뒤&nbsp;로</butten>
+		<button class="btn btn-primary" id="back" >뒤&nbsp;로</button>
 		
-		<button class="btn btn-primary" id="complain" value="${review.reviewNo}" onClick="document.getElementById('mw_temp').style.display='block'">신&nbsp;고</button>
+		
 	</div>
 	
  
  
-<div id="mw_temp" class="mw">
-    <div class="bg"><!--이란에는 내용을 넣지 마십시오.--></div>
-    <div class="fg">
-        <p>
-		<div class="container">
-  <div class="radio">
-    <input id="radio-1" name="radio" type="radio" checked>
-    <label for="radio-1" class="radio-label">욕설</label>
-  </div>
 
-  <div class="radio">
-    <input id="radio-2" name="radio" type="radio">
-    <label  for="radio-2" class="radio-label">도배,홍보</label>
-  </div>
-
-  <div class="radio">
-    <input id="radio-3" name="radio" type="radio">
-    <label for="radio-3" class="radio-label">음란</label>
-  </div>
-</div>
-		<button onclick="document.getElementById('mw_temp').style.display='none'" type="button">신고하기</button>
-		<button onclick="document.getElementById('mw_temp').style.display='none'" type="button">창닫기</button>
-   		
-    </div>
-</div>
 	
 	</c:if>
 

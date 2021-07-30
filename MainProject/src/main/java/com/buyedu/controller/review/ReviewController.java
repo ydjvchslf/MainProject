@@ -27,6 +27,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.review.ReviewService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 @Controller
 
@@ -36,6 +37,9 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	@Autowired
+	private AcademyService academyService;
+	
 	public ReviewController() {
 		System.out.println(this.getClass());
 	}
@@ -43,7 +47,7 @@ public class ReviewController {
 	@Value("5")
 	int pageUnit;
 	
-	@Value("8")
+	@Value("10")
 	int pageSize;
 	
 	@RequestMapping( value="addReviewView", method=RequestMethod.GET)
@@ -141,51 +145,64 @@ public class ReviewController {
 	@RequestMapping (value="listReview")
 	public String listReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		if(search.getCurrentPage() ==0) {
+		System.out.println("listReview 시작");
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		
+		String academyCode = request.getParameter("academyCode");
+		Academy academy = academyService.getAcademy(academyCode);
+		
+		model.addAttribute("academy", academy);
+		
+		// 툴바 학원 리스트
+		User user = UserUtil.user();
+		
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		
+		model.addAttribute("list", map.get("list"));
+		
+		
+		System.out.println("search : "+search);
+		
+		System.out.println("academyCode : "+academyCode);
+		
+		System.out.println("userNo : "+userNo);
+		
+		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
+		search.setSearchAcademyCode(academyCode);
+				
+		Map<String , Object> map2 = reviewService.getReviewList(search);
+		System.out.println("컨트롤 쪽 map : "+map2);
 		
-		String academyCode = request.getParameter("academyCode");
-		System.out.println("아카데미코드 : "+academyCode);
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
-		System.out.println("userNo : "+userNo);
-		System.out.println("여기서 터지냐..?11111");
+		int totalCount = ((Integer)map2.get("totalCount")).intValue();
 		
-		System.out.println("여기서 터지냐..?22222");
+		Page resultPage = new Page(search.getCurrentPage(),totalCount , pageUnit , search.getPageSize());
+		
+		model.addAttribute("listR" , map2.get("list"));
+		model.addAttribute("resultPage", resultPage);
 
-	
-		List<Review> list = reviewService.getReviewList(search);
-		System.out.println("여기서터지나 3333333");
-		if(list.size()!=0) {
-		int totalCount = list.get(0).getTotalCount();
-		Page resultPage = new Page (search.getCurrentPage(),totalCount,pageUnit,pageSize);
-		System.out.println("여기서터지나 44444444");
-		Map<String , Object> map = new HashMap<String , Object>();
-		String connectState = "1";
-		String reviewState = "0";
-		map.put("reviewState" , reviewState);
-		map.put("userNo", userNo);
-		map.put("academyCode", academyCode);
-		map.put("connectState", connectState);
-		
-		int connect = reviewService.getConnect(map);
-		System.out.println("맵 : "+map);
-		
-		System.err.println("커낵트 : "+connect);
-		
-
-		model.addAttribute("academyCode" , academyCode);
-		model.addAttribute("connect",connect);
-		model.addAttribute("list",list);
-		model.addAttribute("resultPage" , resultPage);
-		model.addAttribute("search",search);
-		//model.addAttribute("connect" , map.get("connect"));
-		
-		System.err.println(list);
-		}
-	
 		return "/review/listReview";
+	}
+	
+	//test
+	@RequestMapping(value="testAddReview")
+	public String testAddReview(HttpServletRequest request, Model model) throws Exception {
+		System.out.println("testAddReview");
+		
+		System.out.println(request.getParameter("userNo"));
+		System.out.println(request.getParameter("academyCode"));
+		
+		// 툴바 시작
+		Academy academy = academyService.getAcademy(request.getParameter("academyCode"));
+		model.addAttribute("academy", academy);
+		User user = UserUtil.user();
+		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
+		model.addAttribute("list", map.get("list"));
+		// 툴바 끝
+		
+		return "/review/testAdd";
 	}
 	
 	
