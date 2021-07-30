@@ -273,7 +273,10 @@
     					
     			 }else{
     				 alert("일반 로그아웃");
-    				 self.location = "logout"
+    				 self.location = "/user/logout"
+    				 
+    				 //수정전
+    				 //self.location = "logout"
     			 }
     			 
     		 });
