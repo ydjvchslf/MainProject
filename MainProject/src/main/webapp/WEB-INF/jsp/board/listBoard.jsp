@@ -110,7 +110,7 @@
 	#searchPosition{
 	font-family :NanumBarunGothic;
 	position : absolute;
-	right : -17%;
+	right : -69.5%;
 	top : 4.7%;
 	}
 	
@@ -180,7 +180,7 @@
 			 	<!-- 검색부분  -->
 		   		<div class="row">
 		   		  <!-- 검색그룹  -->
-		   		  <div class="col-md-6 text-right" id="searchPosition">
+		   		  <div class="col-md-12 text-right" id="searchPosition">
 			 	    <form class="form-inline" >
 			    	<input type="hidden" name="cateCode" id="cateCode" value="${search.cateCode}" />
 				    <!-- 검색조건  -->
@@ -315,14 +315,14 @@
 		  <c:choose>
 			<c:when test="${search.cateCode eq '0' && user.role eq 'admin' }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
 		     	 <a href="/board/addBoard?cateCode=0" >글쓰기</a></button>
 		    	</div>
 			</c:when>
 			
 			<c:when test="${search.cateCode eq '2' }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
 		     	 <a href="/board/addBoard?cateCode=2" >글쓰기</a></button>
 		    	</div>
 			</c:when>
