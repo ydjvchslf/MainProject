@@ -196,12 +196,15 @@ public class AcademyController {
 				
 		model.addAttribute("list", map.get("list"));
 		
+		userService.getUser(user.getEmail());
+		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		Map<String, Object> mapm = academyService.getMultimediaList(academyCode);
 		
 		int imgcount = academyService.getImageCount(academyCode);
 		int vidcount = academyService.getVideoCount(academyCode);
+		
 		
 		model.addAttribute("academy", academy);
 		model.addAttribute("listfile", mapm.get("list"));

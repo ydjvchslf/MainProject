@@ -40,6 +40,7 @@ import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
 import com.buyedu.service.noti.NotiService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 @RestController
 @RequestMapping("/academy/*")
@@ -151,6 +152,22 @@ public class AcademyRestController {
 	}
 	
 	
+	@RequestMapping(value = "json/academySampleEdu/{academyCode}", method = RequestMethod.GET)
+	public Map<String, Object> getAcademySampleEdu(HttpServletRequest httpRequest,
+													@PathVariable String academyCode) throws Exception{
+		
+		System.out.println("레스트로 가져오자");
+		
+		System.out.println("academySampleEdu 아카데미 코드 = " + academyCode);
+		
+		Map<String, Object> map = academyService.getMultimediaList(academyCode);
+		
+		int imgcount = academyService.getImageCount(academyCode);
+		
+		
+		return map;
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/file-upload/{academyCode}", method = RequestMethod.POST)
@@ -167,7 +184,7 @@ public class AcademyRestController {
 			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
 				
 				for(MultipartFile file:multipartFile) {
-					fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
+					fileRoot = "C:\\Users\\woohr\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
 					
 					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
 					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
