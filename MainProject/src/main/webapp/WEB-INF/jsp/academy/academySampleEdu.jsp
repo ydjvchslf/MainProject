@@ -119,8 +119,18 @@
 					
 					<div class="card">
                             <div class="card-body">
-                                    
-                                    Image 
+                            
+                            <c:if test="${imgcount+vidcount < 1}">
+				        	
+				        	<img alt="noImage" src="/image/BuyEdyLogo.png">
+				        	
+				        	--이미지를 등록해 주세요!
+				        	
+				        	</c:if> 
+                            
+                            
+                            <c:if test="${imgcount+vidcount > 0}">        
+                                    Image
 		                    <div class="row">
 						
 		           		    <c:set var="i" value="0" />
@@ -129,7 +139,7 @@
 							
 							<c:if test="${academy.multimediarole == 'I'}">
 							<div class="col-md-4">
-									<img style="margin-bottom: 10px; border: 5px solid yellow;" height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
+									<img style="margin-bottom: 10px; border: 2px solid #FFCA77;" height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
 									</br>
 									<c:if test="${user.role == 'academy' }">
 									<span id=deleteButtonImage><a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')">삭제</a></span>
@@ -142,8 +152,12 @@
 				        	</div>
 				        	
 				        	</br></br></br></br>
-				        			Media  
+				        			Media
 				        	</br>	
+				        	
+				        	
+				        	
+				        	
 				        	<div class="row">
 				        	
 				        	<c:set var="i" value="0" />
@@ -151,7 +165,7 @@
 									<c:set var="i" value="${ i+1 }" />
 							<c:if test="${academy.multimediarole == 'V'}">
 							<div class="col-md-4">
-									<video height="450" width="450" style="margin-bottom: 10px; border: 5px solid yellow;" controls>
+									<video height="450" width="450" style="margin-bottom: 10px; border: 2px solid #FFCA77;" controls>
 										<source src="/uploadImages/${academy.multimedia}">
 									</video>
 									<c:if test="${user.role == 'academy' }">
@@ -164,7 +178,7 @@
 				        	</c:forEach>
 		        	
 		        			</div>
-		        	
+		        			</c:if>
 		        	
 		        	
                             </div>
@@ -174,7 +188,8 @@
 
 					
 						  </br></br></br>
-						<c:if test="${user.role == 'academy' }">
+						<c:if test="${user.role == 'academy'}">
+						<c:if test="${imgcount+vidcount < 5}"> 
 						  
 						  <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
 						  	<button class="btn btn-primary" id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">Upload</button>
@@ -188,7 +203,7 @@
 							</div>
 						  	<button class="btn btn-primary" type="submit" style="border: 1px solid #ddd; outline: none;">Save</button>
 						  </form>
-						  
+						 </c:if>
 						</c:if>
 					
  

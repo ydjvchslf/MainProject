@@ -19,9 +19,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </head>
@@ -50,22 +48,9 @@ function fncAddBoard(){
 		alert("글 제목을 입력해주세요.");
 		return;
 	}
-	
-	/* var detail = document.detailForm.prodDetail.value;
-	var manuDate = document.detailForm.manuDate.value;
-	var price = document.detailForm.price.value; */
-	//var target = document.getElementById("cate");
-	//var cateName = target.options[target.selectedIndex].text;
-	//var cateName = $("#cate option:checked").text();
-	//console.log('name : ' + cateName)
-	//document.getElementById("cateName").value = cateName;
-	
-
-	
 	$("form").attr("method" , "POST").attr("action" , "/board/addBoard").submit();
 }
 </script>
-
 
  <body>
  <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
@@ -83,10 +68,10 @@ function fncAddBoard(){
 				  <div class="row" id="boardHeader">
 					<c:choose>
 					<c:when test="${board.cateCode eq '0' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 공지사항</h3>
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h3>
 					</c:when>
 					<c:when test="${board.cateCode eq '1' }">
-					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;사!교육 Q&A</h3>
+					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;Q&A</h3>
 					</c:when>
 					<c:when test="${board.cateCode eq '2' }">
 					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3>
@@ -94,14 +79,11 @@ function fncAddBoard(){
 					<c:when test="${board.cateCode eq '3' }">
 					  <h3>&nbsp;&nbsp;&nbsp;&nbsp;학원 공지사항</h3>
 					</c:when>
-					<c:when test="${search.isMine eq 'y' }">
-					  <h3>내가 쓴 게시글 보기</h3>
-					</c:when>
+				
 					</c:choose>	
 	 			  </div><br>
   
 	
-	<div class="container-fluid">
 	<form class="form-horizontal">
 	
 	<input type="hidden" name="boardWriter" value="${user.userNo}" />
@@ -123,20 +105,22 @@ function fncAddBoard(){
 		    </div>
 		</div>
 		
-</form>
+		</form>
 		
-		</div>	
+		
 				
 		<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      &nbsp;&nbsp;<button type="button" class="btn btn-default"  >등 &nbsp;록</button>
-			  &nbsp;<a class="btn btn-default" href="/board/listBoard" role="button">취&nbsp;소</a>
+		      &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
+			  &nbsp;<a class="btn btn-primary" href="/board/listBoard" role="button">취&nbsp;소</a>
 		 	</div>
-		</div>
-		</div>
-	</div>
-
+		</div><br>
+		
   <div id="summernote"></div>
+  </div>
+  	
+  </div>
+  </div>
   <script>
     $(document).ready(function() {
     	 $('#summernote').summernote({
