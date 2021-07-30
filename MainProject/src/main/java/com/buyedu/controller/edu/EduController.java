@@ -157,6 +157,6 @@ public class EduController {
 		
 		System.out.println("listEdu End");
 		
-		return "/edu/listEduTest";
+		return "/edu/listEdu";
 	}
 }
