@@ -215,6 +215,11 @@
 						       </div><!-- /.col-sm-6 -->
 					     </div><!-- 첫번째 row 끝 -->  
 					     
+					      <c:if test="${user.role eq 'academy'}">
+	                        <div id="academyList" class="row"><!-- 두번째 row -->
+	                        </div>
+	                     </c:if> 
+	                     
 					      <div class="row"><!-- 두번쨰 row 시작 -->
 					       <div class="col-sm-12">
 					        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">

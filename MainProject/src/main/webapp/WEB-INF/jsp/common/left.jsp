@@ -118,9 +118,6 @@
                 
 	        </ul>
 	        
-	        	
-
-			<button name="test" onclick="send();">Å×½ºÆ®</button>
 	        
 
 	      </div>
