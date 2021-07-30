@@ -124,7 +124,10 @@
 				        	
 				        	<img alt="noImage" src="/image/BuyEdyLogo.png">
 				        	
+				        	
+				        	<c:if test="${user.role == 'academy' }">
 				        	--이미지를 등록해 주세요!
+				        	</c:if>
 				        	
 				        	</c:if> 
                             

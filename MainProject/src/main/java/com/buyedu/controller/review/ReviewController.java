@@ -235,47 +235,20 @@ public class ReviewController {
 		
 	}
 	
+	
+	
 	@RequestMapping(value="getmyReview")
-	public String getmyReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
+	public String getmyReview(@RequestParam int userNo, @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
 		
-		System.out.println("getmyReview 시작");
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Map<String, Object> map =  reviewService.getmyReviewList(userNo);
 		
-		String academyCode = request.getParameter("academyCode");
-		Academy academy = academyService.getAcademy(academyCode);
+		model.addAttribute("reviewList", map.get("list"));
 		
-		model.addAttribute("academy", academy);
-		
-		// 툴바 학원 리스트
-		User user = UserUtil.user();
-		
-		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
-		
-		model.addAttribute("list", map.get("list"));
-		
-		
-		System.out.println("search : "+search);
-		
-		System.out.println("academyCode : "+academyCode);
-		
-		System.out.println("userNo : "+userNo);
-		
-		if(search.getCurrentPage() == 0) {
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		search.setSearchAcademyCode(academyCode);
-				
-		Map<String , Object> map2 = reviewService.getReviewList(search);
-		System.out.println("컨트롤 쪽 map : "+map2);
-		
-		int totalCount = ((Integer)map2.get("totalCount")).intValue();
-		
-		Page resultPage = new Page(search.getCurrentPage(),totalCount , pageUnit , search.getPageSize());
-		
-		model.addAttribute("listR" , map2.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		
+		/*
+		 *   1. (mapper) 내가 쓴 후기 -> writer = userNo 로 리스트 뽑기
+		 *   2. 맵 -> list / 맵 자체를 모달에 넣기 
+		 *   3. 
+		 */
 		
 		
 		return "/review/mylistReview";

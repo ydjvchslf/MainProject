@@ -69,20 +69,18 @@ public int getConnect(Map<String,Object> map) throws Exception {
 	return reviewDao.getConnect(map);
 }
 
-public Map<String,Object> getmyReviewList(Search search) throws Exception {
+public Map<String,Object> getmyReviewList(int userNo) throws Exception {
 	
-	List<Review> list = reviewDao.getReviewList(search);
-	int totalCount = reviewDao.getTotalCount(search);
+	List<Review> list = reviewDao.getmyReview(userNo);
 	
-	Map<String , Object> map = new HashMap();
+	Map<String , Object> map = new HashMap<String , Object>();
 	
 	map.put("list", list);
-	map.put("totalCount",totalCount);
+	
+	System.out.println("내 리뷰 보기 service = "+list);
 	
 	return map;
 }
-
-
 
 
 }
