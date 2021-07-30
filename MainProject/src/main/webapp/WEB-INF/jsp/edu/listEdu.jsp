@@ -178,8 +178,8 @@
 							          <div class="thumbnail">
 							            <img src="/image/BBBB.png" >
 							            <div class="caption" align="center">
-							              <h2>${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
-							              <h5>${ edu.eduName }</h5>
+							              <h2 id="titlef">${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
+							              <h5 id="titlef">${ edu.eduName }</h5>
 							              <p>&#8361; ${ edu.eduPrice } 원</p>
 							              <p>
 							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&currentPage=${search.currentPage}" class="btn btn-primary" role="button">상세보기</a> 
@@ -194,10 +194,10 @@
 							          <div class="thumbnail">
 							            <img src="/image/BBBB.png" width="200" height="auto">
 							            <div class="caption" align="center">
-							              <h2>${ edu.academy.academyName }
+							              <h2 id="titlef">${ edu.academy.academyName }
 								              <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/>
 							              </h2>
-							              <h5>${ edu.eduName }</h5>
+							              <h4 id="titlef">${ edu.eduName }</h4>
 							              <p>&#8361; ${ edu.eduPrice } 원</p>
 							              <p>
 							              	<c:if test="${ edu.eduState == '0' }">

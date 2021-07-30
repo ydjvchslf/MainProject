@@ -105,8 +105,6 @@
 		    	</p>
 		    </div>
 		    
-		   
-		    
 		    </br></br>
 		    
 		    <div class="col-md-6 text-right">

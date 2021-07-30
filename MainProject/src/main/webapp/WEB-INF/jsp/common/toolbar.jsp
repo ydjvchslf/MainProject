@@ -39,6 +39,13 @@
 	                    <a class="nav-link" href="/academy/academyConnects?academyCode=${academy.academyCode}">盔积包府</a>
 	                </li>
 	                </c:if>
+	                
+	                <c:if test="${user.role == 'academy'}">
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/purchaseedu/listPurchaseAcademy?academyCode=${academy.academyCode}">搬力格废</a>
+	                </li>
+	                </c:if>
+	                
 	              </ul>
 	            </div>
 	          

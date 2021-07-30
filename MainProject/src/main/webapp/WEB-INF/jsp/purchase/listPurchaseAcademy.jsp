@@ -37,7 +37,7 @@
 		function fncGetList(currentPage) {
 			
 			$("#currentPage").val(currentPage)
-		   	$("form").attr("method", "POST").attr("action","/pickedu/listPickEdu").submit();
+		   	$("form").attr("method", "POST").attr("action","/purchaseedu/listPurchaseEdu").submit();
 		};
 		
 		
@@ -60,32 +60,14 @@
 		
 		$( function() {
 		      
-		      $( "td:nth-child(3)" ).on("click" , function() {
+		      $( "td:nth-child(2)" ).on("click" , function() {
 
 		    	 var eduNo = $(this).find('input').val()
 		         self.location ="/edu/getEdu?eduNo="+eduNo;
+		         
 		      });
 		      
-		      $( "td:nth-child(3)" ).css("color" , "skyblue");
-		      
-		      $( ".btn:contains('삭제')" ).on("click" , function() {
-					 
-					var eduNo = $(this).find('input').val()
-					 
-					$.ajax({
-					    url : '/pickedu/json/deletePickEdu/'+eduNo ,
-					    method : 'POST',
-				 	    dataType : "json",
-					    headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json; charset:UTF-8"
-						},
-					    success : function(data, status){
-
-					    	alert("관심수업에서 삭제되었습니다.")
-					    }
-					});
-			  })
+		      $( "td:nth-child(2)" ).css("color" , "red");
 		      
 		});
 	
@@ -108,60 +90,77 @@
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
-					<div class="row">
-					
-						<div class="col-md-6 text-left">
-							<p style="font-size:15px; color:black; font-family:'돋움';">
+					<div class="page-header text-info">
+				       <h3 id="titlef">구매수업목록</h3>
+				    </div>
+				    
+				    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
+				    <div class="row">
+				    
+					    <div class="col-md-6 text-left">
+					    	<p class="text-primary">
 					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 					    	</p>
-					    	<p>
-					    	<c:if test="${user.role == 'academy'}">
-					    		<button type="button" class="btn btn-primary">등록</button>
-					    	</c:if>
-					    	</p>
-						</div>
-						
+					    </div>
+					    
+					    </br></br>
+					    
+					    <div class="col-md-6 text-right">
+						    <form class="form-inline" name="detailForm">
+						    
+							  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+							  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+							  
+							</form>
+				    	</div>
+				    	
 					</div>
+					<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 					
-					<div class="row">
-						
-						<table class="table table-hover table-striped" >
-      
-					        <thead>
-					          <tr>
-					            <th align="center">No</th>
-					            <th align="left">학원명</th>
-					            <th align="left">수업명</th>
-					            <th align="left">수업 시작일</th>
-					            <th align="left">수업 종료일</th>
-					            <th align="left">대상 학년</th>
-					            <th align="left">대상 과목</th>
-					            <th align="left">수강료</th>
-					            <th align="left"></th>
-					          </tr>
-					        </thead>
-					       
-							<tbody>
-							
-							  <c:set var="i" value="0" />
-							  <c:forEach var="pickedu" items="${list}">
-								<c:set var="i" value="${ i+1 }" />
-								<tr>
-								  <td align="center">${ i }</td>
-								  <td align="left">${pickedu.pickAcademy.academyName}</td>
-								  <td align="left">${pickedu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/> </td>
-								  <td align="left">${pickedu.eduStartDate}</td>
-								  <td align="left">${pickedu.eduEndDate}</td>
-								  <td align="left">${pickedu.eduGrade}</td>
-								  <td align="left">${pickedu.eduSubject}</td>
-								  <td align="left">${pickedu.eduPrice}</td>
-								  <td align="center"> <button type="button" class="btn btn-primary">삭제 <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/> </button></td>
-								</tr>
-					          </c:forEach>
-					        
-					        </tbody>
-					      
-					      </table>
+					
+			      <!--  table Start /////////////////////////////////////-->
+			      <table class="table table-hover table-striped" >
+			      
+			        <thead>
+			          <tr>
+			            <th align="center">No</th>
+			            <th align="left">수업명</th>
+			            <th align="left">구매자 이름</th>
+			            <th align="left">구매자 전화번호</th>
+			            <th align="left">구매일자</th>
+			            <th align="left">수강료</th>
+			            <th align="left">결제상태</th>
+			          </tr>
+			        </thead>
+			       
+					<tbody>
+					
+					  <c:set var="i" value="0" />
+					  <c:forEach var="purchase" items="${list}">
+						<c:set var="i" value="${ i+1 }" />
+						<tr>
+						  <td align="center">${ i }</td>
+						  <td align="left">${purchase.purchaseEdu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/> </td>
+						  <td align="left">${purchase.buyer.name}</td>
+						  <td align="left">${purchase.buyer.phone}</td>
+						  <td align="left">${purchase.payDate}</td>
+						  <td align="left">${purchase.purchaseEdu.eduPrice}</td>
+						  <td align="left">
+						  <c:choose>
+								  <c:when test= "${purchase.payState == '0' }">
+									구매완료
+								  </c:when>
+								  <c:when test= "${purchase.payState == '1' }">
+									취소완료
+								  </c:when>
+						  </c:choose>
+						  </td>
+						</tr>
+			          </c:forEach>
+			        
+			        </tbody>
+			      
+			      </table>
 					</div>
 					
 					<div class="row">
@@ -176,6 +175,7 @@
 	</div>
 
     <!-- <script src="/js/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>

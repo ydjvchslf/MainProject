@@ -143,9 +143,9 @@
 				 
 				 <div  class="row">
 					<div class="float-left">
-						 <h3 class=" text-info">수업상세보기 화면</h3>
-			      		 <h5 class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-			      		 <h5 class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
+						 <h3 id="titlef" class=" text-info">수업상세보기 화면</h3>
+			      		 <h5 id="titlef" class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+			      		 <h5 id="titlef" class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
 					</div>
 				</div>
 				

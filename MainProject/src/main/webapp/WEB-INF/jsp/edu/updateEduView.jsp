@@ -80,8 +80,8 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
 						<div class="page-header text-center">
-					       <h3 class=" text-info">수업정보수정</h3>
-					       <h5 class="text-muted">수업 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+					       <h3 id="titlef" class=" text-info">수업정보수정</h3>
+					       <h5 id="titlef" class="text-muted">수업 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
 					    </div>
 					    
 					    <!-- form Start /////////////////////////////////////-->

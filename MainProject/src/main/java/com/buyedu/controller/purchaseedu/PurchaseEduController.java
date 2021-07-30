@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.buyedu.domain.Academy;
 import com.buyedu.domain.Edu;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.PurchaseEdu;
 import com.buyedu.domain.Search;
+import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.edu.EduService;
 import com.buyedu.service.user.UserService;
@@ -122,15 +124,23 @@ public class PurchaseEduController {
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(academyCode);
 		
+		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		Academy academy = acaService.getAcademy(academyCode);
+		
 		// Business logic 수행
 		Map<String , Object> map= eduService.getPurchaseAcademyList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		// Model 과 View 연결
+		
+		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		
+		model.addAttribute("list", map2.get("list"));
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		model.addAttribute("academy", academy);
 		
 		System.out.println("listPurchaseAcademy End");
 		
