@@ -32,15 +32,18 @@ public class ReviewService {
 		return reviewDao.getReview(reviewNo);
 	}
 
-	public List<Review> getReviewList(Search search) throws Exception {
+	public Map<String,Object> getReviewList(Search search) throws Exception {
 		List<Review> list= reviewDao.getReviewList(search);
 		int totalCount = reviewDao.getTotalCount(search);
 		
+		Map<String ,Object> map = new HashMap();
+		System.out.println("여기는 서비스 리스트 :"+list);
+		System.out.println("여기는 서비스 토탈카운트 : "+totalCount);
 		
-		if(list.size()!=0) {
-		list.get(0).setTotalCount(totalCount);}
-		System.err.println(list);
-		return list;
+		map.put("list" , list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	public void updateReview (Review review) throws Exception {
@@ -72,6 +75,11 @@ public Map<String, Object> academyConnect(String academyCode) throws Exception{
 
 public int getConnect(Map<String,Object> map) throws Exception {	
 	return reviewDao.getConnect(map);
+}
+
+public List<Review> getmyReview(int userNo) throws Exception {
+	
+	return reviewDao.getmyReview(userNo);
 }
 
 

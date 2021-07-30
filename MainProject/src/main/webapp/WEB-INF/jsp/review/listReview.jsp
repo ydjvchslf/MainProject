@@ -1,10 +1,8 @@
-
-    
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,154 +23,109 @@
   </head>
   <!-- 스크립트 시작 -->
   <script type="text/javascript">
-//=============    �˻� / page �ΰ��� ��� ���  Event  ó�� =============	
-	
 	function fncGetList(currentPage) {
-	$("#currentPage").val(currentPage)
-	var academyCode=$("input[name='academyCode']").val();
-	alert("${academyCode} 로 이동!");
-	$("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode="+academyCode).submit();
-}
+		alert(currentPage);
+		$("input").val(currentPage);
+		var academyCode=$("input[name='academyCode']").val();
 
-
-
-$(function() {
-	 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	 $( "button.btn.btn-default" ).on("click" , function() {
-		fncGetList(1);
-	});
-});
-
-$(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	$( ".btn:contains('글쓰기')" ).on("click" , function() {
-		fncAddReviewView();
-	});
-});	
-
-
-
-function fncAddReviewView(){
+		 $("form").attr("method" , "POST").attr("action" , "/review/listReview?academyCode='YN82J1X'").submit();
+	}
 	
-	$("form").attr("method" , "POST").attr("action" , "/review/addReviewView").submit();
-}
+	
+	
+
+	
+	$(function() {
+		//==> DOM Object GET 3���� ��� ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$( ".btn:contains('글쓰기')" ).on("click" , function() {
+			fncAddReviewView();
+		});
+	});	
+	
+	
+	
+	function fncAddReviewView(){
+		
+		$("form").attr("method" , "POST").attr("action" , "/review/addReviewView").submit();
+	}
 </script>
 
 <!-- 스크립트 종 -->
 </head>
 
-<!--스타일 시작부분-->
-<style>
-.card_box {
-    column-gap: 0.25rem;
-}
 
-.card_box {
-            display: flex;
-            margin: 0 70px;
-            justify-content : space-between;
-            margin-top: 65px;
-            flex-wrap: wrap;
-       
-        }
-</style>
-<!-- 스타일 종료부분 -->
 <body>
-<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
-<!-- left -->
-		<jsp:include page="../common/left.jsp"></jsp:include>
-	
-	        
-
-	         
-		        <!-- Page Content  -->
-        <div id="content" class="p-4 p-md-5"> 
-        
-			<div class="container-fluid"  >
-			
- <jsp:include page="../common/toolbar.jsp"></jsp:include> 
-	         
-	        	 <!-- 예쁘게 때려박아주셈!! -->
-	        	 <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
-	        	   <form>
-	        	   <!-- 학원 이름, 전화번호 -->
-					<div id="academytitle" class="row" ></div>
-	     
-	        	  
-	     <!-- 전체게시물 갯수잡는쪽 -->   	  
-
-		  
-		    			 
+		    <div class="row">
+	    
+		    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		전체게시물  ${resultPage.totalCount }개, 현재 ${resultPage.currentPage}  페이지
+		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
-
-
+		    </div>
 		    
-		    <!-- 전체게시물 잡는쪽 종료 -->
+		    <div class="col-md-6 text-right">
+			    <form class="form-inline" name="detailForm">
+			    
+				  <div class="form-group">
+				    <select class="form-control" name="searchCondition" >
+						<option value="0" ${!empty search.searchCondition && search.searchCondition==0?"selected":""}>상품번호</option>
+						<option value="1" ${!empty search.searchCondition && search.searchCondition==1?"selected":""}>상품명</option>
+						<option value="2" ${!empty search.searchCondition && search.searchCondition==2?"selected":""}>가격</option>
+					</select>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">검색어</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+				  </div>
+				  
+				  <button type="button" class="btn btn-default">검색</button>
+				  
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  <input type="hidden" name="academyCode" value="${academyCode}" />
+				  
+				</form>
+	    	</div>
+	    	
+		</div>
+ <table class="table table-hover table-striped" >
+      
+        <thead>
+          <tr>
+            <th width="100" align="center">No</th>
+            <th width="400" align="center" >후기제목</th>
+            <th width="300" align="left">작성자</th>
+            <th width="200" align="left">작성일자</th>
+            
+        </thead>
+       
+   
+       
+		<tbody>
 		
-	        	 <input type="hidden" id="currentPage" name="currentPage" value=""/>
-	        	 <!-- 게시물 forEach문 돌아가는쪽 시작 -->
-	          <div class="row--fluid">
-		 		 <c:set var="i" value="${resultPage.totalCount }" />
-				    <c:forEach var="review" items="${listc}">
-				    <c:set var="i" value="${i-1}" />
-		 	 <div class="row-fruid" style="float: left; width: 50%; padding:10px;">
-		 		 	<div class="card shadow mb-4">
-                                <div id="card_box" class="card-header bg-dark py-3">
-                                    <h3 class="m-0 font-weight-bold text-warning">${review.reviewTitle }</h3>
-                                    <h5 class="text-warning"> 작성자 ${review.reviewWriter.email }</h5> <h5 class="text-warning">${review.reviewDate }</h5>
-                                   
-                                </div>
-                                <div class="card-body">
-                             <button type="button" class="btn btn-dark">
-                                   <a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode }" ><h8 class="text-warning">상세보기</h8></a></button>
-                                </div>
-                            </div>                        
-                    	  </div> 
-		 		 </c:forEach>
-		 		</div> 
-		 		  <!-- 게시물 forEach문 돌아가는쪽 종료 -->
-		 		
-		 		
-	<!-- 글쓰기 버튼 if문 돌아가는곳시작 -->
-	<div class="container-fluid">	 
-	<input type="hidden" name="academyCode" value="${academyCode}" /> 
-	 
-	  	<c:if test="${user.role eq 'student' && connect == '1' }">
-		    <div class="col-sm-11  col-sm-1 text-center">
-		     <button type="button" class="btn btn-dark" > 
-		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">글쓰기</h8></button>
-		      </div>
-		</c:if>	 
+		  <c:set var="i" value="${resultPage.totalCount }" />
+		  <c:forEach var="review" items="${listR}">
+			<c:set var="i" value="${i-1}" />
+			<tr>
+
 		
-		<c:if test="${user.role eq 'parents' && connect == '1' }">
-		    <div class="col-sm-11  col-sm-1 text-center">
-		     <button type="button" class="btn btn-dark"  >
-		      <a href="/review/addReviewView?academyCode=${academyCode }" ><h8 class="text-warning">글쓰기</h8></a></button>
-		      </div>
-		</c:if>
 
+		<td id="listtable" align="left"><a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academyCode}">${review.reviewTitle}</a></td>
+					  
+			  
+			  <td id="listtable" align="left">${review.reviewWriter.email}</td>
+			  <td id="listtable" align="left">${review.reviewDate}</td>
+			  
+			</tr>
+          </c:forEach>
+        
+        </tbody>
+      
+      </table>
 
-</div>
-		    <!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
-  	 <script src="/js/jquery.min.js"></script>
-    <script src="/js/popper.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/main.js"></script>
-
-	<!-- 글쓰기 버튼 if문 돌아가는곳종료 -->
-</form> 
-</div>	
-	        	 <!-- 여기까지 때려박는거인듯!! -->
-	        </div>
-	    </div>
-
-</div>
-
-
+	<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
 
 
 
