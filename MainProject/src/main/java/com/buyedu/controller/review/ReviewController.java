@@ -64,9 +64,6 @@ public class ReviewController {
 		System.out.println("아카데미코드 : "+academyCode);
 		model.addAttribute("academyCode" , academyCode);
 		
-
-		
-		
 		return "/review/addReviewView";
 	}
 	@RequestMapping (value="addReview", method=RequestMethod.POST)

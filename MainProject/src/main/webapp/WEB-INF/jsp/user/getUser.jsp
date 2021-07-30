@@ -1328,7 +1328,7 @@
         				if(value.length<=2){
         					a += '<div class="col-sm-4"><div class="panel" style="border:5px solid #FFCA77;">'
     						a += '<div class="panel-heading" style="background-color:#FFCA77;">'
-    						a += '<h6 class="panel-title"> 학원 등록 하기 </h6>'
+    						a += '<h6 id="titlef" class="panel-title"> 학원 등록 하기 </h6>'
     						
     						a += '<h3 class="panel-title" align="right"> <img src="/image/plus.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
 			              
@@ -1339,7 +1339,7 @@
         					
         					a += '<div class="col-sm-4"><div class="panel" style="border:5px solid #FFCA77;">'
         					a += '<div class="panel-heading" style="background-color:#FFCA77;">'
-        					a += '<h3 class="panel-title">'
+        					a += '<h3 class="panel-title" id="titlef">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
         					a += '<h6 align="right"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash1.png" height="30"></a></h6>'
         					a += '</div>'

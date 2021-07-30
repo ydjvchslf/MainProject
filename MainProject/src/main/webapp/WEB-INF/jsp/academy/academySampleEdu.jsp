@@ -122,7 +122,7 @@
                             
                             <c:if test="${imgcount+vidcount < 1}">
 				        	
-				        	<img alt="noImage" src="/image/BuyEdyLogo.png">
+				        	<img alt="noImage" src="/image/BBBB.png">
 				        	
 				        	
 				        	<c:if test="${user.role == 'academy' }">
