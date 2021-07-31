@@ -19,6 +19,19 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
+<style>
+			body{
+				overflow-x:hidden; overflow-y:visible;
+				font-family: 'ChosunGu';
+			}
+	
+		    #title{
+				vertical-align : top;
+				font-size : 50px;
+				color : #1F4E79;
+				font-family : TmonMonsori;
+			}
+</style>
   </head>
   <body>
 		
@@ -35,6 +48,10 @@
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
+					
+					<div id="title" class="row" >내가 쓴 후기</div>
+					
+				
 					<form>	
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>
 						<table class="table">

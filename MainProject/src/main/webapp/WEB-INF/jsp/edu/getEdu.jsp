@@ -23,6 +23,20 @@
 	
 	<script type="text/javascript">
 	
+	function numberWithCommas(eduPrice) {
+	      return eduPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	   }
+	   
+	   $(function() {
+	      
+	      var eduPrice = "${edu.eduPrice}"
+	      
+	      var eduPrice2 = numberWithCommas(eduPrice)
+	      
+	      $("#price").text(eduPrice2+"원")
+	      
+	   })
+	
 	function fncPurchaseEdu() {
 	
 		var IMP = window.IMP; // 생략가능
@@ -62,8 +76,10 @@
 			 
 			var eduState = ${edu.eduState}
 			
-			if(eduState==1) {
+			if(eduState == 1) {
 				alert("판매중인 수업은 수정이 불가능합니다.")
+			} else if(eduState == 2) {
+				alert("판매완료된 수업은 수정이 불가능합니다.")
 			} else {
 				self.location = "/edu/updateEdu?eduNo=${edu.eduNo}"
 			}
@@ -144,8 +160,10 @@
 				 <div  class="row">
 					<div class="float-left">
 						 <h3 id="titlef" class=" text-info">수업상세보기 화면</h3>
-			      		 <h5 id="titlef" class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-			      		 <h5 id="titlef" class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
+			      		 <c:if test="${user.role == 'academy' }">
+                         <h5 id="titlef" class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+                         <h5 id="titlef" class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
+                      	</c:if>
 					</div>
 				</div>
 				
@@ -171,7 +189,7 @@
 				
 				<div class="row">
 			  		<div class="col-xs-4 col-md-2 "><strong>수강료</strong></div>
-					<div class="col-xs-8 col-md-4">${edu.eduPrice} 원</div>
+					<div class="col-xs-8 col-md-4" id="price">${edu.eduPrice} 원</div>
 					<div class="col-xs-4 col-md-2 "><strong>총 인원</strong></div>
 					<div class="col-xs-8 col-md-4">${edu.eduMember} 명</div>
 				</div>
@@ -214,8 +232,10 @@
 			  			</c:if>
 				  			<button type="button" class="btn btn-primary">수업목록</button>
 			  			<c:if test="${user.role == 'student' || user.role == 'parents'}">
-			  				<button type="button" class="btn btn-primary">관심수업등록</button>
-			  				<button type="button" class="btn btn-primary">수업구매</button>
+			  				<c:if test="${edu.eduState == '1'}">
+			  					<button type="button" class="btn btn-primary">관심수업등록</button>
+			  					<button type="button" class="btn btn-primary">수업구매</button>
+			  				</c:if>
 			  			</c:if>
 		
 			  		</div>

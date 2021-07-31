@@ -16,7 +16,7 @@ public interface ReviewDao {
 	
 	Review getReview(int reviewNo);
 	
-	int updateReview(Review review);
+	void updateReview(Review review);
 	
 	List<Review> getReviewList(Search search);
 	

@@ -15,8 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-    
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/style.css">
 	
@@ -25,45 +24,10 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<meta charset="EUC-KR">
-	
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<link rel="stylesheet2" href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css">
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
 	<style>
-		#complainButton{
-	      background-color:white;
-	      top:-90px; right:-20px;
-	      position:relative;
-	      z-index:3;
-	    }
-	    
-	    #updateButton{
-	      background-color:#E0CEFC;
-	      top:-15px; right:-480px;
-	      position:relative;
-	      z-index:3;
-	    }
-	    
-	    #deleteButton{
-	      background-color:#E0CEFC;
-	      top:-50px; right:-550px;
-	      position:relative;
-	      z-index:3;
-	    }
+		
 	    
 	    .heart{
 	      background-color:white;
@@ -78,6 +42,18 @@
 	      position:relative;
 	      z-index:3;
 	    }
+	    
+	      @font-face {
+	    font-family: 'ChosunGu';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+		}
+		
+		body{
+		overflow-x:hidden; overflow-y:visible;
+		font-family: 'ChosunGu';
+		}
 	    
 	</style>
 	<script type="text/javascript">
@@ -102,7 +78,7 @@
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( ".btn:contains('수')" ).on("click" , function() {
 					 var boardNo = $("div").find('button#updateButton').val();
-						self.location = "/board/updateBoard?boardNo="+boardNo
+						self.location = "/board/updateBoardAca?boardNo="+boardNo
 					});
 			});
 		 
@@ -141,8 +117,7 @@
 </head>
 
 <body>
-
- <div class="wrapper d-flex align-items-stretch">
+ <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -151,23 +126,24 @@
         <div id="content" class="p-4 p-md-5">
 
 	        <div class="container-fluid">
+	        
+	           <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
 	<!-- 게시판 title -->
-	<div class="card shadow mb-4">
-	  	<div class="card-header py-3" id="titlef">
-			<h3>${board.academyName} 공지사항</h3>
-	    </div>
-	    
-	    <div class="container-fluid">
+				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; 
+					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;
+					 width : 100%;">
+				  <!-- 게시판 title -->
 
 				<div class="view-wrap">
 				<!-- google_ad_section_start(name=post) -->
 				<!-- 본문 타이틀&정보 -->
 					
 					
-					<h3 id="boardTitle"><b>${board.boardTitle}</h3></b>
-					<div class="info">
+					<h2 id="titlef"><b>${board.boardTitle}</h2></b>
+					<div class="info" style="font-size: 18px;">
+					
 						<c:if test="${user.role eq 'academy'}">
-						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.academyName}</span>
+						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.academyName} 공지사항</span>
 						</c:if>
 						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> 
 						<fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd KK:mm:ss"/></td></td></span>
@@ -179,8 +155,7 @@
 					<p>${board.boardContent}</p>
 					</br></br>
 					</div>
-					</div>
-					</div>
+					
 <br/>
 
 <div class="form-group">
@@ -188,23 +163,24 @@
 		   <input type="hidden" name="cateCode" id="cateCode" value="${board.cateCode}" />
 		   <input type="hidden" name="acaWriter" value="${board.acaWriter}" />	 
 		   <hr></br>
-		    acaWriter : ${board.acaWriter}
-		    academy : ${academy.academyCode}
+		    <div class="row">
 		    
-		    <c:if test="${academy eq board.acaWriter}">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   
+		    <div class="col-sm-12 text-right">
+		      <button class="btn btn-primary" id="resetButton" value="${board.boardNo}" href="#" onClick="history.back()">목록으로</button>
+		      <c:if test="${user.role eq 'academy'}">
+		      <button class="btn btn-primary" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   
+		      <button class="btn btn-primary" id="deleteButton" value="${board.boardNo}">삭&nbsp;제</button></c:if> 
+		      
 		   	</div>
-		    
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn success" id="deleteButton" value="${board.boardNo}">삭&nbsp;제
+		  
 			</div>
-			</c:if> 
+			
+			 
 		</div>
-	
-	
 		</div>
-</div>
+		</div>
+		</div>
+</div></div>
 
 </body>
 </html>
