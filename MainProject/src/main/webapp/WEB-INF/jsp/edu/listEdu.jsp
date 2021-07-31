@@ -32,8 +32,6 @@
 	
 	<script type="text/javascript">
 	
-		// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
-			
 		function fncGetList(currentPage) {
 			
 			var acaCode = "${ academy.academyCode }"
@@ -198,7 +196,7 @@
 								              <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/>
 							              </h2>
 							              <h4 id="titlef">${ edu.eduName }</h4>
-							              <p>&#8361; ${ edu.eduPrice } 원</p>
+							              <p id="price">&#8361; ${ edu.eduPrice } 원</p>
 							              <p>
 							              	<c:if test="${ edu.eduState == '0' }">
 							              	판매 대기중

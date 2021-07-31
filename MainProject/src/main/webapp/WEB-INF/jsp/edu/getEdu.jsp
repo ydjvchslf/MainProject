@@ -23,6 +23,20 @@
 	
 	<script type="text/javascript">
 	
+	function numberWithCommas(eduPrice) {
+		return eduPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	
+	$(function() {
+		
+		var eduPrice = "${edu.eduPrice}"
+		
+		var eduPrice2 = numberWithCommas(eduPrice)
+		
+		$("#price").text(eduPrice2+"원")
+		
+	})
+	
 	function fncPurchaseEdu() {
 	
 		var IMP = window.IMP; // 생략가능
@@ -171,7 +185,7 @@
 				
 				<div class="row">
 			  		<div class="col-xs-4 col-md-2 "><strong>수강료</strong></div>
-					<div class="col-xs-8 col-md-4">${edu.eduPrice} 원</div>
+					<div class="col-xs-8 col-md-4" id="price">${edu.eduPrice} 원</div>
 					<div class="col-xs-4 col-md-2 "><strong>총 인원</strong></div>
 					<div class="col-xs-8 col-md-4">${edu.eduMember} 명</div>
 				</div>
