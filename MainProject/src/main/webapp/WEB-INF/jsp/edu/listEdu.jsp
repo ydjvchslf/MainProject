@@ -120,9 +120,6 @@
 					<div class="row">
 					
 						<div class="col-md-6 text-left">
-							<p style="font-size:15px; color:black; font-family:'돋움';">
-					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-					    	</p>
 					    	<p>
 					    	<c:if test="${user.role == 'academy'}">
 					    	<button type="button" class="btn btn-primary">등록</button>
@@ -171,7 +168,7 @@
 						
 						<table class="table table-hover table-striped" >
 					      
-					      	  <c:if test="${user.role == 'student' or user.role == 'parents' }">
+					      	  	<c:if test="${user.role == 'student' or user.role == 'parents'}">
 							      <c:if test="${edu.eduState == '1' }">
 						      		<c:forEach var="edu" items="${eduList}" >
 							        <div class="col-sm-6 col-md-4">
@@ -181,6 +178,7 @@
 							              <h2 id="titlef">${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
 							              <h5 id="titlef">${ edu.eduName }</h5>
 							              <p>&#8361; ${ edu.eduPrice } 원</p>
+							              <p>남은자리 ${edu.eduRest}</p>
 							              <p>
 							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&currentPage=${search.currentPage}" class="btn btn-primary" role="button">상세보기</a> 
 							            </div>
@@ -189,6 +187,8 @@
 							       </c:forEach>
 							      </c:if>
 							    </c:if>
+							    
+							    <c:if test="${user.role == 'academy' }">
 							    <c:forEach var="edu" items="${eduList}" >
 							        <div class="col-sm-6 col-md-4">
 							          <div class="thumbnail">
@@ -199,6 +199,7 @@
 							              </h2>
 							              <h4 id="titlef">${ edu.eduName }</h4>
 							              <p>&#8361; ${ edu.eduPrice } 원</p>
+							              <p>남은자리 ${edu.eduRest}</p>
 							              <p>
 							              	<c:if test="${ edu.eduState == '0' }">
 							              	판매 대기중
@@ -222,6 +223,7 @@
 							          </div>
 							        </div>
 							     </c:forEach>
+							     </c:if>
 				    	</table>
 					</div>
 					
