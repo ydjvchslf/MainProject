@@ -125,19 +125,19 @@ public class Board {
 		this.email = email;
 	}
 	
-	public String setAcademyName() {
+	public String getAcademyName() {
 		return academyName;
 	}
 
-	public void getAcademyName(String academyName) {
+	public void setAcademyName(String academyName) {
 		this.academyName = academyName;
 	}
 	
-	public String setAcademyCode() {
+	public String getAcademyCode() {
 		return academyCode;
 	}
 
-	public void getAcademyCode(String academyCode) {
+	public void setAcademyCode(String academyCode) {
 		this.academyCode = academyCode;
 	}
 

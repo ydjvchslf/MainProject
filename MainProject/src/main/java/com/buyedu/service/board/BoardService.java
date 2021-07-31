@@ -32,6 +32,11 @@ public class BoardService {
 		return boardDao.getBoard(boardNo);
 	}
 	
+	public Board getBoardNoacademy(int boardNo) throws Exception {
+		System.out.println("왜 여기가 문제죠...? 겟보드..?");
+		return boardDao.getBoardNoAcademy(boardNo);
+	}
+	
 	public Board getBoardAcademy(int boardNo) throws Exception {
 		System.out.println("여긴 겟보드아카데미");
 		return boardDao.getBoardAcademy(boardNo);
