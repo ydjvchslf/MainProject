@@ -139,8 +139,10 @@
 		         
 		         	</br>
 		         	
+		         		<button name="test" onclick="send();">테스트</button>
+		         		
 	                   <div align="center"><span name="logout" href="#" data-toggle="modal" data-target="#logoutModal"><u>로그아웃</u></span></div>
-	                
+	                   
                 
 	        </ul>
 	        
