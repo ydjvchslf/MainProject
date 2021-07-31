@@ -146,47 +146,45 @@
 						  <div class="form-group">
 						    &nbsp;&nbsp;&nbsp;<label for="eduGrade" class="col-sm-2 control-label">수업 대상학년</label>
 						    <label class="btn btn-default">
-							  <input type="checkbox" name="eduGrade" value="초등">초등
+							  <input type="radio" name="eduGrade" value="초등">초등
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduGrade" value="중등">중등
+							  <input type="radio" name="eduGrade" value="중등">중등
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduGrade" value="고1~고2">고1~고2
+							  <input type="radio" name="eduGrade" value="고등">고등
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduGrade" value="고3">고3
+							  <input type="radio" name="eduGrade" value="고3">고3
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduGrade" value="N수">N수
+							  <input type="radio" name="eduGrade" value="N수">N수
 							 </label>
-							 <span style="color : red"> 1개만 선택해주세요 </span>
 						  </div>
 						  
 						  <div class="form-group">
 						  &nbsp;&nbsp;&nbsp;<label for="eduSubject" class="col-sm-2 control-label">수업 과목</label>
 						     <label class="btn btn-default">
-							  <input type="checkbox" name="eduSubject" value="국어">국어
+							  <input type="radio" name="eduSubject" value="국어">국어
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduSubject" value="영어">영어
+							  <input type="radio" name="eduSubject" value="영어">영어
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduSubject" value="수학">수학
+							  <input type="radio" name="eduSubject" value="수학">수학
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduSubject" value="사회">사회
+							  <input type="radio" name="eduSubject" value="사회">사회
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduSubject" value="과학">과학
+							  <input type="radio" name="eduSubject" value="과학">과학
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduSubject" value="제 2외국어">제 2외국어
+							  <input type="radio" name="eduSubject" value="제 2외국어">제 2외국어
 							 </label>
 							 <label class="btn btn-default">
-							  <input type="checkbox" name="eduSubject" value="예체능">예체능
+							  <input type="radio" name="eduSubject" value="예체능">예체능
 							 </label>
-							 <span style="color : red"> 1개만 선택해주세요 </span>
 						  </div>
 						  
 						  <div class="form-group">

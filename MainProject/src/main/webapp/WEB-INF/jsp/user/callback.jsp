@@ -28,7 +28,7 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "vqx5V5ejE6mgkpcPu2vP",
-				callbackUrl: "http://localhost:8081/user/callback",
+				callbackUrl: "http://192.168.0.47:8081/user/callback",
 				isPopup: false,
 				callbackHandle: true
 				/* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */

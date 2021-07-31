@@ -43,12 +43,18 @@ function fncAddBoard(){
 	var cateCode=$('input[name="cateCode"]').val();
 	var acaWriter=$('input[name="acaWriter"]').val();
 	alert(acaWriter)
+	alert(cateCode)
 	
 	if(title == null || title.length <1){
 		alert("글 제목을 입력해주세요.");
 		return;
 	}
-	$("form").attr("method" , "POST").attr("action" , "/board/addBoard").submit();
+	if(cateCode =='3'){
+	$("form").attr("method" , "POST").attr("action" , "/board/addBoardAcademy").submit();
+	} else {
+	$("form").attr("method" , "POST").attr("action" , "/board/addBoard").submit();	
+	}
+	
 }
 </script>
 <style>

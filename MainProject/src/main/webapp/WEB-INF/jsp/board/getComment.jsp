@@ -27,24 +27,28 @@
 	    }
 	    
 	    #commentwriterpr{
-	      color : #A804CD;
+	      color : #F4A403;
 	    }
 	    
 	    #commentDate{
 	      color : black;
 	    }
 	    
+	    #upbu:link { color: blue; text-decoration: none;}
+ 		#upbu:visited { color: blue; text-decoration: none;}
+ 		#upbu:hover { color: red; text-decoration: underline;}
+	    
 	   </style>
  </br></br>
  <body>
  	  <div class="container-fluid">
-       <div > 댓글 <span class="commentCount"></span>
+       <div style="font-size:16px;"> 댓글 <span class="commentCount" style="font-size:16px;"></span>
         <form name="commentInsertForm" onsubmit="return false">
             <div class="input-group">
                <input type="hidden" name="boardNo" value="${board.boardNo}"/>
-               <input type="text" class="form-control" onkeyup="enterEvent()" id="cmtcontent" name="content" placeholder="내용을 입력하세요." >
+               <input type="textarea" class="form-control" onkeyup="enterEvent()" id="cmtcontent" name="content" placeholder="내용을 입력하세요." >
                <span class="input-group-btn">
-                    <button id="commentInsert" class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+                    <button id="commentInsert" class="btn btn-primary" type="button" name="commentInsertBtn">등록</button>
                </span>
               </div>
               </br></br>
@@ -87,12 +91,12 @@ function commentList(){
            
 			var sessionId = "<%=((User)session.getAttribute("user")).getUserNo() %>"
             
-            alert(sessionId)
+            
             $(".commentCount").html(cnt);
             console.log(cnt)
        		
             $.each(data, function(key, value){ 
-            	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+            	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px; font-size:16px">';
                
                 a += '<div id="commentwriterpr" class="commentInfo'+value.COMMENT_NO+'">'+value.EMAIL;
                 a += '&nbsp;&nbsp;&nbsp;&nbsp;'
@@ -101,8 +105,8 @@ function commentList(){
                 <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
                 a += '<div id="buttons">'
                 if (sessionId == value.COMMENT_WRITER){
-                a += '<a onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
+                a += '<a id="upbu" onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
+                a += '<a id="upbu" onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
         		a += '</div>'
                 a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> '+value.COMMENT_CONTENT+'</p>';
                 a += '</div></div>';

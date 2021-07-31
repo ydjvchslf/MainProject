@@ -58,10 +58,11 @@ $(function() {
 function fncupdateReview(){
 	//Form 유효성 검증
  	//var name = document.detailForm.prodName.value;
-	var title=$("input[name='reviewTitle']").val();
-	var content=$("textarea[name='reviewContent']").val();
-	var writer=$("input[name='reviewWriter']").val();
-
+	var reviewTitle=$("input[name='reviewTitle']").val();
+	var reviewContent=$("textarea[name='reviewContent']").val();
+	//var writer=$("input[name='reviewWriter']").val();
+	$("form").attr("method" , "POST").attr("action" , "/review/updateReview").submit();
+}
 	
 	/* var detail = document.detailForm.prodDetail.value;
 	var manuDate = document.detailForm.manuDate.value;
@@ -73,8 +74,7 @@ function fncupdateReview(){
 	
 	
 		
-	$("form").attr("method" , "POST").attr("action" , "/review/updateReview").submit();
-}
+
 
 
 </script>
@@ -83,20 +83,6 @@ function fncupdateReview(){
 <body>
 
 
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-   	
-
-	
 	
 	<form class="form-horizontal">
 	<input type="hidden" name="reviewNo" value="${review.reviewNo}" />
@@ -109,16 +95,16 @@ function fncupdateReview(){
 		</div>
 		
 		<div id="academyCode" class="form-group">
-		    <label for="academyCode" class="col-sm-offset-1 col-sm-1 control-label">학원코드</label>
+		    <label for="academyCode" class="col-sm-offset-1 col-sm-1 control-label"></label>
 		    <div class="col-sm-8">
-		      <input type="text" class="form-control" id="academyCode" name="academyCode" value="${academyCode}" readonly>
+		      <input type="hidden" class="form-control" id="academyCode" name="academyCode" value="${academyCode}" readonly>
 		    </div>
 		</div>
-		
+
 		<div id="updateReview" class="form-group">
-		    <label for="reviewWriter.name" class="col-sm-offset-1 col-sm-1 control-label">작성자</label>
+		    <label for="reviewWriter.email" class="col-sm-offset-1 col-sm-1 control-label"></label>
 		    <div class="col-sm-8">
-		      <input type="text" class="form-control" id="reviewWriter.name" name="reviewWriter.name" value="${review.reviewWriter.email}" readonly="true"/>
+		      <input type="hidden" class="form-control" id="reviewWriter.email" name="reviewWriter.email" value="${review.reviewWriter.email}" readonly="true"/>
 		    </div>
 		</div>
 			
@@ -144,14 +130,7 @@ function fncupdateReview(){
 		    </div>
 		</div>
 	
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+    
 
 
 </form> 

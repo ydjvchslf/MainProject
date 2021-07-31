@@ -32,7 +32,7 @@
 	           	
 		  		
 	        <ul class="list-unstyled components mb-5">
-	        
+	           <h4>
 	       		<c:choose>
 	           		<c:when test="${!empty user.role}">
 	           			<div align="center">
@@ -47,7 +47,8 @@
 	          			<div align="center"><span style="color:#F8B739">${email}</span> ดิ</div>
 	           		</c:otherwise>
 	           	</c:choose>
-		        
+		      </h4>
+		      
 		        <br>
 		        
 		        <c:if test="${user.role != null }"></c:if>

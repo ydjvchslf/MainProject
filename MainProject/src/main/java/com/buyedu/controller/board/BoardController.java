@@ -66,6 +66,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@RequestMapping( value="addBoard", method=RequestMethod.GET )
 		public String addBoard( Model model, HttpServletRequest request) throws Exception {
 			
+			
+		    
 			System.out.println("/board/addBoard : GET");
 			String category = request.getParameter("cateCode");
 			String academyCode = request.getParameter("academyCode");
@@ -85,8 +87,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		}
 		
 		@RequestMapping( value="addBoard", method=RequestMethod.POST)
-		public String addBoard( @ModelAttribute("board") Board board, Model model, @ModelAttribute("user") User user, HttpServletRequest httpRequest ) throws Exception {
+		public String addBoard( @ModelAttribute("board") Board board, Model model, HttpServletRequest httpRequest ) throws Exception {
 
+			User user = UserUtil.user();
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		    model.addAttribute("list", map1.get("list"));
+		    
 			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
 			String category = httpRequest.getParameter("cateCode");
 			System.out.println(category);
@@ -113,13 +119,39 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			return "redirect:/board/listBoard?cateCode="+board.getCateCode();
 		}
 		
+		@RequestMapping( value="addBoardAcademy", method=RequestMethod.POST)
+		public String addBoardAcademy( @ModelAttribute("board") Board board, Model model, HttpServletRequest httpRequest ) throws Exception {
+
+			User user = UserUtil.user();
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		    model.addAttribute("list", map1.get("list"));
+		    
+			int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
+			String acaWriter = httpRequest.getParameter("acaWriter");
+			System.out.println("애드아카:"+acaWriter);
+			//Business Logic
+			boardService.addBoard(board);
+			Board board1 = boardService.getBoard(board.getBoardNo());
+			System.out.println("insert??");
+			model.addAttribute("board", board1);
+			model.addAttribute(userNo);
+			model.addAttribute("acaWriter", acaWriter);
+			
+			return "redirect:/board/listBoardAcademy?cateCode=3&academyCode="+acaWriter;
+		}
+		
+				
 		//@RequestMapping("/getProduct.do")
 		@RequestMapping( value="getBoard", method = RequestMethod.GET)
 		public String  getBoard( @RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request ) throws Exception {
 			
 			System.out.println("/board/getBoard : GET");
 			//Business Logic
-			
+			//툴바
+			User user = UserUtil.user();
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		    model.addAttribute("list", map1.get("list"));
+		    
 			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			String category = request.getParameter("cateCode");
@@ -169,7 +201,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			
 			System.out.println("/board/getBoardAca : GET");
 			//Business Logic
-			
+			//툴바
+			User user = UserUtil.user();
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		    model.addAttribute("list", map1.get("list"));
+		    
 			int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			String category = request.getParameter("cateCode");
@@ -190,12 +226,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		
 		//@RequestMapping("/updateProductView.do")
 		@RequestMapping( value="updateBoard", method=RequestMethod.GET )
-		public String updateBoard( @RequestParam("boardNo") int boardNo , Model model ) throws Exception{
+		public String updateBoard( @RequestParam("boardNo") int boardNo , Model model, HttpServletRequest request ) throws Exception{
 
 			System.out.println("/board/updateBoardView : GET");
 			//Business Logic
 			Board board = boardService.getBoard(boardNo);
 			System.err.println("게시글번호 왜못받아??"+boardNo);
+			 String academyCode = request.getParameter("academyCode");
+			 System.out.println("업보 아카라이터 : "+academyCode);
+			 board.setAcaWriter(academyCode);
+			 
 //			Map<String , Object> cgmap=categoryService.getCategoryList();
 //			// Model 과 View 연결
 //			System.err.println("리스트 :: " + cgmap.get("list"));
@@ -209,6 +249,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@RequestMapping( value="updateBoard", method=RequestMethod.POST )
 		public String updateBoard( @ModelAttribute("board") Board board , Model model) throws Exception{
 
+			//툴바
+			User user = UserUtil.user();
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		    model.addAttribute("list", map1.get("list"));
 			/*
 			 * int prodNo=Integer.parseInt(request.getParameter("prodNo"));
 			 * System.out.println("/updatePorudct.do");
@@ -224,7 +268,27 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //				session.setAttribute("user", user);
 //			}
 			
-			return "redirect:/board/getBoard?boardNo="+board.getBoardNo();
+			return "redirect:/board/listBoard?cateCode="+board.getCateCode();
+		}
+		
+		//@RequestMapping("/updateProduct.do")
+		@RequestMapping( value="updateBoardAca", method=RequestMethod.POST )
+		public String updateBoardAca( @ModelAttribute("board") Board board , Model model, HttpServletRequest request) throws Exception{
+			System.out.println();
+			//툴바
+			User user = UserUtil.user();
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		    model.addAttribute("list", map1.get("list"));
+
+		    String acaWriter = request.getParameter("acaWriter");
+			System.out.println("애드아카:"+acaWriter);
+			
+			System.err.println("업데이트 전 프로덕트 : "+board);
+			boardService.updateBoard(board);
+			System.out.println("업데이트 후 프로덕트 : "+board);
+			System.out.println("받아오는 boardNo :"+board.getBoardNo());
+			
+			return "redirect:/board/listBoardAcademy?cateCode=3&academyCode="+acaWriter;
 		}
 		
 		//@RequestMapping("/listProduct.do")
@@ -232,6 +296,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		public String listBoard( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
 			
 			System.out.println("/board/listBoard : GET / POST");
+			//툴바
 			User user = UserUtil.user();
 		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
 		    model.addAttribute("list", map1.get("list"));

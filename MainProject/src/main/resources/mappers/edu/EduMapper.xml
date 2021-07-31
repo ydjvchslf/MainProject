@@ -106,7 +106,7 @@
 													AND edu_state = #{searchEduState}
 												</if>
 										</if>
-										ORDER BY edu_no ) inner_table
+										ORDER BY edu_state) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>

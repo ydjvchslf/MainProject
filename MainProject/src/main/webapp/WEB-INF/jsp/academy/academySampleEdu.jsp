@@ -51,27 +51,6 @@
 				font-family: 'ChosunGu';
 			}
 	
-			#title{
-				vertical-align : top;
-				font-size : 50px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-
-			#count{
-				vertical-align : bottom;
-				font-size : 20px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-			
-			#phone{
-				vertical-align : right;
-				font-size : 15px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-	
 			@font-face {
 			    font-family: 'TmonMonsori';
 			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
@@ -133,7 +112,7 @@
                             
                             
                             <c:if test="${imgcount+vidcount > 0}">        
-                                    Image
+ <!--                                    Image-->
 		                    <div class="row">
 						
 		           		    <c:set var="i" value="0" />
@@ -142,7 +121,7 @@
 							
 							<c:if test="${academy.multimediarole == 'I'}">
 							<div class="col-md-4">
-									<img style="margin-bottom: 10px; border: 2px solid #FFCA77;" height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
+									<img style=" margin-bottom: 10px; " height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
 									</br>
 									<c:if test="${user.role == 'academy' }">
 									<span id=deleteButtonImage><a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')">삭제</a></span>
@@ -155,7 +134,7 @@
 				        	</div>
 				        	
 				        	</br></br></br></br>
-				        			Media
+<!--  				        			Media-->
 				        	</br>	
 				        	
 				        	
@@ -168,7 +147,7 @@
 									<c:set var="i" value="${ i+1 }" />
 							<c:if test="${academy.multimediarole == 'V'}">
 							<div class="col-md-4">
-									<video height="450" width="450" style="margin-bottom: 10px; border: 2px solid #FFCA77;" controls>
+									<video height="450" width="450" style="margin-bottom: 10px; " controls>
 										<source src="/uploadImages/${academy.multimedia}">
 									</video>
 									<c:if test="${user.role == 'academy' }">
@@ -356,10 +335,10 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="title" class="col-md-4" style="">'+data.academyName+'</div>'
-						b += '<div id="count" class="col-md-5" > 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
-				        b += '<div id="phone" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
-						 
+						b += '<div id="titlef" class="col-md-5" style="font-size: 45px;">'+data.academyName+'</div>'
+						b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개</div>'
+				        b += '<div id="titlef" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
+					
 					$("#academytitle").html(b);
 						 
 				 }							

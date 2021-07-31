@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 
 <html lang="ko">
-<title>사!교육</title>
+
 <head>
   	<title>Buy Edu</title>
     <meta charset="utf-8">
@@ -73,11 +73,22 @@
 	    
 	    .heart{
 	      background-color:white;
-	      top:0px; right:70px;
+	      top:0px; right:30px;
 	      position:relative;
 	      z-index:3;
 	    }
 	    
+	    @font-face {
+	    font-family: 'ChosunGu';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+		}
+		
+		body{
+		overflow-x:hidden; overflow-y:visible;
+		font-family: 'ChosunGu';
+		}
 	    
 	</style>
 	<script type="text/javascript">
@@ -120,7 +131,6 @@
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
 
-<title>Insert title here</title>
 </head>
 
 <body>
@@ -141,8 +151,8 @@
 					 width : 100%;">
 				  <!-- 게시판 title -->
 					
-					<h3 id="boardTitle"><b>${board.boardTitle}</h3></b>
-					<div class="info">
+					<h2 id="titlef"><b>${board.boardTitle}</h2></b>
+					<div class="info" style="font-size: 15px;">
 						<span id="boardWriter"><i class="glyphicon glyphicon-user" ></i> ${board.email}</span>
 						&nbsp;&nbsp;<span id="boardDate"><i class="glyphicon glyphicon-time" ></i> 
 						<fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd KK:mm:ss"/></td></td></span>
@@ -170,7 +180,7 @@
 							</c:choose>	</span>
 					</div>
 					<hr>
-					<div id=boardContent>
+					<div id=boardContent style="font-size: 18px;">
 					<p>${board.boardContent}</p>
 					</br></br>
 					</div>
@@ -209,6 +219,7 @@
 		</div></div>
 	</div>
  <!--  <script src="/js/jquery.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
