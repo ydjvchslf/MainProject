@@ -113,10 +113,10 @@
 			                                                placeholder="비밀번호확인" id="password2" name="password2" aria-describedby="emailHelp">
 			                                        </div>
 			                                    </div>
-			                                    <div class="form-group" align="center">
-												     <span class="text_password"></span>
-												</div>
 			                            </div>
+			                            <div class="form-group" align="center">
+										     <span class="text_password"></span>
+										</div>
                                         <div class="form-group">
                                             <input type="text" id="name" name="name" class="form-control form-control-user"
                                                aria-describedby="emailHelp"
@@ -168,8 +168,12 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" name="login" href="/user/login">Already have an account? Login!</a>
+                                        <a class="small" name="login" href="/user/login">Login</a>
                                     </div>
+                                    
+                               
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
@@ -257,20 +261,23 @@
 			signup : function() {
 				//alert("11111")
 				if(fncCheckAll()){
-					swal("가입완료 되었습니다!")
+					
+					swal("Buy!edu 회원가입을 환영합니다^ㅇ^")
+					
 					fncAddUser();
+					
 				}
 				
 			},
 			
 			phoneBtn : function() {
-				alert("인증번호발송 클릭")
+				//alert("인증번호발송 클릭")
 				fncAuth();
 				
 			},
 			
 			vaildBtn : function() {
-				alert("인증확인 클릭")
+				//alert("인증확인 클릭")
 				fncKey();
 				
 			}
@@ -513,7 +520,7 @@
 	function fncAuth(){					
 		
 		var phone = $("#phone").val()
-		alert("입력한 연락처 : "+phone);
+		//alert("입력한 연락처 : "+phone);
 		
 		$.ajax({
 				url : "/user/json/sms/"+phone ,
@@ -540,8 +547,8 @@
 	//인증확인 함수
 	//test 용, 나중에 실제에서는 지우기
 	
-	var key ="123456";
-	//var key = "";
+	//var key ="123456";
+	var key = "";
 	
 	var vaildNum = $("#vaildNum").val();
 	
@@ -567,10 +574,6 @@
 		
 		}		
 	}		
-	
-
-	
-	
 	
 
 	</script>

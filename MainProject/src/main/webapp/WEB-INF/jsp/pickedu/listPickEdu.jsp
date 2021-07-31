@@ -83,6 +83,9 @@
 					    success : function(data, status){
 
 					    	alert("관심수업에서 삭제되었습니다.")
+					    	
+					    	self.location = "/pickedu/listPickEdu?userNo=${user.userNo}"
+
 					    }
 					});
 			  })
@@ -175,7 +178,7 @@
       	
 	</div>
 
-    <!-- <script src="/js/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>

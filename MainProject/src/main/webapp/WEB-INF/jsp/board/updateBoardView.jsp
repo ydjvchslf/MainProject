@@ -5,24 +5,28 @@
     
 <!DOCTYPE html>
 
-	<head>
+<head>
+
     	<title>Buy Edu</title>
-   		  <meta charset="utf-8">
-    	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    	  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-		  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		  <link rel="stylesheet" href="/css/style.css">
-		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-  		  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-		  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-		  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-  		  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-	
-	<script type="text/javascript">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/style.css">
 	
 	
-	 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+  
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+</head>
+
+<script type="text/javascript">
 		$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( ".btn:contains('수')" ).on("click" , function() {
@@ -36,10 +40,23 @@
 			var title=$("input[name='boardTitle']").val();
 			var content=$("textarea[name='boardContent']").val();
 			var writer=$("input[name='boardWriter']").val();
+			var cateCode=$('input[name="cateCode"]').val();
+			var acaWriter=$('input[name="acaWriter"]').val();
+			alert(acaWriter)
+			alert(cateCode)
+			
+			if(title == null || title.length <1){
+				alert("글 제목을 입력해주세요.");
+				return;
+			}
 		
-			$("form").attr("method" , "POST").attr("action" , "/board/updateBoard").submit();
+			if(cateCode =='3'){
+				$("form").attr("method" , "POST").attr("action" , "/board/updateBoardAca").submit();
+				} else {
+				$("form").attr("method" , "POST").attr("action" , "/board/updateBoard").submit();	
+				}
 		}
-		
+			
 		$(document).ready(function() {
 	    	 $('#summernote').summernote({
 	    	        placeholder: 'Hello Bootstrap 4',
@@ -103,7 +120,21 @@
 	    }
 
 	</script>
-	</head>
+	
+		<style>
+		@font-face {
+	    font-family: 'ChosunGu';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+		}
+		
+		body{
+		overflow-x:hidden; overflow-y:visible;
+		font-family: 'ChosunGu';
+		}
+	    
+	</style>
 
 <body>
  <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
@@ -118,28 +149,29 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; 
 					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 				  <!-- 게시판 title -->
-				  <div class="row" id="boardHeader">
+				  <div class="row" id="titlef">
 					<c:choose>
 					
 						<c:when test="${board.cateCode eq '0' }">
-						  <h3>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h3>
+						  <h2>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h2>
 						</c:when>
 						<c:when test="${board.cateCode eq '1' }">
-						  <h3>&nbsp;&nbsp;&nbsp;&nbsp;Q&A</h3>
+						  <h2>&nbsp;&nbsp;&nbsp;&nbsp;Q&A</h2>
 						</c:when>
 						<c:when test="${board.cateCode eq '2' }">
-						  <h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3>
+						  <h2>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h2>
 						</c:when>
 						<c:when test="${board.cateCode eq '3' }">
-						  <h3>&nbsp;&nbsp;&nbsp;&nbsp;학원 공지사항</h3>
+						  <h2>&nbsp;&nbsp;&nbsp;&nbsp;학원 공지사항</h2>
 						</c:when>
 				
 					</c:choose>	
 	 			  </div><br>
-			
+	
 				<form class="form-horizontal">
 					<input type="hidden" name="boardNo" value="${board.boardNo}" />
 					<input type="hidden" name="cateCode" value="${board.cateCode}" />
+					<input type="hidden" name="acaWriter" value="${list}" />
 						
 				 		<div id="updatebrdview" class="form-group">
 						    <label for="boardTitle" class="col-sm-offset-1 col-sm-1 control-label"></label>
@@ -159,7 +191,7 @@
 						<div class="form-group">
 						    <div class="col-sm-offset-4  col-sm-4 text-center">
 						      &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >수&nbsp;정</button>
-							  &nbsp;<a class="btn btn-primary" href="/board/listBoard" role="button">취&nbsp;소</a>
+							  &nbsp;<a class="btn btn-primary" href="#" onClick="history.back()" role="button">취&nbsp;소</a>
 						    </div>
 						</div>
 						  <div id="summernote"></div>
