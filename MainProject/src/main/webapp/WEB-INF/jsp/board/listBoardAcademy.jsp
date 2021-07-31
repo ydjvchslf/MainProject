@@ -188,7 +188,7 @@
 			<c:set var="i" value="${i-1}" />
 			<tr>
 			  <td width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>
-			  <td width=50% id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=3">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+			  <td width=50% id="listtable" align="left"><a href="/board/getBoardAca?boardNo=${board.boardNo}&cateCode=3">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 			  <td width=20% id="listtable" align="left">
 			  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
 			  <td width=10% id="listtable" align="left">&nbsp;&nbsp;&nbsp;&nbsp;${board.viewCnt}</td>

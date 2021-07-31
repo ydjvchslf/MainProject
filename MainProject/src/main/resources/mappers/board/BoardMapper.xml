@@ -19,6 +19,7 @@
 		<result property="recommendCnt" 	column="cnt" 					jdbcType="NUMERIC" />
 		<result property="acaWriter" 		column="aca_writer" 			jdbcType="VARCHAR" />
 		<result property="academyName" 		column="academy_name" 			jdbcType="VARCHAR" />
+		<result property="academyCode" 		column="ACADEMY_CODE" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -30,9 +31,16 @@
 
 	<select 	id="getBoard"	parameterType="int"	resultMap="boardSelectMap">
 		SELECT
+		b.board_no , b.board_title , b.board_content , b.board_writer , b.board_date, b.category_code, b.view_count, email, a.academy_Code
+		FROM board b, users u, academy a
+		WHERE b.board_writer=u.user_no and a.academy_Code = b.aca_writer AND board_no = #{value} 
+	 </select>
+	 
+	 <select 	id="getBoardNoAcademy"	parameterType="int"	resultMap="boardSelectMap">
+		SELECT
 		b.board_no , b.board_title , b.board_content , b.board_writer , b.board_date, b.category_code, b.view_count, email
 		FROM board b, users u
-		WHERE b.board_writer=u.user_no and board_no = #{value} 
+		WHERE b.board_writer=u.user_no AND board_no = #{value} 
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->

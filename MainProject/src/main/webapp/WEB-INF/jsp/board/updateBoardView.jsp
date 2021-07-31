@@ -42,6 +42,7 @@
 			var writer=$("input[name='boardWriter']").val();
 			var cateCode=$('input[name="cateCode"]').val();
 			var acaWriter=$('input[name="acaWriter"]').val();
+			
 			alert(acaWriter)
 			alert(cateCode)
 			
@@ -171,7 +172,7 @@
 				<form class="form-horizontal">
 					<input type="hidden" name="boardNo" value="${board.boardNo}" />
 					<input type="hidden" name="cateCode" value="${board.cateCode}" />
-					<input type="hidden" name="acaWriter" value="${list}" />
+					<input type="hidden" name="acaWriter" value="${board.academyCode}" />
 						
 				 		<div id="updatebrdview" class="form-group">
 						    <label for="boardTitle" class="col-sm-offset-1 col-sm-1 control-label"></label>
