@@ -101,7 +101,7 @@
                             
                             <c:if test="${imgcount+vidcount < 1}">
 				        	
-				        	<img alt="noImage" src="/image/BBBB.png">
+				        	<img alt="noImage" src="/image/BuyEdyLogo.png">
 				        	
 				        	
 				        	<c:if test="${user.role == 'academy' }">
@@ -112,7 +112,7 @@
                             
                             
                             <c:if test="${imgcount+vidcount > 0}">        
-                                    Image
+ <!--                                    Image-->
 		                    <div class="row">
 						
 		           		    <c:set var="i" value="0" />
@@ -121,7 +121,7 @@
 							
 							<c:if test="${academy.multimediarole == 'I'}">
 							<div class="col-md-4">
-									<img style="margin-bottom: 10px; border: 2px solid #FFCA77;" height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
+									<img style=" margin-bottom: 10px; " height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
 									</br>
 									<c:if test="${user.role == 'academy' }">
 									<span id=deleteButtonImage><a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')">삭제</a></span>
@@ -134,7 +134,7 @@
 				        	</div>
 				        	
 				        	</br></br></br></br>
-				        			Media
+<!--  				        			Media-->
 				        	</br>	
 				        	
 				        	
@@ -147,7 +147,7 @@
 									<c:set var="i" value="${ i+1 }" />
 							<c:if test="${academy.multimediarole == 'V'}">
 							<div class="col-md-4">
-									<video height="450" width="450" style="margin-bottom: 10px; border: 2px solid #FFCA77;" controls>
+									<video height="450" width="450" style="margin-bottom: 10px; " controls>
 										<source src="/uploadImages/${academy.multimedia}">
 									</video>
 									<c:if test="${user.role == 'academy' }">
@@ -336,9 +336,9 @@
 						 
 					var b = '';
 						b += '<div id="titlef" class="col-md-5" style="font-size: 45px;">'+data.academyName+'</div>'
-						b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
+						b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개</div>'
 				        b += '<div id="titlef" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
-						 
+					
 					$("#academytitle").html(b);
 						 
 				 }							

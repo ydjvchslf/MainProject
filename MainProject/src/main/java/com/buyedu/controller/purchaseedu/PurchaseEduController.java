@@ -137,7 +137,7 @@ public class PurchaseEduController {
 		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
 		
 		model.addAttribute("list", map2.get("list"));
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("purchaseList", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("academy", academy);

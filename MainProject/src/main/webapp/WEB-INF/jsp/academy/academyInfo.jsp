@@ -57,13 +57,18 @@
 				overflow-x:hidden; overflow-y:visible;
 				font-family: 'ChosunGu';
 			}
-	
+			
+			#panel-color{
+				background-color: black !important;
+			}
+			
 			@font-face {
 			    font-family: 'TmonMonsori';
 			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
 			    font-weight: normal;
 			    font-style: normal;
 			}
+			
 			
 		
  		</style>
@@ -170,12 +175,12 @@
 				 	 a += '<div class="col-sm-6" id="AcademyIntro">'
 				 	 a += '<div class="panel" style="border:5px solid #FFCA77;">'
 				 	 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
-			 	 	 a += '<h3 id="titlef" class="panel-title">학원 소개</h3>'
+			 	 	 a += '<h3 class="panel-title">학원 소개</h3>'
 			 	 if(role == 'academy'){	 
 			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>' 
 			 	 }
 			 	 	 a += '</div>'
-			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size:20px;">'
+			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 20px;">'
 			 	 	 a += data.academyIntro +'</div>'
 			 		 a += '</div></div>'
 			 		 
@@ -183,19 +188,19 @@
 			 		 a += '<div class="col-sm-6" id="AcademyHistory">'
 			 		 a += '<div class="panel" style="border:5px solid #FFCA77;">'
 					 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
-			 		 a += '<h3 id="titlef" class="panel-title">학원 실적</h3>'
+			 		 a += '<h3 class="panel-title">학원 실적</h3>'
 			 	if(role == 'academy'){
 			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>'
 			 	}
 			 		 a += '</div>' 
-				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size:20px;">'
+				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 20px;">'
 			 		 a += data.academyHistory+'</div>'
 					 a += '</div></div>'
 						
 					 
 				var b = '';
 					b += '<div id="titlef" class="col-md-5" style="font-size: 45px;">'+data.academyName+'</div>'
-					b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
+					b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개</div>'
 			        b += '<div id="titlef" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
 					 
 				$("#academyInfo").html(a);
@@ -211,7 +216,7 @@
 	    	intro += '<div class="col-sm-12" id="AcademyIntro">';
 	    	intro += '<div class="panel" style="border:5px solid #FFCA77;">'
 	    	intro += '<div class="panel-heading" style="background-color:#FFCA77;">'
-	    	intro += '<h3 id="titlef" class="panel-title">학원 소개</h3>'
+	    	intro += '<h3 class="panel-title">학원 소개</h3>'
 	    	intro += '</div>'
 	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';

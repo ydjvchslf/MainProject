@@ -63,7 +63,10 @@
 		      $( "td:nth-child(3)" ).on("click" , function() {
 
 		    	 var eduNo = $(this).find('input').val()
-		         self.location ="/edu/getEdu?eduNo="+eduNo;
+		    	 var academyCode = $(this).find('#academyCode').val()
+		    	 
+		    	 
+		         self.location ="/edu/getEdu?eduNo="+eduNo+"&academyCode="+academyCode;
 		         
 		      });
 		      
@@ -155,7 +158,10 @@
 								<tr>
 								  <td align="center">${ i }</td>
 								  <td align="left">${purchase.purchaseAcademy.academyName}</td>
-								  <td align="left">${purchase.purchaseEdu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/> </td>
+								  <td align="left">${purchase.purchaseEdu.eduName}
+								  	<input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/>
+								  	<input type="hidden" name="academyCode" id="academyCode" value="${purchase.purchaseAcademy.academyCode}"/>
+								  </td>
 								  <td align="left">${purchase.purchaseEdu.eduStartDate}</td>
 								  <td align="left">${purchase.purchaseEdu.eduPrice}</td>
 								  <td align="left">${purchase.payDate}</td>
@@ -200,7 +206,7 @@
       	
 	</div>
 
-    <!-- <script src="/js/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>

@@ -148,7 +148,7 @@
 				  <!-- 게시판 title -->
 				   <div class="col-md-6 text-left" id="boardHeader">
 		    	<h3>${academy.academyName}  공지사항</h3>
-		    </div>
+		    </div><br>
 		    
 		    <div class="col-md-6 text-right" id="searchPosition">
 			    <form class="form-inline" >
@@ -188,7 +188,7 @@
 			<c:set var="i" value="${i-1}" />
 			<tr>
 			  <td width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>
-			  <td width=50% id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=${board.cateCode}">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+			  <td width=50% id="listtable" align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&cateCode=3">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 			  <td width=20% id="listtable" align="left">
 			  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
 			  <td width=10% id="listtable" align="left">&nbsp;&nbsp;&nbsp;&nbsp;${board.viewCnt}</td>
@@ -206,7 +206,7 @@
 		  
 			<c:if test="${user.role eq 'academy'}">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-default"  >
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
 		     	 
 		     	 <a href="/board/addBoard?cateCode=3&academyCode=${academy.academyCode}">글쓰기</a></button>
 		    	</div> 

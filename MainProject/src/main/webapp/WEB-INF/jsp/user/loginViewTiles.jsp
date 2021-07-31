@@ -256,7 +256,7 @@
 				
 				var naverLogin = new naver.LoginWithNaverId({
 					clientId : "vqx5V5ejE6mgkpcPu2vP",
-					callbackUrl : "http://localhost:8081/user/callback",
+					callbackUrl : "http://192.168.0.47:8081/user/callback", 
 					isPopup : false,
 					
 					loginButton : {

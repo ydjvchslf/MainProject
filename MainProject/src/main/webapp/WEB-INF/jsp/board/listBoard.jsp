@@ -31,7 +31,7 @@
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
 		
 		function fncGetList(currentPage) {
-			alert("1");
+			
 			$("#currentPage").val(currentPage)
 			var cateCode=$("input[name='cateCode']").val();
 			
@@ -94,6 +94,9 @@
 	color : black;
 	font-family : TmonMonsori;
 	}
+	#boardHeader a:link { color: black; text-decoration: none;}
+ 	#boardHeader a:visited { color: black; text-decoration: none;}
+ 	#boardHeader a:hover { color: black; text-decoration: underline;}
 
 	#recommendPosition{
 	background-color : #FFF5E1;
@@ -137,6 +140,16 @@
     background-color: #F8B739;
     border-color: #F8B739;
 	}
+	
+	#write0:link { color: white; text-decoration: none;}
+ 	#write0:visited { color: white; text-decoration: none;}
+ 	#write0:hover { color: white; text-decoration: underline;}
+ 	#write1:link { color: white; text-decoration: none;}
+ 	#write1:visited { color: white; text-decoration: none;}
+ 	#write1:hover { color: white; text-decoration: underline;}
+ 	#write2:link { color: white; text-decoration: none;}
+ 	#write2:visited { color: white; text-decoration: none;}
+ 	#write2:hover { color: white; text-decoration: underline;}
 
 	</style>
 	
@@ -160,23 +173,23 @@
 				  <div class="row" id="boardHeader">
 					<c:choose>
 					<c:when test="${board.cateCode eq '0' }">
-					  <a href="/board/listBoard?cateCode=0"><h3>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h3></a>
+					  <a href="/board/listBoard?cateCode=0"><h2>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h2></a>
 					</c:when>
 					<c:when test="${board.cateCode eq '1' }">
-					  <a href="/board/listBoard?cateCode=1"><h3>&nbsp;&nbsp;&nbsp;&nbsp;Q&A</h3></a>
+					  <a href="/board/listBoard?cateCode=1"><h2>&nbsp;&nbsp;&nbsp;&nbsp;Q&A</h2></a>
 					</c:when>
 					<c:when test="${board.cateCode eq '2' }">
-					  <a href="/board/listBoard?cateCode=2"><h3>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h3></a>
+					  <a href="/board/listBoard?cateCode=2"><h2>&nbsp;&nbsp;&nbsp;&nbsp;자유 게시판</h2></a>
 					</c:when>
 					<c:when test="${board.cateCode eq '3' }">
-					  <a href="/board/listBoard?cateCode=3&academyCode="+${academy.academyCode}><h3>&nbsp;&nbsp;&nbsp;&nbsp;${academy.academyName} 공지사항</h3></a>
+					  <a href="/board/listBoard?cateCode=3&academyCode="+${academy.academyCode}><h2>&nbsp;&nbsp;&nbsp;&nbsp;${academy.academyName} 공지사항</h2></a>
 					</c:when>
 					<c:when test="${search.isMine eq 'y' }">
-					  <a href="/board/listBoard?isMine=y"><h3>&nbsp;&nbsp;&nbsp;&nbsp;내가 쓴 게시글 보기</h3></a>
+					  <a href="/board/listBoard?isMine=y"><h2>&nbsp;&nbsp;&nbsp;&nbsp;내가 쓴 게시글 보기</h2></a>
 					</c:when>
 					</c:choose>	
 	 			  </div><br>
-	 카테코드 : ${board.cateCode}----
+	 
 			 	<!-- 검색부분  -->
 		   		<div class="row">
 		   		  <!-- 검색그룹  -->
@@ -187,7 +200,7 @@
 				    <div class="form-group">
 					    <select class="form-control" id="searchConditionb" name="searchConditionb" style="width:120px;">
 							<option value="0"  ${ ! empty search.searchConditionb && search.searchConditionb==0 ? "selected" : "" }>제목</option>
-							<c:if test="${board.cateCode ne '0'}">
+							<c:if test="${board.cateCode ne '0' }">
 							<option value="2"  ${ ! empty search.searchConditionb && search.searchConditionb==2 ? "selected" : "" }>작성자</option>
 							</c:if>
 						</select>
@@ -231,7 +244,8 @@
 				    <c:set var="i" value="${i-1}" />
 				  <tr>
 					<td id="tablerow" width=10% align="center">${i+1-(resultPage.currentPage-1)*10}</td>
-				    <td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&isMine=y">${board.boardTitle} (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
+				    <td id="tablerow" width=30% align="left"><a href="/board/getBoard?boardNo=${board.boardNo}&isMine=y">
+				    <span id="ListboardTitle">${board.boardTitle}</span> (<span class="commentCount">${board.comment_cnt}</span>)</a></td>
 					<td id="tablerow" width=15% align="left">
 					  <fmt:formatDate value="${board.boardDate}" pattern="yyyy-MM-dd"/></td>
 					<td id="tablerow" width=10% align="left">&nbsp;&nbsp;&nbsp;&nbsp;${board.viewCnt}</td>
@@ -268,7 +282,7 @@
 				    <td id="tablerow" width=20% align="left">${board.EMAIL}</td>
 				    <td id="tablerow" width=15% align="left">
 				  	  <fmt:formatDate value="${board.BOARD_DATE}" pattern="yyyy-MM-dd"/></td>
-				    <td id="tablerow" width=10% align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.VIEW_COUNT}</td>
+				    <td id="tablerow" width=10% align="left">&nbsp;&nbsp;&nbsp;${board.VIEW_COUNT}</td>
 				    <td id="tablerow" width=10% align="left"><span id="recommendCnt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${board.RECNT}</span></td>
 				  </tr>
          			 </c:forEach></c:if>
@@ -301,14 +315,14 @@
      	
     	<!--  table End /////////////////////////////////////-->
 	  <!-- 글쓰기 버튼 -->
-	  <div class="form-group">
+	  <div class="form-group" id="write2">
 		<input type="hidden" name="cateCode" value="${search.cateCode}" />	    
 		<input type="hidden" name="isMine" value="${search.isMine}" />	  
 		 	
 			  <c:if test="${search.cateCode eq '1'}">
 			<div class="col-sm-offset-11  col-sm-1 text-center">
 			<button type="button" class="btn btn-primary" id="cw" >
-		     <a href="/board/addBoard?cateCode=1" >글쓰기</a></button>
+		     <a id="write1" href="/board/addBoard?cateCode=1" >글쓰기</a></button>
 		    </div>
 		    </c:if>
 			
@@ -316,14 +330,14 @@
 			<c:when test="${search.cateCode eq '0' && user.role eq 'admin' }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
 		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
-		     	 <a href="/board/addBoard?cateCode=0" >글쓰기</a></button>
+		     	 <a id="write0" href="/board/addBoard?cateCode=0" >글쓰기</a></button>
 		    	</div>
 			</c:when>
 			
 			<c:when test="${search.cateCode eq '2' }">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
 		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
-		     	 <a href="/board/addBoard?cateCode=2" >글쓰기</a></button>
+		     	 <a id="write2" href="/board/addBoard?cateCode=2" >글쓰기</a></button>
 		    	</div>
 			</c:when>
 			

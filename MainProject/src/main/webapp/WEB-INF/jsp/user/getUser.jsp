@@ -119,7 +119,7 @@
 					       <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">  
 					          <div class="panel" style="border:5px solid #FFCA77;">
 					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title">My Academy</h3>
+					              <h3 class="panel-title" id="titlef">My Academy</h3>
 					            </div>
 					            <div class="panel-body">
 					              <input type="hidden" value="${user.userNo}">
@@ -128,7 +128,7 @@
 										<c:choose>
 											<c:when test="${empty listAcademy}">
 												<span>
-													<h4 id="titlef" align="center"><img src="/image/crying.png">
+													<h4 align="center"><img src="/image/crying.png">
 														인증된 학원이 없습니다. 학원을 인증해주세요!
 													</h4>
 												</span>
@@ -236,30 +236,6 @@
 	                        <div id="academyList" class="row"><!-- 두번째 row -->
 	                        </div>
 	                     </c:if> 
-					     
-					     
-					    
-					     <!--    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-							  <div class="carousel-inner">
-							    <div class="carousel-item active">
-							      <img class="d-block w-400" src="/image/myimage.png" alt="First slide">
-							    </div>
-							    <div class="carousel-item">
-							      <img class="d-block w-400" src="/image/myimage.png" alt="Second slide">
-							    </div>
-							    <div class="carousel-item">
-							      <img class="d-block w-400" src="/image/myimage.png" alt="Third slide">
-							    </div>
-							  </div>
-							  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							    <span class="sr-only">Previous</span>
-							  </a>
-							  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-							    <span class="sr-only">Next</span>
-							  </a>
-							</div> -->
 				
 	
 <!-- //////////////////////////////모달 영역/////////////////////////////////////////// -->
@@ -816,7 +792,7 @@
 			},
 
 			password00 : function() {
-				alert("현재비밀번호 change 이벤트")
+				//alert("현재비밀번호 change 이벤트")
 				passwordChange00();
 			}
 
@@ -829,7 +805,7 @@
 	function fncAuth(){					
 		
 		var phone = $("#phone").val()
-		alert("입력한 연락처 : "+phone);
+		//alert("입력한 연락처 : "+phone);
 		
 		
 		$.ajax({
@@ -1076,7 +1052,7 @@
 
 	//비밀번호 수정하기 함수
 	function fncUpdatePassword() {
-		swal('비밀번호가 수정되었습니다!^ㅇ^~~~~')
+		swal('비밀번호가 수정되었습니다!^ㅇ^')
 		$("form[name=updatePwForm]").attr("method", "POST").attr("action", "/user/updatePassword")
 				.submit();
 		//swal너무 빨리지나가 어떻게 수정하징
@@ -1328,9 +1304,9 @@
         				if(value.length<=2){
         					a += '<div class="col-sm-4"><div class="panel" style="border:5px solid #FFCA77;">'
     						a += '<div class="panel-heading" style="background-color:#FFCA77;">'
-    						a += '<h6 id="titlef" class="panel-title"> 학원 등록 하기 </h6>'
+    						a += '<h6 class="panel-title" id="titlef"> 학원 등록 하기 </h6>'
     						
-    						a += '<h3 class="panel-title" align="right"> <img src="/image/plus.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
+    						a += '<h3 class="panel-title" align="right"> <img src="/image/plus1.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
 			              
     						a += '</div></div>'
     					}
@@ -1341,7 +1317,7 @@
         					a += '<div class="panel-heading" style="background-color:#FFCA77;">'
         					a += '<h3 class="panel-title" id="titlef">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
-        					a += '<h6 align="right"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash1.png" height="30"></a></h6>'
+        					a += '<h6 align="right" id="titlef"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash1.png" height="30"></a></h6>'
         					a += '</div>'
         					
         					a += '<div id="academyInfo_' + i +'" class="panel-body">'
@@ -1365,10 +1341,10 @@
 					 console.log(data);
 					 
 					 var a = ''
-					 	 a += 'PHONE : ' + data.academyPhone
-				 		 a += '<br/><br/>지역구 : ' + data.academyArea
-				 		 a += '<br/><br/>학생수 : ' + data.count + '명'
-				 		 a += '<br/><br/>수업수 : ' + data.count2 + '개'
+					 	 a += '<h4><strong>PHONE</strong> : ' + data.academyPhone
+				 		 a += '<br/><br/><strong>지역구</strong> : ' + data.academyArea
+				 		 a += '<br/><br/><strong>학생수</strong> : ' + data.count + '명'
+				 		 a += '<br/><br/><strong>수업수</strong> : ' + data.count2 + '개</h4>'
 			
 				 		 // 두번째 세번째 정보 못받아옴
 				 		 // 인증 학생 수
@@ -1382,7 +1358,7 @@
 		
 		// 학원 프로필 삭제하기
 		function deleteAcademyProfile(academyCode){
-			alert(academyCode)
+			//alert(academyCode)
 			
 			if(confirm('학원과 관련된 모든 정보가 삭제됩니다. 그래도 삭제 하시겠습니까?')){
 				
@@ -1391,7 +1367,7 @@
 			        url : '/academy/json/deleteAcademyAll/'+academyCode,
 			        type : 'post',
 			        success : function(data){
-			            alert("삭제가 완료되었습니다!")
+			            swal("삭제가 완료되었습니다!")
 			            academyList();
 			        }
 			    });
@@ -1476,7 +1452,7 @@
 			},
 
 			password00 : function() {
-				alert("현재비밀번호 change 이벤트")
+				//alert("현재비밀번호 change 이벤트")
 				passwordChange00_new();
 			}
 
@@ -1681,22 +1657,22 @@
 			
 		click : {
 			signup : function() {
-				alert("가입연동클릭")
+				//alert("가입연동클릭")
 				if(fncCheckAll_()){
-					alert("가입연동 모든 유효성 검사 ok")
+					//alert("가입연동 모든 유효성 검사 ok")
 					fncAddUser_();
 				}
 				
 			},
 			
 			phoneBtn : function() {
-				alert("인증번호발송 클릭")
+				//alert("인증번호발송 클릭")
 				fncAuth_();
 				
 			},
 			
 			vaildBtn : function() {
-				alert("인증확인 클릭")
+				//alert("인증확인 클릭")
 				fncKey_();
 				
 			}
@@ -1792,7 +1768,7 @@
 	
 	//회원가입 버튼 함수
 	function fncAddUser_() {
-		alert("게정연동에 성공했습니다! 로그인 후 이용해주세요!")
+		swal("게정연동에 성공했습니다! 로그인 후 이용해주세요!")
 		$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
 	}
 	
@@ -1885,7 +1861,7 @@
 	function fncAuth_(){					
 		
 		var phone = $("#PHONE").val()
-		alert("입력한 연락처 : "+phone);
+		//alert("입력한 연락처 : "+phone);
 		
 		$.ajax({
 				url : "/user/json/sms/"+phone ,
@@ -1953,17 +1929,17 @@ $(function(){
 					var acaphone=$("input[name='academyPhone']").val();
 					
 					if(acaname == null || acaname.length <1){
-						alert("학원 이름을 입력해주세요.");
+						swal("학원 이름을 입력해주세요.");
 						return;
 					}
 					
 					if(acaphone == null || acaphone.length <1){
-						alert("학원 전화번호를 입력해주세요");
+						swal("학원 전화번호를 입력해주세요");
 						return;
 					}
 					
 					if(acaadde == null || acaadde.length <1){
-						alert("학원 주소를 입력해주세요");
+						swal("학원 주소를 입력해주세요");
 						return;
 					}
 					

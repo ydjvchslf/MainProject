@@ -51,7 +51,7 @@ public class ReviewController {
 	@Value("5")
 	int pageUnit;
 	
-	@Value("10")
+	@Value("6")
 	int pageSize;
 	
 	@RequestMapping( value="addReviewView", method=RequestMethod.GET)
@@ -59,10 +59,6 @@ public class ReviewController {
 		System.out.println("addReviewView");
 		
 		
-		String academyCode = request.getParameter("academyCode");
-
-		System.out.println("아카데미코드 : "+academyCode);
-		model.addAttribute("academyCode" , academyCode);
 		
 		return "/review/addReviewView";
 	}
@@ -85,11 +81,11 @@ public class ReviewController {
 		
 		reviewService.addReview(review);
 		
-		Academy academy = new Academy();
+		//Academy academy = new Academy();
 		
-		academy.setAcademyCode(academyCode);
+		//academy.setAcademyCode(academyCode);
 		
-		return "redirect:/review/listReview?academyCode="+review.getAcademyCode();
+		return "redirect:/review/listReview?academyCode="+academyCode;
 	}
 
 	@RequestMapping (value = "getReview" , method=RequestMethod.GET)
@@ -128,21 +124,20 @@ public class ReviewController {
 	}
 	
 	@RequestMapping( value="updateReview", method=RequestMethod.POST)
-	public String updateReview( @ModelAttribute("reviewNo") Review review , HttpServletRequest request) throws Exception{
+	public String updateReview( @RequestParam("reviewNo") int reviewNo , HttpServletRequest request) throws Exception{
 		
-		
+		Review review = reviewService.getReview(reviewNo);
+		System.out.println("ㄴㄴㄴㄴㄴㄴㄴ : "+review);
 		reviewService.updateReview(review);
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
 	
-		Academy academy = new Academy();
+
 		
-		academy.setAcademyCode(academyCode);
-		
-		System.out.println("reivew : "+review);
+		System.out.println("reviewno : "+reviewNo);
 		
 		
-		return "redirect:/review/getReview?reviewNo="+review.getReviewNo()+"&academyCode="+review.getAcademyCode();
+		return "redirect:/review/getReview?reviewNo="+reviewNo+"&academyCode="+academyCode;
 		
 	}
 	
@@ -185,8 +180,7 @@ public class ReviewController {
 		
 		System.out.println("academyCode : "+academyCode);
 		
-		System.out.println("userNo : "+userNo);
-		
+		System.out.println("currentPage : "+search.getCurrentPage());
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
@@ -242,9 +236,9 @@ public class ReviewController {
 		String academyCode = request.getParameter("academyCode");
 		System.out.println("아카데미코드 : "+academyCode);
 	
-		Academy academy = new Academy();
-		
-		academy.setAcademyCode(academyCode);
+//		Academy academy = new Academy();
+//		
+//		academy.setAcademyCode(academyCode);
 		
 		System.out.println("리뷰넘버들어가냐..?"+reviewNo);
 		System.out.println("리뷰들어가냐"+review);
@@ -252,7 +246,7 @@ public class ReviewController {
 		
 		
 		
-		return "redirect:/review/listReview?academyCode="+review.getAcademyCode();
+		return "redirect:/review/listReview?academyCode="+academyCode;
 		
 		
 	}
@@ -269,7 +263,8 @@ public class ReviewController {
 		Map<String, Object> map =  reviewService.getmyReviewList(userNo);
 		
 		User user1 =  userService.getUserByUserNo(userNo);
-		
+		System.out.println("유저넘버 안들어옴..;; "+userNo);
+		System.out.println("유저넘버 안들어옴;; "+user1);
 		model.addAttribute("reviewList", map.get("list"));
 		model.addAttribute("user", user1);
 		

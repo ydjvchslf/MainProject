@@ -74,7 +74,6 @@ public class AcademyRestController {
 	@GetMapping("testSocket")
 	public void testSocket() {
 		notiService.noti("xrYC6SH");
-		System.out.println("알림 발송");
 	}
 	
 	@ResponseBody

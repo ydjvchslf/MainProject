@@ -59,7 +59,7 @@
 		    review_title = #{reviewTitle} ,
 			review_content = #{reviewContent}
 		</set>
-		WHERE review_no = '${reviewNo}'
+		WHERE review_no = ('${reviewNo}')
 	</update>
 	
 	<delete id="deleteReview" parameterType="int">

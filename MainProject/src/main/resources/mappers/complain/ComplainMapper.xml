@@ -6,6 +6,7 @@
 
 <mapper namespace="com.buyedu.dao.complain.ComplainDao">
  	
+ 	
 	<resultMap id="complainSelectMap" type="complain">
 		<result property="complainNo" 				column="complain_no" 			jdbcType="NUMERIC"/>
 		<result property="boardNo" 		 	    	column="board_no" 				jdbcType="NUMERIC"/>
@@ -13,24 +14,17 @@
 		<result property="reviewNo"					column="review_no" 				jdbcType="NUMERIC" />
 		<result property="complainUserNo.userNo" 	column="complain_user_no" 		jdbcType="NUMERIC" />
 		<result property="complainReasonCode" 		column="complain_reason_code" 	jdbcType="CHAR" />
-		<result property="complainSort" 			column="COMPLAIN_SORT" 			jdbcType="CHAR" />
 		<result property="complainDate" 			column="complain_date"		 	jdbcType="DATE" />
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
-	<insert id="addComplain" parameterType="complain" >
-	 	INSERT
-		INTO complain 
-		(complain_no, board_no , comment_no, review_no, complain_user_no, complain_reason_code, COMPLAIN_SORT, complain_date)
-		VALUES ( seq_complain_complain_no.nextval 
-					, #{boardNo} 
-					, #{commentNo} 
-					, #{reviewNo} 
-					, #{complainUserNo.userNo} 
-					, #{complainReasonCode} 
-					, #{complainSort}
-					, SYSDATE )
+	
+	<insert 	id="addComplain"		parameterType="complain" >
+	 INSERT
+		INTO complain (complain_no, academy_code , review_writer, review_title, review_content, review_date)
+		VALUES ( seq_complain_complain_no.nextval , #{boardNo} , #{commentNo} , #{reviewNo} , #{complainUserNo.userNo} , ${complainReasonCode} ,
+				SYSDATE )
 	 </insert>
+	
 	 
 	
 	 <select 	id="getComplain"	parameterType="int"	resultMap="complainSelectMap">

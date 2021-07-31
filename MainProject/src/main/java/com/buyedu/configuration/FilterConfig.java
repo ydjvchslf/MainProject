@@ -29,7 +29,7 @@ public class FilterConfig {
 		// 파일 인코딩 -> utf-8 -> 당연함!
 		multipartResolver.setDefaultEncoding("UTF-8"); 
 		// 업로드 크기 제한 (5MB) -> 최대 몇메가 인지 정하기..?
-		multipartResolver.setMaxUploadSizePerFile(5*1024*1024);
+		multipartResolver.setMaxUploadSizePerFile(15*1024*1024);
 		
 		return multipartResolver;
 	}

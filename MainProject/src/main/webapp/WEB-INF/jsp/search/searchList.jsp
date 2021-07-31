@@ -20,6 +20,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   </head>
   <body>
@@ -150,7 +151,6 @@
 			    
 			    kakao.maps.event.addListener(marker, 'click', function() {
 			        // 마커 위에 인포윈도우를 표시합니다
-			        alert("${academy.academyName} 로 이동!"); 
 			        self.location = "/academy/academyInfo?academyCode="+"${academy.academyCode}"
 			  	});
 

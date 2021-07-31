@@ -169,8 +169,8 @@
 						<table class="table table-hover table-striped" >
 					      
 					      	  	<c:if test="${user.role == 'student' or user.role == 'parents'}">
-							      <c:if test="${edu.eduState == '1' }">
-						      		<c:forEach var="edu" items="${eduList}" >
+							      <c:forEach var="edu" items="${eduList}" >
+							      	<c:if test="${edu.eduState == '1' }">
 							        <div class="col-sm-6 col-md-4">
 							          <div class="thumbnail">
 							            <img src="/image/BBBB.png" >
@@ -180,12 +180,12 @@
 							              <p>&#8361; ${ edu.eduPrice } 원</p>
 							              <p>남은자리 ${edu.eduRest}</p>
 							              <p>
-							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&currentPage=${search.currentPage}" class="btn btn-primary" role="button">상세보기</a> 
+							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&academyCode=${edu.academy.academyCode}" class="btn btn-primary" role="button">상세보기</a> 
 							            </div>
 							          </div>
 							        </div>
-							       </c:forEach>
-							      </c:if>
+							        </c:if>
+							      </c:forEach>
 							    </c:if>
 							    
 							    <c:if test="${user.role == 'academy' }">
@@ -199,7 +199,7 @@
 							              </h2>
 							              <h4 id="titlef">${ edu.eduName }</h4>
 							              <p>&#8361; ${ edu.eduPrice } 원</p>
-							              <p>남은자리 ${edu.eduRest}</p>
+							              <p style="color: red"><strong>남은자리 ${edu.eduRest}</strong></p>
 							              <p>
 							              	<c:if test="${ edu.eduState == '0' }">
 							              	판매 대기중
@@ -208,7 +208,7 @@
 							              	판매중
 							              	</c:if>
 							              	<c:if test="${ edu.eduState == '2' }">
-							              	판매완료
+							              	<span style="color:blue">판매완료</span>
 							              	</c:if>
 							              </p>
 							              <p>
