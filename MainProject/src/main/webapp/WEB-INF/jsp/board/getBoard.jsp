@@ -204,6 +204,7 @@
 		    <div class="row">
 		    
 		    <div class="col-sm-12 text-right">
+		    <button class="btn btn-primary" id="resetButton" value="${board.boardNo}" href="#" onClick="history.back()">신고</button>
 		      <button class="btn btn-primary" id="resetButton" value="${board.boardNo}" href="#" onClick="history.back()">목록으로</button>
 		      <c:if test="${userNo eq board.boardWriter}">
 		      <button class="btn btn-primary" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   

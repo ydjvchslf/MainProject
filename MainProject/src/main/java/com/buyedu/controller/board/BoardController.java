@@ -146,6 +146,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		public String  getBoard( @RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request ) throws Exception {
 			
 			System.out.println("/board/getBoard : GET");
+			
 			//Business Logic
 			//툴바
 			User user = UserUtil.user();
@@ -159,8 +160,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			String isMine = request.getParameter("isMine");
 			System.out.println("겟보드 이즈마인 :" +isMine);
 			
-			Board board = boardService.getBoard(boardNo);
-			
+			Board board = boardService.getBoardNoacademy(boardNo);
 			System.out.println("컨트롤러 겟보드 "+board);
 			
 			board.setRecommendCnt(recommendCnt);
@@ -210,6 +210,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			int recommendCnt = boardService.recommendCnt(boardNo);
 			String category = request.getParameter("cateCode");
 			String academyCode = request.getParameter("academyCode");
+			System.out.println("asdddddddddddd"+academyCode);
 			
 			
 				Board board = boardService.getBoardAcademy(boardNo);
@@ -217,10 +218,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //				board.setAcademyCode(academyCode);
 				boardService.updateViewcnt(boardNo);
 				System.out.println("컨트롤러 겟보드아카 "+board);
+				//System.err.println(board.getaca);
 				// Model 과 View 연결
 				model.addAttribute("board", board);
+				//model.addAttribute("academyName", "비발디음악학원");
 				model.addAttribute("academy", academyCode);
-				System.out.println("모델에 담긴 아카데미 : "+model.addAttribute("academy", academyCode));
+//				System.out.println("모델에 담긴 아카데미 : "+model.addAttribute("academy", academyCode));
 				return "/board/getBoardAca"; 
 		}
 		
@@ -269,6 +272,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //			}
 			
 			return "redirect:/board/listBoard?cateCode="+board.getCateCode();
+		}
+		
+		@RequestMapping( value="updateBoardAca", method=RequestMethod.GET )
+		public String updateBoardAca( @RequestParam("boardNo") int boardNo , Model model ) throws Exception{
+			
+			Board board = boardService.getBoard(boardNo);
+			System.err.println("업데이트 board 디버깅"+board);
+			
+			model.addAttribute("board", board);
+			
+			return "/board/updateBoardView";
 		}
 		
 		//@RequestMapping("/updateProduct.do")

@@ -16,6 +16,8 @@ public interface BoardDao {
 	
 	public Board getBoard(int boardNo) throws Exception;
 	
+	public Board getBoardNoAcademy(int boardNo) throws Exception;
+	
 	public Board getBoardAcademy(int boardNo) throws Exception;
 	
 	public List<Board> getBoardList(Search search) throws Exception;
