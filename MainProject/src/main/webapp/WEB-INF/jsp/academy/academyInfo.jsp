@@ -58,36 +58,12 @@
 				font-family: 'ChosunGu';
 			}
 	
-		    #title{
-				vertical-align : top;
-				font-size : 50px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-			
-			#count{
-				vertical-align : bottom;
-				font-size : 20px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-			
-			#phone{
-				vertical-align : right;
-				font-size : 15px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-			
-			
-			
 			@font-face {
 			    font-family: 'TmonMonsori';
 			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
 			    font-weight: normal;
 			    font-style: normal;
 			}
-			
 			
 		
  		</style>
