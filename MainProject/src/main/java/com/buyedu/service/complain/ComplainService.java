@@ -21,34 +21,7 @@ public class ComplainService {
 			
 	public void addComplain(Complain complain) throws Exception {
 		complainDao.addComplain(complain);
-		System.out.println("여기는 애드컴플레인");
 	}
 
-	public int getComplain(int complainNo) throws Exception {
-		return complainDao.getComplain(complainNo);
-	}
-
-	public List<Complain> getComplainList(Search search) throws Exception {
-		List<Complain> list= complainDao.getComplainList(search);
-		int totalCount = complainDao.getTotalCount(search);
-		
-		
-	
-		list.get(0).setTotalCount(totalCount);
-		System.err.println(list);
-		return list;
-	}
-
-	public void updateComplain (Complain complain) throws Exception {
-		complainDao.updateComplain(complain);
-		System.out.println("여기는 업데이트컴플레인");
-
-	}
-	
-	public void deleteComplain(int complainNo) throws Exception {
-		System.out.println("여기는 딜리트컴플레인");
-		complainDao.deleteComplain(complainNo);
-		
-	}
 
 }
