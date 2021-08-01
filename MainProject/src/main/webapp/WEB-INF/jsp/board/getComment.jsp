@@ -104,10 +104,16 @@ function commentList(){
                 a += '<span id="commentDate" class="commentDate'+value.COMMENT_NO+'">'+value.COMMENT_DATE+'</span></div>';
                 <fmt:formatDate value="${COMMENT_DATE}" var="date" pattern="yyyyMMdd" />
                 a += '<div id="buttons">'
+                
                 if (sessionId == value.COMMENT_WRITER){
                 a += '<a id="upbu" onclick="commentUpdate('+value.COMMENT_NO+',\''+value.COMMENT_CONTENT+'\');"> 수정 </a>';
-                a += '<a id="upbu" onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';} 
-        		a += '</div>'
+                a += '<a id="upbu" onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';
+                } 
+                if (sessionId != value.COMMENT_WRITER){
+                a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';
+                }
+                
+        		a += '</div></div>'
                 a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> '+value.COMMENT_CONTENT+'</p>';
                 a += '</div></div>';
             });

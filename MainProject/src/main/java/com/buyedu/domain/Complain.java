@@ -13,9 +13,11 @@ public class Complain {
 	
 	private int complainNo;
 	private int commentNo;
-	private String complainReasonCode;
 	private String complainSort;
+	private String complainReasonCode;
+	private String complainReason;
 	private Date complainDate;
+	private String complainState;
 	
 	private int totalCount;
 

@@ -1,6 +1,7 @@
 package com.buyedu.controller.complain;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,45 +36,27 @@ public class ComplainController {
 	@Value("10")
 	int pageSize;
 	
-	// 게시글 신고
-	@RequestMapping( value="addBoardComplain", method=RequestMethod.GET)
-	public String addComplain(@RequestParam("boardNo") int boardNo, 
-								@RequestParam("complainSort") String complainSort,
-								@RequestParam("reason") String complainReasonCode,
-								Model model , HttpServletRequest request) throws Exception {
-		System.out.println("addBoardComplain/GET");
+	@RequestMapping(value = "getComplainList")
+	public String getComplainList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+		System.out.println("/complain/getComplainList");
 		
-		Board board = new Board();
-		board.setBoardNo(boardNo);
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
 		
-		User user = UserUtil.user();
-		user.getUserNo();
+		Map<String, Object> map = complainService.getComplainList(search);
 		
-		Complain complain = new Complain();
-		complain.setComplainReasonCode(complainSort);
-		complain.setComplainSort(complainSort);
+		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue()
+				,pageUnit,pageSize);
 		
+		model.addAttribute("comlist", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
 		
 		
+		System.out.println("complainList map = "+map);
 		
-		return "/complain/addComplainView";
-	}
-	
-	// 댓글 신고
-	@RequestMapping( value="addCommentComplain", method=RequestMethod.GET)
-	public String addComplain(@RequestParam("boardNo") int boardNo, @RequestParam("commentNo") int commentNo,
-								@RequestParam("complainSort") String complainSort,
-								Model model , HttpServletRequest request) throws Exception {
-		System.out.println("addCommentComplain/GET");
-		
-		
-		
-		return "/complain/addComplainView";
-	}
-	
-	@RequestMapping(value = "getComplainList", method = RequestMethod.GET)
-	public void getComplainList() {
-		System.out.println("getCompalinList / GET");
+		return "complain/listComplain";
 	}
 	
 	
