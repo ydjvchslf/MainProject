@@ -22,11 +22,6 @@ public class SearchController {
 	public String searchAcademy(Model model,
 							@ModelAttribute("search") Search search)	throws Exception {
 		
-		System.out.println("searchAcademy");
-		System.out.println(search);
-		
-		System.out.println(academyService.getSearchList(search));
-
 		if(academyService.getSearchList(search).size() != 0) {
 			
 			model.addAttribute("list", academyService.getSearchList(search));
@@ -34,15 +29,12 @@ public class SearchController {
 			model.addAttribute("lng", academyService.getSearchList(search).get(0).getAcademyLng());		
 		}
 		
-		
 		return "search/searchList";
 	}
 	
 	
 	@RequestMapping("searchInfo")
 	public String searchInfo(Model model,@RequestParam("academyCode") String academyCode)	throws Exception {
-		
-		System.out.println("searchInfo 에서 받은 academyCode : " + academyCode);
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		

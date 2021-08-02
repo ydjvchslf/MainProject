@@ -1,15 +1,11 @@
 package com.buyedu.controller.review;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.buyedu.domain.Academy;
-import com.buyedu.domain.Board;
-import com.buyedu.domain.Connect;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.Review;
 import com.buyedu.domain.Search;
@@ -54,68 +48,50 @@ public class ReviewController {
 	@Value("6")
 	int pageSize;
 	
+	// 리뷰 작성화면 단순 네비게이터
 	@RequestMapping( value="addReviewView", method=RequestMethod.GET)
-	public String addReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
-		System.out.println("addReviewView");
-		
-		
+	public String addReview(@ModelAttribute("search") Search search , Model model) throws Exception {
 		
 		return "/review/addReviewView";
 	}
+	
+	// 리뷰 작성한 후 디비에 저장
 	@RequestMapping (value="addReview", method=RequestMethod.POST)
-	public String addReview(@ModelAttribute("review") Review review , @ModelAttribute("uesr") User user ,  HttpServletRequest httpRequest) throws Exception {
+	public String addReview(@ModelAttribute("review") Review review , HttpServletRequest request) throws Exception {
 		
-		System.out.println("애드리뷰포스트 시작");
-		
-		int userNo = ((User)httpRequest.getSession().getAttribute("user")).getUserNo();
-		System.out.println(userNo);
-		
-		System.out.println("review :" + review);
-		user.setUserNo(userNo);
+		User user = UserUtil.user();
+		user.setUserNo(user.getUserNo());
 		review.setReviewWriter(user);
 		
-		String academyCode = httpRequest.getParameter("academyCode");
-		System.out.println("아카데미코드 : "+academyCode);
-		
-		System.out.println("리뷰가 들어가야함 review :" +review);
+		String academyCode = request.getParameter("academyCode");
 		
 		reviewService.addReview(review);
-		
-		//Academy academy = new Academy();
-		
-		//academy.setAcademyCode(academyCode);
 		
 		return "redirect:/review/listReview?academyCode="+academyCode;
 	}
 
+	// 리뷰 상세보기화면 네비게이터
 	@RequestMapping (value = "getReview" , method=RequestMethod.GET)
 	public String getReview (@RequestParam("reviewNo") int reviewNo, Model model , HttpServletRequest request) throws Exception {
-		System.out.println("리뷰넘버 : "+reviewNo);
+		
 		Review review = reviewService.getReview(reviewNo);
 		
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();  
-		//String name = ((User)httpRequest.getSession().getAttribute("user")).getName();
+		User user = UserUtil.user(); 
 		String academyCode = request.getParameter("academyCode");
 		
-		
 		model.addAttribute("review" , review);
-		model.addAttribute("userNo", userNo);
+		model.addAttribute("userNo", user.getUserNo());
 		model.addAttribute("academyCode" , academyCode);
-		System.out.println(userNo);
-		System.out.println(review);
-		
 		
 		return "/review/getReview";
 	}
 	
+	// 리뷰 수정화면 네비게이터
 	@RequestMapping (value = "updateReview", method=RequestMethod.GET)
 	public String updateReview(@RequestParam("reviewNo") int reviewNo , Model model , HttpServletRequest request) throws Exception {
 		
 		Review review = reviewService.getReview(reviewNo);
 		String academyCode = request.getParameter("academyCode");
-		System.out.println("아카데미코드 : "+academyCode);
-		
-		
 		
 		model.addAttribute("academyCode",academyCode);
 		model.addAttribute("review",review);
@@ -123,44 +99,35 @@ public class ReviewController {
 		return "/review/updateReviewView";
 	}
 	
+	// 리뷰 수정 후 디비에 저장
 	@RequestMapping( value="updateReview", method=RequestMethod.POST)
 	public String updateReview( @RequestParam("reviewNo") int reviewNo , HttpServletRequest request) throws Exception{
 		
 		Review review = reviewService.getReview(reviewNo);
-		System.out.println("ㄴㄴㄴㄴㄴㄴㄴ : "+review);
 		reviewService.updateReview(review);
 		String academyCode = request.getParameter("academyCode");
-		System.out.println("아카데미코드 : "+academyCode);
-	
-
-		
-		System.out.println("reviewno : "+reviewNo);
-		
 		
 		return "redirect:/review/getReview?reviewNo="+reviewNo+"&academyCode="+academyCode;
 		
 	}
 	
+	// 리뷰 목록
 	@RequestMapping (value="listReview")
 	public String listReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		System.out.println("listReview 시작");
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		User user = UserUtil.user();
 		
 		String academyCode = request.getParameter("academyCode");
 		Academy academy = academyService.getAcademy(academyCode);
 		
-		
 		// 해당 학원에서 리뷰 쓴 갯수 찾기
 		Map<String, Object> countmap = new HashMap<String, Object>();
 		
-		countmap.put("userNo", userNo);
+		countmap.put("userNo", user.getUserNo());
 		countmap.put("academyCode", academyCode);
 		
 		int count = reviewService.countmyReview(countmap);
 		String state = reviewService.getConnectReviewUser(countmap);
-		
-		System.out.println("해당 학원에서 리뷰가 있는지 ="+count);
 		
 		model.addAttribute("count", count);
 		model.addAttribute("state",state);
@@ -168,27 +135,18 @@ public class ReviewController {
 		
 		model.addAttribute("academy", academy);
 		
-		// 툴바 학원 리스트
-		User user = UserUtil.user();
-		
 		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
 		
 		model.addAttribute("list", map.get("list"));
 		
-		
-		System.out.println("search : "+search);
-		
-		System.out.println("academyCode : "+academyCode);
-		
-		System.out.println("currentPage : "+search.getCurrentPage());
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
+		
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(academyCode);
 				
 		Map<String , Object> map2 = reviewService.getReviewList(search);
-		System.out.println("컨트롤 쪽 map : "+map2);
 		
 		int totalCount = ((Integer)map2.get("totalCount")).intValue();
 		
@@ -200,33 +158,10 @@ public class ReviewController {
 		return "/review/listReview";
 	}
 	
-	//test
-	@RequestMapping(value="testAddReview")
-	public String testAddReview(HttpServletRequest request, Model model) throws Exception {
-		System.out.println("testAddReview");
-		
-		System.out.println(request.getParameter("userNo"));
-		System.out.println(request.getParameter("academyCode"));
-		
-		// 툴바 시작
-		Academy academy = academyService.getAcademy(request.getParameter("academyCode"));
-		model.addAttribute("academy", academy);
-		User user = UserUtil.user();
-		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
-		model.addAttribute("list", map.get("list"));
-		// 툴바 끝
-		
-		return "/review/testAdd";
-	}
-	
-	
-	
-	
-	
+	// 리뷰 삭제
 	@RequestMapping(value="deleteReview", method = RequestMethod.GET)
 	public String deleteReview(@RequestParam("reviewNo") int reviewNo , HttpServletRequest request) throws Exception{
 		
-		System.out.println("/review/deleteReview : GET");
 		reviewService.deleteReview(reviewNo);
 		
 		Review review = new Review();
@@ -234,42 +169,24 @@ public class ReviewController {
 		review.setReviewNo(reviewNo);
 		
 		String academyCode = request.getParameter("academyCode");
-		System.out.println("아카데미코드 : "+academyCode);
 	
-//		Academy academy = new Academy();
-//		
-//		academy.setAcademyCode(academyCode);
-		
-		System.out.println("리뷰넘버들어가냐..?"+reviewNo);
-		System.out.println("리뷰들어가냐"+review);
-		System.out.println("아카데미코드 들어가줘 제발"+academyCode);
-		
-		
-		
 		return "redirect:/review/listReview?academyCode="+academyCode;
-		
-		
 	}
 	
-	
-	
+	// 내가 쓴 리뷰 목록
 	@RequestMapping(value="listmyReview")
 	public String getmyReview(@ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception {
 		
 		User user = UserUtil.user();
-		
 		int userNo = user.getUserNo();
 		
 		Map<String, Object> map =  reviewService.getmyReviewList(userNo);
 		
 		User user1 =  userService.getUserByUserNo(userNo);
-		System.out.println("유저넘버 안들어옴..;; "+userNo);
-		System.out.println("유저넘버 안들어옴;; "+user1);
 		model.addAttribute("reviewList", map.get("list"));
 		model.addAttribute("user", user1);
 		
 		return "/review/listmyReview";
 	}
 	
-
 }
