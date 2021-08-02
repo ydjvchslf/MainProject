@@ -27,7 +27,7 @@
 	
 	<script>
     $(document).ready(function () {
-
+    	
         var heartval = ${heart};
 
         if(heartval>0) {
@@ -108,34 +108,48 @@
 				});
 			 });
 		
-		
 		 $(function() {
-				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( ".btn:contains('수')" ).on("click" , function() {
-					 var boardNo = $("div").find('button#updateButton').val();
-						self.location = "/board/updateBoard?boardNo="+boardNo
-					});
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 $( ".btn:contains('수')" ).on("click" , function() {
+			 var boardNo = $("div").find('button#updateButton').val();
+				self.location = "/board/updateBoard?boardNo="+boardNo
 			});
+		});
 		 
-		 $(function() {
+		$(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				$("a[href='#' ]").on("click" , function() {
 					$("form")[0].reset();
 				});
 			});	
 		 
+		$(function() {
+			$('#ok').on('click', function(){
+				var boardNo = ${board.boardNo};
+				var reason = $("input[name='complain']:checked").val();
+					
+				$.ajax({
+					 url : '/complain/json/addBoardComplain/'+boardNo,
+				     type : 'post',
+				     data : {'boardNo' : boardNo, 'reason' : reason},
+				     success : function(data){
+				    	 location.reload()
+						alert("신고가 완료 되었습니다.");
+				     }
+				});
+			})
+		})
+		
 	$(function() {
-		$('#ok').on('click', function(){
+		$('#deleteComplain').on('click', function(){
 			var boardNo = ${board.boardNo};
-			var reason = $("input[name='complain']:checked").val();
 				
 			$.ajax({
-				 url : '/complain/json/addBoardComplain/'+boardNo,
+				 url : '/complain/json/deleteComplain/'+boardNo,
 			     type : 'post',
-			     data : {'boardNo' : boardNo, 'reason' : reason},
 			     success : function(data){
 			    	 location.reload()
-					alert("신고가 완료 되었습니다.");
+					alert("신고가 취소 되었습니다.");
 			     }
 			});
 		})
@@ -199,7 +213,7 @@
 					<hr>
 					<div id=boardContent style="font-size: 18px;">
 					<p>${board.boardContent}</p>
-					</br></br>
+					<br/><br/>
 					</div>
 					
 <br/>
@@ -209,7 +223,6 @@
            <img id="heart" src="">
        </a>
    </div></c:if>
-
 
 <div class="form-group">
 		
@@ -221,9 +234,10 @@
 		    <div class="row">
 		    
 		    <div class="col-sm-12 text-right">
-		    <button class="btn btn-primary" id="complainButton" data-toggle="modal" data-target="#complainBrd">신고</button>
 		    
 		    <!-- 신고 버튼 모달 -->
+		    <c:if test="${complainCount!= 1}">
+		    <button class="btn btn-primary" id="complainButton" data-toggle="modal" data-target="#complainBrd">신고</button>
 		    <div class="modal fade" id="complainBrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
 						    <div class="modal-content">
@@ -260,11 +274,29 @@
 						    </div>
 						  </div>
 						</div>
-		    
-		    
-		    
-		    
-		    
+			</c:if>
+			
+			
+		    <c:if test="${complainCount== 1}">
+		    <button class="btn btn-primary" id="complainButton" data-toggle="modal" data-target="#complainBrd">신고 취소</button>
+		    <div class="modal fade" id="complainBrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">이미 신고 한 게시글 입니다.</h4>
+						      </div>
+						      <div class="modal-body" align="center">
+						      <!-- 모달 내용 -->
+									신고를 취하 하시겠습니까?
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" id="deleteComplain" class="btn btn-primary">신고 취소 하기</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+		    </c:if>
 		    
 		      <button class="btn btn-primary" id="resetButton" value="${board.boardNo}" href="#" onClick="history.back()">목록으로</button>
 		      <c:if test="${userNo eq board.boardWriter}">
@@ -272,7 +304,6 @@
 		      <button class="btn btn-primary" id="deleteButton" value="${board.boardNo}">삭&nbsp;제</button></c:if> 
 		      
 		   	</div>
-		  
 			</div>
 	
 	<%@ include file="getComment.jsp" %> 

@@ -78,5 +78,40 @@ public class ComplainRestController {
 		System.out.println("신고 처리 완료");
 	};
 	
+	// 신고 반려
+	@RequestMapping(value = "json/deleteComplain2/{complainNo}", method=RequestMethod.POST)
+	public void deleteComplain2(@PathVariable int complainNo) throws Exception{
+		
+		System.out.println("json/deleteComplain : POST");
+		
+		complainService.deleteComplain(complainNo);
+		
+		System.out.println("신고가 반려 되었습니다.");
+	};
+	
+	// 신고 취소
+	@RequestMapping(value = "json/deleteComplain/{boardNo}", method=RequestMethod.POST)
+	public void deleteComplain(@PathVariable int boardNo) throws Exception{
+		
+		System.out.println("json/deleteComplain : POST");
+		
+		User user = UserUtil.user();
+		
+		Board board = new Board();
+		board.setBoardNo(boardNo);
+		
+		Complain complain = new Complain();
+		complain.setUser(user);
+		complain.setBoard(board);
+		
+		int complainNo =  complainService.getComplainNo(complain);
+		
+		complainService.deleteComplain(complainNo);
+		
+		System.out.println("신고가 삭제 되었습니다.");
+	};
+	
+	
+	
 
 }

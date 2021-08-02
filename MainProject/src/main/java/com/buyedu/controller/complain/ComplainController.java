@@ -23,7 +23,6 @@ import com.buyedu.service.complain.ComplainService;
 import com.buyedu.util.UserUtil;
 
 @Controller
-
 @RequestMapping("/complain/*")
 public class ComplainController {
 	
@@ -58,7 +57,5 @@ public class ComplainController {
 		
 		return "complain/listComplain";
 	}
-	
-	
 
 }

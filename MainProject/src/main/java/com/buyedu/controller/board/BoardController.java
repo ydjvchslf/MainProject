@@ -20,10 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buyedu.domain.Academy;
 import com.buyedu.domain.Board;
+import com.buyedu.domain.Complain;
 import com.buyedu.domain.Page;
 import com.buyedu.domain.Search;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.board.BoardService;
+import com.buyedu.service.complain.ComplainService;
 import com.buyedu.util.UserUtil;
 //import com.buyedu.service.complain.ComplainService;
 import com.buyedu.domain.User;
@@ -51,6 +53,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //		@Qualifier("categoryServiceImpl")
 //		private CategoryService categoryService;
 //		//setter Method 구현 않음
+		
+		@Autowired
+		private ComplainService complainService;
 			
 		public BoardController(){
 			System.out.println(this.getClass());
@@ -184,11 +189,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			map.put("boardNo", boardNo);
 			map.put("userNo", userNo);
 			
-			
 			int boardLike = boardService.getRecommend(map);
 	        System.out.println("쪼아용"+boardLike);
 	        model.addAttribute("heart",boardLike);
 	        model.addAttribute("userNo",userNo);
+	        
+	        // 신고 검증
+	        Complain complain = new Complain();
+	        
+	        complain.setUser(user);
+	        complain.setBoard(board);
+	        
+	        int complainCount = complainService.getComplainCount(complain);
+	        
+	        model.addAttribute("complainCount", complainCount);
 	        
 //	        int complainBoard = complainService.addComplainBoard(map);
 //	        System.out.println("컴플레인"+complainBoard);
