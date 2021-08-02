@@ -242,7 +242,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			return "redirect:/board/listBoardAcademy?cateCode=3&academyCode="+acaWriter;
 		}
 		
-		//@RequestMapping("/listProduct.do")
+		// 게시판 목록
 		@RequestMapping( value="listBoard" )
 		public String listBoard( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
 			
@@ -279,16 +279,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			board.setCateCode(category);
 			List<Map<String, Object>> map= boardService.getBoardListPin(board); 
 			
+			// 신고 정보
+			Map<String, Object> complainmap = complainService.getComplainList(search);
+			
 			model.addAttribute("listc", listc);
 			model.addAttribute("map", map);
 			model.addAttribute("resultPage", resultPage);
 			model.addAttribute("search", search);
+			model.addAttribute("comlist",complainmap);
 			}
 
 			return "/board/listBoard";
 		}
 		
-		// 게시판 목록
+		// 학원 공지사항 목록
 		@RequestMapping( value="listBoardAcademy" )
 		public String listBoardAcademy( @ModelAttribute("search") Search search , @ModelAttribute("board") Board board, Model model , HttpServletRequest request) throws Exception{
 			

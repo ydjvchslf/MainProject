@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.buyedu.domain.Board;
 import com.buyedu.domain.Complain;
 import com.buyedu.domain.User;
+import com.buyedu.service.board.BoardService;
 import com.buyedu.service.complain.ComplainService;
 import com.buyedu.util.UserUtil;
 
@@ -27,6 +28,9 @@ public class ComplainRestController {
 	
 	@Autowired
 	private ComplainService complainService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@Value("20")
 	int pageUnit;
@@ -89,5 +93,31 @@ public class ComplainRestController {
 		
 		complainService.deleteComplain(complainNo);
 	};
+	
+	// 게시글 블러 처리
+	@RequestMapping( value = "json/updateBoardState/{boardNo}", method=RequestMethod.POST)
+	public void updateBoardState(@PathVariable int boardNo) throws Exception{
+		
+		User user = new User();
+		
+		Board board = boardService.getBoard(boardNo);
+		
+		
+		
+		user.setUserNo(board.getBoardWriter());
+		
+		Complain complain = new Complain();
+		complain.setUser(user);
+		complain.setBoard(board);
+		
+		System.out.println("ddd"+complain);
+		
+		
+		Complain complain2 = complainService.getComplain(complainService.getComplainNo(complain));
+		complain2.setComplainState("1");
+		complainService.updateComplainState(complain2);
+		
+		boardService.deleteBoard(boardNo);
+	}
 
 }
