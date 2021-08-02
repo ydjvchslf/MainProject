@@ -45,7 +45,6 @@ public class ComplainRestController {
 							@RequestParam String reason) throws Exception {
 		
 		User user = UserUtil.user();
-		
 		Board board = new Board();
 		board.setBoardNo(boardNo);
 		
@@ -63,10 +62,10 @@ public class ComplainRestController {
 	public void updateComplain(@PathVariable int complainNo) throws Exception{
 		
 		Complain complain = complainService.getComplain(complainNo);
-		
 		complain.setComplainState("1");
-		
 		complainService.updateComplainState(complain);
+		Board board = boardService.getBoard(complain.getBoard().getBoardNo());
+		boardService.deleteBoard(complain.getBoard().getBoardNo());
 	};
 	
 	// 신고 반려
@@ -81,10 +80,8 @@ public class ComplainRestController {
 	public void deleteComplain(@PathVariable int boardNo) throws Exception{
 		
 		User user = UserUtil.user();
-		
 		Board board = new Board();
 		board.setBoardNo(boardNo);
-		
 		Complain complain = new Complain();
 		complain.setUser(user);
 		complain.setBoard(board);
@@ -93,31 +90,5 @@ public class ComplainRestController {
 		
 		complainService.deleteComplain(complainNo);
 	};
-	
-	// 게시글 블러 처리
-	@RequestMapping( value = "json/updateBoardState/{boardNo}", method=RequestMethod.POST)
-	public void updateBoardState(@PathVariable int boardNo) throws Exception{
-		
-		User user = new User();
-		
-		Board board = boardService.getBoard(boardNo);
-		
-		
-		
-		user.setUserNo(board.getBoardWriter());
-		
-		Complain complain = new Complain();
-		complain.setUser(user);
-		complain.setBoard(board);
-		
-		System.out.println("ddd"+complain);
-		
-		
-		Complain complain2 = complainService.getComplain(complainService.getComplainNo(complain));
-		complain2.setComplainState("1");
-		complainService.updateComplainState(complain2);
-		
-		boardService.deleteBoard(boardNo);
-	}
 
 }
