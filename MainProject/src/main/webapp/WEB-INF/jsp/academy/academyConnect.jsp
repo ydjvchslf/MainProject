@@ -82,7 +82,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -97,17 +97,31 @@
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
+					<div class="row">
 					
-					<!-- 학원 이름, 전화번호 -->
-					<div id="academytitle" class="row" > </div>
+					<div class="col-sm-3"> <!-- 3 부분 -->
+					</div>
+					<div class="col-sm-6"> <!-- 본문 부분 -->
 					
+						<!-- 학원 이름, 전화번호 -->
+						<div id="academytitle" class="row" > </div>
+						
+						 <div class="panel" style="border:1px solid #ECECEC;">
+				            <div class="panel-heading" style="background-color:#ECECEC;">
+				              <h3 class="panel-title" id="titlef">인증 신청한 학생 보기</h3>
+				            </div>
+				            <div class="panel-body"> 
+				               	<table id="table" name="table" class="table" >
+					   			 </table>
+				            </div>
+				          </div>
+						
+				
 					
-					<h4>인증 신청한 학생 보기</h4>
+					</div>
+					<div class="col-sm-3"> <!-- 3 부분 -->
+					</div>
 					
-					<table id="table" name="table" class="table" >
-				    </table>
-					
-
 					
 					
  
@@ -132,9 +146,7 @@
 				 academyInfo = data;
 					 
 				var b = '';
-					b += '<div id="titlef" class="col-md-5" style="font-size: 45px;">'+data.academyName+'</div>'
-					b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개</div>'
-			        b += '<div id="titlef" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
+					b += '<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">'+data.academyName+'</div>'
 				 
 				$("#academytitle").html(b);
 					 
@@ -153,11 +165,11 @@
     				var a = ''
     				
     				if(value.length == 0){
-						a += '<span><h5>'
+						a += '<span>'
 						a += '<img src="/image/crying.png">'
-						a += '인증 신청한 학생이 없습니다.!</h5></span>'
+						a += '인증 신청한 학생이 없습니다.!</span>'
 					}else{
-    					a += '<thead id="tableHead"><tr>'
+    					a += '<thead><tr>'
     					a += '<th align="center">No</th>'
     					a += '<th align="center">이름</th>'	
     					a += '<th align="center">인증상태</th>'		
@@ -175,7 +187,7 @@
             				a += '<td align="left">'
             				
             					if(value[i].connectState == 0){
-            						a += '<a onclick="updateConnect('+value[i].connectNo+')">인증 대기중 입니다.</a>'	
+            						a += '<a onclick="updateConnect('+value[i].connectNo+')">인증 대기중</a>'	
             					} else {
             						a += '재학생 입니다.'	
             					}
