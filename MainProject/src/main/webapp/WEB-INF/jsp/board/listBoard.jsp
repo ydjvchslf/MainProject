@@ -54,11 +54,9 @@
 			$( "#search" ).on("click" , function() {
 				fncGetList(1);
 			});
-			 
 		 });
 		
 		  
-	
 	</script>
 	<style>
 	
