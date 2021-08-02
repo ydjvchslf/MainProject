@@ -119,13 +119,23 @@
 					
 					<div class="row">
 					
-						<div class="col-md-6 text-left">
-					    	<p>
-					    	<c:if test="${user.role == 'academy'}">
-					    	<button type="button" class="btn btn-primary">등록</button>
-					    	</c:if>
-					    	</p>
+						<div class="col-md-12">
+							<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">
+				    			${academy.academyName} 
+				    		</div>
+				    		
+				    		<!-- 중간 소제목 시작-->
+							<div class="col-sm-12" align="center">
+							<span >수업</span>
+							</div><br>
+							<br>
+							<!-- 중간 소제목 끝-->
+				    		
 						</div>
+					
+						<div class="col-md-6 text-left">
+						</div>
+					
 						
 						<div class="col-md-6 text-right">
 							<form class="form-inline" name="detailForm">
@@ -167,11 +177,19 @@
 					<div class="row">
 					
 						<c:if test="${empty eduList}">
-							<div align="center">
+							<div class="col-sm-12" align="center">
 								<img src="/image/nothing.png"><br>
-								<h5>등록된 수업이 없습니다. 수업을 등록해주세요!</h5>
 							</div>
 						</c:if>
+						
+						<!-- 수업등록하기 버튼 -->
+						<div class="col-sm-12" align="center">
+				    		<p>
+						    	<c:if test="${user.role == 'academy'}">
+						    	<button type="button" class="btn btn-primary">수업등록</button>
+						    	</c:if>
+					    	</p>
+				    	</div>
 						
 						<table class="table table-hover table-striped" >
 					      

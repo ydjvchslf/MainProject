@@ -106,6 +106,14 @@
 						<!-- 학원 이름, 전화번호 -->
 						<div id="academytitle" class="row" > </div>
 						
+						<!-- 중간 소제목 시작-->
+						<div class="col-sm-12" align="center">
+							<h4><strong><span>원생 관리</span></strong></h4>
+						</div><br>
+						<br>
+						<br>
+						<!-- 중간 소제목 끝-->
+						
 						 <div class="panel" style="border:1px solid #ECECEC;">
 				            <div class="panel-heading" style="background-color:#ECECEC;">
 				              <h3 class="panel-title" id="titlef">인증 신청한 학생 보기</h3>
