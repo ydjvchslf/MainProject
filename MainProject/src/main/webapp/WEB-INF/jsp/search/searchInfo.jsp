@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>adminMain</title>
+        <title>Buy!edu</title>
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -18,6 +18,21 @@
 		
 
     </head>
+    
+    <style>
+    @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	body{
+	overflow-x:hidden; overflow-y:visible;
+	font-family: 'ChosunGu';
+	}
+    </style>
+    
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -151,7 +166,7 @@
 			var imageSrc =  "/image/marker2.png";
 		
 			// 마커 이미지의 이미지 크기 입니다
-			var imageSize = new kakao.maps.Size(24, 35); 
+			var imageSize = new kakao.maps.Size(35, 35); 
 			    
 			// 마커 이미지를 생성합니다    
 			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 

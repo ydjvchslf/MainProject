@@ -3,6 +3,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
+<style>
+ #navbarSupportedContent a{
+ font-size: 25px;
+ font-weight: bold;
+ }
+ 
+ /* Change background color of buttons on hover */
+#navbarSupportedContent a:hover {
+  background-color: #f8b739;
+}
+
+/* Create an active/current tablink class */
+#navbarSupportedContent a {
+  background-color: blue;
+}
+
+/* Style the buttons inside the tab */
+#navbarSupportedContent a {
+  background-color: #f8f9fa ;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+</style>
 <body>
 	        <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	        
@@ -19,10 +47,10 @@
 	            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	              <ul class="nav navbar-nav ml-auto">
 	                <li class="nav-item active">
-	                    <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}">학원 정보</a>
+	                    <a class="nav-link" href="/academy/academyInfo?academyCode=${academy.academyCode}"> 학원 정보</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
+	                 	<a class="nav-link" href="/academy/academySampleEdu?academyCode=${academy.academyCode}">멀티미디어 정보</a>
 	                </li>
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/edu/listEdu?acaCode=${academy.academyCode}">수업</a>

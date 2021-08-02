@@ -5,7 +5,7 @@
 
 <head>
 
-    	<title>Buy Edu</title>
+    	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -42,8 +42,6 @@ function fncAddBoard(){
 	var boardWriter=$('input[name="boardWriter"]').val();
 	var cateCode=$('input[name="cateCode"]').val();
 	var acaWriter=$('input[name="acaWriter"]').val();
-	alert(acaWriter)
-	alert(cateCode)
 	
 	if(title == null || title.length <1){
 		alert("글 제목을 입력해주세요.");
