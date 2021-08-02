@@ -103,7 +103,7 @@
 						<br>
 						<!-- 중간 소제목 시작-->
 						<div class="col-sm-12" align="center">
-						<span >멀티미디어 정보</span>
+							<h4><strong><span><span >멀티미디어 정보</span></strong></h4>
 						</div><br>
 						<br>
 						<!-- 중간 소제목 끝-->

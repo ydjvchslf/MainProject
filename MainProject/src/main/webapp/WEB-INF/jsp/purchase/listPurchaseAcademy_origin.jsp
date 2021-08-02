@@ -28,29 +28,6 @@
 	    background-color: #F8B739;
 	    border-color: #F8B739;
 	   }
-	   
-	   @font-face {
-	    font-family: 'ChosunGu';
-	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
-	    font-weight: normal;
-	    font-style: normal;
-		}
-		
-		body{
-			overflow-x:hidden; overflow-y:visible;
-			font-family: 'ChosunGu';
-		}
-		
-		#panel-color{
-			background-color: black !important;
-		}
-		
-		@font-face {
-		    font-family: 'TmonMonsori';
-		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
-		    font-weight: normal;
-		    font-style: normal;
-		}
 	</style>
 	
 	<script type="text/javascript">
@@ -113,23 +90,20 @@
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
-					<div class="col-md-12">
-						<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">
-			    			${academy.academyName} 
-			    		</div>
-			    		
-			    		<!-- 중간 소제목 시작-->
-						<div class="col-sm-12" align="center">
-							<h4><strong><span>수업결제목록</span></strong></h4>
-						</div><br>
-						<br>
-						<!-- 중간 소제목 끝-->
-			    		
-					</div>
-				
+					<div class="page-header text-info">
+				       <h3 id="titlef">구매수업목록</h3>
+				    </div>
 				    
 				    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 				    <div class="row">
+				    
+					    <div class="col-md-6 text-left">
+					    	<p class="text-primary">
+					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+					    	</p>
+					    </div>
+					    
+					    </br></br>
 					    
 					    <div class="col-md-6 text-right">
 						    <form class="form-inline" name="detailForm">
@@ -145,14 +119,6 @@
 					
 					
 			      <!--  table Start /////////////////////////////////////-->
-			      
-			      <c:if test="${empty purchaseList}">
-			      	<div class="col-sm" align="center">
-						<span><img src="/image/nothing.png"></span>
-					</div>
-				  </c:if>
-				  
-				  <c:if test="${!empty purchaseList}">
 			      <table class="table table-hover table-striped" >
 			      
 			        <thead>
@@ -168,7 +134,6 @@
 			        </thead>
 			       
 					<tbody>
-					
 					
 					  <c:set var="i" value="0" />
 					  <c:forEach var="purchase" items="${purchaseList}">
@@ -196,8 +161,6 @@
 			        </tbody>
 			      
 			      </table>
-			      </c:if>
-			      
 					</div>
 					
 					<div class="row">
@@ -209,6 +172,7 @@
       		
        </div>
       	
+	</div>
 
     <!-- <script src="/js/jquery.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
