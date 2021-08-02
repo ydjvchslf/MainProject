@@ -76,99 +76,74 @@ public class AcademyRestController {
 		notiService.noti("xrYC6SH");
 	}
 	
+	// 학원 프로필 (유저 넘버)
 	@ResponseBody
 	@RequestMapping(value = "json/academyProfile/{userNo}", method = RequestMethod.GET)
 	public Map<String, Object> academyProfile(@PathVariable int userNo) throws Exception{
 		
-	      System.out.println("academy/json/academyProfile : 학원 프로필 목록");
-	      
 	      Map<String, Object> map = academyService.getAcademyCodeList(userNo);
-	      
-	      System.out.println("학원 프로필 맵 = " + map);
 	      
 	      return map;
 	}
 	
+	// 학원 프로필 (아카데미 코드)
 	@RequestMapping(value = "json/getacademyInfo/{academyCode}", method = RequestMethod.GET)
 	public Academy academy(@PathVariable String academyCode) throws Exception{
-		
-		System.out.println("json/getacademyInfo : GET");
-		
-		System.out.println("academyInfo 아카데미 코드 = " + academyCode);
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		academy.setCount(academyService.getStudentCount(academyCode));
 		
-		System.out.println("학생수" + academyService.getStudentCount(academyCode));
-		
 		academy.setCount2(academyService.getEduTotalCountforAca(academyCode));
-		
-		System.out.println("수업수" + academyService.getEduTotalCountforAca(academyCode));
 		
 		return academy;
 	}
 
+	// 학원 소개 수정
 	@ResponseBody
 	@RequestMapping(value = "json/updateIntro/{academyCode}", method = RequestMethod.POST)
 	private Academy updateIntro(HttpServletRequest httpRequest,
 							@PathVariable String academyCode, 
 							@RequestParam String updateIntro) throws Exception{
 		
-		System.out.println("수정 요청 한 학원 소개 = " + updateIntro);
-		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		academy.setAcademyIntro(updateIntro);
 					
-		System.out.println("json aca = " + academy);
-		
 		academyService.updateAcademyIntro(academy);
-		
-		System.out.println("수정 된 학원 소개 = "+academyService.getAcademy(academyCode).getAcademyIntro());
 		
 		return academy;
 	}
 	
+	// 학원 실적 수정
 	@ResponseBody
 	@RequestMapping(value = "json/updateHistory/{academyCode}", method = RequestMethod.POST)
 	private Academy updateHistory(HttpServletRequest httpRequest,
 							@PathVariable String academyCode, 
 							@RequestParam String updateHistory) throws Exception{
 		
-		System.out.println("수정 요청한 학원 실적 = " + updateHistory);
-		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		academy.setAcademyHistory(updateHistory);
 					
-		System.out.println("json aca = " + academy);
-		
 		academyService.updateAcademyHistory(academy);
-		
-		System.out.println("수정 된 학원 실적 = "+academyService.getAcademy(academyCode).getAcademyHistory());
 		
 		return academy;
 	}
 	
-	
+	// 학원 멀티미디어 숫자
 	@RequestMapping(value = "json/academySampleEdu/{academyCode}", method = RequestMethod.GET)
 	public Map<String, Object> getAcademySampleEdu(HttpServletRequest httpRequest,
 													@PathVariable String academyCode) throws Exception{
-		
-		System.out.println("레스트로 가져오자");
-		
-		System.out.println("academySampleEdu 아카데미 코드 = " + academyCode);
 		
 		Map<String, Object> map = academyService.getMultimediaList(academyCode);
 		
 		int imgcount = academyService.getImageCount(academyCode);
 		
-		
 		return map;
 	}
 	
-	
+	// 학원 파일 업로드
 	@ResponseBody
 	@RequestMapping(value = "/file-upload/{academyCode}", method = RequestMethod.POST)
 	public String fileUpload(
@@ -201,7 +176,7 @@ public class AcademyRestController {
 					
 					try (InputStream fileStream = file.getInputStream()){
 						if (extension.equals(".mp4") || extension.equals(".avi")) {
-//							fileStream = new FileInputStream(videoEncoder.encode(savedFileName));
+						//	fileStream = new FileInputStream(videoEncoder.encode(savedFileName));
 							academy.setMultimediarole("V");
 						}else {
 							academy.setMultimediarole("I");
@@ -218,9 +193,6 @@ public class AcademyRestController {
 					
 					academyService.addMultimedia(academy);
 					
-					System.out.println("파일 저장 경로 = "+fileRoot);
-					System.out.println("add multimedia Ajax 아카데미 = "+academy);
-					
 				}
 				strResult = "{ \"result\":\"OK\" }";
 			}
@@ -233,13 +205,12 @@ public class AcademyRestController {
 		return strResult;
 	}
 	
+	// 학원 멀티미디어 삭제
 	@ResponseBody
 	@RequestMapping(value = "json/deleteMultimedia/{multimediano}", method = RequestMethod.POST)
 	private int deleteMultimedia(@PathVariable int multimediano) throws Exception{
 		
 		String multimedia = academyService.getMultimedia(multimediano);
-		
-		System.out.println("삭제 파일 이름 = " + multimedia);
 		
 		String fileRoot = "C:\\Users\\woohr\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
 		//String fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
@@ -261,41 +232,30 @@ public class AcademyRestController {
 	
 	// ------------------------------ 학원 인증 ------------------------------
 	
+	// 학원 인증
 	@ResponseBody
 	@RequestMapping(value = "json/academyConnect/{academyCode}", method = RequestMethod.POST)
 	public Map<String, Object> academyConnectList(@PathVariable String academyCode, HttpSession session) throws Exception{
-		
-		System.out.println("json/academyConnects : POST");
-		
-		System.out.println("academyConnect 아카데미 코드 = " + academyCode);
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
 		Map<String, Object> map = academyService.academyConnect(academyCode);
 		
-		System.out.println("academyConnects map = "+map.get("connect"));
-		
 		return map;
 	}
 	
+	// 인증 수락
 	@ResponseBody
 	@RequestMapping(value = "json/updateConnect/{connectNo}", method = RequestMethod.POST)
 	private String updateConnect(@PathVariable int connectNo) throws Exception{
 		
-		System.out.println(" ajax updateConnect -> 인증 완료");
-		
-		System.out.println("json 으로 받은 connectNo " + connectNo);
-		
 		return academyService.updateConnect(connectNo);
 	}
 	
+	// 인증 삭제
 	@ResponseBody
 	@RequestMapping(value = "json/deleteConnect/{connectNo}", method = RequestMethod.POST)
 	private void deleteConnect(@PathVariable int connectNo) throws Exception{
-		
-		System.out.println(" ajax updateConnect -> 인증 거부시 정보 삭제됨");
-		
-		System.out.println("json 으로 받은 connectNo " + connectNo);
 		
 		academyService.deleteConnect(connectNo);
 	}
@@ -307,19 +267,12 @@ public class AcademyRestController {
 		
 		String name = academyService.getAcademy(academyCode).getAcademyName();
 		
-		System.out.println(" ajax deleteAcademy -> 해당 학원 :" +name+ "의 정보가 모두 삭제됨.");
-		
-		System.out.println("삭제되는 정보는 1. 학원 정보 2. 인증 정보 3. 후기 정보 4. 수업 정보 5. 게시글 ");
-		
 		academyService.deleteAcademyAll(academyCode);
 	}
 	
 	// 학원 공지사항
 	@RequestMapping(value = "json/getBoardListAcademy/{search}", method = RequestMethod.GET)
 	public List<Board> getBoardListAcademy(@PathVariable String academyCode, Search search) throws Exception{
-		
-		System.out.println("json/getBoardListAcademy : GET");
-		System.out.println("academyInfo 아카데미 코드 = " + academyCode);
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -335,6 +288,5 @@ public class AcademyRestController {
 		
 		return list;
 	}
-	
 
 }

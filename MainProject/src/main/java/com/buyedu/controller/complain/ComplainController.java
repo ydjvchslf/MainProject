@@ -35,9 +35,9 @@ public class ComplainController {
 	@Value("10")
 	int pageSize;
 	
+	// 신고 목록
 	@RequestMapping(value = "getComplainList")
 	public String getComplainList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
-		System.out.println("/complain/getComplainList");
 		
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
@@ -45,15 +45,11 @@ public class ComplainController {
 		search.setPageSize(pageSize);
 		
 		Map<String, Object> map = complainService.getComplainList(search);
-		
 		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue()
 				,pageUnit,pageSize);
 		
 		model.addAttribute("comlist", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
-		
-		
-		System.out.println("complainList map = "+map);
 		
 		return "complain/listComplain";
 	}
