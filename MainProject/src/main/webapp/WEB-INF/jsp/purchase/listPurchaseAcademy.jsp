@@ -98,7 +98,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -169,7 +169,6 @@
 			       
 					<tbody>
 					
-					
 					  <c:set var="i" value="0" />
 					  <c:forEach var="purchase" items="${purchaseList}">
 						<c:set var="i" value="${ i+1 }" />
@@ -198,10 +197,10 @@
 			      </table>
 			      </c:if>
 			      
-					</div>
-					
-					<div class="row">
+			      	<div class="row">
 						<jsp:include page="../common/pageNavigator_new.jsp"/>
+					</div>
+			      
 					</div>
 					
 				</div>

@@ -72,9 +72,9 @@
 						<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 						
 					      <div class="row">
-							<div class="col-sm-3"> <!-- 3 부분 -->
+							<div class="col-sm-2"> <!-- 3 부분 -->
 							</div>
-							<div class="col-sm-6"> <!-- 6부분 본문 내용 들어갈 자리 -->
+							<div class="col-sm-8"> <!-- 6부분 본문 내용 들어갈 자리 -->
 							
 								<div class="row"><!-- 첫번째 row 시작 -->
 							        <div class="col">
@@ -219,7 +219,7 @@
 			                     </c:if> 
 							
 							</div>
-							<div class="col-sm-3"><!-- 3 부분 -->
+							<div class="col-sm-2"><!-- 3 부분 -->
 							</div>
 						  </div>
 					      
@@ -364,9 +364,6 @@
 								</div>
 							</div>
 						</div><!-- 계정휴면 모달 끝-->		
-						
-						
-						
 						
 						
 						<!-- 비번수정 모달 -->
@@ -1289,13 +1286,14 @@
         				var a = '';
         				
         				if(value.length<=2){
+        					for(var i=0; i<3-value.length; i++){
         					a += '<div class="col-sm-4"><div class="panel" style="border:1px solid #ECECEC;">'
     						a += '<div class="panel-heading" style="background-color:#ECECEC;">'
     						a += '<h6 class="panel-title" id="titlef"> 학원 등록하기 </h6>'
     						
     						a += '<h3 class="panel-title" align="right"> <img src="/image/plus.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
-			              
     						a += '</div></div>'
+        					}
     					}
         				
         				for(var i=0; i<value.length;i++){

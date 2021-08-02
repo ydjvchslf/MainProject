@@ -75,6 +75,7 @@
 				 
 				var eduNo = $(this).find('#eduNo').val()
 				var eduState = $(this).find('#eduState').val()
+				var acaCode = "${ academy.academyCode }"
 				 
 				if( eduState == 1 ) {
 					
@@ -94,6 +95,9 @@
 					    success : function(data, status){
 
 					    	alert("수업이 삭제되었습니다.")
+					    	
+					    	self.location = "/edu/listEdu?acaCode="+acaCode;
+					    	
 					    }
 						
 					});
@@ -150,7 +154,6 @@
 						</div>
 						
 						
-						
 						<div class="col-md-6 text-right">
 							<form class="form-inline" name="detailForm">
 								
@@ -178,6 +181,13 @@
 								  </div>
 								  
 								  <button type="button" class="btn btn-primary">검색</button>
+								  <!-- 수업등록하기 버튼 -->
+								  <div class="col-md-12" align="right">
+								  		<br>
+								    	<c:if test="${user.role == 'academy'}">
+								    	<button type="button" class="btn btn-primary">수업등록</button>
+								    	</c:if>
+								  </div>
 								</div>
 								  
 								  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -196,14 +206,6 @@
 							</div>
 						</c:if>
 						
-						<!-- 수업등록하기 버튼 -->
-						<div class="col-sm-12" align="center">
-				    		<p>
-						    	<c:if test="${user.role == 'academy'}">
-						    	<button type="button" class="btn btn-primary">수업등록</button>
-						    	</c:if>
-					    	</p>
-				    	</div>
 						
 						<table class="table table-hover table-striped" >
 					      
@@ -216,7 +218,7 @@
 							            <div class="caption" align="center">
 							              <h2 id="titlef">${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
 							              <h5 id="titlef">${ edu.eduName }</h5>
-							              <p>&#8361; ${ edu.eduPrice } 원</p>
+							              <p><img src="/image/won.jpg" width="22px"><strong> ${ edu.eduPrice } </strong> </p>
 							              <p>남은자리 ${edu.eduRest}</p>
 							              <p>
 							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&academyCode=${edu.academy.academyCode}" class="btn btn-primary" role="button">상세보기</a> 
@@ -237,7 +239,7 @@
 								              <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/>
 							              </h2>
 							              <h4 id="titlef">${ edu.eduName }</h4>
-							              <p>&#8361; ${ edu.eduPrice } 원</p>
+							              <p> <img src="/image/won.jpg" width="22px"><strong> ${ edu.eduPrice } </strong></p>
 							              <p style="color: red"><strong>남은자리 ${edu.eduRest}</strong></p>
 							              <p>
 							              	<c:if test="${ edu.eduState == '0' }">
@@ -264,12 +266,14 @@
 							     </c:forEach>
 							     </c:if>
 				    	</table>
+				    	
 					
 					</div>
 					
 					<div class="row">
 						<jsp:include page="../common/pageNavigator_new.jsp"/>
 					</div>
+					
 					
 				</div>
 	      	</div>
