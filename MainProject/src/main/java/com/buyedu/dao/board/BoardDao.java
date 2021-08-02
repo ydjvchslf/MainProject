@@ -22,15 +22,11 @@ public interface BoardDao {
 	
 	public List<Board> getBoardList(Search search) throws Exception;
 	
-//	public List<Board> getMyBoardList(Search search, int userNo) throws Exception;
-	
 	public List<Map<String, Object>> getBoardListPin(Board board) throws Exception;
 
 	public void updateBoard(Board board) throws Exception;
 	
 	public int getTotalCount(Search search) throws Exception;
-	
-//	public int getMyTotalCount(Search search, int userNo) throws Exception;
 	
 	public void deleteBoard(int boardNo) throws Exception;
 	
@@ -50,12 +46,10 @@ public interface BoardDao {
 	   
 	public int addComment(Map<String,Object> map) throws Exception;
 
-
 	public int updateComment(Map<String,Object> map) throws Exception;
 
 	public int deleteComment(int commentNo) throws Exception;
 	
-	//학원 공지사항
 	public List<Board> getBoardListAcademy(Search search) throws Exception;
 	public int getTotalCountAcademy(Search search) throws Exception;
 

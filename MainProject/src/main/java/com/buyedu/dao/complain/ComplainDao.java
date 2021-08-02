@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.buyedu.domain.Complain;
 import com.buyedu.domain.Search;
-
 	
 	@Mapper
 	public interface ComplainDao {

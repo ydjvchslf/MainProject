@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.buyedu.domain.Academy;
 import com.buyedu.domain.Search;
 import com.buyedu.domain.User;
 
@@ -36,7 +35,5 @@ public interface UserDao {
 	public int getTotalCount(Search search) throws Exception;
 	
 	public int checkEmail(String email) throws Exception;
-	
-	
 	
 }
