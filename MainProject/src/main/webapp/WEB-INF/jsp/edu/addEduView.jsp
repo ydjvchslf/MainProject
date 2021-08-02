@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -61,7 +61,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -199,6 +199,10 @@
 	      		</div>
 					
 			</div>
+			
+			<!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
+			
 	    </div>
       		
         </div>

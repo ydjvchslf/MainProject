@@ -69,7 +69,7 @@
 						
 						<jsp:include page="../common/toolbar2.jsp"></jsp:include> 
 						
-						<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
+						<div style="background-color:white; border:3px solid white; border-radius: 10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 						
 					      <div class="row">
 							<div class="col-sm-2"> <!-- 3 부분 -->
@@ -109,9 +109,9 @@
 					                		<c:when test="${!empty user.role}">
 									            <h4>
 										            <strong>E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.email} <br>
-							                		<strong>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.name} <br>
-													<strong>PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.phone} <br>
-													<strong>REG_DATE&nbsp;&nbsp;</strong>: &nbsp;${user.inDate} <br>
+							                		<br/><strong>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.name} <br>
+													<br/><strong>PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.phone} <br>
+													<br/><strong>REG_DATE&nbsp;&nbsp;</strong>: &nbsp;${user.inDate} <br>
 												</h4>
 					                		</c:when>
 					                		<c:otherwise>
@@ -217,11 +217,46 @@
 			                        <div id="academyList" class="row"><!-- 두번째 row -->
 			                        </div>
 			                     </c:if> 
-							
+			                     
 							</div>
 							<div class="col-sm-2"><!-- 3 부분 -->
 							</div>
+							
+											
+							
+							  <!--  div class="col-sm-12">
+								 <div class="row">
+										<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+										  <div class="carousel-inner">
+										    <div class="carousel-item active">
+										      <img class="d-block w-300" src="/image/myimage.png" alt="First slide">
+										    </div>
+										    <div class="carousel-item">
+										      <img class="d-block w-300" src="/image/myimage1.png" alt="Second slide">
+										    </div>
+										    <div class="carousel-item">
+										      <img class="d-block w-300" src="/image/myimage2.png" alt="Third slide">
+										    </div>
+										  </div>
+										  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+										    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										    <span class="sr-only">Previous</span>
+										  </a>
+										  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+										    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+										    <span class="sr-only">Next</span>
+										  </a>
+										</div>
+								</div><!-- 캐러셀 끝 -->
+							<!--</div>  -->
+							
+							
 						  </div>
+						  
+						  
+						
+			                     
+			                     
 					      
 					      
 	
@@ -599,41 +634,15 @@
 						</div>
 						
 						
-				<!-- 하단 캐러셀 시작 -->
-				 <div class="row">
-					<div class="col-sm-12">
-						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-						  <div class="carousel-inner">
-						    <div class="carousel-item active">
-						      <img class="d-block w-400" src="/image/myimage.png" alt="First slide">
-						    </div>
-						    <div class="carousel-item">
-						      <img class="d-block w-400" src="/image/myimage1.png" alt="Second slide">
-						    </div>
-						    <div class="carousel-item">
-						      <img class="d-block w-400" src="/image/myimage2.png" alt="Third slide">
-						    </div>
-						  </div>
-						  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-						    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						    <span class="sr-only">Previous</span>
-						  </a>
-						  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-						    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-						    <span class="sr-only">Next</span>
-						  </a>
-						</div>
-					</div>
-				</div><!-- 캐러셀 끝 -->
-				
 				
 				</div>
 				
 	      	</div><!-- container 끝 -->
-	      
 	      	
-      	
-      	
+	      	<!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
+			
+	      
        </div>
        
       
@@ -1289,7 +1298,7 @@
         					for(var i=0; i<3-value.length; i++){
         					a += '<div class="col-sm-4"><div class="panel" style="border:1px solid #ECECEC;">'
     						a += '<div class="panel-heading" style="background-color:#ECECEC;">'
-    						a += '<h6 class="panel-title" id="titlef"> 학원 등록하기 </h6>'
+    						a += '<h6 class="panel-title" id="titlef" style="font-size: 23px;"> 학원 등록하기 </h6>'
     						
     						a += '<h3 class="panel-title" align="right"> <img src="/image/plus.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
     						a += '</div></div>'
@@ -1300,7 +1309,7 @@
         					
         					a += '<div class="col-sm-4"><div class="panel" style="border:1px solid #ECECEC;">'
         					a += '<div class="panel-heading" style="background-color:#ECECEC;">'
-        					a += '<h3 class="panel-title" id="titlef">'
+        					a += '<h3 class="panel-title" id="titlef" style="font-size: 23px;">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
         					a += '<h6 align="right" id="titlef"><h6 align="right" id="titlef"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h6>'
         					a += '</div>'

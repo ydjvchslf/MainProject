@@ -239,6 +239,9 @@
 					
 				</div>
 	      	</div>
+	      	
+	      	 <!-- footer ÀÚ¸® -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
       		
        </div>
       	

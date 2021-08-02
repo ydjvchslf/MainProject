@@ -116,7 +116,7 @@
 						
 						 <div class="panel" style="border:1px solid #ECECEC;">
 				            <div class="panel-heading" style="background-color:#ECECEC;">
-				              <h3 class="panel-title" id="titlef">인증 신청한 학생 보기</h3>
+				              <h3 class="panel-title" id="titlef" style="font-size: 23px;">인증 신청한 학생 보기</h3>
 				            </div>
 				            <div class="panel-body"> 
 				               	<table id="table" name="table" class="table" >
@@ -138,6 +138,9 @@
 	      	</div>
       	
        </div>
+       
+     		 <!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
       
 	</div>
 	

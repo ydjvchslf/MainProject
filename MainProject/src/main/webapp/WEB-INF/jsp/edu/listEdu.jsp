@@ -23,13 +23,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	
 	<style>
-	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-    z-index: 3;
-    color: #fff;
-    cursor: default;
-    background-color: #F8B739;
-    border-color: #F8B739;
-   }
+	
 	   
     @font-face {
     font-family: 'ChosunGu';
@@ -40,6 +34,15 @@
    
    body{
    font-family: ChosunGu;
+   }
+   
+   .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #FFAB00;
+    border: 1px solid #FFAB00;
+    
    }
 	
 	
@@ -285,9 +288,12 @@
 						<jsp:include page="../common/pageNavigator_new.jsp"/>
 					</div>
 					
-					
 				</div>
+				
 	      	</div>
+	      	
+	      <!-- footer ÀÚ¸® -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
       		
        </div>
       	
@@ -299,4 +305,18 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/main.js"></script>
   </body>
+  
+  
+  <style>
+  
+  .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #FFAB00;
+    border: 1px solid #FFAB00;
+    
+   }
+  
+  </style>
 </html>

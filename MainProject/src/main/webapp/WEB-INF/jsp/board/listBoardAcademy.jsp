@@ -137,7 +137,7 @@
 	
 	
   <body>
-  <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
+  <div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; width:100%;">
 	<!-- left 툴바 -->
 	<jsp:include page="../common/left.jsp"></jsp:include>
        <!-- Page Content  -->
@@ -182,12 +182,15 @@
       <!--  table Start /////////////////////////////////////-->
       <div>&nbsp;</div>
       <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
       
       <c:if test="${empty listb}">
 							
 							<div class="col-sm-12" align="center">
 								<hr>
 							</div>
+							
 							<div class="col-sm-12" align="center">
 								<img src="/image/nothing.png"><br>
 							</div>
@@ -223,7 +226,13 @@
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
 		<input type="hidden" name="isMine" value="${search.isMine}" />		
-		<input type="hidden" name="acaWriter" value="${academy.academyCode}" />	  
+		<input type="hidden" name="acaWriter" value="${academy.academyCode}" />	
+		
+			<c:if test="${empty listb}">
+				<div class="col-sm-12" align="center">
+						<hr>
+				</div>
+			</c:if>  
 		  
 			<c:if test="${user.role eq 'academy'}">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
@@ -232,16 +241,17 @@
 		    	</div> 
 			</c:if>
 		
- 			<c:if test="${empty listb}">
-			<div class="col-sm-12" align="center">
-					<hr>
-			</div>
-			</c:if>
+ 			
 			 	<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>
 				<!-- PageNavigation End... -->
 		</div>
-	</div></div></div>
+	</div></div>
+	
+	<!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
+	
+	</div>
 	
   	</div>
   	 <script src="/js/jquery.min.js"></script>

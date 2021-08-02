@@ -68,6 +68,10 @@
 		right: 0%;
 		z-index: 1;
 	}
+	
+	.half{
+	background: linear-gradient(to top, #FFD889 50%, transparent 50%);
+	}
 			
 	</style>
 	
@@ -110,7 +114,7 @@
 						<!-- 학원 정보 -->
 						<div id="academyInfo" class="row" style="margin-top: 30px;"></div>
 							<br>
-							<h4 id="titlef">오시는 길</h4>
+							<div style="font-size: 15px;"><span class="half"><strong>오시는 길</strong></span></div>
 						<div class="row" style="margin-top: 30px;">
 							<div class="col-md-12" >
 								<div id="map" style="width:auto;height:400px;"></div>
@@ -124,10 +128,13 @@
 						    
 				</div>
 	      	</div>
-      	
-       </div>
+	      	
+       </div><!-- fluid -->
+       
+       <!--footer 자리 -->
+       <jsp:include page="../common/footer.jsp"></jsp:include> 
       
-	</div>
+	</div><!-- content -->
 	
 	</div>
 	
@@ -186,12 +193,12 @@
 				 	 a += '<div class="col-sm-6" id="AcademyIntro">'
 				 	 a += '<div class="panel" style="border:1px solid #ECECEC;">'
 				 	 a += '<div class="panel-heading" style="background-color:#ECECEC;">'
-			 	 	 a += '<h3 class="panel-title">학원 소개</h3>'
+			 	 	 a += '<h3 class="panel-title" id="titlef" style="font-size: 23px;">학원 소개</h3>'
 			 	 if(role == 'academy'){	 
 			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>' 
 			 	 }
 			 	 	 a += '</div>'
-			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 20px;">'
+			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 15px;">'
 			 	 	 a += data.academyIntro +'</div>'
 			 		 a += '</div></div>'
 			 		 
@@ -199,12 +206,12 @@
 			 		 a += '<div class="col-sm-6" id="AcademyHistory">'
 			 		 a += '<div class="panel" style="border:1px solid #ECECEC;">'
 					 a += '<div class="panel-heading" style="background-color:#ECECEC;">'
-			 		 a += '<h3 class="panel-title">학원 실적</h3>'
+			 		 a += '<h3 class="panel-title" id="titlef" style="font-size: 23px;">학원 실적</h3>'
 			 	if(role == 'academy'){
 			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>'
 			 	}
 			 		 a += '</div>' 
-				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 20px;">'
+				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 15px;">'
 			 		 a += data.academyHistory+'</div>'
 					 a += '</div></div>'
 						
@@ -213,7 +220,7 @@
 					b += '<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">'+data.academyName+'</div>'
 					b += '<div></div>'
 					b += '<div class="col-md-6" style="font-size: 15px;" align="left"><strong> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개 </strong></div>'
-			        b += '<div class="col-md-6" align="right"> <strong> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</strong></div>'
+			        b += '<div class="col-md-6" align="right"><strong><img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</strong></div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);

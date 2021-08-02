@@ -110,7 +110,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -126,8 +126,8 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
 					<div class="row">
-							<div class="col-md-6 text-left" id="titlef">
-		    					<h2>관심 수업</h2>
+							<div class="col-md-12" id="titlef" align="center">
+		    					<h1>관심 수업</h1>
 		    				</div>
 								<div>&nbsp;</div>
 								<div>&nbsp;</div>
@@ -192,6 +192,9 @@
 					
 				</div>
 	      	</div>
+	      	
+	      	<!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
       		
        </div>
       	

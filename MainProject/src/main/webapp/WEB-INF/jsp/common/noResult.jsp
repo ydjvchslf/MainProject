@@ -38,7 +38,7 @@
   
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -121,6 +121,9 @@
 								<div id="map" style="width:auto;height:600px; border:3px solid white; position:relative; z-index:1; "></div>
 				</div>
 	      	</div>
+	      	
+	      	 <!-- footer ÀÚ¸® -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
       	
        </div>
       

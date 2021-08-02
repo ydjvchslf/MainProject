@@ -158,7 +158,7 @@
   </style>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -173,12 +173,12 @@
 				 <!-- 내용 때려 박으삼 이쁘게 -->
 				 <div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 				 
-				 <div  class="row">
-					<div class="float-left">
-						 <h2 id="titlef" class=" text-info" style="color:red;">&nbsp;수업 상세보기</h2>
+				 <div  class="col-sm">
+					<div class="float-center">
+						 <h1 id="titlef" class=" text-info" align="center">&nbsp;수업 상세보기</h1>
 			      		 <c:if test="${user.role == 'academy' }">
-                         <h5 id="titlef" class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-                         <h5 id="titlef" class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
+                         <h4 align="center">판매중, 판매완료된 수업은 <span style="color:#FFAB00; font-size: 18px;"><strong>수정, 삭제</strong></span>가 불가능합니다.</h4>
+                      	 <br>
                       	</c:if>
 					</div>
 				</div>
@@ -187,7 +187,7 @@
 				
 				<div class="row">
 			  		<div class="col-xs-4 col-md-2"><strong>수 업 명</strong></div>
-					<div class="col-xs-8 col-md-4" style="color:#FFAB00; font-size: 18px;"><b>${edu.eduName}</b></div>
+					<div class="col-xs-8 col-md-4">${edu.eduName}</div>
 					<div class="col-xs-4 col-md-2"><strong>강 사 명</strong></div>
 					<div class="col-xs-8 col-md-4">${edu.eduTeacher}</div>
 				</div>
@@ -259,8 +259,13 @@
 				 
 			</div>
 	    </div>
+	    
+	    <!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
+	    
       		
         </div>
+    </div>
       	
     <!-- <script src="/js/jquery.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>

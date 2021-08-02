@@ -153,7 +153,7 @@
 	
 	
   <body>
-  <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
+  <div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; width:100%;">
 	<!-- left 툴바 -->
 	<jsp:include page="../common/left.jsp"></jsp:include>
        <!-- Page Content  -->
@@ -360,7 +360,14 @@
 		<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>
 				<!-- PageNavigation End... -->
-  	</div></div></div>
+  	</div>
+  	
+  		 	<!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
+  	
+  	</div>
+  	
+  	</div>
   	 <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>

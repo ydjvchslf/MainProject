@@ -64,7 +64,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -221,6 +221,9 @@
 						      	
 				</div>
 	        </div>
+	        
+	        <!-- footer ÀÚ¸® -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
 					
 		</div>
       		
