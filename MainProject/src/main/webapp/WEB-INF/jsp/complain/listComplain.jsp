@@ -174,6 +174,7 @@
             <th width=5%>신고 사유</th>
             <th width=20%>신고일자</th>
             <th width=10%>신고 처리</th>
+            <th width=10%>블러 처리</th>
            </tr>
         </thead>
 		<tbody>
@@ -212,6 +213,10 @@
 			  <a onclick="updateComplainy(${complain.complainNo})">수락</a>
 			  &nbsp;&nbsp; / &nbsp;
 			  <a onclick="updateComplainn(${complain.complainNo})">반려</a>
+			  </td>
+			  
+			  <td width=5% id="listtable" align="left">
+			  <a onclick="updateBoardState(${complain.board.boardNo})">블러 처리하기</a>
 			  </td>
 			  
 			</tr>
@@ -262,7 +267,20 @@
 		    });
 		}
 	}
-    
+	
+	// 게시판 블러처리
+	function updateBoardState(boardNo){
+		if(confirm('게시글을 블러처리 하시겠습니까?')){
+		    $.ajax({
+		        url : '/complain/json/updateBoardState/'+boardNo,
+		        type : 'POST',
+		        success : function(data){
+		        	alert("블러 처리가 완료되었습니다.");
+		        	location.reload()
+		        }
+		    });
+		}
+	}
     
     
     $(document).ready(function(){

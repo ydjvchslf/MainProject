@@ -57,7 +57,7 @@
   
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC;">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -71,172 +71,159 @@
 						
 						<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 						
-					      <div class="row"><!-- 첫번째 row 시작 -->
-					        <div class="col-sm-6">
-					          <div class="panel" style="border:5px solid #FFCA77;">
-					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title" id="titlef">
-					              	<c:choose>
-				                		<c:when test="${!empty user.role}">
-				                			${user.name}님의 Profile
-				                		</c:when>
-				                		<c:otherwise>
-				                			${email}님의 Profile
-				                		</c:otherwise>
-			                		</c:choose>
-					              </h3>
-					              <c:if test="${!empty user.role }"> 
-					              <h3 class="m-0 font-weight-bold text-primary" align="right" id="titlef">
-									<img src="/image/modify1.png" width="30" data-toggle="modal"
-											data-target="#updateModal">
-								  </h3>
-								  </c:if>
-					            </div>
-					            <div class="panel-body">
-					              <input type="hidden" value="${user.userNo}">
-					              <c:choose>
-			                		<c:when test="${!empty user.role}">
-							            <h4>
-								            <strong>E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.email} <br>
-					                		<strong>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.name} <br>
-											<strong>PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.phone} <br>
-											<strong>REG_DATE&nbsp;&nbsp;</strong>: &nbsp;${user.inDate} <br>
-										</h4>
-			                		</c:when>
-			                		<c:otherwise>
-			                			<h4>
-				                			E-MAIL : ${email} <br><br>
-				                			회원님은 SNS 연동해제 상태입니다.<br>
-				                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
-				                			<a href="#" data-toggle="modal"
-												data-target="#unify">계정연동하기</a>
-										</h4>
-			                		</c:otherwise>
-				                </c:choose>
-					            </div>
-					          </div>
-					          
-					       <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">  
-					          <div class="panel" style="border:5px solid #FFCA77;">
-					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title" id="titlef">My Academy</h3>
-					            </div>
-					            <div class="panel-body">
-					              <input type="hidden" value="${user.userNo}">
-					              <!-- 우리 학원 보기 테이블 시작 -->
-					            	<table class="table table-hover table-striped">
-										<c:choose>
-											<c:when test="${empty listAcademy}">
-												<span>
-													<h4 align="center"><img src="/image/crying.png">
-														인증된 학원이 없습니다. 학원을 인증해주세요!
-													</h4>
-												</span>
-											</c:when>
-											<c:otherwise>
-												<thead>
-													<tr>
-														<th align="center">No</th>
-														<th align="center">학원이름</th>
-														<th align="center">인증상태</th>
-														<th align="center">인증취소</th>
-													</tr>
-												</thead>
-	
-												<tbody>
-													<c:set var="i" value="0" />
-													<c:forEach var="connect" items="${listAcademy}">
-														<c:set var="i" value="${ i+1 }" />
-														<tr>
-															<td align="left">${ i }</td>
-															<td align="left"><span class="cntAcademyName"
-																name="cntAcademyName"><a href="/academy/academyInfo?academyCode=${connect.academy.academyCode}"><u>${connect.academy.academyName}</u></a></span>
-																<input type="hidden" name="cntAcademyCode"
-																value="${connect.academy.academyCode}"></td>
-															<td align="left"><c:choose>
-																	<c:when test="${connect.connectState eq '0'}">
-																			인증신청
-																		  </c:when>
-																	<c:when test="${connect.connectState eq '1'}">
-																			인증됨
-																		  </c:when>
-																</c:choose></td>
-															<td align="left">
-																<span name="delete">
-													                &nbsp; &nbsp;
-													                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-																	  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-																	</svg>
-																</span>
-															</td>
-														</tr>
-													</c:forEach>
-												</tbody>
-											</c:otherwise>
-										</c:choose>
-									</table><!-- 우리 학원 보기 테이블 끝 -->
-					            
-					            </div>
-					          </div>
-					         </c:if>
-					        </div><!-- /.col-sm-6 -->
-					      
-					       
-					        <div class="col-sm-6">
-					        <c:if test="${!empty user.role }"> 
-					          <div class="panel" style="border:5px solid #FFCA77;">
-					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title" id="titlef">비밀번호 변경</h3>
-					              <h3 class="panel-title" align="right" id="titlef">
-					              	<img src="/image/password1.png" width="30" data-toggle="modal"
-											data-target="#passwordModal">
-					              </h3>
-					            </div>
-					          </div><br>
-					          <div class="pLanel" style="border:5px solid #FFCA77;">
-					            <div class="panel-heading" style="background-color:#FFCA77;">
-					              <h3 class="panel-title" id="titlef">계정 탈퇴</h3>
-					              <h3 class="panel-title" align="right" id="titlef">
-					              	<img src="/image/trash1.png" width="30" data-toggle="modal"
-											data-target="#outModal">
-					              </h3>
-					            </div>
-					          </div>
-					          </c:if>
-					          
-					          </br>
-					          <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
-					            <!-- 우리학원 인증하기 등록하기 -->
-						          <div class="panel" style="border:5px solid #FFCA77;">
-						            <div class="panel-heading" style="background-color:#FFCA77;">
-						              <h3 class="panel-title" id="titlef">학원 인증하기</h3>
-						              <h3 class="panel-title" align="right" id="titlef">
-						                <!-- 인증하기 버튼 -->
-											<!--  <span name="addConnect" class="btn btn-success btn-circle btn-sm">
-			                                   <i class="fas fa-check">인증버튼</i>
-			                                </span>-->
-			                               <span name="addConnect"><img src="/image/plus1.png" width="30"></span>
-						              </h3>
-						            </div>
-						            <div class="panel-body"> 
-						               	<input type="hidden" value="${user.userNo}">
-										<input type="text" class="form-control" id="academyCode"
-												name="academyCode" placeholder="*학원코드 입력(인증 최대 3개)">
-										<span id="helpBlock" class="help-block">
-											<strong class="connect_text"></strong>
-									   </span>
-						            </div>
-						          </div>
-						         </c:if>
-						       </div><!-- /.col-sm-6 -->
-					     </div><!-- 첫번째 row 끝 -->  
-					     
-					     
-					      <c:if test="${user.role eq 'academy'}">
-	                        <div id="academyList" class="row"><!-- 두번째 row -->
-	                        </div>
-	                     </c:if> 
+					      <div class="row">
+							<div class="col-sm-3"> <!-- 3 부분 -->
+							</div>
+							<div class="col-sm-6"> <!-- 6부분 본문 내용 들어갈 자리 -->
+							
+								<div class="row"><!-- 첫번째 row 시작 -->
+							        <div class="col">
+							          <div class="panel" style="border:1px solid #ECECEC;">
+							            <div class="panel-heading" style="background-color:#ECECEC;">
+							              <h3 class="panel-title" id="titlef">
+							              	<c:choose>
+						                		<c:when test="${!empty user.role}">
+						                			${user.name}님의 Profile
+						                		</c:when>
+						                		<c:otherwise>
+						                			${email}님의 Profile
+						                		</c:otherwise>
+					                		</c:choose>
+							              </h3>
+							              <c:if test="${!empty user.role }"> 
+							              <h3 class="m-0 font-weight-bold text-primary" align="right" id="titlef">
+											<img src="/image/modify.png" width="30" data-toggle="modal"
+													data-target="#updateModal">
+											<c:if test="${!empty user.role }"> 
+												<img src="/image/password.png" width="30" data-toggle="modal"
+														data-target="#passwordModal">
+												<img src="/image/trash.png" width="30" data-toggle="modal"
+												data-target="#outModal">
+											</c:if>
+										  </h3>
+										  </c:if>
+							            </div>
+							            <div class="panel-body">
+							              <input type="hidden" value="${user.userNo}">
+							              <c:choose>
+					                		<c:when test="${!empty user.role}">
+									            <h4>
+										            <strong>E-MAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.email} <br>
+							                		<strong>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.name} <br>
+													<strong>PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>:&nbsp; ${user.phone} <br>
+													<strong>REG_DATE&nbsp;&nbsp;</strong>: &nbsp;${user.inDate} <br>
+												</h4>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<h4>
+						                			E-MAIL : ${email} <br><br>
+						                			회원님은 SNS 연동해제 상태입니다.<br>
+						                			더 많은 서비스를 이용하시려면 계정연동을 해주세요!<br><br>
+						                			<a href="#" data-toggle="modal"
+														data-target="#unify">계정연동하기</a>
+												</h4>
+					                		</c:otherwise>
+						                </c:choose>
+							            </div>
+							          </div>
+							          
+							          <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">
+							            <!-- 우리학원 인증하기 등록하기 -->
+									       <div class="panel" style="border:1px solid #ECECEC;">
+								            <div class="panel-heading" style="background-color:#ECECEC;">
+								              <h3 class="panel-title" id="titlef">학원 인증하기</h3>
+								              <h3 class="panel-title" align="right" id="titlef">
+					                               <span name="addConnect"><img src="/image/plus.png" width="30"></span>
+								              </h3>
+								            </div>
+								            <div class="panel-body"> 
+								               	<input type="hidden" value="${user.userNo}">
+												<input type="text" class="form-control" id="academyCode"
+														name="academyCode" placeholder="*학원코드 입력(인증 최대 3개)">
+												<span id="helpBlock" class="help-block">
+													<strong class="connect_text"></strong>
+											   </span>
+								            </div>
+								          </div>
+								         </c:if>
+							          
+								       <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">  
+								          <div class="panel" style="border:1px solid #ECECEC;">
+							   		        <div class="panel-heading" style="background-color:#ECECEC;">
+								              <h3 class="panel-title" id="titlef">My Academy</h3>
+								            </div>
+								            <div class="panel-body">
+								              <input type="hidden" value="${user.userNo}">
+								              <!-- 우리 학원 보기 테이블 시작 -->
+								            	<table class="table table-hover table-striped">
+													<c:choose>
+														<c:when test="${empty listAcademy}">
+															<span>
+																<h4 align="center"><img src="/image/crying.png">
+																	인증된 학원이 없습니다. 학원을 인증해주세요!
+																</h4>
+															</span>
+														</c:when>
+														<c:otherwise>
+															<thead>
+																<tr>
+																	<th align="center">No</th>
+																	<th align="center">학원이름</th>
+																	<th align="center">인증상태</th>
+																	<th align="center">인증취소</th>
+																</tr>
+															</thead>
 				
+															<tbody>
+																<c:set var="i" value="0" />
+																<c:forEach var="connect" items="${listAcademy}">
+																	<c:set var="i" value="${ i+1 }" />
+																	<tr>
+																		<td align="left">${ i }</td>
+																		<td align="left"><span class="cntAcademyName"
+																			name="cntAcademyName"><a href="/academy/academyInfo?academyCode=${connect.academy.academyCode}"><u>${connect.academy.academyName}</u></a></span>
+																			<input type="hidden" name="cntAcademyCode"
+																			value="${connect.academy.academyCode}"></td>
+																		<td align="left"><c:choose>
+																				<c:when test="${connect.connectState eq '0'}">
+																						인증신청
+																					  </c:when>
+																				<c:when test="${connect.connectState eq '1'}">
+																						인증됨
+																					  </c:when>
+																			</c:choose></td>
+																		<td align="left">
+																			<span name="delete">
+																                &nbsp; &nbsp;
+																                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+																				  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+																				</svg>
+																			</span>
+																		</td>
+																	</tr>
+																</c:forEach>
+															</tbody>
+														</c:otherwise>
+													</c:choose>
+												</table><!-- 우리 학원 보기 테이블 끝 -->
+								            
+								            </div>
+								          </div>
+								         </c:if>
+							        </div><!-- /.col-sm -->
+							     </div><!-- 첫번째 row 끝 -->  
+							     
+							     <c:if test="${user.role eq 'academy'}">
+			                        <div id="academyList" class="row"><!-- 두번째 row -->
+			                        </div>
+			                     </c:if> 
+							
+							</div>
+							<div class="col-sm-3"><!-- 3 부분 -->
+							</div>
+						  </div>
+					      
+					      
 	
 <!-- //////////////////////////////모달 영역/////////////////////////////////////////// -->
 					    
@@ -1302,22 +1289,22 @@
         				var a = '';
         				
         				if(value.length<=2){
-        					a += '<div class="col-sm-4"><div class="panel" style="border:5px solid #FFCA77;">'
-    						a += '<div class="panel-heading" style="background-color:#FFCA77;">'
-    						a += '<h6 class="panel-title" id="titlef"> 학원 등록 하기 </h6>'
+        					a += '<div class="col-sm-4"><div class="panel" style="border:1px solid #ECECEC;">'
+    						a += '<div class="panel-heading" style="background-color:#ECECEC;">'
+    						a += '<h6 class="panel-title" id="titlef"> 학원 등록하기 </h6>'
     						
-    						a += '<h3 class="panel-title" align="right"> <img src="/image/plus1.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
+    						a += '<h3 class="panel-title" align="right"> <img src="/image/plus.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
 			              
     						a += '</div></div>'
     					}
         				
         				for(var i=0; i<value.length;i++){
         					
-        					a += '<div class="col-sm-4"><div class="panel" style="border:5px solid #FFCA77;">'
-        					a += '<div class="panel-heading" style="background-color:#FFCA77;">'
+        					a += '<div class="col-sm-4"><div class="panel" style="border:1px solid #ECECEC;">'
+        					a += '<div class="panel-heading" style="background-color:#ECECEC;">'
         					a += '<h3 class="panel-title" id="titlef">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
-        					a += '<h6 align="right" id="titlef"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash1.png" height="30"></a></h6>'
+        					a += '<h6 align="right" id="titlef"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h6>'
         					a += '</div>'
         					
         					a += '<div id="academyInfo_' + i +'" class="panel-body">'

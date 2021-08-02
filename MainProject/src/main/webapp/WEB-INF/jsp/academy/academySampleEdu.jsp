@@ -77,7 +77,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -92,110 +92,122 @@
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
+					<div class="row">
 					
-					<!-- 학원 이름, 전화번호 -->
-					<div id="academytitle" class="row" > </div>
+					<div class="col-sm-3"> <!-- 3 부분 -->
+					</div>
+					<div class="col-sm-6"> <!-- 본문 부분 -->
 					
-					<div class="card">
-                            <div class="card-body">
-                            
-                            <c:if test="${imgcount+vidcount < 1}">
-				        	
-				        	<img alt="noImage" src="/image/BuyEdyLogo.png">
-				        	
-				        	
-				        	<c:if test="${user.role == 'academy' }">
-				        	--이미지를 등록해 주세요!
-				        	</c:if>
-				        	
-				        	</c:if> 
-                            
-                            
-                            <c:if test="${imgcount+vidcount > 0}">        
- <!--                                    Image-->
-		                    <div class="row">
+							<!-- 학원 이름, 전화번호 -->
+						<div id="academytitle" class="row" > </div>
 						
-		           		    <c:set var="i" value="0" />
-							<c:forEach var="academy" items="${listfile}">
-									<c:set var="i" value="${ i+1 }" />
+						<div class="card">
+	                            <div class="card-body">
+	                            
+	                            <c:if test="${imgcount+vidcount < 1}">
+					        	
+					        	<img alt="noImage" src="/image/BuyEdyLogo.png">
+					        	
+					        	
+					        	<c:if test="${user.role == 'academy' }">
+					        		<br>
+					        		--이미지를 등록해 주세요!
+					        	</c:if>
+					        	
+					        	</c:if> 
+	                            
+	                            
+	                            <c:if test="${imgcount+vidcount > 0}">        
+								<!--  Image-->
+			                    <div class="row">
 							
-							<c:if test="${academy.multimediarole == 'I'}">
-							<div class="col-md-4">
-									<img style=" margin-bottom: 10px; " height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
-									</br>
-									<c:if test="${user.role == 'academy' }">
-									<span id=deleteButtonImage><a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')">삭제</a></span>
-									</br>
-									</c:if>
-							</div>
-							</c:if>
-				        	</c:forEach>	
-				        	
-				        	</div>
-				        	
-				        	</br></br></br></br>
-<!--  				        			Media-->
-				        	</br>	
-				        	
-				        	
-				        	
-				        	
-				        	<div class="row">
-				        	
-				        	<c:set var="i" value="0" />
-							<c:forEach var="academy" items="${listfile}">
-									<c:set var="i" value="${ i+1 }" />
-							<c:if test="${academy.multimediarole == 'V'}">
-							<div class="col-md-4">
-									<video height="450" width="450" style="margin-bottom: 10px; " controls>
-										<source src="/uploadImages/${academy.multimedia}">
-									</video>
-									<c:if test="${user.role == 'academy' }">
-									</br>
-									<span id="deleteButtonVideo" > <a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')"> 삭제</a></span>
-									</br>
-									</c:if>
-							</div>
-							</c:if>
-				        	</c:forEach>
-		        	
-		        			</div>
-		        			</c:if>
-		        	
-		        	
-                            </div>
-
-                        </div>
-					
-
-					
-						  </br></br></br>
-						<c:if test="${user.role == 'academy'}">
-						<c:if test="${imgcount+vidcount < 5}"> 
-						  
-						  <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
-						  	<button class="btn btn-primary" id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">Upload</button>
-						  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
-						  	<span style="font-size:15px; color: gray;">※첨부파일은 최대 5개까지 등록이 가능합니다.</span>
-						  	<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
-								<span>첨부 파일 목록</span>
-								<br />
-								<div id="articlefileChange">
+			           		    <c:set var="i" value="0" />
+								<c:forEach var="academy" items="${listfile}">
+										<c:set var="i" value="${ i+1 }" />
+								
+								<c:if test="${academy.multimediarole == 'I'}">
+								<div class="col-md-4">
+										<img style=" margin-bottom: 10px; " height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
+										</br>
+										<c:if test="${user.role == 'academy' }">
+										<span id=deleteButtonImage><a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')">삭제</a></span>
+										</br>
+										</c:if>
 								</div>
-							</div>
-						  	<button class="btn btn-primary" type="submit" style="border: 1px solid #ddd; outline: none;">Save</button>
-						  </form>
-						 </c:if>
-						</c:if>
-					
- 
-						    
-				</div>
-	      	</div>
-      	
-       </div>
-      
+								</c:if>
+					        	</c:forEach>	
+					        	
+					        	</div>
+					        	
+					        	</br></br></br></br>
+	<!--  				        			Media-->
+					        	</br>	
+					        	
+					        	
+					        	
+					        	
+					        	<div class="row">
+					        	
+					        	<c:set var="i" value="0" />
+								<c:forEach var="academy" items="${listfile}">
+										<c:set var="i" value="${ i+1 }" />
+								<c:if test="${academy.multimediarole == 'V'}">
+								<div class="col-md-4">
+										<video height="450" width="450" style="margin-bottom: 10px; " controls>
+											<source src="/uploadImages/${academy.multimedia}">
+										</video>
+										<c:if test="${user.role == 'academy' }">
+										</br>
+										<span id="deleteButtonVideo" > <a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')"> 삭제</a></span>
+										</br>
+										</c:if>
+								</div>
+								</c:if>
+					        	</c:forEach>
+			        	
+			        			</div>
+			        			</c:if>
+			        	
+			        	
+	                            </div>
+	
+	                        </div>
+						
+	
+						
+							  </br></br></br>
+							<c:if test="${user.role == 'academy'}">
+							 <c:if test="${imgcount+vidcount < 5}"> 
+							  
+							  <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
+							  	<button class="btn btn-primary" id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">Upload</button>
+							  	<input id="input_file" multiple="multiple" type="file" style="display:none;">
+							  	<span style="font-size:15px; color: gray;">※첨부파일은 최대 5개까지 등록이 가능합니다.</span>
+							  	<div class="data_file_txt" id="data_file_txt" style="margin:40px;">
+									<span>첨부 파일 목록</span>
+									<br />
+									<div id="articlefileChange">
+									</div>
+								</div>
+							  	<button class="btn btn-primary" type="submit" style="border: 1px solid #ddd; outline: none;">Save</button>
+							  </form>
+							 </c:if>
+							</c:if>
+						
+	 
+							    
+					</div>
+		      	</div>
+	      	
+	       </div>
+	      </div>
+		</div>
 	</div>
+	
+	<div class="col-sm-3"> <!-- 3 부분 -->
+	</div>
+					
+					
 	
 	<script >
 	
@@ -335,9 +347,7 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="titlef" class="col-md-5" style="font-size: 45px;">'+data.academyName+'</div>'
-						b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개</div>'
-				        b += '<div id="titlef" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
+						b += '<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">'+data.academyName+'</div>'
 					
 					$("#academytitle").html(b);
 						 

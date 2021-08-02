@@ -165,6 +165,13 @@
 					</div>
 					
 					<div class="row">
+					
+						<c:if test="${empty eduList}">
+							<div align="center">
+								<img src="/image/nothing.png"><br>
+								<h5>등록된 수업이 없습니다. 수업을 등록해주세요!</h5>
+							</div>
+						</c:if>
 						
 						<table class="table table-hover table-striped" >
 					      
@@ -225,6 +232,7 @@
 							     </c:forEach>
 							     </c:if>
 				    	</table>
+					
 					</div>
 					
 					<div class="row">
