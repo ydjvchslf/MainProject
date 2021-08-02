@@ -98,9 +98,15 @@
 					</div>
 					<div class="col-sm-6"> <!-- 본문 부분 -->
 					
-							<!-- 학원 이름, 전화번호 -->
-						<div id="academytitle" class="row" > </div>
-						
+						<!-- 학원 이름, 전화번호 -->
+						<div id="academytitle" class="row"></div>
+						<br>
+						<!-- 중간 소제목 시작-->
+						<div class="col-sm-12" align="center">
+						<span >멀티미디어 정보</span>
+						</div><br>
+						<br>
+						<!-- 중간 소제목 끝-->
 						<div class="card">
 	                            <div class="card-body">
 	                            
