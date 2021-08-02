@@ -331,7 +331,7 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="titlef" class="col-md-4" style=""><h2> &nbsp;&nbsp;'+data.academyName+'&nbsp;&nbsp;후기 </h2></div>'
+						b += '<div id="titlef" class="col-md-12" style="" align="center"><span style="font-size:38px;"> &nbsp;&nbsp;'+data.academyName+'&nbsp;&nbsp;후기 </span></div>'
 					$("#academytitle").html(b);
 						 
 				 }							

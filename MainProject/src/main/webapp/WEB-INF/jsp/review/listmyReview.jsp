@@ -52,6 +52,17 @@
 					<div id="title" class="row" ><h2>&nbsp;&nbsp;&nbsp;내 후기 보기</div></h2><br>
 				
 					<form>	
+					<div class="row">
+					<c:if test="${empty reviewList}">
+							<div class="col-sm-12" align="center">
+								<hr>
+							</div>
+							<div class="col-sm-12" align="center">
+								<img src="/image/nothing.png"><br>
+							</div>
+	 				</c:if></div>
+	 				
+	 				<c:if test="${!empty reviewList}">
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>
 						<table class="table">
 							 <thead>
@@ -80,16 +91,22 @@
 
 							 </tbody> 
 							
-						</table>
+						</table></c:if>
 					</form>
 				
 						
-				</div>
-	      	</div>
+				
+				<c:if test="${empty listR}">
+			<div class="col-sm-12" align="center">
+					<hr>
+			</div>
+			</c:if>
+			<br>
+	      	</div></div></div>
       	
        </div>
       
-	</div>
+	
 	
 	<script >
 		

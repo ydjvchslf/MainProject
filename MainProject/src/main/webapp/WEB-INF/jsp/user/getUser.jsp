@@ -4,7 +4,7 @@
 
 <html lang="UTF-8">
   <head>
-  	<title>Buy Edu</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -80,7 +80,7 @@
 							        <div class="col">
 							          <div class="panel" style="border:1px solid #ECECEC;">
 							            <div class="panel-heading" style="background-color:#ECECEC;">
-							              <h3 class="panel-title" id="titlef">
+							              <span class="panel-title" id="titlef" style="font-size: 23px;">
 							              	<c:choose>
 						                		<c:when test="${!empty user.role}">
 						                			${user.name}님의 Profile
@@ -89,7 +89,7 @@
 						                			${email}님의 Profile
 						                		</c:otherwise>
 					                		</c:choose>
-							              </h3>
+							              </span>
 							              <c:if test="${!empty user.role }"> 
 							              <h3 class="m-0 font-weight-bold text-primary" align="right" id="titlef">
 											<img src="/image/modify.png" width="30" data-toggle="modal"
@@ -131,7 +131,7 @@
 							            <!-- 우리학원 인증하기 등록하기 -->
 									       <div class="panel" style="border:1px solid #ECECEC;">
 								            <div class="panel-heading" style="background-color:#ECECEC;">
-								              <h3 class="panel-title" id="titlef">학원 인증하기</h3>
+								              <span class="panel-title" id="titlef" style="font-size: 23px;">학원 인증하기</span>
 								              <h3 class="panel-title" align="right" id="titlef">
 					                               <span name="addConnect"><img src="/image/plus.png" width="30"></span>
 								              </h3>
@@ -150,7 +150,7 @@
 								       <c:if test="${!empty user.role && user.role ne 'academy' && user.role ne 'admin'}">  
 								          <div class="panel" style="border:1px solid #ECECEC;">
 							   		        <div class="panel-heading" style="background-color:#ECECEC;">
-								              <h3 class="panel-title" id="titlef">My Academy</h3>
+								              <span class="panel-title" id="titlef" style="font-size: 23px;">My Academy</span>
 								            </div>
 								            <div class="panel-body">
 								              <input type="hidden" value="${user.userNo}">
@@ -346,9 +346,9 @@
 	                                        </div>
 	                                        <div class="form-group" align="center">
 	                                        	<div class="out_text">
-		                                        	<p>정말 탈퇴하시겠습니까? <br>
-					                                    계정복구는 신청한 날짜로부터 <strong style="color:red">30일</strong> 이내만 가능합니다.
-									 				</p>
+		                                        	 <span style="font-family:ChosunGu; font-size: 15px;"><p>정말 탈퇴하시겠습니까? <br>
+					                                   style계정복구는 신청한 날짜로부터 <strong style="color:red">30일</strong> 이내만 가능합니다.
+									 				</p></span>
 								 				</div>
 	                                        </div>
 		                                        <button type="button" id="out" name="out" class="btn btn-primary btn-user btn-block">

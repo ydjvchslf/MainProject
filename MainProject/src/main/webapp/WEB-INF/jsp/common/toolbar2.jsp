@@ -18,7 +18,7 @@
 	
 	            <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	              <ul class="nav navbar-nav ml-auto">
-						<h4> <strong>Buy Edu</strong> </h4>
+						<h4> <strong>Buy!edu</strong> </h4>
 	              </ul>
 	            </div>
 	          

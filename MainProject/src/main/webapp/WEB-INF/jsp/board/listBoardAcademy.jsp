@@ -102,7 +102,7 @@
 	font-family :NanumBarunGothic;
 	position : absolute;
 	right : -17%;
-	top : 4.7%;
+	top : 23%;
 	}
 	
 	#boardTable{
@@ -150,9 +150,9 @@
 					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;
 					 width : 100%;">
 				  <!-- 게시판 title -->
-				   <div class="col-md-6 text-left" id="boardHeader">
-		    	${academy.academyName}  공지사항<br>
-		    </div><br>
+				   <div class="col-md-12 " id="boardHeader" align="center">
+		    	${academy.academyName}  공지사항
+		    </div>
 		    
 		    <div class="col-md-6 text-right" id="searchPosition">
 			    <form class="form-inline" >
