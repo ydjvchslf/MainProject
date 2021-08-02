@@ -49,52 +49,6 @@ public class UserController {
 	@Value("10")
 	int pageSize;
 	
-	
-	//Test용 
-	@RequestMapping( value="tiles", method=RequestMethod.GET )
-	public String test(Search search , Model model , HttpServletRequest request) throws Exception{
-		
-		System.out.println("/user/listUser : GET / POST");
-		
-		System.out.println("계정상태=> " + search.getSearchAccountState());
-		
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		System.err.println("Search => " + search);
-		
-		System.out.println("searchRole 잘받았나==>" + search.getSearchRole() );
-		
-		List<String> roles = search.getSearchRole();
-		List<String> states = search.getSearchAccountState();
-		
-		System.err.println(roles);
-		System.err.println(states);
-		
-		model.addAttribute("roles", roles);
-		model.addAttribute("states", states);
-			
-		// Business logic 수행
-		Map<String , Object> map=userService.getUserList(search);
-		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
-		
-		// Model 과 View 연결
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-		
-		System.out.println( "써치 키워드->" + search.getSearchKeyword() );
-		
-		System.out.println("listUser 끝");
-		
-		return "/tiles/user/listUserTiles";
-	}
-	
-	
 	@RequestMapping( value="addUser", method=RequestMethod.GET )
 	public String addUser() throws Exception{
 		
