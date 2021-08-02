@@ -366,9 +366,6 @@
 						</div><!-- 계정휴면 모달 끝-->		
 						
 						
-						
-						
-						
 						<!-- 비번수정 모달 -->
 						<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog"
 							aria-labelledby="myModalLabel">
@@ -1289,13 +1286,14 @@
         				var a = '';
         				
         				if(value.length<=2){
+        					for(var i=0; i<3-value.length; i++){
         					a += '<div class="col-sm-4"><div class="panel" style="border:1px solid #ECECEC;">'
     						a += '<div class="panel-heading" style="background-color:#ECECEC;">'
     						a += '<h6 class="panel-title" id="titlef"> 학원 등록하기 </h6>'
     						
     						a += '<h3 class="panel-title" align="right"> <img src="/image/plus.png" width="30" data-toggle="modal" data-target="#addAca"></h3></div>'
-			              
     						a += '</div></div>'
+        					}
     					}
         				
         				for(var i=0; i<value.length;i++){
