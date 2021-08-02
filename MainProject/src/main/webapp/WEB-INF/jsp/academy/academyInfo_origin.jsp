@@ -69,13 +69,6 @@
 			    font-style: normal;
 			}
 			
-			#chatBtn{
-				position: relative;
-				top: 5%;
-				right: 0%;
-				z-index: 1;
-			}
-			
 			
 		
  		</style>
@@ -84,7 +77,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC;">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -92,42 +85,32 @@
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5"> 
 	        
-	        <div class="container-fluid">
+	        <div class="container-fluid"  >
 	        	 
 	        	 <jsp:include page="../common/toolbar.jsp"></jsp:include> 
 	        
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
+					
+					<!-- 학원 이름, 전화번호 -->
+					<div id="academytitle" class="row" ></div>
+					
 					<div class="row">
-					
-					<div class="col-sm-3"> <!-- 3 부분 -->
-					</div>
-					<div class="col-sm-6"> <!-- 본문 부분 -->
-					
-						<div class="row" id="chatBtn">
-							<div align="right" class="col-md-12">
-								<br>
-								<button id="chat" class="btn btn-primary" style="background-color:#FFCA77;" align="left">Academy Talk</button>
-							</div>
+						<div align="right" class="col-md-12">
+							<button id="chat" class="btn btn-primary" style="background-color:#FFCA77;" align="left">Academy Talk</button>
 						</div>
-					
-						<!-- 학원 이름, 전화번호 -->
-						<div id="academytitle" class="row" ></div>
-						
-						
-						<!-- 학원 정보 -->
-						<div id="academyInfo" class="row" style="margin-top: 30px;"></div>
-							<br>
-							<h4 id="titlef">오시는 길</h4>
-						<div class="row" style="margin-top: 30px;">
-							<div class="col-md-12" >
-								<div id="map" style="width:auto;height:400px;"></div>
-							</div>
-						</div>
-					
 					</div>
-					<div class="col-sm-3"> <!-- 3 부분 -->
+					
+					
+					
+					<!-- 학원 정보 -->
+					<div id="academyInfo" class="row" style="margin-top: 30px;"></div>	
+					
+					<div class="row" style="margin-top: 30px;">
+						<div class="col-md-12" >
+							<div id="map" style="width:auto;height:400px; border:3px solid gold; "></div>
+						</div>
 					</div>
 					
 						    
@@ -138,10 +121,7 @@
       
 	</div>
 	
-	</div>
-	
-	
-	<script>
+	<script >
 	
 	$('#chat').on('click', function(){
 		var url = "https://academy-chat.herokuapp.com/chat.html?username=${user.name}&room=${academy.academyCode}&roomname=${academy.academyName}";
@@ -193,11 +173,11 @@
 				 var a = ''
 					 
 				 	 a += '<div class="col-sm-6" id="AcademyIntro">'
-				 	 a += '<div class="panel" style="border:1px solid #ECECEC;">'
-				 	 a += '<div class="panel-heading" style="background-color:#ECECEC;">'
+				 	 a += '<div class="panel" style="border:5px solid #FFCA77;">'
+				 	 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
 			 	 	 a += '<h3 class="panel-title">학원 소개</h3>'
 			 	 if(role == 'academy'){	 
-			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>' 
+			 	 	 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateIntro(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>' 
 			 	 }
 			 	 	 a += '</div>'
 			 	 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 20px;">'
@@ -206,11 +186,11 @@
 			 		 
 			 		 
 			 		 a += '<div class="col-sm-6" id="AcademyHistory">'
-			 		 a += '<div class="panel" style="border:1px solid #ECECEC;">'
-					 a += '<div class="panel-heading" style="background-color:#ECECEC;">'
+			 		 a += '<div class="panel" style="border:5px solid #FFCA77;">'
+					 a += '<div class="panel-heading" style="background-color:#FFCA77;">'
 			 		 a += '<h3 class="panel-title">학원 실적</h3>'
 			 	if(role == 'academy'){
-			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify.png" height="30"></a></h3>'
+			 		 a += '<h3 class="m-0 font-weight-bold text-primary" align="right"><a onclick="updateHistory(\''+data.academyCode+'\')"><img src="/image/modify1.png" height="30"></a></h3>'
 			 	}
 			 		 a += '</div>' 
 				 	 a += '<div class="panel-body" style="white-space: pre; height: 200px; overflow: auto; font-size: 20px;">'
@@ -219,10 +199,9 @@
 						
 					 
 				var b = '';
-					b += '<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">'+data.academyName+'</div>'
-					b += '<div></div>'
-					b += '<div class="col-md-6" style="font-size: 15px;" align="left"><strong> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개 </strong></div>'
-			        b += '<div class="col-md-6" align="right"> <strong> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</strong></div>'
+					b += '<div id="titlef" class="col-md-5" style="font-size: 45px;">'+data.academyName+'</div>'
+					b += '<div id="titlef" class="col-md-4" style="font-size: 15px;"> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개</div>'
+			        b += '<div id="titlef" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
 					 
 				$("#academyInfo").html(a);
 				$("#academytitle").html(b);
@@ -235,11 +214,11 @@
 	    var intro ='';
 	    
 	    	intro += '<div class="col-sm-12" id="AcademyIntro">';
-	    	intro += '<div class="panel" style="border:1px solid #ECECEC;">'
-	    	intro += '<div class="panel-heading" style="background-color:#ECECEC;">'
+	    	intro += '<div class="panel" style="border:5px solid #FFCA77;">'
+	    	intro += '<div class="panel-heading" style="background-color:#FFCA77;">'
 	    	intro += '<h3 class="panel-title">학원 소개</h3>'
 	    	intro += '</div>'
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="38" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
+	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
 	   	 	intro += '</div></div>';
 	    
@@ -265,14 +244,14 @@
 	function updateHistory(academyCode){
 	    var history ='';
 	    
-	    //alert("코드 = " + academyCode + "실적글 = "+academyInfo.academyHistory);
+	    alert("코드 = " + academyCode + "실적글 = "+academyInfo.academyHistory);
 	    
 	    	history += '<div class="col-sm-12" id="AcademyHistory">';
-	    	history += '<div class="panel" style="border:1px solid #ECECEC;">'
-	    	history += '<div class="panel-heading" style="background-color:#ECECEC;">'
+	    	history += '<div class="panel" style="border:5px solid #FFCA77;">'
+	    	history += '<div class="panel-heading" style="background-color:#FFCA77;">'
 	    	history += '<h3 class="panel-title">학원 실적</h3>'
 	    	history += '</div>'
-	    	history += '<textarea name="academy_'+academyCode+'" rows="10" cols="38" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyHistory+'</textarea>'
+	    	history += '<textarea name="academy_'+academyCode+'" rows="10" cols="60" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyHistory+'</textarea>'
 	    	history += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
 	    	history += '</div></div>';
 	    
