@@ -11,7 +11,7 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 
   <head>
-  	<title>Buy Edu</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -88,13 +88,13 @@
 	
 	#boardHeader{
 	vertical-align : top;
-	font-size : 0px;
-	color : black;
+	font-size : 38x;
+	color : #333;
 	font-family : TmonMonsori;
 	}
-	#boardHeader a:link { color: black; text-decoration: none;}
- 	#boardHeader a:visited { color: black; text-decoration: none;}
- 	#boardHeader a:hover { color: black; text-decoration: underline;}
+	#boardHeader a:link { color: #3A3F43; text-decoration: none;}
+ 	#boardHeader a:visited { color: #3A3F43; text-decoration: none;}
+ 	#boardHeader a:hover { color: #3A3F43; text-decoration: underline;}
 
 	#recommendPosition{
 	background-color : #FFF5E1;
@@ -168,7 +168,7 @@
 					 padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;
 					 width : 100%;">
 				  <!-- 게시판 title -->
-				  <div class="row" id="boardHeader">
+				  <div class="row" id="boardHeader" >
 					<c:choose>
 					<c:when test="${board.cateCode eq '0' }">
 					  <a href="/board/listBoard?cateCode=0"><h2>&nbsp;&nbsp;&nbsp;&nbsp;공지사항</h2></a>
@@ -220,9 +220,18 @@
 					</div>
 	    		  </div>
 				</div>
-		
+			<div class="col-sm-12" align="center">
+			<hr>
+			</div>
+      		<c:if test="${empty listc}">
+							<div class="col-sm-12" align="center">
+								<img src="/image/nothing.png"><br>
+							</div>
+			</c:if>
+						
       		<!-- 게시판 table Start -->
 			<div class="table-responsive">
+			<c:if test="${!empty listc}">
 			<!--  내가 쓴 게시글  -->
 			 <c:if test="${search.isMine eq 'y' }">
 			 <table class="table" id="boardTable" >
@@ -250,8 +259,9 @@
 				  </tr>
            		 	</c:forEach>
           		</tbody>
-     	 	</table></c:if>
+     	 	</table></c:if></c:if>
      	 	<!--  나머지 게시판  -->
+			   <c:if test="${!empty listc}">     	 	
      	 	   <c:if test="${search.isMine ne 'y' }">
       	       <table class="table" id="boardTable" >
         		 <!-- 게시판 table head -->
@@ -307,7 +317,7 @@
 				  </tr>
            		 	</c:forEach>
           		</tbody>
-     	 	</table></c:if>
+     	 	</table></c:if></c:if>
      	</div>
      	
      	
@@ -341,6 +351,9 @@
 			
 		  </c:choose>	
 			 	
+		</div>
+		<div class="col-sm-12" align="center">
+			<hr>
 		</div>
 		<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>

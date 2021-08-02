@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>학원 검색</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -50,44 +50,44 @@
     font-style: normal;
 	}
 	
-			body{
-				overflow-x:hidden; overflow-y:visible;
-				font-family: 'ChosunGu';
-			}
+	body{
+	overflow-x:hidden; overflow-y:visible;
+	font-family: 'ChosunGu';
+	}
 	
-		    #title{
-				vertical-align : top;
-				font-size : 50px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-			
-			#count{
-				vertical-align : bottom;
-				font-size : 20px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-			
-			#phone{
-				vertical-align : right;
-				font-size : 15px;
-				color : #1F4E79;
-				font-family : TmonMonsori;
-			}
-			
-			#panel-color{
-				background-color: black !important;
-			}
-			
-			
-			@font-face {
-			    font-family: 'TmonMonsori';
-			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
-			    font-weight: normal;
-			    font-style: normal;
-			}
-			
+    #title{
+		vertical-align : top;
+		font-size : 50px;
+		color : #1F4E79;
+		font-family : TmonMonsori;
+	}
+	
+	#count{
+		vertical-align : bottom;
+		font-size : 20px;
+		color : #1F4E79;
+		font-family : TmonMonsori;
+	}
+	
+	#phone{
+		vertical-align : right;
+		font-size : 15px;
+		color : #1F4E79;
+		font-family : TmonMonsori;
+	}
+	
+	#panel-color{
+		background-color: black !important;
+	}
+	
+	
+	@font-face {
+	    font-family: 'TmonMonsori';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+		
 	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
     z-index: 3;
     color: #fff;
@@ -123,12 +123,15 @@
 
 					<!-- 학원 이름, 전화번호 -->
 					<div id="academytitle" class="row" ></div>
-					
+					<div class="col-sm-12" align="center">
+			<hr>
+			</div>
 					<div class="row">
 						<div class="col-md-12">
 						<c:if test="${count == 0 && state == '1'}">
 						
-							
+					
+					
 					<button class="btn btn-primary btn-lg" id="reviewButton" data-toggle="modal" data-target="#addReview">
 					  후기작성
 					</button>
@@ -153,7 +156,6 @@
 									  <div class="col-xs-6 col-md-4">
 									  	<input type="text" name="academyPhone" placeholder="학원전화번호" class="form-control"> <br/><br/>
 									  </div>
-								
 									</div>
 									
 									<div class="row">
@@ -179,7 +181,7 @@
 										<input type="hidden" id="lng" name="academyLng"  placeholder="경도" readonly/>
 
 								</form>
-								
+							  
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -227,8 +229,15 @@
 					<div class="row">	
 					<div class="col-md-12">
 					<form class="form-inline" name="detailForm">	
-					
+					<c:if test="${empty listR}">
+							<div class="col-sm-12" align="center">
+								<img src="/image/nothing.png"><br>
+							</div>
+	 				</c:if>
+	 				
+	 				
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>
+					<c:if test="${!empty listb}">
 						<table class="table">
 							 <thead>
 							  											<!-- Modal -->
@@ -283,11 +292,13 @@
 
 							 </tbody> 
 							
-						</table>
+						</table></c:if>
 					</form>
 					</div>
 					</div>
-					
+			<div class="col-sm-12" align="center">
+			<hr>
+			</div>
 						<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
 
 				</div>
@@ -318,7 +329,7 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="titlef" class="col-md-4" style=""><h2> &nbsp;&nbsp;'+data.academyName+'</h2></div>'
+						b += '<div id="titlef" class="col-md-4" style=""><h2> &nbsp;&nbsp;'+data.academyName+'&nbsp;&nbsp;후기 </h2></div>'
 					$("#academytitle").html(b);
 						 
 				 }							
