@@ -11,17 +11,15 @@ import com.buyedu.domain.Search;
 	@Mapper
 	public interface ComplainDao {
 		
-		void addComplain(Complain complain)throws Exception;
+		void addComplain(Complain complain) throws Exception;
 		
-		int getComplain(int complainNo);
+		Complain getComplain(int complainNo) throws Exception;
 		
-		int updateComplain(Complain complain);
+		List<Complain> getComplainList(Search search) throws Exception;
 		
-		List<Complain> getComplainList(Search search);
+		int getTotalCount(Search search) throws Exception;
 		
-		int getTotalCount(Search search);
+		void updateComplainState(Complain complain) throws Exception;
 		
-		void deleteComplain(int complainNo);
-	
 
 }

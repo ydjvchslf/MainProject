@@ -9,68 +9,82 @@
  	
 	<resultMap id="complainSelectMap" type="complain">
 		<result property="complainNo" 				column="complain_no" 			jdbcType="NUMERIC"/>
-		<result property="boardNo" 		 	    	column="board_no" 				jdbcType="NUMERIC"/>
+		<result property="board.boardNo" 		 	column="board_no" 				jdbcType="NUMERIC"/>
 		<result property="commentNo"				column="comment_no" 			jdbcType="NUMERIC" />
-		<result property="reviewNo"					column="review_no" 				jdbcType="NUMERIC" />
-		<result property="complainUserNo.userNo" 	column="complain_user_no" 		jdbcType="NUMERIC" />
+		<result property="review.reviewNo"			column="review_no" 				jdbcType="NUMERIC" />
+		<result property="user.userNo" 				column="complain_user_no" 		jdbcType="NUMERIC" />
+		<result property="complainSort" 			column="complain_sort"		 	jdbcType="CHAR" />
 		<result property="complainReasonCode" 		column="complain_reason_code" 	jdbcType="CHAR" />
+		<result property="complainReason" 			column="COMPLAIN_REASON_NAME" 	jdbcType="CHAR" />
 		<result property="complainDate" 			column="complain_date"		 	jdbcType="DATE" />
+		<result property="complainState" 			column="complain_state"		 	jdbcType="CHAR" />
 	</resultMap>
 	
-	
-	<insert 	id="addComplain"		parameterType="complain" >
-	 INSERT
-		INTO complain (complain_no, academy_code , review_writer, review_title, review_content, review_date)
-		VALUES ( seq_complain_complain_no.nextval , #{boardNo} , #{commentNo} , #{reviewNo} , #{complainUserNo.userNo} , ${complainReasonCode} ,
-				SYSDATE )
+	<!-- SQL : INSERT  -->
+	<insert 	id="addComplain" parameterType="complain" >
+		INSERT
+		INTO complain
+		(complain_no, board_no, comment_no, review_no, complain_user_no, complain_sort, complain_reason_code, complain_date, complain_state)
+		VALUES( seq_complain_complain_no.NEXTVAL
+				,#{board.boardNo:NUMERIC}
+				,#{commentNo:NUMERIC}
+				,#{review.reviewNo:NUMERIC}
+				,#{user.userNo}
+				,#{complainSort}
+				,#{complainReasonCode}
+				,SYSDATE
+				,'0')
 	 </insert>
-	
 	 
-	
+	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getComplain"	parameterType="int"	resultMap="complainSelectMap">
-						SELECT c.complain_no , c.review_no , c.complain_user_no, a.complain_reason_name , c.complain_date
-						FROM complain c , complain_reason a
-						WHERE c.complain_reason_code = a.complain_reason_code AND complain_no = (#{value})
+		SELECT
+		*
+		FROM complain 
+		WHERE complain_no = #{complainNo}
 	 </select>
 	 
-
-	<!--  <update id="updateComplain" parameterType="complain">
-		UPDATE review
-		<set>
-		  review_state = '0'
-		</set>
-		WHERE review_no = '${reviewNo}'
-	</update>
-	
-	<delete id="deleteComplain" parameterType="int">
-		update review
-		<set>
-			review_state = '2'
-		</set>
-		WHERE review_no = '${reviewNo}'
-	</delete>
-		  -->
-
-	
+	<!-- SQL : SELECT LIST -->
 	<select  id="getComplainList"  parameterType="search"	resultMap="complainSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT c.complain_no , c.review_no , c.complain_user_no, a.complain_reason_name , c.complain_date
-											FROM complain c , complain_reason a
-											WHERE c.complain_reason_code = a.complain_reason_code 
-											ORDER BY complain_no desc ) inner_table 
+	  					FROM		(	SELECT  c.complain_no, c.board_no, c.comment_no, c.review_no, c.complain_user_no, c.complain_sort, r.complain_reason_code, c.complain_date, r.COMPLAIN_REASON_NAME
+											FROM complain c, complain_reason r
+											<if test="searchCondition != null">
+												<where>
+												c.complain_reason_code = r.complain_reason_code
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				AND r.complain_reason_code = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY complain_no desc) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
-	 	
-		
-	
+	 
+	 <!-- SQL : UPDATE 신고 상태 수정 -->
+	<update	id="updateComplainState"	parameterType="complain" >
+	   	UPDATE complain
+	   	<set>
+	   		complain_state = #{complainState},
+	   	</set>
+	   	WHERE complain_no = #{complainNo}
+	 </update>
+	 
+
 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT c.complain_no , c.review_no , c.complain_user_no, a.complain_reason_name , c.complain_date
-						FROM complain c , complain_reason a
-						WHERE c.complain_reason_code = a.complain_reason_code ) countTable						
+	  	FROM(	SELECT *
+				FROM complain
+				<if test="searchCondition != null">
+				<where>
+					<if test="searchCondition == 0 and searchKeyword !='' ">
+						complain_reason_code = #{searchKeyword}
+					</if>
+				</where>
+			  </if>) countTable						
 	 </select>
  
 </mapper>

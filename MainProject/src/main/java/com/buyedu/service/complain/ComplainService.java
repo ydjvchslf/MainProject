@@ -12,7 +12,6 @@ import com.buyedu.domain.Search;
 import com.buyedu.domain.Complain;
 
 
-
 @Service
 public class ComplainService {
 	
@@ -21,34 +20,35 @@ public class ComplainService {
 			
 	public void addComplain(Complain complain) throws Exception {
 		complainDao.addComplain(complain);
-		System.out.println("여기는 애드컴플레인");
 	}
-
-	public int getComplain(int complainNo) throws Exception {
+	
+	// 신고 정보
+	public Complain getComplain(int complainNo) throws Exception{
+		
 		return complainDao.getComplain(complainNo);
-	}
-
-	public List<Complain> getComplainList(Search search) throws Exception {
-		List<Complain> list= complainDao.getComplainList(search);
+	};
+	
+	// 신고 목록
+	public Map<String, Object> getComplainList(Search search) throws Exception{
+		
+		List<Complain> list = complainDao.getComplainList(search);
 		int totalCount = complainDao.getTotalCount(search);
 		
+		System.out.println("lilllll" + list);
 		
-	
-		list.get(0).setTotalCount(totalCount);
-		System.err.println(list);
-		return list;
-	}
-
-	public void updateComplain (Complain complain) throws Exception {
-		complainDao.updateComplain(complain);
-		System.out.println("여기는 업데이트컴플레인");
-
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 	
-	public void deleteComplain(int complainNo) throws Exception {
-		System.out.println("여기는 딜리트컴플레인");
-		complainDao.deleteComplain(complainNo);
+	// 신고 처리
+	public void updateComplainState(Complain complain) throws Exception{
 		
-	}
+		complainDao.updateComplainState(complain);
+		
+	};
+
 
 }

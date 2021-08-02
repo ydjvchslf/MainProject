@@ -124,6 +124,23 @@
 				});
 			});	
 		 
+	$(function() {
+		$('#ok').on('click', function(){
+			var boardNo = ${board.boardNo};
+			var reason = $("input[name='complain']:checked").val();
+				
+			$.ajax({
+				 url : '/complain/json/addBoardComplain/'+boardNo,
+			     type : 'post',
+			     data : {'boardNo' : boardNo, 'reason' : reason},
+			     success : function(data){
+			    	 location.reload()
+					alert("신고가 완료 되었습니다.");
+			     }
+			});
+		})
+	})
+		 
 	</script>
 
 <html>
@@ -204,7 +221,51 @@
 		    <div class="row">
 		    
 		    <div class="col-sm-12 text-right">
-		    <button class="btn btn-primary" id="resetButton" value="${board.boardNo}" href="#" onClick="history.back()">신고</button>
+		    <button class="btn btn-primary" id="complainButton" data-toggle="modal" data-target="#complainBrd">신고</button>
+		    
+		    <!-- 신고 버튼 모달 -->
+		    <div class="modal fade" id="complainBrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">신고 사유를 선택해 주세요</h4>
+						      </div>
+						      <div class="modal-body">
+						      <!-- 모달 내용 -->
+						        <form>
+						            <div class="row">
+									  
+									  <div class="col-sm-5" align="left" style="padding-left: 50;">
+									  	<br/>
+									  	<input type="radio" id="1" name="complain" value="1">&nbsp;<label for="1"> 욕설 </label>
+									  	<br/>
+									  	<input type="radio" id="2" name="complain" value="2">&nbsp;<label for="2"> 도배 </label>
+									  	<br/>
+									  	<input type="radio" id="3" name="complain" value="3">&nbsp;<label for="3"> 홍보, 광고 </label>
+									  	<br/>
+									  	<input type="radio" id="4" name="complain" value="4">&nbsp;<label for="4"> 음란성 </label>
+									  	<br/>
+									  	<input type="radio" id="5" name="complain" value="5">&nbsp;<label for="5"> 기타 </label>
+									  	<br/>
+									  </div>
+								
+									</div>
+								</form>
+								
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" id="ok" class="btn btn-primary">신고 하기</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+		    
+		    
+		    
+		    
+		    
+		    
 		      <button class="btn btn-primary" id="resetButton" value="${board.boardNo}" href="#" onClick="history.back()">목록으로</button>
 		      <c:if test="${userNo eq board.boardWriter}">
 		      <button class="btn btn-primary" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   

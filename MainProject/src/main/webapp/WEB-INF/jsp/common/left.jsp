@@ -103,6 +103,9 @@
 	                    <a href="/user/listUser">회원 목록</a>
 	                </li>
 	                <li>
+	                    <a href="/complain/getComplainList">신고 관리</a>
+	                </li>
+	                <li>
 	                    <a href="/chart/getChart">현황 차트</a>
 	                </li>
 		            </ul>
