@@ -1,22 +1,12 @@
 package com.buyedu.restcontroller.edu;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.buyedu.domain.Edu;
-import com.buyedu.domain.Page;
-import com.buyedu.domain.Search;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.edu.EduService;
 import com.buyedu.service.user.UserService;
@@ -32,50 +22,21 @@ public class EduRestController {
 	@Autowired
 	AcademyService acaService;
 	
+	// 페이지 버튼의 끝이 5의 배수이다.
 	@Value("5")
 	int pageUnit;
 	
+	// 한 페이지에 보여줄 개수
 	@Value("6")
 	int pageSize;
 	
+	// 원장이 수업을 삭제할 때 사용되는 메소드
 	@PostMapping( "json/deleteEdu/{eduNo}" )
-	public int deletePickEdu( @PathVariable int eduNo, HttpServletRequest request ) throws Exception {
-		
-		System.out.println(" /json/deleteEdu : 시작 ");
-		
-		System.err.println(eduNo);
+	public int deletePickEdu( @PathVariable int eduNo) throws Exception {
 		
 		eduService.deletePickEdu(eduNo);
 		
 		return eduService.deleteEdu(eduNo);
-		
 	}
 	
-	@RequestMapping( value="/json/listEdu" )
-	public String listEdu( @ModelAttribute("search") Search search , 
-							@ModelAttribute("edu") Edu edu , Model model , HttpServletRequest request) throws Exception{
-		
-		System.out.println("/edu/listEdu : GET / POST");
-		
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		// Business logic ����
-		Map<String , Object> map= eduService.getEduList(search);
-		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.err.println(map);
-		
-		// Model 怨� View �곌껐
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-		
-		System.out.println("listEdu End");
-		
-		return "/edu/listEdu";
-	}
-
 }

@@ -18,21 +18,30 @@
 		<result property="eduGrade"			column="edu_grade"			jdbcType="VARCHAR"/>
 		<result property="eduSubject"		column="edu_Subject"		jdbcType="VARCHAR"/>
 		<result property="eduPrice"			column="edu_price"			jdbcType="NUMERIC"/>
+		<result property="pickCheck"		column="pick_check"			jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	<!-- buyEdu : Pick Edu INSERT -->
 	<insert 	id="addPickEdu"	parameterType="PickEdu" useGeneratedKeys="true" keyColumn="pick_no" keyProperty="pickNo">
 		INSERT
-		INTO pick_edu( pick_no, pick_user_no, pick_edu_no )
-		VALUES( SEQ_PICK_EDU_PICK_NO.nextval, ${picker.userNo}, ${eduNo} )
+		INTO pick_edu( pick_no, pick_user_no, pick_edu_no, pick_check )
+		VALUES( SEQ_PICK_EDU_PICK_NO.nextval, ${picker.userNo}, ${eduNo}, ${pickCheck} )
 	</insert>
 	
 	<!--  buyEdu : Pick Edu GET -->
 	<select 	id="getPickEdu"	parameterType="String"	resultMap="pickEduSelectMap" >
 		SELECT
-		pick_no, pick_user_no, pick_edu_no
+		pick_no, pick_user_no, pick_edu_no, pick_check
 		FROM pick_edu
 		WHERE pick_no = '${value}'
+	</select>
+	
+	<!--  buyEdu : Pick Edu GET -->
+	<select 	id="getPickNo"	parameterType="pickedu"	resultMap="pickEduSelectMap" >
+		SELECT
+		pick_no
+		FROM pick_edu
+		WHERE pick_user_no = #{picker.userNo} AND pick_edu_no = #{eduNo}
 	</select>
 	
 	<!-- buyEdu : Pick Edu GET LIST -->

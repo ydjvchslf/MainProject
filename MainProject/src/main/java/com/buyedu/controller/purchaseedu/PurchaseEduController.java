@@ -2,8 +2,6 @@ package com.buyedu.controller.purchaseedu;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,6 +20,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.edu.EduService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 @Controller
 @RequestMapping("/purchaseedu/*")
@@ -38,30 +37,19 @@ public class PurchaseEduController {
 		System.out.println(this.getClass());
 	}
 	
+	// 페이지 버튼의 끝이 5의 배수이다.
 	@Value("5")
 	int pageUnit;
 	
-	@Value("4")
+	// 한 페이지에 보여줄 개수
+	@Value("5")
 	int pageSize;
 	
-	@RequestMapping ( value = "addPurchaseEdu", method=RequestMethod.GET )
-	public String addPurchaseEduView( @RequestParam("eduNo") int eduNo, Model model ) throws Exception {
-		
-		System.out.println("/purchase/addPurchaseEdu : GET ");
-		
-		Edu edu = eduService.getEdu(eduNo);
-		
-		model.addAttribute("edu", edu);
-		
-		return "/purchase/addPurchaseEduView";
-	}
-	
+	// 학생, 학부모가 수업 구매를하면 결제정보를 디비에 담고 구매목록으로 네비게이터
 	@RequestMapping ( value = "addPurchaseEduUid", method=RequestMethod.GET )
 	public String addPurchaseEduUid( @RequestParam("eduNo") int eduNo ,
 										@RequestParam("userNo") int userNo , 
 										@RequestParam("uid") String uid) throws Exception {
-		
-		System.out.println("/purchase/addPurchaseEduUid : GET");
 		
 		PurchaseEdu purchase = new PurchaseEdu();
 		Edu edu = eduService.getEdu(eduNo);
@@ -69,6 +57,7 @@ public class PurchaseEduController {
 		purchase.setBuyer( userService.getUserByUserNo(userNo) );
 		purchase.setPurchaseEdu( edu );
 		edu.setEduRest( edu.getEduRest() - 1);
+		
 		if ( edu.getEduRest() == 0 ) {
 			edu.setEduState("2");
 			eduService.updateEduRest(edu);
@@ -84,11 +73,10 @@ public class PurchaseEduController {
 		return "forward:/purchaseedu/listPurchaseEdu";
 	}
 	
+	// 학생, 학부모가 자신이 구매한 수업의 목록을 보여주는 메소드
 	@RequestMapping ( "listPurchaseEdu" )
 	public String listPurchaseEdu( @ModelAttribute("search") Search search , 
-									@RequestParam("userNo") int UserNo , Model model , HttpServletRequest request) throws Exception{
-		
-		System.out.println("/purchase/listPurchase : GET / POST");
+									@RequestParam("userNo") int UserNo , Model model) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -96,12 +84,10 @@ public class PurchaseEduController {
 		search.setPageSize(pageSize);
 		search.setSearchUserNo(UserNo);
 		
-		// Business logic 수행
 		Map<String , Object> map= eduService.getPurchaseEduList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
-		// Model 과 View 연결
+
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
@@ -111,12 +97,10 @@ public class PurchaseEduController {
 		return "/purchase/listPurchaseEdu";
 	}
 	
+	// 원장이 자신의 학원에 등록된 수업을 구매한 구매자의 목록을 보여주는 메소드
 	@RequestMapping ( "listPurchaseAcademy" )
 	public String listPurchaseAcademy( @ModelAttribute("search") Search search ,
-										@RequestParam("academyCode") String academyCode ,
-										Model model , HttpServletRequest request) throws Exception{
-		
-		System.out.println("/purchase/listPurchaseAcademy : GET / POST");
+										@RequestParam("academyCode") String academyCode , Model model) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -124,25 +108,20 @@ public class PurchaseEduController {
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(academyCode);
 		
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		User user = UserUtil.user();
 		Academy academy = acaService.getAcademy(academyCode);
 		
-		// Business logic 수행
 		Map<String , Object> map= eduService.getPurchaseAcademyList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
-		// Model 과 View 연결
 		
-		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		Map<String, Object> map2 = acaService.getAcademyCodeList(user.getUserNo());
 		
 		model.addAttribute("list", map2.get("list"));
 		model.addAttribute("purchaseList", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("academy", academy);
-		
-		System.out.println("listPurchaseAcademy End");
 		
 		return "/purchase/listPurchaseAcademy";
 	}
