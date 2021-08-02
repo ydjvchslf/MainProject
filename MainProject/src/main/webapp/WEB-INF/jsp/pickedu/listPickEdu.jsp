@@ -63,7 +63,9 @@
 		      $( "td:nth-child(3)" ).on("click" , function() {
 
 		    	 var eduNo = $(this).find('input').val()
-		         self.location ="/edu/getEdu?eduNo="+eduNo;
+		    	 var academyCode = $(this).find('input').val()
+		    	 
+		         self.location ="/edu/getEdu?eduNo="+eduNo+"&academyCode="+academyCode;
 		      });
 		      
 		      $( "td:nth-child(3)" ).css("color" , "skyblue");
@@ -152,7 +154,10 @@
 								<tr>
 								  <td align="center">${ i }</td>
 								  <td align="left">${pickedu.pickAcademy.academyName}</td>
-								  <td align="left">${pickedu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/> </td>
+								  <td align="left">${pickedu.eduName} 
+								  <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/>
+								  <input type="hidden" name="academyCode" id="academyCode" value="${pickedu.pickAcademy.academyCode}"/>
+								  </td>
 								  <td align="left">${pickedu.eduStartDate}</td>
 								  <td align="left">${pickedu.eduEndDate}</td>
 								  <td align="left">${pickedu.eduGrade}</td>
