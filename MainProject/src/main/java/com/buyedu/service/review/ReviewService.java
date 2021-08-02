@@ -26,7 +26,6 @@ public class ReviewService {
 	
 	public void addReview(Review review) throws Exception {
 		reviewDao.addReview(review);
-		System.out.println("여기는 애드서비스");
 	}
 
 	public Review getReview(int reviewNo) throws Exception {
@@ -38,9 +37,6 @@ public class ReviewService {
 		int totalCount = reviewDao.getTotalCount(search);
 		
 		Map<String ,Object> map = new HashMap();
-		System.out.println("여기는 서비스 리스트 :"+list);
-		System.out.println("여기는 서비스 토탈카운트 : "+totalCount);
-		
 		map.put("list" , list);
 		map.put("totalCount", totalCount);
 		
@@ -49,51 +45,38 @@ public class ReviewService {
 
 	public void updateReview (Review review) throws Exception {
 		reviewDao.updateReview(review);
-		System.out.println("여기는 업데이트리뷰");
-
 	}
 	
 	public void deleteReview(int reviewNo) throws Exception {
-		System.out.println("여기는 딜리트리뷰");
 		reviewDao.deleteReview(reviewNo);
-		
 	}
 	
 	public String getReviewWriter(int userNo) throws Exception {
-		
 		return reviewDao.getReviewWriter(userNo);
 	}
-	
-
 
 	public int getConnect(Map<String,Object> map) throws Exception {	
 		return reviewDao.getConnect(map);
 	}
 	
 	public Map<String,Object> getmyReviewList(int userNo) throws Exception {
-		
 		List<Review> list = reviewDao.getmyReview(userNo);
-		
 		Map<String , Object> map = new HashMap<String , Object>();
-		
 		map.put("list", list);
 		
 		return map;
 	}
 	
 	public int countmyReview(Map<String, Object> map) throws Exception{
-		
 		int count = reviewDao.countmyReview(map);
 		
 		return count;
 	};
 	
 	public String getConnectReviewUser(Map map) throws Exception{
-		
 		String state = connectDao.getConnectReviewUser(map);
 		
 		return state;
 	};
 	
-
 }

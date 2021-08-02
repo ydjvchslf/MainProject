@@ -1,11 +1,9 @@
 package com.buyedu.dao.edu;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.buyedu.domain.Academy;
 import com.buyedu.domain.Edu;
 import com.buyedu.domain.Search;
 
@@ -26,7 +24,6 @@ public interface EduDao {
 	
 	int updateEduRest(Edu edu);
 	
-	// 학원에서 쓰는 카운트
 	int getEduTotalCountforAca(String academyCode);
 	
 }

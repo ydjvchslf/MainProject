@@ -17,22 +17,17 @@ public class ChartService {
 	private ChartDao chartDao;
 	
 	public List<Chart> getUserData() {
-		
 		return chartDao.getUserChart();
 	}
 	
 	public List<Chart> getAcademyData() {
-		
 		return chartDao.getAcademyChart();
 	}
 	
 	public Map<String,Object> getChartData() {
-		
 		List<Chart> userData = chartDao.getUserChart();
 		List<Chart> academyData = chartDao.getAcademyChart();
-		
 		Map<String, Object> map = new HashMap<String,Object>();
-		
 		map.put("userData", userData);
 		map.put("academyData", academyData);
 		
@@ -40,17 +35,14 @@ public class ChartService {
 	}
 	
 	public int getBoardCnt() {
-		
 		return chartDao.getBoardCnt();
 	}
 	
 	public int getEduCnt() {
-		
 		return chartDao.getEduCnt();
 	}
 	
 	public int getReviewCnt() {
-		
 		return chartDao.getReviewCnt();
 	}
 

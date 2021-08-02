@@ -29,7 +29,6 @@ public class UserService {
 	
 	@Autowired
 	private SmsDao smsDao;
-	
 
 	@Transactional
 	public void addUser(User user) throws Exception {
@@ -88,7 +87,6 @@ public class UserService {
 		return userDao.getUserByUserNo(userNo);
 	}
 	
-	
 	// Connect 
 	public int checkConnectCnt(int userNo) throws Exception{
 		return connectDao.checkConnectCnt(userNo);
@@ -121,8 +119,6 @@ public class UserService {
 	public void deleteConnect(Connect connect) throws Exception{
 		connectDao.deleteConnect(connect);
 	}
-	
-	
 	
 	//SMS
 	@Transactional

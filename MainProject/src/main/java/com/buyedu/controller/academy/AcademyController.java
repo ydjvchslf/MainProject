@@ -54,6 +54,7 @@ public class AcademyController {
 	@Autowired
 	public UserService userService;
 	
+	// 학원 코드 생성
 	public String random() {
 		StringBuffer temp = new StringBuffer();
 		Random rnd = new Random();
@@ -104,26 +105,18 @@ public class AcademyController {
 		
 		// 툴바 학원 리스트
 		User user1 = UserUtil.user();
-		
 		Map<String, Object> map = academyService.getAcademyCodeList(user1.getUserNo());
-		
 		model.addAttribute("list", map.get("list"));
 		
 		String makeAcaCode = random();
-		
 		String checkAcademyCode = academyService.checkAcademyCode(makeAcaCode);
 		
 		if (checkAcademyCode == null) {
-			
 			academy.setAcademyCode(makeAcaCode);
 		}else {
-			
-			System.out.println("학원코드가 중복되어 다시 실행합니다.");
 			String makeAnotherAcaCode = random();
-			
 			academy.setAcademyCode(makeAnotherAcaCode);
 		}
-		
 		academyService.addAcademy(academy);
 		
 		return "/academy/academyInfo";
@@ -134,14 +127,11 @@ public class AcademyController {
 	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search, Model model, HttpSession session, HttpServletRequest request ) throws Exception{
 		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		model.addAttribute("academy", academy);
 		
 		// 툴바 학원 리스트
 		User user = UserUtil.user();
-		
 		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
-		
 		model.addAttribute("list", map.get("list"));
 		
 		//학원 공지사항
@@ -151,7 +141,6 @@ public class AcademyController {
 		}
 		search.setPageSize(pageSize);
 		search.setCateCode(category);
-		
 		List<Board> listb =boardService.getBoardListAcademy(search);
 		
 		if(listb.size()!=0) {
@@ -162,7 +151,6 @@ public class AcademyController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		}
-		
 		return "/academy/academyInfo";
 	}
 	
@@ -175,9 +163,7 @@ public class AcademyController {
 		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
 		model.addAttribute("list", map.get("list"));
 		userService.getUser(user.getEmail());
-		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		Map<String, Object> mapm = academyService.getMultimediaList(academyCode);
 		
 		int imgcount = academyService.getImageCount(academyCode);
@@ -196,15 +182,11 @@ public class AcademyController {
 	public String academyConnectList(@RequestParam("academyCode") String academyCode, Model model, HttpSession session) throws Exception{
 		
 		User user1 = UserUtil.user();
-		
 		Map<String, Object> map2 = academyService.getAcademyCodeList(user1.getUserNo());
-		
-		model.addAttribute("list", map2.get("list"));
-		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		Map<String, Object> map = academyService.academyConnect(academyCode);
 		
+		model.addAttribute("list", map2.get("list"));
 		model.addAttribute("academy", academy);
 		model.addAttribute("connect", map.get("connect"));
 		

@@ -41,11 +41,8 @@ public class AcademyService {
 	public Map<String, Object> getAcademyCodeList(int userNo) throws Exception {
 		
 		List<Academy> list = academyDao.getAcademyCodeList(userNo);
-				
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
-		
-		System.out.println("service list = "+list);
 		
 		return map;
 	};
@@ -84,7 +81,6 @@ public class AcademyService {
 	public Map<String, Object> getMultimediaList(String academyCode) throws Exception{
 		
 		List<Academy> list = academyDao.getMultimediaList(academyCode);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		
@@ -92,37 +88,30 @@ public class AcademyService {
 	}
 	
 	public String getMultimedia(int multimediaNo) throws Exception{
-		
 		String multimedia = academyDao.getMultimedia(multimediaNo);
 		
 		return multimedia;
 	};
 	
 	public int getImageCount(String academyCode) throws Exception{
-		
 		int imgcount = academyDao.getImageCount(academyCode);
 		
 		return imgcount;
 	};
 	
 	public int getVideoCount(String academyCode) throws Exception{
-		
 		int vidcount = academyDao.getVideoCount(academyCode);
 		
 		return vidcount;
 	};
 	
-	
 	public int deleteMultimedia(int multimediaNo) throws Exception{
 		return academyDao.deleteMultimedia(multimediaNo);
 	}
 	
-	
 	// 인증 --------------------------------------------------
 	public Map<String, Object> academyConnect(String academyCode) throws Exception{
-		
 		List<Connect> connect = connectDao.academyConnect(academyCode);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("connect", connect);
 		
@@ -130,17 +119,14 @@ public class AcademyService {
 	};
 	
 	public String updateConnect(int connectNo) throws Exception{
-		
 		return connectDao.updateConnectAcceptaca(connectNo);
 	}
 	
 	public void deleteConnect(int connectNo) throws Exception{
-		
 		connectDao.deleteConnectfromAca(connectNo);
 	}
 	
 	public int getStudentCount(String academyCode) throws Exception{
-		
 		return connectDao.getStudentCount(academyCode);
 	};
 	
@@ -154,17 +140,11 @@ public class AcademyService {
 	public void deleteAcademyAll(String academyCode) throws Exception{
 		
 		academyDao.deleteBoard(academyCode);
-		
 		academyDao.deleteReview(academyCode);
-		
 		academyDao.deleteEdu(academyCode);
-		
 		academyDao.deleteConnection(academyCode);
-		
 		academyDao.deleteAllMultimedia(academyCode);
-		
 		academyDao.deleteAcademy(academyCode);
-		
 	}
 	
 }

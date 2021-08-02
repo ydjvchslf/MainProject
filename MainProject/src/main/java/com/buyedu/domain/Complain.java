@@ -92,6 +92,24 @@ public class Complain {
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
+
+	public String getComplainReason() {
+		return complainReason;
+	}
+
+	public void setComplainReason(String complainReason) {
+		this.complainReason = complainReason;
+	}
+
+	public String getComplainState() {
+		return complainState;
+	}
+
+	public void setComplainState(String complainState) {
+		this.complainState = complainState;
+	}
+
+
 	
 	
 

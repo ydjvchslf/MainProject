@@ -62,7 +62,7 @@ public class AcademyRestController {
 	private SimpMessagingTemplate simpMessagingTemplate;
 	
 	public AcademyRestController() {
-		System.out.println(this.getClass());
+		//System.out.println(this.getClass());
 	}
 	
 	@Value("5")
@@ -80,7 +80,6 @@ public class AcademyRestController {
 	@ResponseBody
 	@RequestMapping(value = "json/academyProfile/{userNo}", method = RequestMethod.GET)
 	public Map<String, Object> academyProfile(@PathVariable int userNo) throws Exception{
-		
 	      Map<String, Object> map = academyService.getAcademyCodeList(userNo);
 	      
 	      return map;
@@ -89,11 +88,8 @@ public class AcademyRestController {
 	// 학원 프로필 (아카데미 코드)
 	@RequestMapping(value = "json/getacademyInfo/{academyCode}", method = RequestMethod.GET)
 	public Academy academy(@PathVariable String academyCode) throws Exception{
-		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		academy.setCount(academyService.getStudentCount(academyCode));
-		
 		academy.setCount2(academyService.getEduTotalCountforAca(academyCode));
 		
 		return academy;
@@ -105,11 +101,8 @@ public class AcademyRestController {
 	private Academy updateIntro(HttpServletRequest httpRequest,
 							@PathVariable String academyCode, 
 							@RequestParam String updateIntro) throws Exception{
-		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		academy.setAcademyIntro(updateIntro);
-					
 		academyService.updateAcademyIntro(academy);
 		
 		return academy;
@@ -121,11 +114,8 @@ public class AcademyRestController {
 	private Academy updateHistory(HttpServletRequest httpRequest,
 							@PathVariable String academyCode, 
 							@RequestParam String updateHistory) throws Exception{
-		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		academy.setAcademyHistory(updateHistory);
-					
 		academyService.updateAcademyHistory(academy);
 		
 		return academy;
@@ -135,9 +125,7 @@ public class AcademyRestController {
 	@RequestMapping(value = "json/academySampleEdu/{academyCode}", method = RequestMethod.GET)
 	public Map<String, Object> getAcademySampleEdu(HttpServletRequest httpRequest,
 													@PathVariable String academyCode) throws Exception{
-		
 		Map<String, Object> map = academyService.getMultimediaList(academyCode);
-		
 		int imgcount = academyService.getImageCount(academyCode);
 		
 		return map;
@@ -150,7 +138,6 @@ public class AcademyRestController {
 			@RequestParam("article_file") List<MultipartFile> multipartFile
 			, @PathVariable String academyCode
 			, HttpServletRequest request) {
-		
 		String strResult = "{ \"result\":\"FAIL\" }";
 		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
 		String fileRoot;
@@ -181,7 +168,6 @@ public class AcademyRestController {
 						}else {
 							academy.setMultimediarole("I");
 						}
-						
 						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
 						
 					} catch (Exception e) {
@@ -190,9 +176,7 @@ public class AcademyRestController {
 						e.printStackTrace();
 						break;
 					}
-					
 					academyService.addMultimedia(academy);
-					
 				}
 				strResult = "{ \"result\":\"OK\" }";
 			}
@@ -211,34 +195,29 @@ public class AcademyRestController {
 	private int deleteMultimedia(@PathVariable int multimediano) throws Exception{
 		
 		String multimedia = academyService.getMultimedia(multimediano);
-		
 		String fileRoot = "C:\\Users\\woohr\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
 		//String fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
 		
 		File file = new File(fileRoot+multimedia);
-		
 		if (file.exists()) {
 			if (file.delete()) {
-				System.out.println("파일 삭제 성공!!");
+				//System.out.println("파일 삭제 성공");
 			}else {
-				System.err.println("파일 삭제 실패 ㅜ.ㅜ");
+				//System.err.println("파일 삭제 실패");
 			}
 		} else {
-			System.err.println("폴더 안에 파일이 존재하지 않습니다.");
+			//System.err.println("폴더 안에 파일이 존재하지 않습니다.");
 		}
 		
 		return academyService.deleteMultimedia(multimediano);
 	}
 	
 	// ------------------------------ 학원 인증 ------------------------------
-	
 	// 학원 인증
 	@ResponseBody
 	@RequestMapping(value = "json/academyConnect/{academyCode}", method = RequestMethod.POST)
 	public Map<String, Object> academyConnectList(@PathVariable String academyCode, HttpSession session) throws Exception{
-		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		Map<String, Object> map = academyService.academyConnect(academyCode);
 		
 		return map;
@@ -248,7 +227,6 @@ public class AcademyRestController {
 	@ResponseBody
 	@RequestMapping(value = "json/updateConnect/{connectNo}", method = RequestMethod.POST)
 	private String updateConnect(@PathVariable int connectNo) throws Exception{
-		
 		return academyService.updateConnect(connectNo);
 	}
 	
@@ -256,7 +234,6 @@ public class AcademyRestController {
 	@ResponseBody
 	@RequestMapping(value = "json/deleteConnect/{connectNo}", method = RequestMethod.POST)
 	private void deleteConnect(@PathVariable int connectNo) throws Exception{
-		
 		academyService.deleteConnect(connectNo);
 	}
 	
@@ -264,16 +241,13 @@ public class AcademyRestController {
 	@ResponseBody
 	@RequestMapping(value = "json/deleteAcademyAll/{academyCode}", method = RequestMethod.POST)
 	private void deleteAcademy(@PathVariable String academyCode) throws Exception{
-		
 		String name = academyService.getAcademy(academyCode).getAcademyName();
-		
 		academyService.deleteAcademyAll(academyCode);
 	}
 	
 	// 학원 공지사항
 	@RequestMapping(value = "json/getBoardListAcademy/{search}", method = RequestMethod.GET)
 	public List<Board> getBoardListAcademy(@PathVariable String academyCode, Search search) throws Exception{
-		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -285,7 +259,6 @@ public class AcademyRestController {
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
 			System.out.println(resultPage);
 		}
-		
 		return list;
 	}
 
