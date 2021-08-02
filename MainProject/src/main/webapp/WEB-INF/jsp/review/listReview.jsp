@@ -117,11 +117,12 @@
 					<!-- 학원 이름, 전화번호 -->
 					<div id="academytitle" class="row" ></div>
 					<div class="col-sm-12" align="center">
-			<hr>
+		
 			</div>
 					<div class="row">
 						<div class="col-md-12">
 						<c:if test="${count == 0 && state == '1'}">
+					
 						
 					
 					
@@ -224,13 +225,16 @@
 					<form class="form-inline" name="detailForm">	
 					<c:if test="${empty listR}">
 							<div class="col-sm-12" align="center">
+								<hr>
+							</div>
+							<div class="col-sm-12" align="center">
 								<img src="/image/nothing.png"><br>
 							</div>
 	 				</c:if>
 	 				
 	 				
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>
-					<c:if test="${!empty listb}">
+					<c:if test="${!empty listR}">
 						<table class="table">
 							 <thead>
 							  											<!-- Modal -->
@@ -290,8 +294,14 @@
 					</div>
 					</div>
 			<div class="col-sm-12" align="center">
-			<hr>
+			
 			</div>
+			
+			<c:if test="${empty listR}">
+			<div class="col-sm-12" align="center">
+					<hr>
+			</div>
+			</c:if>
 						<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
 				</div>
 	      	</div>

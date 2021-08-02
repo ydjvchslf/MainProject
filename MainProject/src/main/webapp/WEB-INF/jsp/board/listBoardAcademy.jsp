@@ -170,25 +170,28 @@
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : null }"  >
 				  </div>
 				  
-				  <button type="button" class="btn btn-default">검색</button>
+				  <button type="button" class="btn btn-primary">검색</button>
 			
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				</form>
 	    	</div>
-	    	<div class="col-sm-12" align="center">
-			<hr>
-			</div>
+	    	
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
       <!--  table Start /////////////////////////////////////-->
       <div>&nbsp;</div>
       <div>&nbsp;</div>
       
       <c:if test="${empty listb}">
+							
+							<div class="col-sm-12" align="center">
+								<hr>
+							</div>
 							<div class="col-sm-12" align="center">
 								<img src="/image/nothing.png"><br>
 							</div>
+							
 	  </c:if>
 	  
 	  <c:if test="${!empty listb}">
@@ -229,9 +232,11 @@
 		    	</div> 
 			</c:if>
 		
- 			<div class="col-sm-12" align="center">
-			<hr>
+ 			<c:if test="${empty listb}">
+			<div class="col-sm-12" align="center">
+					<hr>
 			</div>
+			</c:if>
 			 	<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>
 				<!-- PageNavigation End... -->

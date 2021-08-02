@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -20,20 +21,31 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	
-	<style>
-		.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-	    z-index: 3;
-	    color: #fff;
-	    cursor: default;
-	    background-color: #F8B739;
-	    border-color: #F8B739;
-	   }
+<style>
+	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #F8B739;
+    border-color: #F8B739;
+    }
+    
+    @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	body{
+	overflow-x:hidden; overflow-y:visible;
+	font-family: 'ChosunGu';
+	}
+	
 	</style>
 	
 	<script type="text/javascript">
 	
-	// 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용 
-		
 		function fncGetList(currentPage) {
 			
 			$("#currentPage").val(currentPage)
@@ -68,7 +80,7 @@
 		         self.location ="/edu/getEdu?eduNo="+eduNo+"&academyCode="+academyCode;
 		      });
 		      
-		      $( "td:nth-child(3)" ).css("color" , "skyblue");
+		      $( "td:nth-child(3)" ).css("color" , "#FFAB00");
 		      
 		      $( ".btn:contains('삭제')" ).on("click" , function() {
 					 
@@ -114,11 +126,12 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
 					<div class="row">
-					
+							<div class="col-md-6 text-left" id="titlef">
+		    					<h2>관심 수업</h2>
+		    				</div>
+								<div>&nbsp;</div>
+								<div>&nbsp;</div>
 						<div class="col-md-6 text-left">
-							<p style="font-size:15px; color:black; font-family:'돋움';">
-					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-					    	</p>
 					    	<p>
 					    	<c:if test="${user.role == 'academy'}">
 					    		<button type="button" class="btn btn-primary">등록</button>
@@ -154,15 +167,16 @@
 								<tr>
 								  <td align="center">${ i }</td>
 								  <td align="left">${pickedu.pickAcademy.academyName}</td>
-								  <td align="left">${pickedu.eduName} 
+								  <td align="left"><strong>${pickedu.eduName} 
 								  <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/>
 								  <input type="hidden" name="academyCode" id="academyCode" value="${pickedu.pickAcademy.academyCode}"/>
-								  </td>
+								  </strong></td>
 								  <td align="left">${pickedu.eduStartDate}</td>
 								  <td align="left">${pickedu.eduEndDate}</td>
 								  <td align="left">${pickedu.eduGrade}</td>
 								  <td align="left">${pickedu.eduSubject}</td>
-								  <td align="left">${pickedu.eduPrice}</td>
+								  <td align="left">
+								  	<fmt:formatNumber value="${pickedu.eduPrice}" pattern="#,###" />원</td>
 								  <td align="center"> <button type="button" class="btn btn-primary">삭제 <input type="hidden" name="eduNo" id="eduNo" value="${pickedu.eduNo}"/> </button></td>
 								</tr>
 					          </c:forEach>

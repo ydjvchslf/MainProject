@@ -2,9 +2,10 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -140,6 +141,21 @@
 	</script>
 	
   </head>
+  <style>
+  
+   @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	body{
+	overflow-x:hidden; overflow-y:visible;
+	font-family: 'ChosunGu';
+	}
+	
+  </style>
   <body>
 		
 		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
@@ -159,7 +175,7 @@
 				 
 				 <div  class="row">
 					<div class="float-left">
-						 <h3 id="titlef" class=" text-info">수업상세보기 화면</h3>
+						 <h2 id="titlef" class=" text-info" style="color:red;">&nbsp;수업 상세보기</h2>
 			      		 <c:if test="${user.role == 'academy' }">
                          <h5 id="titlef" class="text-muted">수업정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
                          <h5 id="titlef" class="text-muted">판매중, 판매완료된 수업은 <strong class="text-danger">수정, 삭제</strong>가 불가능합니다.</h5>
@@ -171,7 +187,7 @@
 				
 				<div class="row">
 			  		<div class="col-xs-4 col-md-2"><strong>수 업 명</strong></div>
-					<div class="col-xs-8 col-md-4">${edu.eduName}</div>
+					<div class="col-xs-8 col-md-4" style="color:#FFAB00; font-size: 18px;"><b>${edu.eduName}</b></div>
 					<div class="col-xs-4 col-md-2"><strong>강 사 명</strong></div>
 					<div class="col-xs-8 col-md-4">${edu.eduTeacher}</div>
 				</div>

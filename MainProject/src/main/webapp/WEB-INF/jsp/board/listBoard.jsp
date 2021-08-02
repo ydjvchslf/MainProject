@@ -222,12 +222,13 @@
 				</div>
 			
       		<c:if test="${empty listc}">
+				      		<div class="col-sm-12" align="center">
+								<hr>
+							</div>
 							<div class="col-sm-12" align="center">
 								<img src="/image/nothing.png"><br>
 							</div>
-				<div class="col-sm-12" align="center">
-					<hr>
-				</div>
+				
 			</c:if>
 						
       		<!-- 게시판 table Start -->
@@ -318,7 +319,7 @@
 				  </tr>
            		 	</c:forEach>
           		</tbody>
-     	 	</table></c:if>
+     	 	</table></c:if></c:if>
      	</div>
      	
      	
@@ -349,19 +350,17 @@
 		     	 <a id="write2" href="/board/addBoard?cateCode=2" >글쓰기</a></button>
 		    	</div>
 			</c:when>
-			
 		  </c:choose>	
-			 	
 		</div>
 		<c:if test="${empty listc}">
 			<div class="col-sm-12" align="center">
 					<hr>
-				</div>
-			</c:if>
+			</div>
+		</c:if>
 		<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>
 				<!-- PageNavigation End... -->
-  	</div>
+  	</div></div></div>
   	 <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.js"></script>
     <script src="/js/bootstrap.min.js"></script>
