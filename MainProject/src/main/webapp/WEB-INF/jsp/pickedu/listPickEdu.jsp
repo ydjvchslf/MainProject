@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -21,13 +21,26 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	
 	<style>
-		.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-	    z-index: 3;
-	    color: #fff;
-	    cursor: default;
-	    background-color: #F8B739;
-	    border-color: #F8B739;
-	   }
+	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #F8B739;
+    border-color: #F8B739;
+    }
+    
+    @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+	
+	body{
+	overflow-x:hidden; overflow-y:visible;
+	font-family: 'ChosunGu';
+	}
+	
 	</style>
 	
 	<script type="text/javascript">
@@ -110,13 +123,13 @@
 	        
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
-					
-					<div class="row">
+				<div class="row">
+					<div class="col-md-6 text-left" id="titlef">
+		    			<h2>관심 수업</h2>
+		    		</div>
 					
 						<div class="col-md-6 text-left">
-							<p style="font-size:15px; color:black; font-family:'돋움';">
-					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-					    	</p>
+							
 					    	<p>
 					    	<c:if test="${user.role == 'academy'}">
 					    		<button type="button" class="btn btn-primary">등록</button>
@@ -127,7 +140,23 @@
 					</div>
 					
 					<div class="row">
-						
+					<div class="col-sm-12" align="center">
+						<hr>
+					 </div>
+					
+					 <c:if test="${empty list}">
+							<div class="col-sm-12" align="center">
+								<img src="/image/nothing.png"><br>
+							</div>
+					 </c:if>
+					 
+					  <c:if test="${!empty list}">
+					
+					 
+					 <div class="pickedutable">
+					 
+					 
+					 
 						<table class="table table-hover table-striped" >
       
 					        <thead>
@@ -164,13 +193,15 @@
 					        
 					        </tbody>
 					      
-					      </table>
-					</div>
+					      </table></c:if></div>
 					
+					<div class="col-sm-12" align="center">
+						<hr>
+					 </div>
 					<div class="row">
 						<jsp:include page="../common/pageNavigator_new.jsp"/>
+					</div></div>
 					</div>
-					
 				</div>
 	      	</div>
       		

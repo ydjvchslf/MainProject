@@ -192,6 +192,7 @@
 	  </c:if>
 	  
 	  <c:if test="${!empty listb}">
+	  
 							
 	  
       <table class="table table-hover" id="boardTable" style="margin-top:20px;">
