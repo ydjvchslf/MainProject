@@ -220,13 +220,14 @@
 					</div>
 	    		  </div>
 				</div>
-			<div class="col-sm-12" align="center">
-			<hr>
-			</div>
+			
       		<c:if test="${empty listc}">
 							<div class="col-sm-12" align="center">
 								<img src="/image/nothing.png"><br>
 							</div>
+				<div class="col-sm-12" align="center">
+					<hr>
+				</div>
 			</c:if>
 						
       		<!-- °Ô½ÃÆÇ table Start -->
@@ -317,7 +318,7 @@
 				  </tr>
            		 	</c:forEach>
           		</tbody>
-     	 	</table></c:if></c:if>
+     	 	</table></c:if>
      	</div>
      	
      	
@@ -352,9 +353,11 @@
 		  </c:choose>	
 			 	
 		</div>
-		<div class="col-sm-12" align="center">
-			<hr>
-		</div>
+		<c:if test="${empty listc}">
+			<div class="col-sm-12" align="center">
+					<hr>
+				</div>
+			</c:if>
 		<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>
 				<!-- PageNavigation End... -->
