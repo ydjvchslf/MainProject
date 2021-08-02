@@ -90,7 +90,7 @@
 		         
 		      });
 		      
-		      $( "td:nth-child(2)" ).css("color" , "red");
+		      $( "td:nth-child(2)" ).css("color" , "#FFAB00");
 		      
 		});
 	
@@ -125,9 +125,11 @@
 						<br>
 						<!-- 吝埃 家力格 场-->
 						
-						<div class="col-md-12">
-							<hr>
-						</div>
+					  <c:if test="${empty purchaseList}">
+				        <div class="col-md-12">
+						  <hr>
+					   </div>
+					  </c:if>
 			    		
 					</div>
 				
@@ -178,7 +180,7 @@
 						<c:set var="i" value="${ i+1 }" />
 						<tr>
 						  <td align="center">${ i }</td>
-						  <td align="left">${purchase.purchaseEdu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/> </td>
+						  <td align="left"><strong>${purchase.purchaseEdu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/></strong> </td>
 						  <td align="left">${purchase.buyer.name}</td>
 						  <td align="left">${purchase.buyer.phone}</td>
 						  <td align="left">${purchase.payDate}</td>

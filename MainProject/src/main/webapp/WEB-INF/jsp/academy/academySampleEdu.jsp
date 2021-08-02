@@ -110,14 +110,16 @@
 	                            <div class="card-body">
 	                            
 	                            <c:if test="${imgcount+vidcount < 1}">
+					        	<div align="center">
+					        		<img alt="noImage" src="/image/nothing.png">
+					        		
+					        		<c:if test="${user.role == 'academy' }">
+						        		<br><br>
+						        		<strong><span style="color: #FFAB00">이미지를 등록해 주세요!</span></strong>
+					        		</c:if>
+					        	</div>
 					        	
-					        	<img alt="noImage" src="/image/BuyEdyLogo.png">
 					        	
-					        	
-					        	<c:if test="${user.role == 'academy' }">
-					        		<br>
-					        		--이미지를 등록해 주세요!
-					        	</c:if>
 					        	
 					        	</c:if> 
 	                            

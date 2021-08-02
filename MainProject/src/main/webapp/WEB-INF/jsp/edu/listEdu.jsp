@@ -168,6 +168,7 @@
 								    	<button type="button" class="btn btn-primary">수업등록</button>&nbsp;&nbsp;&nbsp;&nbsp;
 								    	</c:if>
 								  </div>
+								  
 
 								<div class="col-md-6 text-right">
 								  <div class="form-group">
@@ -185,16 +186,20 @@
 								  
 								  <button type="button" class="btn btn-primary">검색</button>
 								 
+								
 								</div>
 								
-								<div class="col-md-12 text-left">
-									<hr>
-								</div>
+								  <c:if test="${empty eduList}">
+							        <hr>
+								  </c:if>
 								  
 								  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 								  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 								  
 								</form>
+								
+								<hr> <!-- 썸네일 윗부분 hr -->
+									<br><br>
 						</div>
 					
 					</div>
