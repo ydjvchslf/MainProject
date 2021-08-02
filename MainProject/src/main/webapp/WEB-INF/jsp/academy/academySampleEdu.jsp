@@ -100,7 +100,6 @@
 					
 						<!-- 학원 이름, 전화번호 -->
 						<div id="academytitle" class="row"></div>
-						<br>
 						<!-- 중간 소제목 시작-->
 						<div class="col-sm-12" align="center">
 							<h4><strong><span><span >멀티미디어 정보</span></strong></h4>
@@ -111,14 +110,16 @@
 	                            <div class="card-body">
 	                            
 	                            <c:if test="${imgcount+vidcount < 1}">
+					        	<div align="center">
+					        		<img alt="noImage" src="/image/nothing.png">
+					        		
+					        		<c:if test="${user.role == 'academy' }">
+						        		<br><br>
+						        		<strong><span style="color: #FFAB00">이미지를 등록해 주세요!</span></strong>
+					        		</c:if>
+					        	</div>
 					        	
-					        	<img alt="noImage" src="/image/BuyEdyLogo.png">
 					        	
-					        	
-					        	<c:if test="${user.role == 'academy' }">
-					        		<br>
-					        		--이미지를 등록해 주세요!
-					        	</c:if>
 					        	
 					        	</c:if> 
 	                            
@@ -353,7 +354,7 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">'+data.academyName+'</div>'
+						b += '<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">'+data.academyName+'</div>'
 					
 					$("#academytitle").html(b);
 						 

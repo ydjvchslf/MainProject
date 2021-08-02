@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -90,7 +90,7 @@
 		         
 		      });
 		      
-		      $( "td:nth-child(2)" ).css("color" , "red");
+		      $( "td:nth-child(2)" ).css("color" , "#FFAB00");
 		      
 		});
 	
@@ -114,7 +114,7 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
 					<div class="col-md-12">
-						<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">
+						<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">
 			    			${academy.academyName} 
 			    		</div>
 			    		
@@ -124,6 +124,12 @@
 						</div><br>
 						<br>
 						<!-- 중간 소제목 끝-->
+						
+					  <c:if test="${empty purchaseList}">
+				        <div class="col-md-12">
+						  <hr>
+					   </div>
+					  </c:if>
 			    		
 					</div>
 				
@@ -174,7 +180,7 @@
 						<c:set var="i" value="${ i+1 }" />
 						<tr>
 						  <td align="center">${ i }</td>
-						  <td align="left">${purchase.purchaseEdu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/> </td>
+						  <td align="left"><strong>${purchase.purchaseEdu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/></strong> </td>
 						  <td align="left">${purchase.buyer.name}</td>
 						  <td align="left">${purchase.buyer.phone}</td>
 						  <td align="left">${purchase.payDate}</td>
@@ -197,6 +203,8 @@
 			      </table>
 			      </c:if>
 			      
+			      <hr>
+			      
 			      	<div class="row">
 						<jsp:include page="../common/pageNavigator_new.jsp"/>
 					</div>
@@ -205,7 +213,7 @@
 					
 				</div>
 	      	</div>
-      		
+      	
        </div>
       	
 

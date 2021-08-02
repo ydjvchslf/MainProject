@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -28,6 +28,26 @@
 	    background-color: #F8B739;
 	    border-color: #F8B739;
 	   }
+	   
+	    @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+   }
+	
+   body{
+   overflow-x:hidden; overflow-y:visible;
+   font-family: ChosunGu;
+   }
+	
+	#tableHead{
+	background-color : #4D4D4D;
+	color : white;
+	text-align : center;
+	font-size : 18px;
+	}
+	   
 	</style>
 	
 	<script type="text/javascript">
@@ -70,15 +90,12 @@
 		         
 		      });
 		      
-		      $( "td:nth-child(3)" ).css("color" , "red");
+		      $( "td:nth-child(3)" ).css("color" , "#FFAB00");
 		      
 		      $( ".btn:contains('취소')").on("click", function() {
 		    	  
 		    	  var userNo = "${user.userNo}"
 		    	  var eduNo = $(this).find('input').val()
-		    	  
-		    	  alert( userNo )
-		    	  alert( eduNo )
 		    	
 		    	  $.ajax({
 					    url : '/purchaseedu/json/deletePurchaseEdu/'+userNo+"/"+eduNo ,
@@ -91,6 +108,8 @@
 					    success : function(data, status){
 
 					    	alert("수업이 취소되었습니다. 환불까지 약 3~5일정도 소요됩니다.")
+					    	
+					    	self.location = "/purchaseedu/listPurchaseEdu?userNo="+userNo
 					    }
 					});
 		    	  
@@ -102,7 +121,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -119,21 +138,31 @@
 					
 					<div class="row">
 					
-						<div class="col-md-6 text-left">
-							<p style="font-size:15px; color:black; font-family:'돋움';">
-					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-					    	</p>
-					    	<p>
-					    	<c:if test="${user.role == 'academy'}">
-					    		<button type="button" class="btn btn-primary">등록</button>
-					    	</c:if>
-					    	</p>
-						</div>
+					<div class="col-md-12">
+						<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">
+			    			수업구매목록
+			    		</div>
+			    		
+			    		<div class="col-md-12">
+			    			<br>
+			    		</div>
+			    		
+					  <c:if test="${empty list}">
+					      <div class="col-md-12">
+							<hr>
+						  </div>
+					  </c:if>
 						
 					</div>
 					
-					<div class="row">
+					
+					 <c:if test="${empty list}">
+				      	<div class="col-sm" align="center">
+							<span><img src="/image/nothing.png"></span>
+						</div>
+					  </c:if>
 						
+					<c:if test="${!empty list}">	
 						<table class="table table-hover table-striped" >
       
 					        <thead>
@@ -158,9 +187,10 @@
 								<tr>
 								  <td align="center">${ i }</td>
 								  <td align="left">${purchase.purchaseAcademy.academyName}</td>
-								  <td align="left">${purchase.purchaseEdu.eduName}
-								  	<input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/>
-								  	<input type="hidden" name="academyCode" id="academyCode" value="${purchase.purchaseAcademy.academyCode}"/>
+								  <td align="left"><strong>${purchase.purchaseEdu.eduName}
+									  	<input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/>
+									  	<input type="hidden" name="academyCode" id="academyCode" value="${purchase.purchaseAcademy.academyCode}"/>
+								  	</strong>
 								  </td>
 								  <td align="left">${purchase.purchaseEdu.eduStartDate}</td>
 								  <td align="left">${purchase.purchaseEdu.eduPrice}</td>
@@ -193,7 +223,15 @@
 					        </tbody>
 					      
 					    </table>
+					  </c:if>   
+					    
 					</div>
+					
+					 <c:if test="${empty list}">
+					      <div class="col-md-12">
+							<hr>
+						  </div>
+					 </c:if>
 					
 					<div class="row">
 						<jsp:include page="../common/pageNavigator_new.jsp"/>
