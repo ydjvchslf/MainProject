@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.buyedu.domain.Board;
 import com.buyedu.domain.Complain;
 import com.buyedu.domain.User;
+import com.buyedu.service.board.BoardService;
 import com.buyedu.service.complain.ComplainService;
 import com.buyedu.util.UserUtil;
 
@@ -27,6 +28,9 @@ public class ComplainRestController {
 	
 	@Autowired
 	private ComplainService complainService;
+	
+	@Autowired
+	private BoardService boardService;
 	
 	@Value("20")
 	int pageUnit;
@@ -41,7 +45,6 @@ public class ComplainRestController {
 							@RequestParam String reason) throws Exception {
 		
 		User user = UserUtil.user();
-		
 		Board board = new Board();
 		board.setBoardNo(boardNo);
 		
@@ -59,10 +62,10 @@ public class ComplainRestController {
 	public void updateComplain(@PathVariable int complainNo) throws Exception{
 		
 		Complain complain = complainService.getComplain(complainNo);
-		
 		complain.setComplainState("1");
-		
 		complainService.updateComplainState(complain);
+		Board board = boardService.getBoard(complain.getBoard().getBoardNo());
+		boardService.deleteBoard(complain.getBoard().getBoardNo());
 	};
 	
 	// 신고 반려
@@ -77,10 +80,8 @@ public class ComplainRestController {
 	public void deleteComplain(@PathVariable int boardNo) throws Exception{
 		
 		User user = UserUtil.user();
-		
 		Board board = new Board();
 		board.setBoardNo(boardNo);
-		
 		Complain complain = new Complain();
 		complain.setUser(user);
 		complain.setBoard(board);

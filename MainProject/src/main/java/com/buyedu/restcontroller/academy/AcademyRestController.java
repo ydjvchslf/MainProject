@@ -91,9 +91,7 @@ public class AcademyRestController {
 	public Academy academy(@PathVariable String academyCode) throws Exception{
 		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		academy.setCount(academyService.getStudentCount(academyCode));
-		
 		academy.setCount2(academyService.getEduTotalCountforAca(academyCode));
 		
 		return academy;
@@ -107,9 +105,7 @@ public class AcademyRestController {
 							@RequestParam String updateIntro) throws Exception{
 		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		academy.setAcademyIntro(updateIntro);
-					
 		academyService.updateAcademyIntro(academy);
 		
 		return academy;
@@ -123,9 +119,7 @@ public class AcademyRestController {
 							@RequestParam String updateHistory) throws Exception{
 		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		academy.setAcademyHistory(updateHistory);
-					
 		academyService.updateAcademyHistory(academy);
 		
 		return academy;
@@ -137,7 +131,6 @@ public class AcademyRestController {
 													@PathVariable String academyCode) throws Exception{
 		
 		Map<String, Object> map = academyService.getMultimediaList(academyCode);
-		
 		int imgcount = academyService.getImageCount(academyCode);
 		
 		return map;
@@ -219,12 +212,12 @@ public class AcademyRestController {
 		
 		if (file.exists()) {
 			if (file.delete()) {
-				System.out.println("파일 삭제 성공!!");
+				//System.out.println("파일 삭제 성공");
 			}else {
-				System.err.println("파일 삭제 실패 ㅜ.ㅜ");
+				//System.err.println("파일 삭제 실패");
 			}
 		} else {
-			System.err.println("폴더 안에 파일이 존재하지 않습니다.");
+			//System.err.println("폴더 안에 파일이 존재하지 않습니다.");
 		}
 		
 		return academyService.deleteMultimedia(multimediano);
@@ -238,7 +231,6 @@ public class AcademyRestController {
 	public Map<String, Object> academyConnectList(@PathVariable String academyCode, HttpSession session) throws Exception{
 		
 		Academy academy = academyService.getAcademy(academyCode);
-		
 		Map<String, Object> map = academyService.academyConnect(academyCode);
 		
 		return map;
