@@ -112,7 +112,7 @@
 				},
 			    success : function(data, status){
 
-			    	alert("관심수업에 등록되었습니다.")
+			    	alert(data)
 			    }
 			});
 		})

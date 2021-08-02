@@ -2,8 +2,6 @@ package com.buyedu.controller.edu;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,6 +21,7 @@ import com.buyedu.domain.User;
 import com.buyedu.service.academy.AcademyService;
 import com.buyedu.service.edu.EduService;
 import com.buyedu.service.user.UserService;
+import com.buyedu.util.UserUtil;
 
 @Controller
 @RequestMapping("/edu/*")
@@ -39,35 +38,36 @@ public class EduController {
 		System.out.println(this.getClass());
 	}
 	
+	// 페이지 버튼의 끝이 5의 배수이다.
 	@Value("5")
 	int pageUnit;
 	
-	@Value("6")
+	// 한 페이지에 보여줄 개수
+	@Value("5")
 	int pageSize;
 	
+	// 수업 등록화면으로 가는 단순 네비게이터
 	@RequestMapping ( value = "addEdu", method=RequestMethod.GET )
-	public String addEduView(@RequestParam String academyCode, Model model , HttpServletRequest request) throws Exception {
+	public String addEduView(@RequestParam String academyCode, Model model) throws Exception {
 		
-		// 여기 모델 추가
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
+		User user = UserUtil.user();
 		Academy academy = acaService.getAcademy(academyCode);
-		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		Map<String, Object> map2 = acaService.getAcademyCodeList(user.getUserNo());
 		
 		model.addAttribute("list", map2.get("list"));
 		model.addAttribute("code", academy);
 		
-		System.out.println("/edu/addEdu : GET ");
-		
 		return "/edu/addEduView";
 	}
 	
+	// 수업등록시 입력한 정보를 디비에 담은 후 수업 상세보기화면으로 네비게이터
 	@RequestMapping ( value = "addEdu", method=RequestMethod.POST )
 	public String addEdu( @ModelAttribute("edu") Edu edu, 
-							@RequestParam("academyCode") String acaCode , Model model, HttpServletRequest request ) throws Exception {
+							@RequestParam("academyCode") String acaCode , Model model) throws Exception {
 		
-		String userEmail = ((User)request.getSession().getAttribute("user")).getEmail();   
+		User user = UserUtil.user();
 		
-		edu.setUser( userService.getUser(userEmail));
+		edu.setUser( userService.getUser(user.getEmail()));
 		edu.setAcademy( acaService.getAcademy(acaCode) );
 		edu.setEduRest( edu.getEduMember() );
 		
@@ -75,31 +75,25 @@ public class EduController {
 			edu.setEduState("0");
 		}
 		
-		System.out.println("/edu/addEdu : POST ");
-		
-		System.err.println(edu);
-		
 		eduService.addEdu(edu);
 		
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
-		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		Map<String, Object> map2 = acaService.getAcademyCodeList(user.getUserNo());
 		
 		model.addAttribute("list", map2.get("list"));
 		
 		return "forward:/edu/getEdu?eduNo="+edu.getEduNo();
 	}
 	
+	// 상세보기화면으로 가는 단순네비게이터
 	@RequestMapping ("getEdu")
 	public String getEdu( @RequestParam("eduNo") int eduNo, 
-						  @RequestParam("academyCode") String academyCode , Model model , HttpServletRequest request) throws Exception {
-		
-		System.out.println("/edu/getEdu : GET");
+						  @RequestParam("academyCode") String academyCode , Model model) throws Exception {
 		
 		Edu edu = eduService.getEdu(eduNo);
 		Academy academy = acaService.getAcademy(academyCode);
+		User user = UserUtil.user();
 		
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
-		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		Map<String, Object> map2 = acaService.getAcademyCodeList(user.getUserNo());
 		
 		model.addAttribute("list", map2.get("list"));		
 		model.addAttribute("edu", edu);
@@ -108,15 +102,14 @@ public class EduController {
 		return "/edu/getEdu";
 	}
 	
+	// 수업수정 화면으로 가는 단순 네비게이터
 	@GetMapping ( "updateEdu" )
-	public String updateEdu( @RequestParam("eduNo") int eduNo , Model model , HttpServletRequest request) throws Exception {
-		
-		System.out.println("/edu/updateEdu : GET");
+	public String updateEdu( @RequestParam("eduNo") int eduNo , Model model) throws Exception {
 		
 		Edu edu = eduService.getEdu(eduNo);
+		User user = UserUtil.user();
 		
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
-		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		Map<String, Object> map2 = acaService.getAcademyCodeList(user.getUserNo());
 		
 		model.addAttribute("list", map2.get("list"));
 		model.addAttribute("edu", edu);
@@ -124,10 +117,9 @@ public class EduController {
 		return "/edu/updateEduView";
 	}
 	
+	// 수정된 수업을 디비에 업데이트한 후 상세보기화면으로 네비게이터
 	@PostMapping ("updateEdu" )
 	public String updateEdu( @ModelAttribute("edu") Edu edu, Model model ) throws Exception {
-		
-		System.out.println("/edu/updateEdu : POST");
 		
 		if( edu.getEduState() == null ) {
 			edu.setEduState("0");
@@ -139,41 +131,35 @@ public class EduController {
 		return "forward:/edu/getEdu?eduNo="+edu.getEduNo()+"&academyCode="+academyCode;
 	}
 	
+	// 등록된 수업의 목록을 보여주는 메소드
 	@RequestMapping( value="listEdu" )
 	public String listEdu( @ModelAttribute("search") Search search , 
 							@ModelAttribute("edu") Edu edu , Model model ,
-							@RequestParam("acaCode") String acaCode , HttpServletRequest request) throws Exception{
-		
-		System.out.println("/edu/listEdu : GET / POST");
+							@RequestParam("acaCode") String acaCode) throws Exception{
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
 		
-		String role = ((User)request.getSession().getAttribute("user")).getRole();
-		int userNo = ((User)request.getSession().getAttribute("user")).getUserNo();
 		Academy academy = acaService.getAcademy(acaCode);
+		User user = UserUtil.user();
 		
-		search.setSearchRoleByEdu(role);
+		search.setSearchRoleByEdu(user.getRole());
 		search.setPageSize(pageSize);
 		search.setSearchAcademyCode(acaCode);
 		search.setSearchEduState(search.getSearchEduState());
 
-		System.out.println("삭제하지말 것 =========== " + search.getSearchEduState() );
-		
 		Map<String , Object> map= eduService.getEduList(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
-		Map<String, Object> map2 = acaService.getAcademyCodeList(userNo);
+		Map<String, Object> map2 = acaService.getAcademyCodeList(user.getUserNo());
 		
 		model.addAttribute("list", map2.get("list"));
 		model.addAttribute("eduList", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("academy", academy);
-		
-		System.out.println("listEdu End");
 		
 		return "/edu/listEdu";
 	}

@@ -1,7 +1,6 @@
 package com.buyedu.domain;
 
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 public class PickEdu {
@@ -15,6 +14,8 @@ public class PickEdu {
 	private String eduName;
 	private String eduGrade;
 	private String eduSubject;
+	private String pickCheck;
+	
 	private int eduPrice;
 	private int eduRest;
 	private int eduNo;
@@ -115,6 +116,14 @@ public class PickEdu {
 
 	public void setPickNo(int pickNo) {
 		this.pickNo = pickNo;
+	}
+	
+	public String getPickCheck() {
+		return pickCheck;
+	}
+
+	public void setPickCheck(String pickCheck) {
+		this.pickCheck = pickCheck;
 	}
 
 	@Override

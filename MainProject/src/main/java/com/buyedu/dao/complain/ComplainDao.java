@@ -17,9 +17,14 @@ import com.buyedu.domain.Search;
 		
 		List<Complain> getComplainList(Search search) throws Exception;
 		
+		int getComplainNo(Complain complain) throws Exception;
+		
+		int getComplainCount(Complain complain) throws Exception;
+		
 		int getTotalCount(Search search) throws Exception;
 		
 		void updateComplainState(Complain complain) throws Exception;
 		
-
+		void deleteComplain(int complainNo) throws Exception;
+		
 }

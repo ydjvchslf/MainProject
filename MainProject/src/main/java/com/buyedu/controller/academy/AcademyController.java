@@ -86,21 +86,17 @@ public class AcademyController {
 	@Value("5")
 	int pageSize;
 	
+	// 학원 등록화면 네비게이터
 	@RequestMapping("addAcademyView")
 	public String addAcademyView() throws Exception {
-		
-		System.out.println("addAcademyView 단순 네비게이터");
 		
 		return "/academy/addAcademyView";
 	}
 
+	// 학원 등록
 	@RequestMapping("addAcademy")
 	public String addAcademy(@ModelAttribute("academy") Academy academy
 							, @RequestParam("userNo") int userNo,  Model model) throws Exception {
-		
-		System.out.println("addAcademy : POST");		
-		System.out.println("userNo = " + userNo);
-		System.out.println("academy = " + academy);
 		
 		User user = new User();
 		user.setUserNo(userNo);
@@ -120,15 +116,12 @@ public class AcademyController {
 		if (checkAcademyCode == null) {
 			
 			academy.setAcademyCode(makeAcaCode);
-			System.out.println("중복되는 학원코드가 존재하지 않습니다.");
-			System.out.println("학원 코드 : "+makeAcaCode);
 		}else {
 			
 			System.out.println("학원코드가 중복되어 다시 실행합니다.");
 			String makeAnotherAcaCode = random();
 			
 			academy.setAcademyCode(makeAnotherAcaCode);
-			System.out.println("학원 코드 : "+makeAnotherAcaCode);
 		}
 		
 		academyService.addAcademy(academy);
@@ -136,13 +129,9 @@ public class AcademyController {
 		return "/academy/academyInfo";
 	}
 	
-	
+	// 학원 정보 
 	@RequestMapping(value = "academyInfo", method = {RequestMethod.GET, RequestMethod.POST})
 	public String getAcademyInfo( @RequestParam("academyCode") String academyCode, @ModelAttribute("search") Search search, Model model, HttpSession session, HttpServletRequest request ) throws Exception{
-		
-		System.out.println("/academy/academyInfo : GET");
-		
-		System.out.println("academyInfo 아카데미 코드 = " + academyCode);
 		
 		Academy academy = academyService.getAcademy(academyCode);
 		
@@ -155,11 +144,7 @@ public class AcademyController {
 		
 		model.addAttribute("list", map.get("list"));
 		
-		System.out.println(academy);
-		
 		//학원 공지사항
-		System.out.println("학원 공지사항 돌아간다");
-//		String academyCodeb = request.getParameter("academyCode");
 		String category = request.getParameter("cateCode"); // 게시판 종류
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -172,7 +157,6 @@ public class AcademyController {
 		if(listb.size()!=0) {
 			int totalCount = listb.get(0).getTotalCount();
 			Page resultPage = new Page( search.getCurrentPage(),totalCount, pageUnit, pageSize);
-			System.out.println(resultPage);
 			
 		model.addAttribute("listb", listb);
 		model.addAttribute("resultPage", resultPage);
@@ -182,20 +166,14 @@ public class AcademyController {
 		return "/academy/academyInfo";
 	}
 	
+	// 학원 멀티미디어 정보
 	@RequestMapping(value = "academySampleEdu", method = RequestMethod.GET)
 	public String getAcademySampleEdu(@RequestParam("academyCode") String academyCode, Model model) throws Exception{
 		
-		System.out.println("/academy/academySampleEdu : GET 테스트 학원만 뽑는중");
-		
-		System.out.println("academySampleEdu 아카데미 코드 = " + academyCode);
-		
 		// 툴바 학원 리스트
 		User user = UserUtil.user();
-				
 		Map<String, Object> map = academyService.getAcademyCodeList(user.getUserNo());
-				
 		model.addAttribute("list", map.get("list"));
-		
 		userService.getUser(user.getEmail());
 		
 		Academy academy = academyService.getAcademy(academyCode);
@@ -205,41 +183,17 @@ public class AcademyController {
 		int imgcount = academyService.getImageCount(academyCode);
 		int vidcount = academyService.getVideoCount(academyCode);
 		
-		
 		model.addAttribute("academy", academy);
 		model.addAttribute("listfile", mapm.get("list"));
 		model.addAttribute("imgcount", imgcount);
 		model.addAttribute("vidcount", vidcount);
 		
-		System.out.println("academySampleEdu map = "+map.get("list"));
-		
 		return "academy/academySampleEdu";
 	}
 	
-//	@RequestMapping(value = "eduVideo", method = RequestMethod.GET)
-//	public StreamingResponseBody getVideo() throws Exception{
-//		File file = new ClassPathResource("static/image/KakaoTalk_20210719_213033364.mp4").getFile();
-//		@SuppressWarnings("resource")
-//		final InputStream is = new FileInputStream(file);
-//		return video -> {
-//			byte[] data = new byte[2048];
-//	        int read = 0;
-//	        while ((read = is.read(data)) > 0) {
-//	        	video.write(data, 0, read);
-//	        }
-//	        video.flush();
-//		};
-//	}
-	
-	
-//	academyConnects
-	
+	// 학원에서 학생 인증
 	@RequestMapping(value = "academyConnects", method = RequestMethod.GET)
 	public String academyConnectList(@RequestParam("academyCode") String academyCode, Model model, HttpSession session) throws Exception{
-		
-		System.out.println("/academy/academyConnects : GET");
-		
-		System.out.println("academyConnect 아카데미 코드 = " + academyCode);
 		
 		User user1 = UserUtil.user();
 		
@@ -254,10 +208,7 @@ public class AcademyController {
 		model.addAttribute("academy", academy);
 		model.addAttribute("connect", map.get("connect"));
 		
-		System.out.println("academyConnects map = "+map.get("connect"));
-		
 		return "academy/academyConnect";
 	}
 	
-
 }

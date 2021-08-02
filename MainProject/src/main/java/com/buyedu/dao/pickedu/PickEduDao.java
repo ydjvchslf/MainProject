@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.buyedu.domain.Academy;
 import com.buyedu.domain.PickEdu;
 import com.buyedu.domain.Search;
 
@@ -14,6 +13,8 @@ public interface PickEduDao {
 	int addPickEdu(PickEdu pickEdu) throws Exception;
 	
 	PickEdu getPickEdu(int pickNo) throws Exception;
+	
+	PickEdu getPickNo(PickEdu pickEdu) throws Exception;
 	
 	List<PickEdu> getPickEduList(Search search) throws Exception;
 	

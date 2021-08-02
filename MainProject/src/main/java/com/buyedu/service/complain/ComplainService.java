@@ -49,6 +49,27 @@ public class ComplainService {
 		complainDao.updateComplainState(complain);
 		
 	};
+	
+	// 신고 유무
+	public int getComplainCount(Complain complain) throws Exception{
+		
+		int count = complainDao.getComplainCount(complain);
+		
+		return count;
+	};
+	
+	// 신고 번호 찾기
+	public int getComplainNo(Complain complain) throws Exception{
+		
+		int compalinNo = complainDao.getComplainNo(complain);
+		
+		return compalinNo;
+	};
+	
+	public void deleteComplain(int complainNo) throws Exception{
+		
+		complainDao.deleteComplain(complainNo);
+	};
 
 
 }

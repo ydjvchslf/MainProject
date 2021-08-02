@@ -180,6 +180,9 @@
 		  <c:set var="i" value="${resultPage.totalCount}" />
 		  <c:forEach var="complain" items="${comlist}">
 			<c:set var="i" value="${i-1}" />
+			
+			<c:if test="${complain.complainState != '1'}">
+			
 			<tr>
 			  <td width=5% align="center">
 				<c:if test="${complain.complainSort == 'B'}">
@@ -193,8 +196,7 @@
 			  <td width=5% align="left">
 			  
 			  <c:if test="${complain.complainSort == 'B'}">
-<!-- 여기 희진이한테 링크 해달라고하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-				  <a href="/board/getBoard?boardNo=${complain.board.boardNo}&isMine=y">${complain.board.boardNo}</a>
+				  <a href="/board/getBoard?boardNo=${complain.board.boardNo}">${complain.board.boardNo}</a>
 			  </c:if>
 			  <c:if test="${complain.complainSort == 'C'}">
 				  ${complain.commentNo}
@@ -207,10 +209,13 @@
 			  <td width=20% id="listtable" align="left">
 			  <fmt:formatDate value="${complain.complainDate}" pattern="yyyy-MM-dd"/></td>
 			  <td width=10% id="listtable" align="left">
-			  <a onclick="updateComplain(${complain.complainNo})">수락</a>
+			  <a onclick="updateComplainy(${complain.complainNo})">수락</a>
+			  &nbsp;&nbsp; / &nbsp;
+			  <a onclick="updateComplainn(${complain.complainNo})">반려</a>
 			  </td>
 			  
 			</tr>
+			</c:if>
           </c:forEach>
         </tbody>
       </table>
@@ -230,14 +235,29 @@
     <script src="/js/main.js"></script>
     <script>
     
-	// 신고 처리
-	function updateComplain(complainNo){
+	// 신고 처리 yes
+	function updateComplainy(complainNo){
 		if(confirm('신고 처리 하시겠습니까?')){
 		    $.ajax({
 		        url : '/complain/json/updateComplain/'+complainNo,
 		        type : 'POST',
 		        success : function(data){
 		        	alert("신고 처리가 완료되었습니다.");
+		        	location.reload()
+		        }
+		    });
+		}
+	}
+	
+	// 신고 처리 no
+	function updateComplainn(complainNo){
+		if(confirm('신고 반려 하시겠습니까?')){
+		    $.ajax({
+		        url : '/complain/json/deleteComplain2/'+complainNo,
+		        type : 'POST',
+		        success : function(data){
+		        	alert("신고 처리가 완료되었습니다.");
+		        	location.reload()
 		        }
 		    });
 		}
