@@ -48,16 +48,16 @@
 	<select  id="getComplainList"  parameterType="search"	resultMap="complainSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT  c.complain_no, c.board_no, c.comment_no, c.review_no, c.complain_user_no, c.complain_sort, r.complain_reason_code, c.complain_date, r.COMPLAIN_REASON_NAME
+	  					FROM		(	SELECT  c.complain_no, c.board_no, c.comment_no, c.review_no, c.complain_user_no, c.complain_sort, r.complain_reason_code, c.complain_date, c.complain_state, r.COMPLAIN_REASON_NAME
 											FROM complain c, complain_reason r
+											<where> 
+											c.complain_reason_code = r.complain_reason_code
 											<if test="searchCondition != null">
-												<where>
-												c.complain_reason_code = r.complain_reason_code
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				AND r.complain_reason_code = #{searchKeyword}
-													</if>
-												</where>
+												<if test="searchCondition == 0 and searchKeyword !='' ">
+									 				AND r.complain_reason_code = #{searchKeyword}
+												</if>
 											</if>
+											</where>
 											ORDER BY complain_no desc) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
@@ -72,7 +72,18 @@
 	   	WHERE complain_no = #{complainNo}
 	 </update>
 	 
-
+	 <select  id="getComplainNo"  parameterType="complain"	 resultType="int">
+	  	SELECT complain_no
+	  	FROM complain
+	  	WHERE complain_user_no = #{user.userNo} AND board_no = #{board.boardNo}
+	 </select>
+	 
+	 
+	<select  id="getComplainCount"  parameterType="complain"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM complain
+	  	WHERE complain_user_no = #{user.userNo} AND board_no = #{board.boardNo}
+	 </select>
 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
@@ -86,5 +97,12 @@
 				</where>
 			  </if>) countTable						
 	 </select>
+	 
+	 <!-- SQL : 신고 삭제 -->
+	<delete 	id="deleteComplain"	parameterType="int">
+		DELETE 
+		FROM complain
+		WHERE complain_no = #{complainNo}
+	 </delete>
  
 </mapper>

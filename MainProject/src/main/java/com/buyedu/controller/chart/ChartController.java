@@ -14,21 +14,22 @@ public class ChartController {
 	@Autowired
 	public ChartService chartService;
 	
+	// 차트 가져오기
 	@RequestMapping("getChart")
 	public String getChart(Model model) throws Exception {
-		System.out.println("getChart() 실행");
 		
 		model.addAttribute("userData", chartService.getUserData());
 		model.addAttribute("academyData", chartService.getAcademyData());
 		model.addAttribute("board", chartService.getBoardCnt());
 		model.addAttribute("edu", chartService.getEduCnt());
 		model.addAttribute("review", chartService.getReviewCnt());
+		
 		return "chart/getChart";
 	}
 	
 	@RequestMapping("moveChat")
 	public String moveChat() throws Exception {
-		System.out.println("moveChat()");
+		
 		return "redirect:http://localhost:3000/";
 	}
 
