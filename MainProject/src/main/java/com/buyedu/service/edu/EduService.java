@@ -15,7 +15,6 @@ import com.buyedu.domain.Edu;
 import com.buyedu.domain.PickEdu;
 import com.buyedu.domain.PurchaseEdu;
 import com.buyedu.domain.Search;
-import com.buyedu.domain.User;
 
 @Service
 public class EduService {
@@ -76,6 +75,11 @@ public class EduService {
 	public PickEdu getPickEdu(int pickNo) throws Exception {
 		
 		return pickDao.getPickEdu(pickNo);
+	}
+	
+	public PickEdu getPickNo(PickEdu pickEdu) throws Exception {
+		
+		return pickDao.getPickNo(pickEdu);
 	}
 	
 	@Transactional (readOnly = true)
