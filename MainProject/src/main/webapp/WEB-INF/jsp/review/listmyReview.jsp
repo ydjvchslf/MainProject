@@ -27,8 +27,7 @@
 	
 		    #title{
 				vertical-align : top;
-				font-size : 50px;
-				color : #1F4E79;
+				font-size : 30px;
 				font-family : TmonMonsori;
 			}
 </style>
@@ -45,12 +44,12 @@
 	        
 	        <div class="container-fluid"  >
 	        
+	        	         <jsp:include page="../common/toolbar2.jsp"></jsp:include> 
+	        
 				<!-- 내용 때려 박으삼 이쁘게 -->
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
-					
-					<div id="title" class="row" >내가 쓴 후기</div>
-					
+					<div id="title" class="row" ><h2>&nbsp;&nbsp;&nbsp;내 후기 보기</div></h2><br>
 				
 					<form>	
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>

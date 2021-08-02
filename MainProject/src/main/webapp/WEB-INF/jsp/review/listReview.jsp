@@ -88,7 +88,18 @@
 			    font-style: normal;
 			}
 			
-			
+	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #F8B739;
+    border-color: #F8B739;
+    }
+    
+    #reviewBtn a:link { color: white; text-decoration: none;}
+ 	#reviewBtn a:visited { color: white; text-decoration: none;}
+ 	#reviewBtn a:hover { color: white; text-decoration: underline;}
+	}		
 		
  		</style>
   </head>
@@ -110,23 +121,103 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 
 
-
-
 					<!-- 학원 이름, 전화번호 -->
 					<div id="academytitle" class="row" ></div>
-					
-					<p class="text-primary">
-		    		전체게시물  ${resultPage.totalCount }개, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
 					
 					<div class="row">
 						<div class="col-md-12">
 						<c:if test="${count == 0 && state == '1'}">
 						
 							
-					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addReview">
+					<button class="btn btn-primary btn-lg" id="reviewButton" data-toggle="modal" data-target="#addReview">
 					  후기작성
 					</button>
+					
+					<!-- Modal -->
+						<div class="modal fade" id="addAca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">기본정보 입력</h4>
+						      </div>
+						      <div class="modal-body">
+						      <!-- 모달 내용 -->
+						        <form>
+						            
+						            <div class="row">
+									  
+									  <div class="col-xs-12 col-md-8">
+									  	<input type="text" name="academyName" placeholder="학원명" class="form-control"> <br/><br/>
+									  </div>
+									  
+									  <div class="col-xs-6 col-md-4">
+									  	<input type="text" name="academyPhone" placeholder="학원전화번호" class="form-control"> <br/><br/>
+									  </div>
+								
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<input class="form-control" type="text" onclick="sample5_execDaumPostcode()" id="sample5_address" name="academyAddr"  placeholder="주소" readonly/> <br/><br/>
+									  </div>
+
+								
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<div id="map" style="width:470;height:300; display:none"></div>
+									  </div>
+
+								
+									</div>
+						
+										<input type="hidden" class="form-control" type="text" id="sample5_address_extra" name="academyArea" placeholder="구이름" readonly/>
+										<input  type="hidden"  id="lat" name="academyLat"  placeholder="위도" readonly/>
+										<input type="hidden" id="lng" name="academyLng"  placeholder="경도" readonly/>
+
+								</form>
+								
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						        <button type="button" id="ok" class="btn btn-primary">등록</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 						</c:if>
 						
 						
@@ -151,17 +242,13 @@
 					      <form>
 					      <div class="modal-body">
 					      
-					      
-					      
 					      	<div class="row-fruid">
-					        <input name="reviewTitle" style="width:420px;height:50px;" id="modalReviewTitle"  placeholder="후기제목" >
+					        <input name="reviewTitle" style="width:420px;height:50px; color:black;" id="modalReviewTitle"  placeholder="후기제목" >
 					        </div>
 					       <div class="row-fruid">
 					        <input name="reviewContent"  class="form-control" style="width:420px;height:200px;" id="modalReviewContent" placeholder="후기내용">
 					        <input name="email" value="${user.email}" type="hidden">
 					        </div>
-					        
-					        
 					        
 					      </div>
 					      </form>
@@ -186,13 +273,12 @@
                                    
                                 </div>
                                 <div class="card-body">
-                             <button type="button" class="btn btn-dark">
-                                   <a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academy.academyCode }" ><h8 class="text-warning">상세보기</h8></a></button>
+                             <button type="button" class="btn btn-primary" id=reviewBtn>
+                                   <a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academy.academyCode }" ><h8 id="reviewBtn">상세보기</h8></a></button>
                                 </div>
                             </div>                        
                     	  </div> 
 		
-							 
 							 </c:forEach>
 
 							 </tbody> 
@@ -202,15 +288,11 @@
 					</div>
 					</div>
 					
-						
 						<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
-						
 
 				</div>
 	      	</div>
-      	
        </div>
-      
 	</div>
 	
 	<script >
@@ -236,10 +318,7 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="title" class="col-md-4" style="">'+data.academyName+'</div>'
-						b += '<div id="count" class="col-md-5" > 학생 수 : '+data.count+'개 &nbsp;&nbsp; 수업 수 : '+data.count2+'명</div>'
-				        b += '<div id="phone" class="col-md-3" align="right"> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</div>'
-						 
+						b += '<div id="titlef" class="col-md-4" style=""><h2> &nbsp;&nbsp;'+data.academyName+'</h2></div>'
 					$("#academytitle").html(b);
 						 
 				 }							
