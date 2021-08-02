@@ -10,7 +10,7 @@
 
 <html lang="ko">
 <head>
-<title>Buy Edu</title>
+<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -64,7 +64,6 @@
 			$( ".btn:contains('삭')" ).on("click" , function() {
 				if(confirm("삭제하시겠습니까?")==true){
 				 var boardNo = $("div").find('button#deleteButton').val();
-				 alert(boardNo)
 				 var cateCode=$("input[name='cateCode']").val();
 					self.location = "/board/deleteBoard?cateCode="+cateCode+"&boardNo="+boardNo
 				}else{

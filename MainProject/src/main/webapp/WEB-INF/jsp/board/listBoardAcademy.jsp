@@ -11,7 +11,7 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 
   <head>
-  	<title>Buy Edu</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -81,8 +81,8 @@
 	
 	#boardHeader{
 	vertical-align : top;
-	font-size : 0px;
-	color : black;
+	color : #3A3F43;
+	font-size: 38px;
 	font-family : TmonMonsori;
 	}
 
@@ -129,6 +129,10 @@
     border-color: #F8B739;
 	}
 
+	#wrbtn a:link { color: white; text-decoration: none;}
+ 	#wrbtn a:visited { color: white; text-decoration: none;}
+ 	#wrbtn a:hover { color: white; text-decoration: underline;}
+ 	
 	</style>
 	
 	
@@ -147,7 +151,7 @@
 					 width : 100%;">
 				  <!-- 게시판 title -->
 				   <div class="col-md-6 text-left" id="boardHeader">
-		    	<h3>${academy.academyName}  공지사항</h3>
+		    	${academy.academyName}  공지사항<br>
 		    </div><br>
 		    
 		    <div class="col-md-6 text-right" id="searchPosition">
@@ -167,14 +171,30 @@
 				  </div>
 				  
 				  <button type="button" class="btn btn-default">검색</button>
+			
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				</form>
 	    	</div>
+	    	<div class="col-sm-12" align="center">
+			<hr>
+			</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover" id="boardTable">
+      <div>&nbsp;</div>
+      <div>&nbsp;</div>
+      
+      <c:if test="${empty listb}">
+							<div class="col-sm-12" align="center">
+								<img src="/image/nothing.png"><br>
+							</div>
+	  </c:if>
+	  
+	  <c:if test="${!empty listb}">
+							
+	  
+      <table class="table table-hover" id="boardTable" style="margin-top:20px;">
         <thead id="tableHead">
           <tr>
             <th width=10% align="center"></th>
@@ -195,24 +215,22 @@
 			</tr>
           </c:forEach>
         </tbody>
-      </table>
+      </table></c:if>	
 	  <!--  table End /////////////////////////////////////-->
 	  <div class="form-group">
-	  
-	  userNo : ${user.userNo}    
-	  아카데미 코드 : ${academy.academyCode}
 		<input type="hidden" name="isMine" value="${search.isMine}" />		
 		<input type="hidden" name="acaWriter" value="${academy.academyCode}" />	  
 		  
 			<c:if test="${user.role eq 'academy'}">
 				<div class="col-sm-offset-11  col-sm-1 text-center">
-		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary"  >
-		     	 
+		     	 &nbsp;&nbsp;<button type="button" class="btn btn-primary" id="wrbtn"  >
 		     	 <a href="/board/addBoard?cateCode=3&academyCode=${academy.academyCode}">글쓰기</a></button>
 		    	</div> 
 			</c:if>
 		
- 	
+ 			<div class="col-sm-12" align="center">
+			<hr>
+			</div>
 			 	<!-- PageNavigation Start... -->
 				<jsp:include page="../common/pageNavigator_new.jsp"/>
 				<!-- PageNavigation End... -->
