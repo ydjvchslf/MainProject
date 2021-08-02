@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -120,9 +120,6 @@
 					<div class="row">
 					
 						<div class="col-md-6 text-left">
-							<p style="font-size:15px; color:black; font-family:'돋움';">
-					    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-					    	</p>
 					    	<p>
 					    	<c:if test="${user.role == 'academy'}">
 					    		<button type="button" class="btn btn-primary">등록</button>

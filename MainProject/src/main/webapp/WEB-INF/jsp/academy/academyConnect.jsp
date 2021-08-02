@@ -154,7 +154,7 @@
 				 academyInfo = data;
 					 
 				var b = '';
-					b += '<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">'+data.academyName+'</div>'
+					b += '<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">'+data.academyName+'</div>'
 				 
 				$("#academytitle").html(b);
 					 
@@ -174,8 +174,8 @@
     				
     				if(value.length == 0){
 						a += '<span>'
-						a += '<img src="/image/crying.png">'
-						a += '인증 신청한 학생이 없습니다.!</span>'
+						a += '<h4 align="center"><img src="/image/crying.png">'
+						a += '인증 신청한 학생이 없습니다!</h4></span>'
 					}else{
     					a += '<thead><tr>'
     					a += '<th align="center">No</th>'

@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>수업등록</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -114,7 +114,7 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 					
 					<div class="col-md-12">
-						<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">
+						<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">
 			    			${academy.academyName} 
 			    		</div>
 			    		
@@ -124,6 +124,10 @@
 						</div><br>
 						<br>
 						<!-- 중간 소제목 끝-->
+						
+						<div class="col-md-12">
+							<hr>
+						</div>
 			    		
 					</div>
 				
@@ -197,6 +201,8 @@
 			      </table>
 			      </c:if>
 			      
+			      <hr>
+			      
 			      	<div class="row">
 						<jsp:include page="../common/pageNavigator_new.jsp"/>
 					</div>
@@ -205,7 +211,7 @@
 					
 				</div>
 	      	</div>
-      		
+      	
        </div>
       	
 

@@ -100,7 +100,6 @@
 					
 						<!-- 학원 이름, 전화번호 -->
 						<div id="academytitle" class="row"></div>
-						<br>
 						<!-- 중간 소제목 시작-->
 						<div class="col-sm-12" align="center">
 							<h4><strong><span><span >멀티미디어 정보</span></strong></h4>
@@ -353,7 +352,7 @@
 					 academyInfo = data;
 						 
 					var b = '';
-						b += '<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">'+data.academyName+'</div>'
+						b += '<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">'+data.academyName+'</div>'
 					
 					$("#academytitle").html(b);
 						 

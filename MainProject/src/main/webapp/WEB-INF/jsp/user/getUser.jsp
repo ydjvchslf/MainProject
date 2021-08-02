@@ -1302,7 +1302,7 @@
         					a += '<div class="panel-heading" style="background-color:#ECECEC;">'
         					a += '<h3 class="panel-title" id="titlef">'
         					a += '<a href="/academy/academyInfo?academyCode='+(value[i].academyCode)+'" >'+value[i].academyName+'</a></h3>'
-        					a += '<h6 align="right" id="titlef"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h6>'
+        					a += '<h6 align="right" id="titlef"><h6 align="right" id="titlef"><a onclick="deleteAcademyProfile(\''+(value[i].academyCode)+'\')"><img alt="deleteacademy" src="/image/trash.png" height="30"></a></h6>'
         					a += '</div>'
         					
         					a += '<div id="academyInfo_' + i +'" class="panel-body">'
@@ -1340,6 +1340,8 @@
 			});		
 		}
         
+        
+      
 		
 		// 학원 프로필 삭제하기
 		function deleteAcademyProfile(academyCode){
@@ -1358,6 +1360,8 @@
 			    });
 			}
 		}
+        
+        
 	
 		
 		 $(document).ready(function(){

@@ -64,7 +64,7 @@
 	
 	#chatBtn{
 		position: relative;
-		top: 5%;
+		top: -2%;
 		right: 0%;
 		z-index: 1;
 	}
@@ -104,7 +104,7 @@
 						</div>
 					
 						<!-- 학원 이름, 전화번호 -->
-						<div id="academytitle" class="row" ></div>
+						<div id="academytitle" class="row" style="margin-top: -55px"></div>
 						
 						
 						<!-- 학원 정보 -->
@@ -210,7 +210,7 @@
 						
 					 
 				var b = '';
-					b += '<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">'+data.academyName+'</div>'
+					b += '<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">'+data.academyName+'</div>'
 					b += '<div></div>'
 					b += '<div class="col-md-6" style="font-size: 15px;" align="left"><strong> 학생 수 : '+data.count+'명 &nbsp;&nbsp; 수업 수 : '+data.count2+'개 </strong></div>'
 			        b += '<div class="col-md-6" align="right"> <strong> <img alt="전화번호" src="/image/phone_icon.png" height="20">&nbsp;'+data.academyPhone+'</strong></div>'

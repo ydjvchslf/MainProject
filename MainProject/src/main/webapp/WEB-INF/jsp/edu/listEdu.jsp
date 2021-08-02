@@ -137,36 +137,39 @@
 					<div class="row">
 					
 						<div class="col-md-12">
-							<div id="titlef" class="col-md-12" style="font-size: 45px;" align="center">
+							<div id="titlef" class="col-md-12" style="font-size: 38px;" align="center">
 				    			${academy.academyName} 
 				    		</div>
 				    		
 				    		<!-- 중간 소제목 시작-->
 							<div class="col-sm-12" align="center">
-								<h4><strong><span>수업</span></strong></h4>
+								<h4><strong><span>등록된 수업</span></strong></h4>
 							</div><br>
 							<br>
 							<!-- 중간 소제목 끝-->
-				    		
-						</div>
-					
-						<div class="col-md-6 text-left">
 						</div>
 						
-						
-						<div class="col-md-6 text-right">
+						<div class="col-md-12 text-right">
 							<form class="form-inline" name="detailForm">
 								
-								<div class="col-md-12 text-right">
-							    	<p>
-							    		<span><strong> 판매상태 </strong></span>
-							    		<input type="radio" name="searchEduState" id="searchEduState" value="0" > 판매대기중
-										<input type="radio" name="searchEduState" id="searchEduState" value="1" > 판매중
-							    		<input type="radio" name="searchEduState" id="searchEduState" value="2" > 판매완료
-							    	</p>
-								</div>
+								<c:if test="${user.role eq 'academy'}">
+									<div class="col-md-12 text-right">
+								    	<p>
+								    		<span><strong> 판매상태 </strong></span>
+								    		<input type="radio" name="searchEduState" id="searchEduState" value="0" > 판매대기중
+											<input type="radio" name="searchEduState" id="searchEduState" value="1" > 판매중
+								    		<input type="radio" name="searchEduState" id="searchEduState" value="2" > 판매완료
+								    	</p>
+									</div>
+								</c:if>
+								 <!-- 수업등록하기 버튼 -->
+								  <div class="col-md-6" align="left">
+								    	<c:if test="${user.role == 'academy'}">
+								    	<button type="button" class="btn btn-primary">수업등록</button>&nbsp;&nbsp;&nbsp;&nbsp;
+								    	</c:if>
+								  </div>
 
-								<div class="col-md-12 text-right">
+								<div class="col-md-6 text-right">
 								  <div class="form-group">
 								    <select class="form-control" name="searchCondition" >
 										<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>수업명</option>
@@ -181,13 +184,11 @@
 								  </div>
 								  
 								  <button type="button" class="btn btn-primary">검색</button>
-								  <!-- 수업등록하기 버튼 -->
-								  <div class="col-md-12" align="right">
-								  		<br>
-								    	<c:if test="${user.role == 'academy'}">
-								    	<button type="button" class="btn btn-primary">수업등록</button>
-								    	</c:if>
-								  </div>
+								 
+								</div>
+								
+								<div class="col-md-12 text-left">
+									<hr>
 								</div>
 								  
 								  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -267,7 +268,11 @@
 							     </c:if>
 				    	</table>
 				    	
-					
+				    	<div class="col-md-12 text-left">
+							<hr>
+						</div>
+				    
+				    	
 					</div>
 					
 					<div class="row">
