@@ -70,7 +70,7 @@
 		          </li>
 		         </c:if> 
 		         
-		         
+		         <c:if test="${user.role != 'admin'}"> 
 		          <li>
 		            <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">³» Á¤º¸</a>
 		          	 <ul class="collapse list-unstyled" id="userSubmenu">
@@ -87,7 +87,7 @@
 		                  </c:if>
 		              </ul>
 		          </li>
-		          
+		        </c:if>  
 		          
 		         <c:if test="${user.role != 'academy'}"> 
 		          <li>

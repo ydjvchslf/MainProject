@@ -218,7 +218,7 @@
 							            <div class="caption" align="center">
 							              <h2 id="titlef">${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
 							              <h5 id="titlef">${ edu.eduName }</h5>
-							              <p>&#8361; ${ edu.eduPrice } 원</p>
+							              <p><img src="/image/won.jpg" width="22px"><strong> ${ edu.eduPrice } </strong> </p>
 							              <p>남은자리 ${edu.eduRest}</p>
 							              <p>
 							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&academyCode=${edu.academy.academyCode}" class="btn btn-primary" role="button">상세보기</a> 
@@ -239,7 +239,7 @@
 								              <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/>
 							              </h2>
 							              <h4 id="titlef">${ edu.eduName }</h4>
-							              <p>&#8361; ${ edu.eduPrice } 원</p>
+							              <p> <img src="/image/won.jpg" width="22px"><strong> ${ edu.eduPrice } </strong></p>
 							              <p style="color: red"><strong>남은자리 ${edu.eduRest}</strong></p>
 							              <p>
 							              	<c:if test="${ edu.eduState == '0' }">
