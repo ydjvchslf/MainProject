@@ -300,7 +300,6 @@
 			<hr>
 			</div>
 						<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
-
 				</div>
 	      	</div>
        </div>
