@@ -121,8 +121,6 @@
 				<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 
 
-
-
 					<!-- 학원 이름, 전화번호 -->
 					<div id="academytitle" class="row" ></div>
 					
@@ -131,9 +129,95 @@
 						<c:if test="${count == 0 && state == '1'}">
 						
 							
-					<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addReview">
+					<button class="btn btn-primary btn-lg" id="reviewButton" data-toggle="modal" data-target="#addReview">
 					  후기작성
 					</button>
+					
+					<!-- Modal -->
+						<div class="modal fade" id="addAca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">기본정보 입력</h4>
+						      </div>
+						      <div class="modal-body">
+						      <!-- 모달 내용 -->
+						        <form>
+						            
+						            <div class="row">
+									  
+									  <div class="col-xs-12 col-md-8">
+									  	<input type="text" name="academyName" placeholder="학원명" class="form-control"> <br/><br/>
+									  </div>
+									  
+									  <div class="col-xs-6 col-md-4">
+									  	<input type="text" name="academyPhone" placeholder="학원전화번호" class="form-control"> <br/><br/>
+									  </div>
+								
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<input class="form-control" type="text" onclick="sample5_execDaumPostcode()" id="sample5_address" name="academyAddr"  placeholder="주소" readonly/> <br/><br/>
+									  </div>
+
+								
+									</div>
+									
+									<div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<div id="map" style="width:470;height:300; display:none"></div>
+									  </div>
+
+								
+									</div>
+						
+										<input type="hidden" class="form-control" type="text" id="sample5_address_extra" name="academyArea" placeholder="구이름" readonly/>
+										<input  type="hidden"  id="lat" name="academyLat"  placeholder="위도" readonly/>
+										<input type="hidden" id="lng" name="academyLng"  placeholder="경도" readonly/>
+
+								</form>
+								
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						        <button type="button" id="ok" class="btn btn-primary">등록</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
 						</c:if>
 						
 						

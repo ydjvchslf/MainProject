@@ -183,7 +183,7 @@
 					  <a href="/board/listBoard?cateCode=3&academyCode="+${academy.academyCode}><h2>&nbsp;&nbsp;&nbsp;&nbsp;${academy.academyName} 공지사항</h2></a>
 					</c:when>
 					<c:when test="${search.isMine eq 'y' }">
-					  <a href="/board/listBoard?isMine=y"><h2>&nbsp;&nbsp;&nbsp;&nbsp;내가 쓴 게시글 보기</h2></a>
+					  <a href="/board/listBoard?isMine=y"><h2>&nbsp;&nbsp;&nbsp;&nbsp;내 게시글 보기</h2></a>
 					</c:when>
 					</c:choose>	
 	 			  </div><br>
