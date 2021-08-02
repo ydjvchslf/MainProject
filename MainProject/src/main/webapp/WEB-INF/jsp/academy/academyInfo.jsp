@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>Academy Info</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -92,10 +92,10 @@
 					
 					<div class="row">
 					
-					<div class="col-sm-3"> <!-- 3 부분 -->
+					<div class="col-sm-2"> <!-- 3 부분 -->
 					</div>
-					<div class="col-sm-6"> <!-- 본문 부분 -->
-					
+					<div class="col-sm-8"> <!-- 본문 부분 -->
+				
 						<div class="row" id="chatBtn">
 							<div align="right" class="col-md-12">
 								<br>
@@ -118,7 +118,7 @@
 						</div>
 					
 					</div>
-					<div class="col-sm-3"> <!-- 3 부분 -->
+					<div class="col-sm-2"> <!-- 3 부분 -->
 					</div>
 					
 						    
@@ -153,7 +153,7 @@
 	var imageSrc =  "/image/marker2.png";
 	
 	// 마커 이미지의 이미지 크기 입니다
-    var imageSize = new kakao.maps.Size(24, 35); 
+    var imageSize = new kakao.maps.Size(35, 35); 
     
     // 마커 이미지를 생성합니다    
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
@@ -230,7 +230,7 @@
 	    	intro += '<div class="panel-heading" style="background-color:#ECECEC;">'
 	    	intro += '<h3 class="panel-title">학원 소개</h3>'
 	    	intro += '</div>'
-	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="38" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
+	    	intro += '<textarea name="academy_'+academyCode+'" rows="10" cols="55" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyIntro+'</textarea>'
 	   	 	intro += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveIntro(\''+academyCode+'\');">저장</button> </span>';
 	   	 	intro += '</div></div>';
 	    
@@ -263,7 +263,7 @@
 	    	history += '<div class="panel-heading" style="background-color:#ECECEC;">'
 	    	history += '<h3 class="panel-title">학원 실적</h3>'
 	    	history += '</div>'
-	    	history += '<textarea name="academy_'+academyCode+'" rows="10" cols="38" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyHistory+'</textarea>'
+	    	history += '<textarea name="academy_'+academyCode+'" rows="10" cols="55" style="margin-left: 5; margin-top: 5; padding-left: 15; padding-top: 10;">'+academyInfo.academyHistory+'</textarea>'
 	    	history += '<span class="input-group-btn"><button class="btn blue" id="saveIntro" type="button" onclick="saveHistory(\''+academyCode+'\');">저장</button> </span>';
 	    	history += '</div></div>';
 	    

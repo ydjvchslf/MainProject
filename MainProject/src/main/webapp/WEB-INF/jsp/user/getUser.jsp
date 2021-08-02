@@ -72,9 +72,9 @@
 						<div style="background-color:white; border:3px solid white; border-radius:10px; position:relative; padding-top: 30px; padding-right: 30px; padding-left: 30px; padding-bottom: 30px;">
 						
 					      <div class="row">
-							<div class="col-sm-3"> <!-- 3 부분 -->
+							<div class="col-sm-2"> <!-- 3 부분 -->
 							</div>
-							<div class="col-sm-6"> <!-- 6부분 본문 내용 들어갈 자리 -->
+							<div class="col-sm-8"> <!-- 6부분 본문 내용 들어갈 자리 -->
 							
 								<div class="row"><!-- 첫번째 row 시작 -->
 							        <div class="col">
@@ -219,7 +219,7 @@
 			                     </c:if> 
 							
 							</div>
-							<div class="col-sm-3"><!-- 3 부분 -->
+							<div class="col-sm-2"><!-- 3 부분 -->
 							</div>
 						  </div>
 					      

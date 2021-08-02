@@ -99,9 +99,9 @@
 					
 					<div class="row">
 					
-					<div class="col-sm-3"> <!-- 3 부분 -->
+					<div class="col-sm-2"> <!-- 3 부분 -->
 					</div>
-					<div class="col-sm-6"> <!-- 본문 부분 -->
+					<div class="col-sm-8"> <!-- 본문 부분 -->
 					
 						<!-- 학원 이름, 전화번호 -->
 						<div id="academytitle" class="row" > </div>
@@ -127,7 +127,7 @@
 				
 					
 					</div>
-					<div class="col-sm-3"> <!-- 3 부분 -->
+					<div class="col-sm-2"> <!-- 3 부분 -->
 					</div>
 					
 					
