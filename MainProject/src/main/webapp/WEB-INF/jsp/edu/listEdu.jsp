@@ -21,14 +21,27 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	
 	<style>
-		.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-	    z-index: 3;
-	    color: #fff;
-	    cursor: default;
-	    background-color: #F8B739;
-	    border-color: #F8B739;
-	   }
-	</style>
+	.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3;
+    color: #fff;
+    cursor: default;
+    background-color: #F8B739;
+    border-color: #F8B739;
+   }
+	   
+    @font-face {
+    font-family: 'ChosunGu';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunGu.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+   }
+   
+   body{
+   font-family: ChosunGu;
+   }
+	
+	
+   </style>
 	
 	<script type="text/javascript">
 	
@@ -102,7 +115,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -126,7 +139,7 @@
 				    		
 				    		<!-- 중간 소제목 시작-->
 							<div class="col-sm-12" align="center">
-							<span >수업</span>
+								<h4><strong><span>수업</span></strong></h4>
 							</div><br>
 							<br>
 							<!-- 중간 소제목 끝-->
@@ -135,7 +148,8 @@
 					
 						<div class="col-md-6 text-left">
 						</div>
-					
+						
+						
 						
 						<div class="col-md-6 text-right">
 							<form class="form-inline" name="detailForm">

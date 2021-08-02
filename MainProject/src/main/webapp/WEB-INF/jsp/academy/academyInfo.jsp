@@ -46,39 +46,30 @@
     font-style: normal;
 	}
 	
-	@font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	body{
+		overflow-x:hidden; overflow-y:visible;
+		font-family: 'ChosunGu';
 	}
 	
-			body{
-				overflow-x:hidden; overflow-y:visible;
-				font-family: 'ChosunGu';
-			}
+	#panel-color{
+		background-color: black !important;
+	}
+	
+	@font-face {
+	    font-family: 'TmonMonsori';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	#chatBtn{
+		position: relative;
+		top: 5%;
+		right: 0%;
+		z-index: 1;
+	}
 			
-			#panel-color{
-				background-color: black !important;
-			}
-			
-			@font-face {
-			    font-family: 'TmonMonsori';
-			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
-			    font-weight: normal;
-			    font-style: normal;
-			}
-			
-			#chatBtn{
-				position: relative;
-				top: 5%;
-				right: 0%;
-				z-index: 1;
-			}
-			
-			
-		
- 		</style>
+	</style>
 	
 
   </head>
