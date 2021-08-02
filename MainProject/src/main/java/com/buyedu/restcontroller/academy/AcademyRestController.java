@@ -146,8 +146,8 @@ public class AcademyRestController {
 			if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
 				
 				for(MultipartFile file:multipartFile) {
-					fileRoot = "C:\\Users\\woohr\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
-					// fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
+					//fileRoot = "C:\\Users\\woohr\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
+					 fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
 					
 					String originalFileName = file.getOriginalFilename();	//오리지날 파일명
 					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
@@ -195,8 +195,8 @@ public class AcademyRestController {
 	private int deleteMultimedia(@PathVariable int multimediano) throws Exception{
 		
 		String multimedia = academyService.getMultimedia(multimediano);
-		String fileRoot = "C:\\Users\\woohr\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
-		//String fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
+		//String fileRoot = "C:\\Users\\woohr\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
+		String fileRoot = "C:\\Users\\woan2\\git\\MainProject\\MainProject\\src\\main\\resources\\static\\uploadImages\\";
 		
 		File file = new File(fileRoot+multimedia);
 		if (file.exists()) {
