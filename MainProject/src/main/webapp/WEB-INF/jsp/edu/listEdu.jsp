@@ -2,6 +2,8 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
+
 <html lang="en">
   <head>
   	<title>수업등록</title>
@@ -214,7 +216,6 @@
 						
 						
 						<table class="table table-hover table-striped" >
-					      
 					      	  	<c:if test="${user.role == 'student' or user.role == 'parents'}">
 							      <c:forEach var="edu" items="${eduList}" >
 							      	<c:if test="${edu.eduState == '1' }">
@@ -224,7 +225,7 @@
 							            <div class="caption" align="center">
 							              <h2 id="titlef">${ edu.academy.academyName } <input type="hidden" name="acaCode" id="acaCode" value="${edu.academy.academyCode}"/> </h2>
 							              <h5 id="titlef">${ edu.eduName }</h5>
-							              <p><img src="/image/won.jpg" width="22px"><strong> ${ edu.eduPrice } </strong> </p>
+							              <span><img src="/image/won.jpg" width="22px"><strong>${edu.eduPrice}</strong></span>
 							              <p>남은자리 ${edu.eduRest}</p>
 							              <p>
 							              <p><a href="/edu/getEdu?eduNo=${edu.eduNo}&academyCode=${edu.academy.academyCode}" class="btn btn-primary" role="button">상세보기</a> 
