@@ -47,14 +47,12 @@ public class ComplainService {
 	// 게시글 신고 유무
 	public int getComplainCount(Complain complain) throws Exception{
 		int count = complainDao.getComplainCount(complain);
-		
 		return count;
 	};
 	// 댓글 신고 유무
 	public int getComplainCommentCount(Complain complain) throws Exception{
-		int count = complainDao.getComplainCommentCount(complain);
-		
-		return count;
+		int ccount = complainDao.getComplainCommentCount(complain);
+		return ccount;
 	};
 	
 	// 신고 번호 찾기

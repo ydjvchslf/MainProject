@@ -60,7 +60,7 @@ public class ComplainRestController {
 	// 댓글 신고
 		@ResponseBody
 		@RequestMapping( value="json/addCommentComplain/{boardNo}", method=RequestMethod.POST)
-		public void addCommentComplain(@PathVariable int boardNo, 
+		public int addCommentComplain(@PathVariable int boardNo, 
 								@RequestParam("commentNo") int commentNo,
 								@RequestParam("reason") String reason) throws Exception {
 			
@@ -75,7 +75,13 @@ public class ComplainRestController {
 			complain.setComplainReasonCode(reason);
 			complain.setComplainSort("C");
 			
-			complainService.addComplain(complain);
+			int ccount = complainService.getComplainCommentCount(complain);
+			
+			if (ccount == 0) {
+				complainService.addComplain(complain);
+			}
+			
+			return ccount;
 		}
 	
 	// 신고 처리

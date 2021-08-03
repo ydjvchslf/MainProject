@@ -62,7 +62,7 @@
     </div>
 </div>
 
-<!-- 신고 모달 팝업 -->      
+<!-- 신고 모달 팝업 -->     
 		    <div class="modal fade" id="complainCmd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
 						    <div class="modal-content">
@@ -99,12 +99,26 @@
 						    </div>
 						  </div>
 						</div>
-						
-						<a ></a>
-
-
-
-
+				
+		    <button class="btn btn-primary" id="complainButton" data-toggle="modal" data-target="#complainBrd">신고 취소</button>
+		    <div class="modal fade" id="complainBrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">이미 신고 한 게시글 입니다.</h4>
+						      </div>
+						      <div class="modal-body" align="center">
+						      <!-- 모달 내용 -->
+									신고를 취하 하시겠습니까?
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" id="deleteComplain" class="btn btn-primary">신고 취소 하기</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+			
 	
 <script>
 var boardNo = '${board.boardNo}'; //게시글 번호
@@ -250,9 +264,15 @@ $(function() {
 				 url : '/complain/json/addCommentComplain/'+boardNo,
 			     type : 'post',
 			     data : {'boardNo' : boardNo, 'reason' : reason, 'commentNo' : commentNo},
-			     success : function(data){
-			    	location.reload()
-					alert("신고가 완료 되었습니다.");
+			     success : function(res){
+			    	 alert(res);
+			    	 if(res==0){
+			    		 location.reload();
+							alert("신고가 완료 되었습니다.");
+			    	 }else{
+			    		 location.reload();
+			    		 alert("이미 신고한 댓글입니다.");
+			    	 }
 			     }
 			});
 		}
