@@ -198,40 +198,6 @@
                                    <c:if test="${user.email == review.reviewWriter.email}">
                                    <br/>
                                    
-                           <button class="btn btn-primary btn-lg" id="updatereviewButton" data-toggle="modal" data-target="#updateReview">
-					  		 후기 수정
-							</button>
-					
-					<div class="modal fade" id="updateReview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						  <div class="modal-dialog" role="document">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h4 class="modal-title" id="myModalLabel">후기 수정 하기</h4>
-						      </div>
-						      <div class="modal-body">
-						      <!-- 모달 내용 -->
-						        <form>
-						            <div class="row">
-									  
-									  <div class="col-xs-12 col-md-12">
-									  	<input type="text" name="reviewTitle" class="form-control" value="${review.reviewTitle}"> <br/><br/>
-									  </div>
-									  
-									  <div class="col-xs-12 col-md-12">
-									  	<textarea rows="5" cols="50" id="reviewContent" name="reviewContents" class="form-control">${review.reviewContent}</textarea><br/><br/>
-									  </div>
-									</div>
-								</form>
-								
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-						        <button type="button" id="update" class="btn btn-primary">등록</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-                                   
                                    <a onclick="deleteReview(${review.reviewNo})">후기 삭제</a>
                                    </c:if>
                                 </div>
