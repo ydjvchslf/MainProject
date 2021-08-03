@@ -123,59 +123,33 @@
 						<div class="col-md-12">
 						<c:if test="${count == 0 && state == '1'}">
 					
-						
-					
 					
 					<button class="btn btn-primary btn-lg" id="reviewButton" data-toggle="modal" data-target="#addReview">
 					  후기작성
 					</button>
 					
-					<!-- Modal -->
-						<div class="modal fade" id="addAca" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal fade" id="addReview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
 						    <div class="modal-content">
 						      <div class="modal-header">
-						        <h4 class="modal-title" id="myModalLabel">기본정보 입력</h4>
+						        <h4 class="modal-title" id="myModalLabel">학원 후기 작성하기</h4>
 						      </div>
 						      <div class="modal-body">
 						      <!-- 모달 내용 -->
 						        <form>
-						            
 						            <div class="row">
 									  
-									  <div class="col-xs-12 col-md-8">
-									  	<input type="text" name="academyName" placeholder="학원명" class="form-control"> <br/><br/>
+									  <div class="col-xs-12 col-md-12">
+									  	<input type="text" name="reviewTitle" placeholder="후기 제목" class="form-control"> <br/><br/>
 									  </div>
-									  
-									  <div class="col-xs-6 col-md-4">
-									  	<input type="text" name="academyPhone" placeholder="학원전화번호" class="form-control"> <br/><br/>
-									  </div>
-									</div>
-									
-									<div class="row">
 									  
 									  <div class="col-xs-12 col-md-12">
-									  	<input class="form-control" type="text" onclick="sample5_execDaumPostcode()" id="sample5_address" name="academyAddr"  placeholder="주소" readonly/> <br/><br/>
+									  	<textarea rows="5" cols="50" id="reviewContent" name="reviewContents" placeholder="후기 내용" class="form-control"></textarea><br/><br/>
 									  </div>
-
 								
 									</div>
-									
-									<div class="row">
-									  
-									  <div class="col-xs-12 col-md-12">
-									  	<div id="map" style="width:470;height:300; display:none"></div>
-									  </div>
-
-								
-									</div>
-						
-										<input type="hidden" class="form-control" type="text" id="sample5_address_extra" name="academyArea" placeholder="구이름" readonly/>
-										<input  type="hidden"  id="lat" name="academyLat"  placeholder="위도" readonly/>
-										<input type="hidden" id="lng" name="academyLng"  placeholder="경도" readonly/>
-
 								</form>
-							  
+								
 						      </div>
 						      <div class="modal-footer">
 						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -184,38 +158,8 @@
 						    </div>
 						  </div>
 						</div>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-						</c:if>
 						
+						</c:if>
 						
 						</div>	
 					</div>
@@ -236,54 +180,63 @@
 						<input type="hidden" id="currentPage" name="currentPage" value=""/>
 					<c:if test="${!empty listR}">
 						<table class="table">
-							 <thead>
-							  											<!-- Modal -->
-					<div class="modal fade" id="addReview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h4 class="modal-title" id="myModalLabel">후기 작성</h4>
-					      </div>
-					      
-					      <form>
-					      <div class="modal-body">
-					      
-					      	<div class="row-fruid">
-					        <input name="reviewTitle" style="width:420px;height:50px; color:black;" id="modalReviewTitle"  placeholder="후기제목" >
-					        </div>
-					       <div class="row-fruid">
-					        <input name="reviewContent"  class="form-control" style="width:420px;height:200px;" id="modalReviewContent" placeholder="후기내용">
-					        <input name="email" value="${user.email}" type="hidden">
-					        </div>
-					        
-					      </div>
-					      </form>
-					      
-					      <div class="modal-footer">
-					      <button type="button" onclick="add()" class="btn btn-primary">등록</button>
-					        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					      </div>
-					    </div>
-					  </div>
-					</div>
-							 </thead>
 							 
 							 <tbody>
 							 
 							 <c:forEach var="review" items="${listR}">
-							  <div class="row-fruid" style="float: left; width: 50%; padding:10px;">
+				   <div class="row-fruid" style="float: left; width: 50%; padding:10px;">
 		 		 	<div class="card shadow mb-4">
                                 <div id="card_box" class="card-header bg-dark py-3">
-                                    <h3 class="m-0 font-weight-bold text-warning">${review.reviewTitle }</h3>
-                                    <h5 class="text-warning"> 작성자 ${review.reviewWriter.email }</h5> <h5 class="text-warning">작성일자 ${review.reviewDate }</h5>
+                                    <h3 class="m-0 font-weight-bold text-warning">${review.reviewTitle}</h3>
+                                    <h5 class="text-warning" align="right"> ${review.reviewWriter.email}</h5> 
+                                    <h5 class="text-warning" align="right"> ${review.reviewDate}</h5>
                                    
                                 </div>
                                 <div class="card-body">
-                             <button type="button" class="btn btn-primary" id=reviewBtn>
-                                   <a href="/review/getReview?reviewNo=${review.reviewNo}&academyCode=${academy.academyCode }" ><h8 id="reviewBtn">상세보기</h8></a></button>
+                                   ${review.reviewContent}
+                                   
+                                   <c:if test="${user.email == review.reviewWriter.email}">
+                                   <br/>
+                                   
+                           <button class="btn btn-primary btn-lg" id="updatereviewButton" data-toggle="modal" data-target="#updateReview">
+					  		 후기 수정
+							</button>
+					
+					<div class="modal fade" id="updateReview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">후기 수정 하기</h4>
+						      </div>
+						      <div class="modal-body">
+						      <!-- 모달 내용 -->
+						        <form>
+						            <div class="row">
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<input type="text" name="reviewTitle" class="form-control" value="${review.reviewTitle}"> <br/><br/>
+									  </div>
+									  
+									  <div class="col-xs-12 col-md-12">
+									  	<textarea rows="5" cols="50" id="reviewContent" name="reviewContents" class="form-control">${review.reviewContent}</textarea><br/><br/>
+									  </div>
+									</div>
+								</form>
+								
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+						        <button type="button" id="update" class="btn btn-primary">등록</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+                                   
+                                   <a onclick="deleteReview(${review.reviewNo})">후기 삭제</a>
+                                   </c:if>
                                 </div>
-                            </div>                        
-                    	  </div> 
+                     </div>                        
+                    </div> 
 		
 							 </c:forEach>
 
@@ -345,6 +298,84 @@
 		$(document).ready(function(){
 			getAcademyInfo(); 
 		});
+		
+		// 모달 후기 등록
+		$(function(){
+			$("#ok").on('click',function(){
+				
+				var academyCode = '${academy.academyCode}';
+				var reviewTitle=$("input[name='reviewTitle']").val();
+				var reviewContent=$("textarea#reviewContent").val();
+				
+				
+// 용미언니 여기 swal 안먹는다 -----------------------------------------------------------------
+				if(reviewTitle == null || reviewTitle.length <1){
+					alert("후기 제목을 입력해주세요.");
+					return;
+				}
+				if(reviewContent == null || reviewContent.length <10){
+					alert("후기 내용은 최소 10자 이상 입니다.");
+					return;
+				}
+				
+				$.ajax({
+			        url : '/review/json/addReview/'+academyCode,
+			        type : 'POST',
+			        data : {'reviewTitle' : reviewTitle, 'reviewContent' : reviewContent},
+			        success : function(data){
+			        	alert("후기 등록 완료!");
+			        	location.reload()
+			        }
+			    });
+				
+			});
+		});
+		
+		// 모달 후기 수정
+		$(function(){
+			$("#update").on('click',function(){
+				
+				var academyCode = '${academy.academyCode}';
+				var reviewTitle=$("input[name='reviewTitle']").val();
+				var reviewContent=$("textarea#reviewContent").val();
+				
+				
+// 용미언니 여기 swal 안먹는다 -----------------------------------------------------------------
+				if(reviewTitle == null || reviewTitle.length <1){
+					alert("후기 제목을 입력해주세요.");
+					return;
+				}
+				if(reviewContent == null || reviewContent.length <10){
+					alert("후기 내용은 최소 10자 이상 입니다.");
+					return;
+				}
+				
+				$.ajax({
+			        url : '/review/json/updateReview/'+reviewNo,
+			        type : 'POST',
+			        data : {'reviewTitle' : reviewTitle, 'reviewContent' : reviewContent},
+			        success : function(data){
+			        	alert("후기 등록 완료!");
+			        	location.reload()
+			        }
+			    });
+				
+			});
+		});
+		
+		function deleteReview(reviewNo){
+			if(confirm('후기를 삭제 하시겠습니까?')){
+			    $.ajax({
+			        url : '/review/json/deleteReview/'+reviewNo,
+			        type : 'POST',
+			        success : function(data){
+			        	alert("후기가 삭제 되었습니다.");
+			        	location.reload()
+			        }
+			    });
+			}
+		}
+		
 		
 	</script>
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
