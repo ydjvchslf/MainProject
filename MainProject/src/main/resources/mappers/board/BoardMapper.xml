@@ -40,7 +40,7 @@
 		SELECT
 		b.board_no , b.board_title , b.board_content , b.board_writer , b.board_date, b.category_code, b.view_count, email
 		FROM board b, users u
-		WHERE b.board_writer=u.user_no AND board_no = #{value} 
+		WHERE b.board_writer=u.user_no and board_no = #{value} 
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
