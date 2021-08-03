@@ -198,7 +198,7 @@
                                    <c:if test="${user.email == review.reviewWriter.email}">
                                    <br/>
                                    
-                                   <a onclick="deleteReview(${review.reviewNo})">후기 삭제</a>
+                                   <a class="btn btn-primary" onclick="deleteReview(${review.reviewNo})">후기 삭제</a>
                                    </c:if>
                                 </div>
                      </div>                        
