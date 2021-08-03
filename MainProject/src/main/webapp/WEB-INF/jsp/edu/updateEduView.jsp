@@ -182,7 +182,6 @@
 							 <label class="btn btn-default">
 							 	<input type="radio" name="eduGrade" value="N수">N수
 							 </label>
-							 <span style="color : red"> 1개만 선택해주세요 </span>
 						  </div>
 						  
 						  <div class="form-group">
@@ -208,7 +207,6 @@
 							 <label class="btn btn-default">
 							 	<input type="radio" name="eduSubject" value="예체능">예체능
 							 </label>
-							 <span style="color : red"> 1개만 선택해주세요 </span>
 						  </div>
 						  
 						  <div class="form-group">
