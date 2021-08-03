@@ -221,5 +221,21 @@ public class Search {
 		this.searchRoleByEdu = searchRoleByEdu;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Academy getAcademy() {
+		return academy;
+	}
+
+	public void setAcademy(Academy academy) {
+		this.academy = academy;
+	}
+
 	
 }
