@@ -27,6 +27,11 @@ public class ComplainService {
 		return complainDao.getComplain(complainNo);
 	};
 	
+	// 신고된 댓글 번호
+	public int getCommentNo(int complainNo) throws Exception{
+		return complainDao.getCommentNo(complainNo);
+	};
+	
 	// 신고 목록
 	public Map<String, Object> getComplainList(Search search) throws Exception{
 		List<Complain> list = complainDao.getComplainList(search);
@@ -47,14 +52,17 @@ public class ComplainService {
 	// 게시글 신고 유무
 	public int getComplainCount(Complain complain) throws Exception{
 		int count = complainDao.getComplainCount(complain);
-		
 		return count;
 	};
 	// 댓글 신고 유무
 	public int getComplainCommentCount(Complain complain) throws Exception{
-		int count = complainDao.getComplainCommentCount(complain);
-		
-		return count;
+		int ccount = complainDao.getComplainCommentCount(complain);
+		return ccount;
+	};
+	// 후기 신고 유무
+	public int getReviewCount(Complain complain) throws Exception{
+		int rcount = complainDao.getReviewCount(complain);
+		return rcount;
 	};
 	
 	// 신고 번호 찾기

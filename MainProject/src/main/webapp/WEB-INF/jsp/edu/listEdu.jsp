@@ -148,7 +148,7 @@
 				    		
 				    		<!-- 중간 소제목 시작-->
 							<div class="col-sm-12" align="center">
-								<h4><strong><span>등록된 수업</span></strong></h4>
+								<h4><strong><span>Buy!edu</span></strong></h4>
 							</div><br>
 							<br>
 							<!-- 중간 소제목 끝-->

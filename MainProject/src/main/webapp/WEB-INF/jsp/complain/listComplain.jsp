@@ -127,7 +127,7 @@
 	
 	
   <body>
-  <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
+  <div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; width:100%;">
 
 	<jsp:include page="../common/left.jsp"></jsp:include>
 
@@ -194,6 +194,9 @@
 				<c:if test="${complain.complainSort == 'C'}">
 				  ´ñ±Û
 				</c:if>
+				<c:if test="${complain.complainSort == 'R'}">
+				  ÈÄ±â
+				</c:if>
 			  </td>
 				  
 			  <td width=5% align="left">
@@ -202,6 +205,9 @@
 				  <a href="/board/getBoard?boardNo=${complain.board.boardNo}">${complain.board.boardNo}</a>
 			  </c:if>
 			  <c:if test="${complain.complainSort == 'C'}">
+			  	  <a href="/board/getBoard?boardNo=${complain.board.boardNo}">${complain.board.boardNo}</a>
+			  </c:if>
+			  <c:if test="${complain.complainSort == 'R'}">
 				  ${complain.commentNo}
 			  </c:if>
 			  
