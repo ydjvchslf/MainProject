@@ -41,7 +41,7 @@ public class ComplainRestController {
 	// 게시글 신고
 	@ResponseBody
 	@RequestMapping( value="json/addBoardComplain/{boardNo}", method=RequestMethod.POST)
-	public void addComplain(@PathVariable int boardNo, 
+	public void addBoardComplain(@PathVariable int boardNo, 
 							@RequestParam String reason) throws Exception {
 		
 		User user = UserUtil.user();
@@ -56,6 +56,26 @@ public class ComplainRestController {
 		
 		complainService.addComplain(complain);
 	}
+	
+	// 게시글 신고
+		@ResponseBody
+		@RequestMapping( value="json/addCommentComplain/{boardNo}", method=RequestMethod.POST)
+		public void addCommentComplain(@PathVariable int boardNo, 
+								@RequestParam("commentNo") int commentNo,
+								@RequestParam("reason") String reason) throws Exception {
+			
+			User user = UserUtil.user();
+			Board board = new Board();
+			board.setBoardNo(boardNo);
+			
+			Complain complain = new Complain();
+			complain.setUser(user);
+			complain.setBoard(board);
+			complain.setComplainReasonCode(reason);
+			complain.setComplainSort("B");
+			
+			complainService.addComplain(complain);
+		}
 	
 	// 신고 처리
 	@RequestMapping(value="json/updateComplain/{complainNo}", method=RequestMethod.POST)

@@ -146,7 +146,6 @@ function enterEvent(){
 		commentInsert(insertData);
 	}
 }
-
  
 //댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
 function commentUpdate(commentNo, content){
@@ -158,7 +157,6 @@ function commentUpdate(commentNo, content){
     a += '</div>';
     
     $('.commentContent'+commentNo).html(a);
-    
 }
  
 //댓글 수정
@@ -191,6 +189,22 @@ function commentDelete(commentNo){
 	    });
 	}else{
 		return false;
+	}
+}
+
+// 댓글 신고
+function commentComplain(commentNo){
+	if(confirm('신고 하시겠습니까?')){
+	    $.ajax({
+	        url : '/complain/json/addCommentComplain/'+boardNo,
+	        type : 'POST',
+	        data : {'reason' : reason, 'commentNo' : commentNo},
+	        success : function(data){
+	        	alert("신고가 완료 되었습니다.")
+	            location.reload(); 
+	          //댓글 삭제후 목록 출력 
+	        }
+	    });
 	}
 }
  
