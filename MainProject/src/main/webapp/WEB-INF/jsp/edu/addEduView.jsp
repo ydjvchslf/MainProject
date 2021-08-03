@@ -55,6 +55,14 @@
 		   $('#eduEndDate').datepicker( { dateFormat : "yy-mm-dd" } );
 		   
 	   })
+	   
+	   
+	   function inNumber(){
+          if(event.keyCode<48 || event.keyCode>57){
+             event.returnValue=false;
+          }
+		}
+	   
 	
 	</script>
 	
@@ -95,10 +103,9 @@
 						  </div>
 						  
 						  <div class="form-group">
-						    <label for="eduPrice" class="col-sm-offset-1 col-sm-1 control-label">수 강 료</label>
+						    <label for="eduPrice" class="col-sm-offset-1 col-sm-1 control-label" >수 강 료</label>
 						    <div class="col-lg-3">
-						      <input type="text" class="form-control" id="eduPrice" name="eduPrice" placeholder="수강료를 입력해주세요.">
-						      <span style = "color:red">숫자만 입력해주세요.</span>
+						      <input type="text" class="form-control" id="eduPrice" name="eduPrice" placeholder="수강료를 입력해주세요." onkeypress="inNumber();"/>
 						    </div>
 						  </div>
 						  
@@ -120,8 +127,7 @@
 						    </div>
 						    <label for="eduMember" class="col-sm-2 control-label">수업 총 인원</label>
 						    <div class="col-sm-3">
-						      <input type="text" class="form-control" id="eduMember" name="eduMember" placeholder="수업 총정원을 입력해주세요."/>
-						      <span style = "color:red">숫자만 입력해주세요.</span>
+						      <input type="text" class="form-control" id="eduMember" name="eduMember" placeholder="수업 총 인원을 입력해주세요." onkeypress="inNumber();"/>
 						    </div>
 						  </div>
 						  
