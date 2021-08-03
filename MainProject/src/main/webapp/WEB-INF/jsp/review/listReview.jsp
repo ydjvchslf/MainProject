@@ -125,7 +125,7 @@
 						<c:if test="${count == 0 && state == '1'}">
 					
 					
-					<button class="btn btn-primary btn-lg" id="reviewButton" data-toggle="modal" data-target="#addReview">
+					<button class="btn btn-primary" id="reviewButton" data-toggle="modal" data-target="#addReview">
 					  후기작성
 					</button>
 					
