@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.buyedu.domain.Board;
 import com.buyedu.domain.Complain;
+import com.buyedu.domain.Review;
 import com.buyedu.domain.User;
 import com.buyedu.service.board.BoardService;
 import com.buyedu.service.complain.ComplainService;
+import com.buyedu.service.review.ReviewService;
 import com.buyedu.util.UserUtil;
 
 @RestController
@@ -31,6 +33,9 @@ public class ComplainRestController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@Value("20")
 	int pageUnit;
@@ -83,17 +88,52 @@ public class ComplainRestController {
 			
 			return ccount;
 		}
+		
+		// 댓글 신고
+		@ResponseBody
+		@RequestMapping( value="json/complainReview/{reviewNo}", method=RequestMethod.POST)
+		public int addReviewComplain(@PathVariable int reviewNo, 
+								@RequestParam("reason") String reason) throws Exception {
+			
+			User user = UserUtil.user();
+			Review review = new Review();
+			reviewService.getReview(reviewNo);
+			
+			Complain complain = new Complain();
+			complain.setUser(user);
+			complain.setReview(review);
+			complain.setComplainReasonCode(reason);
+			complain.setComplainSort("R");
+			
+			int rcount = complainService.getReviewCount(complain);
+			
+			if (rcount == 0) {
+				complainService.addComplain(complain);
+			}
+			
+			return rcount;
+		}
 	
-	// 신고 처리
+	// 게시글 신고 처리
 	@RequestMapping(value="json/updateComplain/{complainNo}", method=RequestMethod.POST)
 	public void updateComplain(@PathVariable int complainNo) throws Exception{
 		
 		Complain complain = complainService.getComplain(complainNo);
 		complain.setComplainState("1");
 		complainService.updateComplainState(complain);
-		Board board = boardService.getBoard(complain.getBoard().getBoardNo());
-		boardService.deleteBoard(complain.getBoard().getBoardNo());
+		
+		String sort = complain.getComplainSort();
+		if (sort.equals("B")) {
+			Board board = boardService.getBoard(complain.getBoard().getBoardNo());
+			boardService.deleteBoard(complain.getBoard().getBoardNo());
+		} else if (sort.equals("C")) {
+			int commentNo = complainService.getCommentNo(complainNo);
+			boardService.deleteComment(commentNo);
+		} else if (sort.equals("R")){
+			// 리뷰 블러 처리
+		}
 	};
+	
 	
 	// 신고 반려
 	@RequestMapping(value = "json/deleteComplain2/{complainNo}", method=RequestMethod.POST)

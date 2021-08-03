@@ -14,11 +14,15 @@ import com.buyedu.domain.Search;
 		
 		Complain getComplain(int complainNo) throws Exception;
 		
+		int getCommentNo(int complainNo) throws Exception;
+		
 		List<Complain> getComplainList(Search search) throws Exception;
 		
 		int getComplainNo(Complain complain) throws Exception;
 		
 		int getComplainCount(Complain complain) throws Exception;
+		
+		int getReviewCount(Complain complain) throws Exception;
 		
 		int getComplainCommentCount(Complain complain) throws Exception;
 		

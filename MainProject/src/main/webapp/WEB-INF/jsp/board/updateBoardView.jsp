@@ -135,7 +135,7 @@
 	</style>
 
 <body>
- <div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; width:100%;">
+ <div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; width:100%;">
 	<!-- left Åø¹Ù -->
 	<jsp:include page="../common/left.jsp"></jsp:include>
        <!-- Page Content  -->

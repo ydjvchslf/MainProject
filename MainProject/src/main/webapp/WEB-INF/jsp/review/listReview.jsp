@@ -193,6 +193,9 @@
 		                                      <c:if test="${user.email == review.reviewWriter.email}">
 			                                   <a class="btn btn-primary" onclick="deleteReview(${review.reviewNo})"><span style="color:white">삭제</span></a>
 			                                  </c:if>
+			                                  <c:if test="${user.role == 'academy'}">
+			                                   <a class="btn btn-primary" onclick="complainReview(${review.reviewNo})"><span style="color:white">신고</span></a>
+			                                  </c:if>
 	                                   </div>
 	                                </div>   
                                 </div>
@@ -344,6 +347,27 @@
 			        success : function(data){
 			        	alert("후기가 삭제 되었습니다.");
 			        	location.reload()
+			        }
+			    });
+			}
+		}
+		
+		// 후기 신고
+		function complainReview(res){
+			if(confirm('후기를 신고 하시겠습니까?')){
+			    $.ajax({
+			        url : '/review/json/complainReview/'+reviewNo,
+			        type : 'POST',
+			        success : function(data){
+			          	 alert(res);
+			          	 
+			           	 if(res==0){
+			           		 location.reload();
+			        				alert("신고가 완료 되었습니다.");
+			           	 }else{
+			           		 location.reload();
+			           		 alert("이미 신고한 댓글입니다.");
+			           	 }
 			        }
 			    });
 			}

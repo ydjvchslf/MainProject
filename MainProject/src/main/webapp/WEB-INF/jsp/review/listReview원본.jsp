@@ -75,7 +75,7 @@ function fncAddReviewView(){
 </style>
 <!-- 스타일 종료부분 -->
 <body>
-<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 <!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
 	
