@@ -110,12 +110,11 @@ function commentList(){
                 a += '<a id="upbu" onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';
                 } 
                 if (sessionId != value.COMMENT_WRITER){
-                a += '<a onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';
+                a += '<a id="upbu" onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';
                 }
-                
-        		a += '</div></div>'
+        		a += '</div>'
                 a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> '+value.COMMENT_CONTENT+'</p>';
-                a += '</div></div>';
+                a += '</div></div></div>';
             });
             
             $(".commentList").html(a);

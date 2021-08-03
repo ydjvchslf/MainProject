@@ -363,10 +363,9 @@
   	</div>
   	
   		 	<!-- footer ÀÚ¸® -->
-       		<jsp:include page="../common/footer.jsp"></jsp:include>
-  	
+       		
   	</div>
-  	
+  	<jsp:include page="../common/footer.jsp"></jsp:include>
   	</div>
   	 <script src="/js/jquery.min.js"></script>
     <script src="/js/popper.js"></script>
