@@ -230,6 +230,7 @@ public class UserController {
 		User dbUser=userService.getUser(user.getEmail());
 		if ( dbUser == null ) {
 			
+			model.addAttribute("message", "회원정보가 맞지 않습니다.");
 			return "/user/loginViewTiles";
 		}
 		String accountState = dbUser.getAccountState();
