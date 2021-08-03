@@ -4,7 +4,7 @@
 
 <html lang="en">
   <head>
-  	<title>Â÷Æ®</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -71,7 +71,7 @@
 						</div>
 						
 						<div class="col-xs-12 col-md-6">
-							<h1 id="titlef"><strong>Ect</strong></h1>
+							<h1 id="titlef"><strong>Etc</strong></h1>
 							<div style="background-color:white;" class="container-fluid"><canvas id="ectChart" width="400" height="300"></canvas></div>
 						</div>
 		  			</div>

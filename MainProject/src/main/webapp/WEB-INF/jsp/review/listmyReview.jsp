@@ -34,7 +34,7 @@
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -70,8 +70,8 @@
 							      <th>후기 제목</th>
 							      <th>후기 내용</th>
 							      <th>작성자</th>
-							      <th>작성 학원</th>
 							      <th>작성일자</th>
+							      <th></th>
 							   </tr>
 							 </thead>
 							 
@@ -83,8 +83,8 @@
 							      <td>${review.reviewTitle}</td>
 							      <td>${review.reviewContent}</td>
 							      <td>${user.email}</td>
-							      <th><a href="/review/listReview?academyCode=${review.academyCode}">학원 가기</a></th>
 							      <td>${review.reviewDate}</td>
+							      <th><a href="/review/listReview?academyCode=${review.academyCode}">학원 가기</a></th>
 							   </tr>
 							 
 							 </c:forEach>
@@ -102,7 +102,12 @@
 			</div>
 			</c:if>
 			<br>
-	      	</div></div></div>
+	      	</div></div>
+	      	
+	      	<!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
+	      	
+	      	</div>
       	
        </div>
       

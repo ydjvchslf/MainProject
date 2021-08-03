@@ -64,6 +64,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		@RequestMapping( value="addBoard", method=RequestMethod.GET )
 		public String addBoard( Model model, HttpServletRequest request) throws Exception {
 		    
+			//툴바
+			User user = UserUtil.user();
+		    Map<String, Object> map1 = academyService.getAcademyCodeList(user.getUserNo());
+		    model.addAttribute("list", map1.get("list"));
+		    
 			String category = request.getParameter("cateCode");
 			String academyCode = request.getParameter("academyCode");
 			Board board = new Board();
@@ -139,7 +144,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 			String academyCode = request.getParameter("academyCode");
 			String isMine = request.getParameter("isMine");
 			
-			Board board = boardService.getBoardNoacademy(boardNo);
+			Board board = boardService.getBoardNoAcademy(boardNo);
 			board.setRecommendCnt(recommendCnt);
 			
 			// 조회수 증가
@@ -193,12 +198,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 		
 		// 게시판 수정 GET
 		@RequestMapping( value="updateBoard", method=RequestMethod.GET )
-		public String updateBoard( @RequestParam("boardNo") int boardNo , Model model, HttpServletRequest request ) throws Exception{
+		public String updateBoard( @RequestParam("boardNo") int boardNo , 
+									@RequestParam("cateCode") String cateCode , Model model, HttpServletRequest request ) throws Exception{
 
 			//Business Logic
-			Board board = boardService.getBoard(boardNo);
-			String academyCode = request.getParameter("academyCode");
-			board.setAcaWriter(academyCode);
+			Board board = boardService.getBoardNoAcademy(boardNo);
+			
+			if ( cateCode == "3" ) {
+				String academyCode = request.getParameter("academyCode");
+				board.setAcaWriter(academyCode);
+				model.addAttribute("board", board);
+			}
+			
 			model.addAttribute("board", board);
 			
 			return "/board/updateBoardView";
