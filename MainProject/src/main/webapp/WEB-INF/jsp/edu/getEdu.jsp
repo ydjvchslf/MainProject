@@ -21,6 +21,7 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7b7bd68bba98dd72e7204e4be68eaab0&libraries=services"></script>
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<script type="text/javascript">
 	
@@ -63,10 +64,11 @@
 		        self.location = "/purchaseedu/addPurchaseEduUid?eduNo="+eduNo+"&userNo="+userNo+"&uid="+rsp.imp_uid
 		        		
 		    } else {
-		        var msg = '결제에 실패하였습니다.';
+		        var msg = '결제에 실패하였습니다.\n';
 		        msg += '에러내용 : ' + rsp.error_msg;
 		    }
-		    alert(msg);
+		    //alert(msg);
+		    swal(msg);
 		});
 	
 	};
@@ -78,9 +80,9 @@
 			var eduState = ${edu.eduState}
 			
 			if(eduState == 1) {
-				alert("판매중인 수업은 수정이 불가능합니다.")
+				swal("판매중인 수업은 수정이 불가능합니다.")
 			} else if(eduState == 2) {
-				alert("판매완료된 수업은 수정이 불가능합니다.")
+				swal("판매완료된 수업은 수정이 불가능합니다.")
 			} else {
 				self.location = "/edu/updateEdu?eduNo=${edu.eduNo}"
 			}
@@ -113,7 +115,7 @@
 				},
 			    success : function(data, status){
 
-			    	alert(data)
+			    	swal(data)
 			    }
 			});
 		})
@@ -132,7 +134,7 @@
 				},
 			    success : function(data, status){
 
-			    	alert("관심수업에서 삭제되었습니다.")
+			    	swal("관심수업에서 삭제되었습니다.")
 			    }
 			});
 		})
