@@ -58,6 +58,12 @@
 			
 		$("form").attr("method" , "POST").attr("action" , "/edu/updateEdu").submit();
 	}
+	
+	function inNumber(){
+        if(event.keyCode<48 || event.keyCode>57){
+           event.returnValue=false;
+        }
+	}
 		
 	</script>
 	
@@ -112,7 +118,7 @@
 						  <div class="form-group">
 						    <label for="eduPrice" class="col-sm-offset-1 col-sm-3 control-label">수강료</label>
 						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="eduPrice" name="eduPrice"  value="${edu.eduPrice}" placeholder="변경휴대폰번호">
+						      <input type="text" class="form-control" id="eduPrice" name="eduPrice"  value="${edu.eduPrice}" placeholder="변경휴대폰번호" onkeypress="inNumber();"/>
 						    </div>
 						  </div>
 						  
@@ -140,7 +146,7 @@
 						  <div class="form-group">
 						    <label for="eduMember" class="col-sm-offset-1 col-sm-3 control-label">수업 총 인원</label>
 						    <div class="col-sm-4">
-						      <input type="text" class="form-control" id="eduMember" name="eduMember" value="${edu.eduMember}"/>
+						      <input type="text" class="form-control" id="eduMember" name="eduMember" value="${edu.eduMember}" onkeypress="inNumber();"/>
 						    </div>
 						  </div>
 						  
