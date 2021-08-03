@@ -4,7 +4,7 @@
 
 <html lang="UTF-8">
   <head>
-  	<title>Buy Edu</title>
+  	<title>Buy!edu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -60,7 +60,7 @@
  
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB;">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC;">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
