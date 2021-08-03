@@ -57,7 +57,7 @@ public class ComplainRestController {
 		complainService.addComplain(complain);
 	}
 	
-	// 게시글 신고
+	// 댓글 신고
 		@ResponseBody
 		@RequestMapping( value="json/addCommentComplain/{boardNo}", method=RequestMethod.POST)
 		public void addCommentComplain(@PathVariable int boardNo, 
@@ -71,8 +71,9 @@ public class ComplainRestController {
 			Complain complain = new Complain();
 			complain.setUser(user);
 			complain.setBoard(board);
+			complain.setCommentNo(commentNo);
 			complain.setComplainReasonCode(reason);
-			complain.setComplainSort("B");
+			complain.setComplainSort("C");
 			
 			complainService.addComplain(complain);
 		}
