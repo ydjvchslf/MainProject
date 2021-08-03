@@ -30,7 +30,8 @@ public class BoardService {
 		return boardDao.getBoard(boardNo);
 	}
 	
-	public Board getBoardNoacademy(int boardNo) throws Exception {
+	public Board getBoardNoAcademy(int boardNo) throws Exception {
+		
 		return boardDao.getBoardNoAcademy(boardNo);
 	}
 	

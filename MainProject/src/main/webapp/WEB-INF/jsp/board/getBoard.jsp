@@ -112,7 +112,9 @@
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 $( ".btn:contains('수')" ).on("click" , function() {
 			 var boardNo = $("div").find('button#updateButton').val();
-				self.location = "/board/updateBoard?boardNo="+boardNo
+			 var cateCode = $(this).find('input').val()
+			 
+				self.location = "/board/updateBoard?boardNo="+boardNo+"&cateCode="+cateCode
 			});
 		});
 		 
@@ -236,7 +238,7 @@
 		    <div class="col-sm-12 text-right">
 		    
 		    <!-- 신고 버튼 모달 -->
-		    <c:if test="${complainCount!= 1}">
+		    <c:if test="${complainCount!= 1 && userNo ne board.boardWriter}">
 		    <button class="btn btn-primary" id="complainButton" data-toggle="modal" data-target="#complainBrd">신고</button>
 		    <div class="modal fade" id="complainBrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">
@@ -300,7 +302,8 @@
 		    
 		      <button class="btn btn-primary" id="resetButton" value="${board.boardNo}" href="#" onClick="history.back()">목록으로</button>
 		      <c:if test="${userNo eq board.boardWriter}">
-		      <button class="btn btn-primary" id="updateButton" value="${board.boardNo}">수 &nbsp;정</button>   
+		      <button class="btn btn-primary" id="updateButton" value="${board.boardNo}">
+		      <input type="hidden" id="updateButton" value="${board.cateCode}"/>수 &nbsp;정</button>   
 		      <button class="btn btn-primary" id="deleteButton" value="${board.boardNo}">삭&nbsp;제</button></c:if> 
 		      
 		   	</div>
