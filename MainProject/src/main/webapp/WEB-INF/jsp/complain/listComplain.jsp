@@ -172,7 +172,7 @@
           <tr>
             <th width=5%>신고 분류</th>
             <th width=5%>글 번호</th>
-            <th width=5%>신고자 번호</th>
+            <th width=10%>신고자 번호</th>
             <th width=5%>신고 사유</th>
             <th width=20%>신고일자</th>
             <th width=10%>신고 처리</th>
@@ -207,7 +207,7 @@
 			  
 			  </td>
 			  
-			  <td width=5% id="listtable" align="left">${complain.user.userNo}</td>
+			  <td width=10% id="listtable" align="left">${complain.user.userNo}</td>
 			  <td width=5% id="listtable" align="left">${complain.complainReason}</td>
 			  <td width=20% id="listtable" align="left">
 			  <fmt:formatDate value="${complain.complainDate}" pattern="yyyy-MM-dd"/></td>

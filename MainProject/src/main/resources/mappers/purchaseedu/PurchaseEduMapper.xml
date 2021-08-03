@@ -75,7 +75,7 @@
 	<select 	id="getPurchaseAcademyList"	parameterType="search"	resultMap="purchaseEduSelectMap">
 		SELECT distinct *
 	  		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  				FROM	( SELECT e.edu_no , e.edu_name , u.name , u.phone , pc.pay_date , e.edu_price , pc.pay_state
+	  				FROM	( SELECT e.edu_no , e.edu_name , u.name , u.phone , pc.pay_date , e.edu_price , pc.pay_state, pc.purchase_aca_code
 						  		FROM edu e, academy a, users u, purchase_edu pc 
 						  		WHERE pc.purchase_user_no = u.user_no AND pc.purchase_aca_code = #{searchAcademyCode} AND 
 							  	e.edu_academy_code = a.academy_code AND purchase_edu_no = e.edu_no ORDER BY edu_no ) inner_table

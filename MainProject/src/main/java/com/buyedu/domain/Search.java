@@ -32,6 +32,9 @@ public class Search {
 	private String academyCode;
 	private String isMine;
 	
+	private User user;
+	private Academy academy;
+	
 	///Constructor
 	public Search() {
 	}
@@ -216,6 +219,22 @@ public class Search {
 
 	public void setSearchRoleByEdu(String searchRoleByEdu) {
 		this.searchRoleByEdu = searchRoleByEdu;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Academy getAcademy() {
+		return academy;
+	}
+
+	public void setAcademy(Academy academy) {
+		this.academy = academy;
 	}
 
 	

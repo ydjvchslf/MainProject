@@ -60,7 +60,7 @@
 		function fncGetList(currentPage) {
 			
 			$("#currentPage").val(currentPage)
-		   	$("form").attr("method", "POST").attr("action","/purchaseedu/listPurchaseEdu").submit();
+		   	$("form").attr("method", "POST").attr("action","/purchaseedu/listPurchaseAcademy?academyCode=${academy.academyCode}").submit();
 		};
 		
 		
@@ -86,7 +86,8 @@
 		      $( "td:nth-child(2)" ).on("click" , function() {
 
 		    	 var eduNo = $(this).find('input').val()
-		         self.location ="/edu/getEdu?eduNo="+eduNo;
+		    	 
+		         self.location ="/edu/getEdu?eduNo="+eduNo+"&academyCode=${academy.academyCode}";
 		         
 		      });
 		      
@@ -180,7 +181,10 @@
 						<c:set var="i" value="${ i+1 }" />
 						<tr>
 						  <td align="center">${ i }</td>
-						  <td align="left"><strong>${purchase.purchaseEdu.eduName} <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/></strong> </td>
+						  <td align="left"><strong>${purchase.purchaseEdu.eduName} 
+						  <input type="hidden" name="eduNo" id="eduNo" value="${purchase.purchaseEdu.eduNo}"/>
+						  <input type="hidden" name="academyCode" id="academyCode" value="${purchase.purchaseAcademy.academyCode}"/>
+						  </strong> </td>
 						  <td align="left">${purchase.buyer.name}</td>
 						  <td align="left">${purchase.buyer.phone}</td>
 						  <td align="left">${purchase.payDate}</td>
