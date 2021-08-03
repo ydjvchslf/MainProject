@@ -92,13 +92,14 @@
     #reviewBtn a:link { color: white; text-decoration: none;}
  	#reviewBtn a:visited { color: white; text-decoration: none;}
  	#reviewBtn a:hover { color: white; text-decoration: underline;}
-	}		
+	}	
+	
 		
- 		</style>
+	</style>
   </head>
   <body>
 		
-		<div class="wrapper d-flex align-items-stretch" style="background-color:#E6E5DB; ">
+		<div class="wrapper d-flex align-items-stretch" style="background-color:#ECECEC; ">
 		
 		<!-- left -->
 		<jsp:include page="../common/left.jsp"></jsp:include>
@@ -187,19 +188,21 @@
 				   <div class="row-fruid" style="float: left; width: 50%; padding:10px;">
 		 		 	<div class="card shadow mb-4">
                                 <div id="card_box" class="card-header bg-dark py-3">
-                                    <h3 class="m-0 font-weight-bold text-warning">${review.reviewTitle}</h3>
-                                    <h5 class="text-warning" align="right"> ${review.reviewWriter.email}</h5> 
-                                    <h5 class="text-warning" align="right"> ${review.reviewDate}</h5>
-                                   
+                                    <div class="m-0 font-weight-bold text-warning" style="font-size: 20px;">${review.reviewTitle}
+	                                    <div align="right">
+		                                      <c:if test="${user.email == review.reviewWriter.email}">
+			                                   <a class="btn btn-primary" onclick="deleteReview(${review.reviewNo})"><span style="color:white">삭제</span></a>
+			                                  </c:if>
+	                                   </div>
+	                                </div>   
                                 </div>
                                 <div class="card-body">
-                                   ${review.reviewContent}
-                                   
-                                   <c:if test="${user.email == review.reviewWriter.email}">
-                                   <br/>
-                                   
-                                   <a class="btn btn-primary" onclick="deleteReview(${review.reviewNo})">후기 삭제</a>
-                                   </c:if>
+                                  <div> 
+                                  	<strong>${review.reviewContent}</strong>
+                                  </div>
+                                  <div class="col-sm-12" align="right"> 
+                                  	${review.reviewDate}&nbsp; by ${review.reviewWriter.email}
+                                  </div>
                                 </div>
                      </div>                        
                     </div> 
@@ -224,6 +227,10 @@
 						<jsp:include page="../common/pageNavigator_new.jsp"></jsp:include>
 				</div>
 	      	</div>
+	      	
+	      	<!-- footer 자리 -->
+       		<jsp:include page="../common/footer.jsp"></jsp:include>
+	      	
        </div>
 	</div>
 	
