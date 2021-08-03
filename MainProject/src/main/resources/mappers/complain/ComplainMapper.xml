@@ -44,6 +44,14 @@
 		WHERE complain_no = #{complainNo}
 	 </select>
 	 
+	 <!-- SQL : SELECT ONE 댓글 번호 뽑기 -->
+	 <select 	id="getCommentNo"	parameterType="int"	resultType="int">
+		SELECT
+		comment_no
+		FROM complain 
+		WHERE complain_no = #{complainNo}
+	 </select>
+	 
 	<!-- SQL : SELECT LIST -->
 	<select  id="getComplainList"  parameterType="search"	resultMap="complainSelectMap">
 	  	SELECT *
@@ -78,17 +86,25 @@
 	  	WHERE complain_user_no = #{user.userNo} AND board_no = #{board.boardNo}
 	 </select>
 	 
-	 
+	 <!-- 게시글 신고 검증 -->
 	<select  id="getComplainCount"  parameterType="complain"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM complain
 	  	WHERE complain_user_no = #{user.userNo} AND board_no = #{board.boardNo}
 	 </select>
 	 
+	 <!-- 댓글 신고 검증 -->
 	 <select  id="getComplainCommentCount"  parameterType="complain"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM complain
 	  	WHERE complain_user_no = #{user.userNo} AND comment_no = #{commentNo}
+	 </select>
+	 
+	 <!-- 후기 신고 검증 -->
+	 <select  id="getReviewCount"  parameterType="complain"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM complain
+	  	WHERE complain_user_no = #{user.userNo} AND review_no = #{review.reviewNo}
 	 </select>
 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">

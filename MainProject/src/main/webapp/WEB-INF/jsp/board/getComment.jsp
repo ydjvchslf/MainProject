@@ -265,7 +265,7 @@ $(function() {
 			     type : 'post',
 			     data : {'boardNo' : boardNo, 'reason' : reason, 'commentNo' : commentNo},
 			     success : function(res){
-			    	 alert(res);
+			    	 
 			    	 if(res==0){
 			    		 location.reload();
 							alert("신고가 완료 되었습니다.");
