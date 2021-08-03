@@ -62,11 +62,52 @@
     </div>
 </div>
 
+<!-- 신고 모달 팝업 -->      
+		    <div class="modal fade" id="complainCmd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h4 class="modal-title" id="myModalLabel">댓글 신고 사유를 선택해 주세요</h4>
+						      </div>
+						      <div class="modal-body">
+						      <!-- 모달 내용 -->
+						        <form>
+						            <div class="row">
+									  
+									  <div class="col-sm-5" align="left" style="padding-left: 50;">
+									  	<br/>
+									  	<input type="radio" id="c1" name="complainc" value="1">&nbsp;<label for="c1"> 욕설 </label>
+									  	<br/>
+									  	<input type="radio" id="c2" name="complainc" value="2">&nbsp;<label for="c2"> 도배 </label>
+									  	<br/>
+									  	<input type="radio" id="c3" name="complainc" value="3">&nbsp;<label for="c3"> 홍보, 광고 </label>
+									  	<br/>
+									  	<input type="radio" id="c4" name="complainc" value="4">&nbsp;<label for="c4"> 음란성 </label>
+									  	<br/>
+									  	<input type="radio" id="c5" name="complainc" value="5">&nbsp;<label for="c5"> 기타 </label>
+									  	<br/>
+									  </div>
+								
+									</div>
+								</form>
+								
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" id="okC" class="btn btn-primary">신고 하기</button>
+						        <button type="button" id="modalClose" class="btn btn-default" data-dismiss="modal">취소</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						
+						<a ></a>
+
+
+
+
 	
 <script>
 var boardNo = '${board.boardNo}'; //게시글 번호
-
-
 
 $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭시 
     var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
@@ -110,7 +151,8 @@ function commentList(){
                 a += '<a id="upbu" onclick="commentDelete('+value.COMMENT_NO+');"> 삭제 </a>';
                 } 
                 if (sessionId != value.COMMENT_WRITER){
-                a += '<a id="upbu" onclick="commentComplain('+value.COMMENT_NO+');"> 신고 </a>';
+                a += '<a id="upbu" data-toggle="modal" href="#complainCmd" onclick="getNo('+value.COMMENT_NO+')")> 신고 </a>';
+                
                 }
         		a += '</div>'
                 a += '<div class="commentContent'+value.COMMENT_NO+'"> <p> '+value.COMMENT_CONTENT+'</p>';
@@ -146,7 +188,6 @@ function enterEvent(){
 		commentInsert(insertData);
 	}
 }
-
  
 //댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
 function commentUpdate(commentNo, content){
@@ -158,7 +199,6 @@ function commentUpdate(commentNo, content){
     a += '</div>';
     
     $('.commentContent'+commentNo).html(a);
-    
 }
  
 //댓글 수정
@@ -193,6 +233,31 @@ function commentDelete(commentNo){
 		return false;
 	}
 }
+
+let commentNo = "";
+
+function getNo(test){
+	commentNo = test
+}
+
+// 댓글 신고
+$(function() {
+	$('#okC').on('click', function(){
+		console.log(commentNo)
+		var reason = $("input[name='complainc']:checked").val();
+		if(confirm('신고 하시겠습니까?')){	
+			$.ajax({
+				 url : '/complain/json/addCommentComplain/'+boardNo,
+			     type : 'post',
+			     data : {'boardNo' : boardNo, 'reason' : reason, 'commentNo' : commentNo},
+			     success : function(data){
+			    	location.reload()
+					alert("신고가 완료 되었습니다.");
+			     }
+			});
+		}
+	})
+})
  
  
  

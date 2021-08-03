@@ -279,7 +279,7 @@
 			</c:if>
 			
 			
-		    <c:if test="${complainCount== 1}">
+		    <c:if test="${complainCount >= 1}">
 		    <button class="btn btn-primary" id="complainButton" data-toggle="modal" data-target="#complainBrd">신고 취소</button>
 		    <div class="modal fade" id="complainBrd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 						  <div class="modal-dialog" role="document">

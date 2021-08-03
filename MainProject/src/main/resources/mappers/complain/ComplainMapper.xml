@@ -84,6 +84,12 @@
 	  	FROM complain
 	  	WHERE complain_user_no = #{user.userNo} AND board_no = #{board.boardNo}
 	 </select>
+	 
+	 <select  id="getComplainCommentCount"  parameterType="complain"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM complain
+	  	WHERE complain_user_no = #{user.userNo} AND comment_no = #{commentNo}
+	 </select>
 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)

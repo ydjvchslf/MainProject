@@ -20,6 +20,8 @@ import com.buyedu.domain.Search;
 		
 		int getComplainCount(Complain complain) throws Exception;
 		
+		int getComplainCommentCount(Complain complain) throws Exception;
+		
 		int getTotalCount(Search search) throws Exception;
 		
 		void updateComplainState(Complain complain) throws Exception;
