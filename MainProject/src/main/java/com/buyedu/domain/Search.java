@@ -32,6 +32,9 @@ public class Search {
 	private String academyCode;
 	private String isMine;
 	
+	private User user;
+	private Academy academy;
+	
 	///Constructor
 	public Search() {
 	}

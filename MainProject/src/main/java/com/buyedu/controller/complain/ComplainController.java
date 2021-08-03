@@ -48,6 +48,8 @@ public class ComplainController {
 		Page resultPage = new Page(search.getCurrentPage(),((Integer)map.get("totalCount")).intValue()
 				,pageUnit,pageSize);
 		
+		System.out.println("111111111111111"+map);
+		
 		model.addAttribute("comlist", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		

@@ -134,7 +134,7 @@
 								
 								<c:if test="${academy.multimediarole == 'I'}">
 								<div class="col-md-4">
-										<img style=" margin-bottom: 10px; " height="450" width="450" src="/uploadImages/${academy.multimedia}"/>
+										<img style=" margin-bottom: 10px; " height="200" width="200" src="/uploadImages/${academy.multimedia}"/>
 										</br>
 										<c:if test="${user.role == 'academy' }">
 										<span id=deleteButtonImage><a class="btn btn-primary" style="color: white;" onclick="deleteMultimedia('${academy.multimediano}')">ªË¡¶</a></span>
@@ -151,8 +151,6 @@
 					        	</br>	
 					        	
 					        	
-					        	
-					        	
 					        	<div class="row">
 					        	
 					        	<c:set var="i" value="0" />
@@ -160,7 +158,7 @@
 										<c:set var="i" value="${ i+1 }" />
 								<c:if test="${academy.multimediarole == 'V'}">
 								<div class="col-md-4">
-										<video height="450" width="450" style="margin-bottom: 10px; " controls>
+										<video height="200" width="200" style="margin-bottom: 10px; " controls>
 											<source src="/uploadImages/${academy.multimedia}">
 										</video>
 										<c:if test="${user.role == 'academy' }">
