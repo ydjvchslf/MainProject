@@ -479,9 +479,9 @@
 						                          <div class="form-group" align="center">
 						                             <div class="custom-control custom-checkbox small">
 						                                <span class="radio">
-											                   <label><input name="role" id="student" name="student" type="radio" class="radio-label" checked value="student">학생</label>
-														       <label><input name="role" id="parents" name="parents" type="radio" class="radio-label" value="parents"> 학부모 </label>
-														       <label><input name="role" id="academy" name="academy" type="radio" class="radio-label" value="academy"> 학원</label>
+											                   <label><input id="role" name="student" type="radio" class="radio-label" checked value="student">학생</label>
+														       <label><input id="role" name="parents" type="radio" class="radio-label" value="parents"> 학부모 </label>
+														       <label><input id="role" name="academy" type="radio" class="radio-label" value="academy"> 학원</label>
 											            </span>
 							                         </div>
 							                      </div>
@@ -826,8 +826,8 @@
 	
 	//인증번호 확인 함수
 	//test 용, 나중에 실제에서는 지우기
-	//var key ="123456";
-	var key = "";
+	var key ="123456";
+	//var key = "";
 	
 	var vaildNum = $("#vaildNum").val();
 	
@@ -1886,8 +1886,8 @@
 	//인증확인 함수
 	//test 용, 나중에 실제에서는 지우기
 	
-	//var key ="123456";
-	var key = "";
+	var key ="123456";
+	//var key = "";
 	
 	var vaildNum = $("#VAILDNUM").val();
 	
